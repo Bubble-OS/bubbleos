@@ -1,0 +1,23 @@
+{
+  "name": "bubbleos-lite",
+  "version": "0.0.1",
+  "description": "BubbleOS Lite - a command-line interface version of the BubbleOS concept!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnavthorat78/bubbleos-lite.git"
+  },
+  "author": "Arnav Thorat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arnavthorat78/bubbleos-lite/issues"
+  },
+  "homepage": "https://github.com/arnavthorat78/bubbleos-lite#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "prompt-sync": "^4.2.0"
+  }
+}

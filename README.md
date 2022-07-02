@@ -1,2 +1,3 @@
-# bubbleos-lite
-BubbleOS Lite - a command-line interface version of the BubbleOS concept!
+# BubbleOS Lite
+
+BubbleOS Lite - A command-line interface version of the BubbleOS concept!
