@@ -23,7 +23,10 @@ const ls = (directory = process.cwd()) => {
   all.forEach((item) => {
     if (item.type === "file") {
       console.log(chalk.green(item.name));
-    } else if (item.type === "folder" && item.name.startsWith(".")) {
+    } else if (
+      item.type === "folder" &&
+      (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
+    ) {
       console.log(chalk.bold.grey(item.name));
     } else {
       console.log(chalk.bold.blue(item.name));
