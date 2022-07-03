@@ -3,6 +3,8 @@ const prompt = require("./src/prompt");
 const error = require("./src/error");
 
 const cd = require("./src/commands/cd");
+const ls = require("./src/commands/ls");
+const sysinfo = require("./src/commands/sysinfo");
 
 require("./src/intro");
 
@@ -15,9 +17,19 @@ while (true) {
     require("./src/exit");
   }
 
-  if (command.command.includes("cd")) {
-    const directory = command.command.split("cd")[1];
+  if (command.command.startsWith("cd")) {
+    const directory = command.command.split(" ")[1];
 
-    cd(directory?.trim());
+    cd(directory);
+  }
+
+  if (command.command.startsWith("ls")) {
+    const directory = command.command.split(" ")[1];
+
+    ls(directory);
+  }
+
+  if (command.command === "sysinfo") {
+    sysinfo();
   }
 }
