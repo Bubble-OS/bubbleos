@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const prompt = require("./src/prompt");
 
 const error = require("./src/error");
@@ -24,7 +26,9 @@ while (true) {
   }
 
   if (command.command.startsWith("ls")) {
-    const directory = command.command.replace("ls ", "");
+    const directory = command.command.replace("ls ", "").startsWith("ls")
+      ? process.cwd()
+      : command.command.replace("ls ", "");
 
     ls(directory);
   }
