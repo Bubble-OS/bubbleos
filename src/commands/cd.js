@@ -15,7 +15,7 @@ const cd = (dir) => {
     return;
   }
 
-  console.log(`Changed directory to ${chalk.green(dir)}.`);
+  console.log(`Changed directory to ${chalk.green(process.cwd())}.`);
   console.log();
 };
 
