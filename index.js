@@ -18,13 +18,13 @@ while (true) {
   }
 
   if (command.command.startsWith("cd")) {
-    const directory = command.command.split(" ")[1];
+    const directory = command.command.replace("cd ", "");
 
     cd(directory);
   }
 
   if (command.command.startsWith("ls")) {
-    const directory = command.command.split(" ")[1];
+    const directory = command.command.replace("ls ", "");
 
     ls(directory);
   }
