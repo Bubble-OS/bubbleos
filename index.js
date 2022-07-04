@@ -33,7 +33,9 @@ while (true) {
     ls(directory);
   }
 
-  if (command.command === "sysinfo") {
-    sysinfo();
+  if (command.command.startsWith("sysinfo")) {
+    const all = command.command.includes("-a");
+
+    all ? sysinfo(true) : sysinfo();
   }
 }
