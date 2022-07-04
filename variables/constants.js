@@ -1,6 +1,6 @@
 const VERSION = "0.1.0";
 
-const RECOGNIZED_COMMANDS = ["help", "exit", "cd", "sysinfo", "ls"];
+const RECOGNIZED_COMMANDS = ["help", "exit", "cd", "sysinfo", "ls", "taskkill"];
 
 const DEFINITIONS = {
   help: {
