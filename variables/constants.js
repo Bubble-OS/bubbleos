@@ -1,4 +1,4 @@
-const VERSION = "0.1.0";
+const VERSION = "0.1.5";
 
 const RECOGNIZED_COMMANDS = [
   "help",
@@ -16,17 +16,26 @@ const DEFINITIONS = {
   help: {
     description: "Displays a list of available commands.",
     usage: ["help", "help <command>"],
-    example: ["help taskkill"],
   },
   exit: {
     description: "Exits the BubbleOS Lite shell.",
     usage: ["exit"],
-    example: ["exit"],
   },
   cd: {
     description: "Changes the current working directory.",
     usage: ["cd <directory>"],
-    example: ["cd Windows"],
+  },
+  sysinfo: {
+    description: "Displays system information.",
+    usage: ["sysinfo"],
+  },
+  ls: {
+    description: "Displays the contents of the current working directory or other directories.",
+    usage: ["ls", "ls <directory>"],
+  },
+  taskkill: {
+    description: "Terminates a process using a PID.",
+    usage: ["taskkill <PID>"],
   },
 };
 

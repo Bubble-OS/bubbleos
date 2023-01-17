@@ -20,6 +20,8 @@ while (true) {
 
   if (command.isExit) {
     require("./src/exit");
+  } else if (command.isHelp) {
+    require("./src/help");
   } else if (command.command.startsWith("cd")) {
     const directory = command.command.replace("cd ", "");
 
