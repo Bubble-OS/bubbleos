@@ -8,6 +8,8 @@ const cd = require("./src/commands/cd");
 const ls = require("./src/commands/ls");
 const sysinfo = require("./src/commands/sysinfo");
 const taskkill = require("./src/commands/taskkill");
+const mkdir = require("./src/commands/mkdir");
+const execFile = require("./src/commands/exec");
 
 require("./src/intro");
 
@@ -38,5 +40,23 @@ while (true) {
       : command.command.replace("taskkill ", "");
 
     taskkill(pid);
+  } else if (command.command.startsWith("mkfile")) {
+    const fileName = command.command.replace("mkfile ", "");
+
+    console.log(fileName);
+  } else if (command.command.startsWith("cls")) {
+    console.clear();
+  } else if (command.command.startsWith("mkdir")) {
+    const mkdirName = command.command.replace("mkdir ", "").startsWith("mkdir")
+      ? undefined
+      : command.command.replace("mkdir ", "");
+
+    mkdir(mkdirName);
+  } else if (command.command.startsWith("exec")) {
+    const execFilename = command.command.replace("exec ", "").startsWith("exec")
+      ? undefined
+      : command.command.replace("exec ", "");
+
+    execFile(execFilename);
   }
 }

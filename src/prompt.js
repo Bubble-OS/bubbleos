@@ -2,9 +2,13 @@ const chalk = require("chalk");
 const promptSync = require("prompt-sync")();
 
 const prompt = () => {
-  const command = promptSync(
-    `${chalk.bold.green("bubble")} ${process.cwd()} ${chalk.red("$")} `
-  ).trim();
+  let command = promptSync(`${chalk.bold.green("bubble")} ${process.cwd()} ${chalk.red("$")} `);
+
+  try {
+    command === command.trim();
+  } catch (err) {
+    require("./exit");
+  }
 
   const isEmpty = command.length === 0;
   const isExit = command === "exit";
