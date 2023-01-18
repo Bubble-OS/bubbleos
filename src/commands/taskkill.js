@@ -14,11 +14,7 @@ const taskkill = (pid) => {
     process.kill(Number(pid));
   } catch (err) {
     if (err.message.toLowerCase().includes("eperm")) {
-      console.log(
-        `You do not have permission to kill ${chalk.red(
-          `${pid}`
-        )}. Try running Bubble from an administrator account.`
-      );
+      console.log(`You do not have permission to kill ${chalk.red(`${pid}`)}.`);
       console.log();
     } else {
       console.log(`${chalk.red(err.message)}.`);
