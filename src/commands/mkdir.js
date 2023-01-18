@@ -32,6 +32,14 @@ const mkdir = (dirName) => {
           )}. Try running Bubble as an administrator.\n`
         )
       );
+    } else {
+      console.log(
+        chalk.red(
+          `An unknown error occured while creating the folder: ${chalk.bold(
+            process.cwd() + "\\" + dirName
+          )}.\n`
+        )
+      );
     }
   }
 };

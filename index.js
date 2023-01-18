@@ -13,6 +13,7 @@ const taskkill = require("./src/commands/taskkill");
 const mkdir = require("./src/commands/mkdir");
 const execFile = require("./src/commands/exec");
 const about = require("./src/commands/about");
+const rmdir = require("./src/commands/rmdir");
 
 require("./src/intro");
 
@@ -69,5 +70,11 @@ while (true) {
     execFile(execFilename);
   } else if (command.command.startsWith("about")) {
     about();
+  } else if (command.command.startsWith("rmdir")) {
+    const rmdirFile = command.command.replace("rmdir ", "").startsWith("rmdir")
+      ? undefined
+      : command.command.replace("rmdir ", "");
+
+    rmdir(rmdirFile);
   }
 }

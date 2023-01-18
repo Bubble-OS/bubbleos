@@ -1,4 +1,4 @@
-const VERSION = "0.1.5";
+const VERSION = "0.1.8";
 
 const RECOGNIZED_COMMANDS = [
   "help",
@@ -11,6 +11,7 @@ const RECOGNIZED_COMMANDS = [
   "mkdir",
   "exec",
   "about",
+  "rmdir",
 ];
 
 const DEFINITIONS = {
@@ -43,6 +44,31 @@ const DEFINITIONS = {
     description: "Terminates a process using a PID.",
     all: "Note: You cannot use the process name; only the PID works. This has NOT been tested on Mac/Linux.",
     usage: ["taskkill <PID>"],
+  },
+  mkfile: {
+    description: "incomplete",
+    all: "incomplete",
+    usage: ["mkfile <filename>"],
+  },
+  mkdir: {
+    description: "Make a directory in the file system.",
+    all: "Make a directory using an absolute or a relative path. For Windows users: uses UNC paths (\\\\?\\).",
+    usage: ["mkdir <foldername>"],
+  },
+  exec: {
+    description: "Execute 'exe' files. Windows users only.",
+    all: "Execute executable files for Windows users. Programs that must be run as admin must have Bubble run as an administrator. You do not need to specify '.exe' at the end.",
+    usage: ["exec <execfile>"],
+  },
+  about: {
+    description: "Display information about BubbleOS Lite.",
+    all: "Display information including the version number, author, and GitHub URL.",
+    usage: ["about"],
+  },
+  rmdir: {
+    description: "Remove a directory from the file system.",
+    all: "Remove a directory using an abolsute or relative path. For Windows users: uses UNC paths (\\\\?\\).",
+    usage: ["rmdir <foldername>"],
   },
 };
 
