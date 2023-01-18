@@ -4,12 +4,15 @@ const prompt = require("./src/prompt");
 
 const error = require("./src/error");
 
+const help = require("./src/help");
+
 const cd = require("./src/commands/cd");
 const ls = require("./src/commands/ls");
 const sysinfo = require("./src/commands/sysinfo");
 const taskkill = require("./src/commands/taskkill");
 const mkdir = require("./src/commands/mkdir");
 const execFile = require("./src/commands/exec");
+const about = require("./src/commands/about");
 
 require("./src/intro");
 
@@ -20,8 +23,12 @@ while (true) {
 
   if (command.isExit) {
     require("./src/exit");
-  } else if (command.isHelp) {
-    require("./src/help");
+  } else if (command.command.startsWith("help")) {
+    const helpCommand = command.command.replace("help ", "").startsWith("help")
+      ? undefined
+      : command.command.replace("help ", "");
+
+    help(helpCommand);
   } else if (command.command.startsWith("cd")) {
     const directory = command.command.replace("cd ", "");
 
@@ -60,5 +67,7 @@ while (true) {
       : command.command.replace("exec ", "");
 
     execFile(execFilename);
+  } else if (command.command.startsWith("about")) {
+    about();
   }
 }

@@ -2,7 +2,9 @@ const chalk = require("chalk");
 const promptSync = require("prompt-sync")();
 
 const prompt = () => {
-  let command = promptSync(`${chalk.bold.green("bubble")} ${process.cwd()} ${chalk.red("$")} `);
+  let command = promptSync(
+    `${chalk.bold.green("bubble")} ${chalk.blueBright(process.cwd())} ${chalk.red("$")} `
+  );
 
   try {
     command === command.trim();

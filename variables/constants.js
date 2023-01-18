@@ -10,15 +10,18 @@ const RECOGNIZED_COMMANDS = [
   "mkfile",
   "mkdir",
   "exec",
+  "about",
 ];
 
 const DEFINITIONS = {
   help: {
     description: "Displays a list of available commands.",
+    all: "bruh",
     usage: ["help", "help <command>"],
   },
   exit: {
     description: "Exits the BubbleOS Lite shell.",
+    all: "You can also exit the BubbleOS shell by pressing Ctrl + C, which will invoke the same function as if you were typing 'exit'.",
     usage: ["exit"],
   },
   cd: {
