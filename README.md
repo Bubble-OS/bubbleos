@@ -14,7 +14,7 @@ For the portable executable, go the the [Releases](https://github.com/arnavthora
 
 Run the executable and it should open in a terminal-like window. You can also run this through command prompt (Windows), or the terminal (Mac/Linux), or other command prompt-like apps (e.g. PowerShell).
 
-### `PATH` Installer
+### `PATH` Installer <sup>(*Recommended for advanced users only)</sup>
 
 To add BubbleOS to your path, you can just install the latest version of Node.js from [this website](https://nodejs.org/en/). To see if you have it installed or not, run the following command:
 
