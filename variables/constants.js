@@ -7,11 +7,11 @@ const RECOGNIZED_COMMANDS = [
   "sysinfo",
   "ls",
   "taskkill",
-  "mkfile",
   "mkdir",
   "exec",
   "about",
   "rmdir",
+  "mkfile",
 ];
 
 const DEFINITIONS = {
@@ -45,11 +45,6 @@ const DEFINITIONS = {
     all: "Note: You cannot use the process name; only the PID works. This has NOT been tested on Mac/Linux.",
     usage: ["taskkill <PID>"],
   },
-  mkfile: {
-    description: "incomplete",
-    all: "incomplete",
-    usage: ["mkfile <filename>"],
-  },
   mkdir: {
     description: "Make a directory in the file system.",
     all: "Make a directory using an absolute or a relative path. For Windows users: uses UNC paths (\\\\?\\).",
@@ -69,6 +64,11 @@ const DEFINITIONS = {
     description: "Remove a directory from the file system.",
     all: "Remove a directory using an abolsute or relative path. For Windows users: uses UNC paths (\\\\?\\).",
     usage: ["rmdir <foldername>"],
+  },
+  mkfile: {
+    description: "Make a file in the current working directory.",
+    all: "N/A",
+    usage: ["mkfile <filename>"],
   },
 };
 

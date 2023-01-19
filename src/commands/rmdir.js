@@ -6,7 +6,7 @@ const path = require("path");
 
 const rmdir = (dir) => {
   if (typeof dir === "undefined") {
-    console.log(`Please enter folder to delete. Example: ${chalk.yellow("rmdir test")}.`);
+    console.log(`Please enter a folder to delete. Example: ${chalk.yellow("rmdir test")}.`);
     console.log();
 
     return;

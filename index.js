@@ -14,6 +14,7 @@ const mkdir = require("./src/commands/mkdir");
 const execFile = require("./src/commands/exec");
 const about = require("./src/commands/about");
 const rmdir = require("./src/commands/rmdir");
+const mkfile = require("./src/commands/mkfile");
 
 require("./src/intro");
 
@@ -50,10 +51,6 @@ while (true) {
       : command.command.replace("taskkill ", "");
 
     taskkill(pid);
-  } else if (command.command.startsWith("mkfile")) {
-    const fileName = command.command.replace("mkfile ", "");
-
-    console.log(fileName);
   } else if (command.command.startsWith("cls")) {
     console.clear();
   } else if (command.command.startsWith("mkdir")) {
@@ -76,5 +73,11 @@ while (true) {
       : command.command.replace("rmdir ", "");
 
     rmdir(rmdirFile);
+  } else if (command.command.startsWith("mkfile")) {
+    const mkfileName = command.command.replace("mkfile ", "").startsWith("mkfile")
+      ? undefined
+      : command.command.replace("mkfile ", "");
+
+    mkfile(mkfileName);
   }
 }
