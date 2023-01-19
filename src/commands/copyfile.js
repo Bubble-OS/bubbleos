@@ -16,8 +16,6 @@ const copyfile = (src, dest) => {
     return;
   }
 
-  console.log("Disclaimer: This command is very unstable.\n");
-
   const convertToAbsolute = (param) => {
     const isAbsolutePath = path.isAbsolute(param);
     let pathName = "";
