@@ -1,4 +1,4 @@
-const VERSION = "0.2.1";
+const VERSION = "0.2.2";
 
 const RECOGNIZED_COMMANDS = [
   "help",
@@ -14,6 +14,7 @@ const RECOGNIZED_COMMANDS = [
   "mkfile",
   "rmfile",
   "readfile",
+  "copyfile",
 ];
 
 const DEFINITIONS = {
@@ -81,6 +82,11 @@ const DEFINITIONS = {
     description: "Read a file's contents.",
     all: "Read a specified file's contents and output it to the terminal. Only UTF-8 encodings are supported. WARNING: Viewing non-plain text files can temporarily corrupt your terminal.",
     usage: ["readfile <filename>"],
+  },
+  copyfile: {
+    description: "Copy a file from the source to a destination.",
+    all: "Copies a file from a location to another, overwriting it if it exists in the destination folder. THIS COMMAND IS VERY UNSTABLE RIGHT NOW.",
+    usage: ["copyfile <filename>"],
   },
 };
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const chalk = require("chalk");
+
 const prompt = require("./src/prompt");
 
 const error = require("./src/error");
@@ -17,6 +19,7 @@ const rmdir = require("./src/commands/rmdir");
 const mkfile = require("./src/commands/mkfile");
 const rmfile = require("./src/commands/rmfile");
 const readfile = require("./src/commands/readfile");
+const copyfile = require("./src/commands/copyfile");
 
 require("./src/intro");
 
@@ -93,5 +96,12 @@ while (true) {
       : command.command.replace("readfile ", "");
 
     readfile(readFilename);
+  } else if (command.command.startsWith("copyfile")) {
+    const params = command.command.split(" ");
+
+    const src = params[1];
+    const dest = params[2];
+
+    copyfile(src, dest);
   }
 }
