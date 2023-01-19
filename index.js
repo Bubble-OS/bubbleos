@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const chalk = require("chalk");
+const _singleParam = require("./src/functions/singleParam");
 
 const prompt = require("./src/prompt");
 
@@ -24,84 +24,40 @@ const copyfile = require("./src/commands/copyfile");
 require("./src/intro");
 
 while (true) {
-  const command = prompt();
+  const { command, isEmpty, isExit, isHelp } = prompt();
 
   error(command);
 
-  if (command.isExit) {
+  if (isExit) {
     require("./src/exit");
-  } else if (command.command.startsWith("help")) {
-    const helpCommand = command.command.replace("help ", "").startsWith("help")
-      ? undefined
-      : command.command.replace("help ", "");
-
-    help(helpCommand);
-  } else if (command.command.startsWith("cd")) {
-    const directory = command.command.replace("cd ", "");
-
-    cd(directory);
-  } else if (command.command.startsWith("ls")) {
-    const directory = command.command.replace("ls ", "").startsWith("ls")
-      ? process.cwd()
-      : command.command.replace("ls ", "");
-
-    ls(directory);
-  } else if (command.command.startsWith("sysinfo")) {
-    const all = command.command.includes("-a");
-
-    all ? sysinfo(true) : sysinfo();
-  } else if (command.command.startsWith("taskkill")) {
-    const pid = command.command.replace("taskkill ", "").startsWith("taskkill")
-      ? undefined
-      : command.command.replace("taskkill ", "");
-
-    taskkill(pid);
-  } else if (command.command.startsWith("cls")) {
+  } else if (command.startsWith("help")) {
+    help(_singleParam(command, "help"));
+  } else if (command.startsWith("cd")) {
+    cd(_singleParam(command, "cd"));
+  } else if (command.startsWith("ls")) {
+    ls(_singleParam(command, "ls"));
+  } else if (command.startsWith("sysinfo")) {
+    command.includes("-a") ? sysinfo(true) : sysinfo();
+  } else if (command.startsWith("taskkill")) {
+    taskkill(_singleParam(command, "taskkill"));
+  } else if (command.startsWith("cls")) {
     console.clear();
-  } else if (command.command.startsWith("mkdir")) {
-    const mkdirName = command.command.replace("mkdir ", "").startsWith("mkdir")
-      ? undefined
-      : command.command.replace("mkdir ", "");
-
-    mkdir(mkdirName);
-  } else if (command.command.startsWith("exec")) {
-    const execFilename = command.command.replace("exec ", "").startsWith("exec")
-      ? undefined
-      : command.command.replace("exec ", "");
-
-    execFile(execFilename);
-  } else if (command.command.startsWith("about")) {
+  } else if (command.startsWith("mkdir")) {
+    mkdir(_singleParam(command, "mkdir"));
+  } else if (command.startsWith("exec")) {
+    execFile(_singleParam(command, "exec"));
+  } else if (command.startsWith("about")) {
     about();
-  } else if (command.command.startsWith("rmdir")) {
-    const rmdirFile = command.command.replace("rmdir ", "").startsWith("rmdir")
-      ? undefined
-      : command.command.replace("rmdir ", "");
-
-    rmdir(rmdirFile);
-  } else if (command.command.startsWith("mkfile")) {
-    const mkfileName = command.command.replace("mkfile ", "").startsWith("mkfile")
-      ? undefined
-      : command.command.replace("mkfile ", "");
-
-    mkfile(mkfileName);
-  } else if (command.command.startsWith("rmfile")) {
-    const rmfilename = command.command.replace("rmfile ", "").startsWith("rmfile")
-      ? undefined
-      : command.command.replace("rmfile ", "");
-
-    rmfile(rmfilename);
-  } else if (command.command.startsWith("readfile")) {
-    const readFilename = command.command.replace("readfile ", "").startsWith("readfile")
-      ? undefined
-      : command.command.replace("readfile ", "");
-
-    readfile(readFilename);
-  } else if (command.command.startsWith("copyfile")) {
+  } else if (command.startsWith("rmdir")) {
+    rmdir(_singleParam(command, "rmdir"));
+  } else if (command.startsWith("mkfile")) {
+    mkfile(_singleParam(command, "mkfile"));
+  } else if (command.startsWith("rmfile")) {
+    rmfile(_singleParam(command, "rmfile"));
+  } else if (command.startsWith("readfile")) {
+    readfile(_singleParam(command, "readfile"));
+  } else if (command.startsWith("copyfile")) {
     const params = command.command.split(" ");
-
-    const src = params[1];
-    const dest = params[2];
-
-    copyfile(src, dest);
+    copyfile(params[1], params[2]);
   }
 }

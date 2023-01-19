@@ -1,6 +1,13 @@
 const chalk = require("chalk");
 
 const cd = (dir) => {
+  if (typeof dir === "undefined") {
+    console.log(`Please enter a directory to change into. Example: ${chalk.yellow("cd test")}.`);
+    console.log();
+
+    return;
+  }
+
   try {
     process.chdir(dir);
   } catch (err) {
