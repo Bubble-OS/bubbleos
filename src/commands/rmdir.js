@@ -1,4 +1,6 @@
 const chalk = require("chalk");
+const readline = require("readline-sync");
+
 const fs = require("fs");
 const path = require("path");
 
@@ -23,7 +25,21 @@ const rmdir = (dir) => {
     return;
   }
 
-  console.log(`Deleting directory: ${chalk.bold.blueBright(directory)}...`);
+  const confirmText = readline
+    .question(
+      `Are you sure you want to delete the directory: ${chalk.bold(directory)}? [${chalk.green(
+        "y"
+      )}/${chalk.red.bold("N")}] `
+    )
+    .toLowerCase();
+  if (confirmText.includes("n") || !confirmText.includes("y")) {
+    console.log(chalk.yellow(`Operation cancelled.`));
+    console.log();
+
+    return;
+  }
+
+  console.log(`\nDeleting directory: ${chalk.bold.blueBright(directory)}...`);
 
   try {
     fs.rmSync(directory, { recursive: true, force: true });
