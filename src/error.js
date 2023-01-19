@@ -1,5 +1,7 @@
 const { red: chalkRed, italic: chalkItalic } = require("chalk");
 
+const _errorInterpret = require("./functions/errorInt");
+
 /**
  * First error handler for the input from the main prompt.
  *
@@ -9,11 +11,7 @@ const { red: chalkRed, italic: chalkItalic } = require("chalk");
  */
 const error = (isEmpty) => {
   if (isEmpty) {
-    console.log(
-      chalkRed(
-        `Please enter a command. Type ${chalkItalic("help")} for a list of available commands.\n`
-      )
-    );
+    _errorInterpret("0x0000");
   }
 };
 

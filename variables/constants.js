@@ -1,3 +1,5 @@
+const { italic: chalkItalic } = require("chalk");
+
 const VERSION = "0.2.3";
 
 /**
@@ -21,6 +23,10 @@ const RECOGNIZED_COMMANDS = [
   "readfile",
   "copyfile",
 ];
+
+const ERRORS = {
+  "0x0000": `Please enter a command. Type ${chalkItalic("help")} for a list of available commands.`,
+};
 
 const DEFINITIONS = {
   help: {
@@ -98,5 +104,6 @@ const DEFINITIONS = {
 module.exports = {
   VERSION,
   RECOGNIZED_COMMANDS,
+  ERRORS,
   DEFINITIONS,
 };

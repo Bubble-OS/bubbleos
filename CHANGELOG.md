@@ -8,6 +8,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added
 
+  - Added error codes
   - Extracted argument repition into seperate function `_singleParam`.
   - Added `CHANGELOG.md`
 
