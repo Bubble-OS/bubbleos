@@ -3,6 +3,7 @@
 const { red: chalkRed, bold: chalkBold, italic: chalkItalic } = require("chalk");
 
 const _singleParam = require("./src/functions/singleParam");
+const _errorInterpret = require("./src/functions/errorInt");
 
 const prompt = require("./src/prompt");
 const error = require("./src/error");
@@ -24,7 +25,7 @@ const copyfile = require("./src/commands/copyfile");
 require("./src/intro");
 
 while (true) {
-  const { command, isEmpty, isExit, isHelp } = prompt();
+  const { command, isEmpty, isExit } = prompt();
 
   error(isEmpty);
 
@@ -60,13 +61,17 @@ while (true) {
     const params = command.command.split(" ");
     copyfile(params[1], params[2]);
   } else {
-    if (command !== "")
-      console.log(
-        chalkRed(
-          `The command '${chalkBold(command)}' is unrecognized. Type ${chalkItalic(
-            "'help'"
-          )} for a list of available commands.\n`
-        )
-      );
+    // if (command !== "")
+    //   console.log(
+    //     chalkRed(
+    //       `The command '${chalkBold(command)}' is unrecognized. Type ${chalkItalic(
+    //         "'help'"
+    //       )} for a list of available commands.\n`
+    //     )
+    //   );
+
+    if (command !== "") {
+      _errorInterpret("0x0001", { variable: command });
+    }
   }
 }

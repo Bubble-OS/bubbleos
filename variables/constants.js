@@ -1,6 +1,6 @@
-const { italic: chalkItalic } = require("chalk");
+const { italic: chalkItalic, bold: chalkBold } = require("chalk");
 
-const VERSION = "0.2.3";
+const VERSION = "0.2.4";
 
 /**
  * Recognized commands that the shell knows.
@@ -25,7 +25,12 @@ const RECOGNIZED_COMMANDS = [
 ];
 
 const ERRORS = {
-  "0x0000": `Please enter a command. Type ${chalkItalic("help")} for a list of available commands.`,
+  "0x0000": `Please enter a command. Type ${chalkItalic(
+    "'help'"
+  )} for a list of available commands.`,
+  "0x0001": `The command '${chalkBold("%VARIABLE%")}' is unrecognized. Type ${chalkItalic(
+    "'help'"
+  )} for a list of available commands.`,
 };
 
 const DEFINITIONS = {

@@ -2,7 +2,27 @@ const { red: chalkRed, bold: chalkBold } = require("chalk");
 
 const errors = require("../../variables/constants").ERRORS;
 
-const _errorInterpret = (errorCode, newLine = true) => {
+/**
+ * Interpret an error from the `ERRORS` object and `console.log` a formatted string with the error code, error message, and stylings with `chalk`.
+ *
+ * Example:
+ *
+ * ```js
+ * _errorInterpret("0x0001", { variable: command });
+ * ```
+ *
+ * @param {string} errorCode The error code from the `ERRORS` object. Make sure it exists before adding it.
+ * @param {object} vars An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
+ * @param {boolean} newLine Optional; decides whether an error should have a newline/line break at the end or not.
+ */
+const _errorInterpret = (
+  errorCode,
+  vars = {
+    variable: undefined,
+    type: undefined,
+  },
+  newLine = true
+) => {
   if (typeof errors[errorCode] === "undefined") {
     throw new Error(
       "The error code provided is invalid. Make sure you have added it in constants.js."
@@ -10,7 +30,12 @@ const _errorInterpret = (errorCode, newLine = true) => {
   }
 
   console.log(
-    chalkRed(`${chalkBold(`Error code ${errorCode}:`)} ${errors[errorCode]}${newLine ? "\n" : ""}`)
+    chalkRed(
+      `${chalkBold(`Error code ${errorCode}:`)} ${errors[errorCode].replace(
+        "%VARIABLE%",
+        vars.variable
+      )}${newLine ? "\n" : ""}`
+    )
   );
 };
 
