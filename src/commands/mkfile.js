@@ -2,19 +2,28 @@ const chalk = require("chalk");
 const readline = require("readline-sync");
 
 const fs = require("fs");
+const path = require("path");
 
-const mkfile = (fileName) => {
-  if (typeof fileName === "undefined") {
+const mkfile = (fileNameParam) => {
+  if (typeof fileNameParam === "undefined") {
     console.log(`Please enter a file name to create. Example: ${chalk.yellow("mkfile test.txt")}.`);
     console.log();
     return;
+  }
+
+  const isAbsolutePath = path.isAbsolute(fileNameParam);
+  let fileName = "";
+  if (!isAbsolutePath) {
+    fileName = process.cwd() + "\\" + fileNameParam;
+  } else {
+    fileName = fileNameParam;
   }
 
   const contents = readline.question(
     `Please enter the file contents (or press 'Enter' to make a blank file): `
   );
 
-  console.log(`\nMaking file: ${chalk.bold.blueBright(process.cwd() + "\\" + fileName)}...`);
+  console.log(`\nMaking file: ${chalk.bold.blueBright(fileName)}...`);
 
   try {
     if (!fs.existsSync(fileName)) {
@@ -29,18 +38,12 @@ const mkfile = (fileName) => {
     if (err.message.includes("EPERM")) {
       console.log(
         chalk.red(
-          `You do not have permission to create a file in the folder: ${chalk.bold(
-            process.cwd()
-          )}.\n`
+          `You do not have permission to create a file in the folder: ${chalk.bold(fileName)}.\n`
         )
       );
     } else {
       console.log(
-        chalk.red(
-          `An unknown error occured while creating the file: ${chalk.bold(
-            process.cwd() + "\\" + fileName
-          )}.\n`
-        )
+        chalk.red(`An unknown error occured while creating the file: ${chalk.bold(fileName)}.\n`)
       );
     }
   }
