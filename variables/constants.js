@@ -74,6 +74,7 @@ const DEFINITIONS = {
   rmfile: {
     description: "Remove a file from the file system.",
     all: "Remove a file in the specified directory, either absolute or relative.",
+    usage: ["rmfile <filename>"],
   },
 };
 
