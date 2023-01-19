@@ -22,6 +22,12 @@ const help = (command) => {
     for (const commandName in DEFINITIONS) {
       printHelp(commandName, false);
     }
+
+    console.log(
+      chalk.yellow.italic(
+        "Tip: To get more information about a specific command, run 'help <command>'.\n"
+      )
+    );
   } else {
     for (const commandName in DEFINITIONS) {
       if (commandName === command) {

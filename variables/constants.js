@@ -1,4 +1,4 @@
-const VERSION = "0.2.0";
+const VERSION = "0.2.1";
 
 const RECOGNIZED_COMMANDS = [
   "help",
@@ -13,6 +13,7 @@ const RECOGNIZED_COMMANDS = [
   "rmdir",
   "mkfile",
   "rmfile",
+  "readfile",
 ];
 
 const DEFINITIONS = {
@@ -38,7 +39,7 @@ const DEFINITIONS = {
   },
   ls: {
     description: "Displays the contents of the current working directory or other directories.",
-    all: "Color-codes the contents of the CWD or another directory that you specify and shows it on-screen.",
+    all: "Color-codes the contents of the CWD or another directory that you specify and shows it on-screen. Note: To view files, use the 'readfile' command.",
     usage: ["ls", "ls <directory>"],
   },
   taskkill: {
@@ -75,6 +76,11 @@ const DEFINITIONS = {
     description: "Remove a file from the file system.",
     all: "Remove a file in the specified directory, either absolute or relative.",
     usage: ["rmfile <filename>"],
+  },
+  readfile: {
+    description: "Read a file's contents.",
+    all: "Read a specified file's contents and output it to the terminal. Only UTF-8 encodings are supported. WARNING: Viewing non-plain text files can temporarily corrupt your terminal.",
+    usage: ["readfile <filename>"],
   },
 };
 
