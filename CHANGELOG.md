@@ -4,7 +4,7 @@ _Note: Only from BubbleOS v0.2.2 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 23 (v0.2.3)
+## Build 23-25 (v0.2.3-v0.2.5)
 
 ### Added
 
