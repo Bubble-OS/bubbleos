@@ -12,6 +12,7 @@ const RECOGNIZED_COMMANDS = [
   "about",
   "rmdir",
   "mkfile",
+  "rmfile",
 ];
 
 const DEFINITIONS = {
@@ -62,13 +63,17 @@ const DEFINITIONS = {
   },
   rmdir: {
     description: "Remove a directory from the file system.",
-    all: "Remove a directory using an abolsute or relative path. For Windows users: uses UNC paths (\\\\?\\).",
+    all: "Remove a directory using an absolute or relative path. For Windows users: uses UNC paths (\\\\?\\).",
     usage: ["rmdir <foldername>"],
   },
   mkfile: {
     description: "Make a file in the current working directory.",
-    all: "N/A",
+    all: "Make a new file in a specified directory. If only the file name is specified, it will create a file in the current working directory.",
     usage: ["mkfile <filename>"],
+  },
+  rmfile: {
+    description: "Remove a file from the file system.",
+    all: "Remove a file in the specified directory, either absolute or relative.",
   },
 };
 

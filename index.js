@@ -15,6 +15,7 @@ const execFile = require("./src/commands/exec");
 const about = require("./src/commands/about");
 const rmdir = require("./src/commands/rmdir");
 const mkfile = require("./src/commands/mkfile");
+const rmfile = require("./src/commands/rmfile");
 
 require("./src/intro");
 
@@ -79,5 +80,11 @@ while (true) {
       : command.command.replace("mkfile ", "");
 
     mkfile(mkfileName);
+  } else if (command.command.startsWith("rmfile")) {
+    const rmfilename = command.command.replace("rmfile ", "").startsWith("rmfile")
+      ? undefined
+      : command.command.replace("rmfile ", "");
+
+    rmfile(rmfilename);
   }
 }
