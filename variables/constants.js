@@ -1,5 +1,10 @@
 const VERSION = "0.2.3";
 
+/**
+ * Recognized commands that the shell knows.
+ *
+ * @deprecated As of `v0.2.3`, this constant is unused.
+ */
 const RECOGNIZED_COMMANDS = [
   "help",
   "exit",

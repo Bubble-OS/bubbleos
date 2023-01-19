@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
+const { red: chalkRed, bold: chalkBold, italic: chalkItalic } = require("chalk");
+
 const _singleParam = require("./src/functions/singleParam");
 
 const prompt = require("./src/prompt");
-
 const error = require("./src/error");
-
 const help = require("./src/help");
 
 const cd = require("./src/commands/cd");
@@ -26,7 +26,7 @@ require("./src/intro");
 while (true) {
   const { command, isEmpty, isExit, isHelp } = prompt();
 
-  error(command);
+  error(isEmpty);
 
   if (isExit) {
     require("./src/exit");
@@ -59,5 +59,14 @@ while (true) {
   } else if (command.startsWith("copyfile")) {
     const params = command.command.split(" ");
     copyfile(params[1], params[2]);
+  } else {
+    if (command !== "")
+      console.log(
+        chalkRed(
+          `The command '${chalkBold(command)}' is unrecognized. Type ${chalkItalic(
+            "'help'"
+          )} for a list of available commands.\n`
+        )
+      );
   }
 }

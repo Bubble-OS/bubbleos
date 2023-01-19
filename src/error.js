@@ -1,24 +1,19 @@
-const chalk = require("chalk");
+const { red: chalkRed, italic: chalkItalic } = require("chalk");
 
-const { RECOGNIZED_COMMANDS } = require("../variables/constants");
-
-const error = (prompt) => {
-  if (!RECOGNIZED_COMMANDS.includes(prompt.split(" ")[0])) {
-    if (prompt.isEmpty) {
-      console.log(
-        `${chalk.red("Please enter a command.")} Type 'help' for a list of available commands.`
-      );
-
-      console.log();
-    } else {
-      console.log(
-        `${chalk.red(
-          `${prompt.command}`
-        )} is not a recognized command. Type 'help' for a list of available commands.`
-      );
-
-      console.log();
-    }
+/**
+ * First error handler for the input from the main prompt.
+ *
+ * _Note: As of `v0.2.3`, the unrecognized command checking has been moved to the `index.js` file._
+ *
+ * @param {boolean} isEmpty If the input is empty or not.
+ */
+const error = (isEmpty) => {
+  if (isEmpty) {
+    console.log(
+      chalkRed(
+        `Please enter a command. Type ${chalkItalic("help")} for a list of available commands.\n`
+      )
+    );
   }
 };
 
