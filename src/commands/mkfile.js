@@ -4,10 +4,11 @@ const readline = require("readline-sync");
 const fs = require("fs");
 const path = require("path");
 
+const _errorInterpret = require("../functions/errorInt");
+
 const mkfile = (fileNameParam) => {
   if (typeof fileNameParam === "undefined") {
-    console.log(`Please enter a file name to create. Example: ${chalk.yellow("mkfile test.txt")}.`);
-    console.log();
+    _errorInterpret("0x0020");
     return;
   }
 
@@ -30,21 +31,13 @@ const mkfile = (fileNameParam) => {
       fs.writeFileSync(fileName, contents);
       console.log(chalk.green("The operation completed successfully.\n"));
     } else {
-      console.log(
-        chalk.red(`The file already exists in the current directory: ${chalk.bold(fileName)}.\n`)
-      );
+      _errorInterpret("0x0021", { variable: fileName });
     }
   } catch (err) {
-    if (err.message.includes("EPERM")) {
-      console.log(
-        chalk.red(
-          `You do not have permission to create a file in the folder: ${chalk.bold(fileName)}.\n`
-        )
-      );
+    if (err.code === "EPERM") {
+      _errorInterpret("0x0022", { variable: fileName });
     } else {
-      console.log(
-        chalk.red(`An unknown error occured while creating the file: ${chalk.bold(fileName)}.\n`)
-      );
+      _errorInterpret("0x0023", { variable: fileName, wordCode: err.code });
     }
   }
 };

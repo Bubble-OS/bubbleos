@@ -5,6 +5,8 @@ const errors = require("../../variables/constants").ERRORS;
 /**
  * Interpret an error from the `ERRORS` object and `console.log` a formatted string with the error code, error message, and stylings with `chalk`.
  *
+ * If the error code does not exist, an `Error` is thrown.
+ *
  * Example:
  *
  * ```js

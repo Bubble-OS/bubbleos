@@ -4,10 +4,11 @@ const readline = require("readline-sync");
 const fs = require("fs");
 const path = require("path");
 
+const _errorInterpret = require("../functions/errorInt");
+
 const rmfile = (fileNameParam) => {
   if (typeof fileNameParam === "undefined") {
-    console.log(`Please enter a file name to delete. Example: ${chalk.yellow("rmfile test.txt")}.`);
-    console.log();
+    _errorInterpret("0x0035");
     return;
   }
 
@@ -20,9 +21,7 @@ const rmfile = (fileNameParam) => {
   }
 
   if (!fs.existsSync(fileName)) {
-    console.log(chalk.red(`The file, ${chalk.bold(fileName)}, does not exist.`));
-    console.log();
-
+    _errorInterpret("0x0030", { variable: fileName });
     return;
   }
 
@@ -34,9 +33,7 @@ const rmfile = (fileNameParam) => {
     )
     .toLowerCase();
   if (confirmText.includes("n") || !confirmText.includes("y")) {
-    console.log(chalk.yellow(`Operation cancelled.`));
-    console.log();
-
+    _errorInterpret("0x0037");
     return;
   }
 
@@ -48,21 +45,11 @@ const rmfile = (fileNameParam) => {
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EBUSY") {
-      console.log(
-        chalk.red(
-          `The file, ${chalk.bold(
-            fileName
-          )}, is being used by another program. End the program and try again.\n`
-        )
-      );
+      _errorInterpret("0x0038", { variable: fileName });
     } else if (err.code === "EPERM") {
-      console.log(
-        chalk.red(`You do not have permission to delete the file ${chalk.bold(fileName)}.\n`)
-      );
+      _errorInterpret("0x0039", { variable: fileName });
     } else {
-      console.log(
-        chalk.red(`An unknown error occured while creating the file: ${chalk.bold(fileName)}.\n`)
-      );
+      _errorInterpret("0x0040", { variable: fileName, wordCode: err.code });
     }
   }
 };

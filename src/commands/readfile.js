@@ -8,7 +8,7 @@ const _errorInterpret = require("../functions/errorInt");
 
 const readfile = (file) => {
   if (typeof file === "undefined") {
-    _errorInterpret("0x0002", { type: "a file", example: "readfile 3d-space-cadet-pinball.txt" });
+    _errorInterpret("0x0024");
     return;
   }
 
@@ -21,13 +21,13 @@ const readfile = (file) => {
   }
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret("0x0003", { variable: fileName, type: "file", wordCode: "N/A" });
+    _errorInterpret("0x0025", { variable: fileName });
     return;
   }
 
   try {
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret("0x0006");
+      _errorInterpret("0x0026");
       return;
     }
 
@@ -37,15 +37,9 @@ const readfile = (file) => {
     console.log();
   } catch (err) {
     if (err.code === "EISDIR") {
-      console.log(
-        chalk.red(
-          `You cannot view directories using 'readfile' (use 'ls' for that). If a file and folder name are the same, try specifing the extention to get the file contents.\nError while reading directory: ${chalk.bold(
-            fileName
-          )}\n`
-        )
-      );
+      _errorInterpret("0x0027", { variable: fileName });
     } else {
-      console.log(chalk.red(`An unknown error occurred while reading file ${fileName}.\n`));
+      _errorInterpret("0x0028", { variable: fileName, wordCode: err.code });
     }
   }
 };

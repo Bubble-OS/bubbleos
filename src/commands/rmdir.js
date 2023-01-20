@@ -4,11 +4,11 @@ const readline = require("readline-sync");
 const fs = require("fs");
 const path = require("path");
 
+const _errorInterpret = require("../functions/errorInt");
+
 const rmdir = (dir) => {
   if (typeof dir === "undefined") {
-    console.log(`Please enter a folder to delete. Example: ${chalk.yellow("rmdir test")}.`);
-    console.log();
-
+    _errorInterpret("0x0029");
     return;
   }
 
@@ -19,9 +19,7 @@ const rmdir = (dir) => {
   const directory = isAbsolutePath ? newerDir : process.cwd() + "\\" + newerDir;
 
   if (!fs.existsSync(directory)) {
-    console.log(chalk.red(`The folder, ${chalk.bold(directory)}, does not exist.`));
-    console.log();
-
+    _errorInterpret("0x0030", { variable: directory });
     return;
   }
 
@@ -33,9 +31,7 @@ const rmdir = (dir) => {
     )
     .toLowerCase();
   if (confirmText.includes("n") || !confirmText.includes("y")) {
-    console.log(chalk.yellow(`Operation cancelled.`));
-    console.log();
-
+    _errorInterpret("0x0031");
     return;
   }
 
@@ -47,21 +43,11 @@ const rmdir = (dir) => {
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EBUSY") {
-      console.log(
-        chalk.red(
-          `The folder, ${chalk.bold(
-            directory
-          )}, is being used by another program. End the program and try again.\n`
-        )
-      );
+      _errorInterpret("0x0032", { variable: directory });
     } else if (err.code === "EPERM") {
-      console.log(
-        chalk.red(`You do not have permission to delete the folder ${chalk.bold(directory)}.\n`)
-      );
+      _errorInterpret("0x0033", { variable: directory });
     } else {
-      console.log(
-        chalk.red(`An unknown error occured while creating the folder: ${chalk.bold(directory)}.\n`)
-      );
+      _errorInterpret("0x0034", { variable: directory, wordCode: err.code });
     }
   }
 };

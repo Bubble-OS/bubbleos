@@ -6,12 +6,12 @@ const sysinfo = (all) => {
   console.log(`Operating System: ${chalk.bold(process.platform)}`);
   console.log(`Architecture: ${chalk.bold(process.arch)}`);
 
+  if (process.platform === "linux") {
+    console.log(chalk.red.dim("Hello, Linux user!"));
+  }
+
   if (!all) {
-    console.log();
-
-    console.log(chalk.cyan(`Use ${chalk.italic("-a")} to see all information.`));
-
-    console.log();
+    console.log(chalk.cyan(`\nUse ${chalk.italic("-a")} to see all information.\n`));
     return;
   }
 

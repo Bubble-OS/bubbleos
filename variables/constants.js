@@ -73,7 +73,61 @@ const ERRORS = {
   "0x0019": `An unknown exception occurred when creating the folder: ${chalk.bold(
     "%VARIABLE%"
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
-  // "0x0006": `Cannot read any files other than ones encoded in UTF-8.`,
+  "0x0020": `Please enter a file name to create. Example: ${chalk.italic("'mkfile test.txt'")}`,
+  "0x0021": `The file, %VARIABLE%, already exists in the current directory. Please choose another file name, or delete the exist file using ${chalk.italic(
+    "'rmfile'"
+  )}.`,
+  "0x0022": `You do not have permission to create a file in ${chalk.bold(
+    "%VARIABLE%"
+  )} (error message EPERM).`,
+  "0x0023": `An unknown exception occurred when creating the file: ${chalk.bold(
+    "%VARIABLE%"
+  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  "0x0024": `Please enter a file name to read. Example: ${chalk.italic(
+    "'readfile windows-7-is-my-fav-os.txt'"
+  )}.`,
+  "0x0025": `The file, %VARIABLE%, does not exist. Verify that the file exists and try again.`,
+  "0x0026": `Cannot read any files other than ones encoded in UTF-8 (plain text files).`,
+  "0x0027": `You cannot view directories using ${chalk.italic("'readfile'")} (use ${chalk.italic(
+    "'ls'"
+  )} for that). If a file and folder name are the same, try specifing the extention to get the file contents.\nError while reading directory: ${chalk.bold(
+    "%VARIABLE%"
+  )} (error message EISDIR).`,
+  "0x0028": `An unknown error occurred when reading the file: ${chalk.bold(
+    "%VARIABLE%"
+  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  "0x0029": `Please enter a folder name to remove. Example: ${chalk.italic("'rmdir test'")}.`,
+  "0x0030": `The folder, %VARIABLE%, does not exist. Make sure that the folder exists and try again.`,
+  "0x0031": `The operation was cancelled by the user.`,
+  "0x0032": `The folder, %VARIABLE%, is being used by another program. End the program and try again (error message EBUSY).`,
+  "0x0033": `You do not have permission to remove the folder ${chalk.bold(
+    "%VARIABLE%"
+  )} (error message EPERM).`,
+  "0x0034": `An unknown error occurred while deleting the directory: ${chalk.bold(
+    "%VARIABLE%"
+  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  "0x0035": `Please enter a file name to remove. Example: ${chalk.italic(
+    "'rmfile never-gonna-give-you-up.txt'"
+  )}.`,
+  "0x0036": `The file, %VARIABLE%, does not exist. Confirm that the file exists and try again.`,
+  "0x0037": `The operation was cancelled by the user.`,
+  "0x0038": `The file, %VARIABLE%, is being used by another program. End the program and try again (error message EBUSY).`,
+  "0x0039": `You do not have permission to remove the file ${chalk.bold(
+    "%VARIABLE%"
+  )} (error message EPERM).`,
+  "0x0040": `An unknown error occurred while deleting the file: ${chalk.bold(
+    "%VARIABLE%"
+  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  "0x0041": `Please enter a PID for the respective task to kill. Example: ${chalk.italic(
+    "'taskkill 1234'"
+  )}.`,
+  "0x0042": `The PID must consist of only numbers and cannot consist of letters and special characters.`,
+  "0x0043": `You do not have permission to kill the process with PID ${chalk.bold(
+    "%VARIABLE%"
+  )} (error message EPERM).`,
+  "0x0044": `An unknown error occurred while killing the process with PID: ${chalk.bold(
+    "%VARIABLE%"
+  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
 };
 
 const DEFINITIONS = {
