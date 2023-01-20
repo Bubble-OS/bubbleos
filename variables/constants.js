@@ -201,6 +201,11 @@ const DEFINITIONS = {
     all: "Copies a file from a location to another, overwriting it if it exists in the destination folder. THIS COMMAND IS VERY UNSTABLE RIGHT NOW.",
     usage: ["copyfile <filename>"],
   },
+  cls: {
+    description: "Clear the terminal screen.",
+    all: "What more do you need to know? :)",
+    usage: ["cls"],
+  },
 };
 
 module.exports = {
