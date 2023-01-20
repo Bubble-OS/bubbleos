@@ -18,6 +18,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Changed
 
+  - Fixed an issue where `rmdir` crashes `explorer.exe` on Windows sometimes.
   - Fixed an issue which would cause terminal characters to temporarily be corrupted when reading a non-UTF-8 file with `readfile` (the functionality to read binaries has been removed).
   - Fixed an issue where `ls` would crash BubbleOS entirely if the directory was invalid.
   - Updated the `error` function to make it more reuseable and lightweight.
