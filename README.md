@@ -16,6 +16,27 @@ Run the executable and it should open in a terminal-like window. You can also ru
 
 ### `PATH` Installer <sup>(*Recommended for advanced users only)</sup>
 
+#### `EXE` File
+
+If you want to add `bubble` to your path, first install the executable from the [Releases](https://github.com/arnavthorat78/bubbleos-lite/releases).
+
+##### Windows
+
+In Windows, follow the steps below.
+
+ 1. Move the Bubble executable to a place where you won't delete it (e.g. `C:\Windows`).
+ 2. Press <kbd>Windows</kbd> + <kbd>R</kbd>, and type `sysdm.cpl`. Press <kbd>Enter</kbd>.
+ 3. Go to the _Advanced_ tab, and then click _Environment Variables_.
+ 4. If you want to add it for your user only, click _New_ under user variables, else, click _New_ under system variables.
+ 5. Click _New_ and add the path to the Bubble executable.
+ 6. Close all of the windows by clicking _Ok_. It should work now anywhere in the command prompt now!
+ 
+##### macOS/Linux
+
+_Steps coming soon..._
+
+#### `ZIP` File
+
 To add BubbleOS to your path, you can just install the latest version of Node.js from [this website](https://nodejs.org/en/). To see if you have it installed or not, run the following command:
 
 ```
