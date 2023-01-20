@@ -1,32 +1,27 @@
 const chalk = require("chalk");
 
+const _errorInterpret = require("../functions/errorInt");
+
 const cd = (dir) => {
   if (typeof dir === "undefined") {
-    console.log(`Please enter a directory to change into. Example: ${chalk.yellow("cd test")}.`);
-    console.log();
-
+    _errorInterpret("0x0002", { type: "directory", example: "cd test" });
     return;
   }
 
   try {
     process.chdir(dir);
   } catch (err) {
-    if (err.message.toLowerCase().includes("enoent")) {
-      console.log(`${chalk.red(`${dir}`)} does not exist.`);
-      console.log();
-    } else if (err.message.toLowerCase().includes("eperm")) {
-      console.log(`You do not have permission to view ${chalk.red(`${dir}`)}.`);
-      console.log();
+    if (err.code === "ENOENT") {
+      _errorInterpret("0x0003", { variable: dir, type: "directory", wordCode: err.code });
+    } else if (err.code === "EPERM") {
+      _errorInterpret("0x0004", { variable: dir, type: "directory", wordCode: err.code });
     } else {
-      console.log(`${chalk.red(err.message)}.`);
-      console.log();
+      _errorInterpret("0x0005", { variable: dir, wordCode: err.code });
     }
-
     return;
   }
 
-  console.log(`Changed directory to ${chalk.green(process.cwd())}.`);
-  console.log();
+  console.log(`Changed directory to ${chalk.green(process.cwd())}.\n`);
 };
 
 module.exports = cd;

@@ -12,7 +12,7 @@ const errors = require("../../variables/constants").ERRORS;
  * ```
  *
  * @param {string} errorCode The error code from the `ERRORS` object. Make sure it exists before adding it.
- * @param {object} vars An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
+ * @param {} vars An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
  * @param {boolean} newLine Optional; decides whether an error should have a newline/line break at the end or not.
  */
 const _errorInterpret = (
@@ -20,6 +20,8 @@ const _errorInterpret = (
   vars = {
     variable: undefined,
     type: undefined,
+    wordCode: undefined,
+    example: undefined,
   },
   newLine = true
 ) => {
@@ -31,10 +33,11 @@ const _errorInterpret = (
 
   console.log(
     chalkRed(
-      `${chalkBold(`Error code ${errorCode}:`)} ${errors[errorCode].replace(
-        "%VARIABLE%",
-        vars.variable
-      )}${newLine ? "\n" : ""}`
+      `${chalkBold(`Error code ${errorCode}:`)} ${errors[errorCode]
+        .replace("%VARIABLE%", vars.variable)
+        .replace("%TYPE%", vars.type)
+        .replace("%WORD_CODE%", vars.wordCode)
+        .replace("%EXAMPLE%", vars.example)}${newLine ? "\n" : ""}`
     )
   );
 };

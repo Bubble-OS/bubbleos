@@ -1,8 +1,6 @@
 const chalk = require("chalk");
 const { question } = require("readline-sync");
 
-const _errorInterpret = require("./functions/errorInt");
-
 const prompt = () => {
   let command = question(
     `${chalk.bold.green("bubble")} ${chalk.blueBright(process.cwd())} ${chalk.red("$")} `
