@@ -1,25 +1,25 @@
 const chalk = require("chalk");
+const sortKeys = require("sort-keys");
 const { DEFINITIONS } = require("../variables/constants");
 
 const help = (command) => {
+  const sorted = sortKeys(DEFINITIONS);
+
   const printHelp = (commandChosen, all) => {
-    console.log(
-      `${chalk.red(commandChosen)}: ${chalk.italic(DEFINITIONS[commandChosen].description)}`
-    );
+    console.log(`${chalk.red(commandChosen)}: ${chalk.italic(sorted[commandChosen].description)}`);
 
     if (all) {
       console.log();
-      console.log(DEFINITIONS[commandChosen].all);
+      console.log(sorted[commandChosen].all);
       console.log();
     }
 
-    console.log(`\t${chalk.grey(DEFINITIONS[commandChosen].usage.join(", "))}\n`);
-
+    console.log(`\t${chalk.grey(sorted[commandChosen].usage.join(", "))}\n`);
     return;
   };
 
   if (typeof command === "undefined") {
-    for (const commandName in DEFINITIONS) {
+    for (const commandName in sorted) {
       printHelp(commandName, false);
     }
 
@@ -29,10 +29,9 @@ const help = (command) => {
       )
     );
   } else {
-    for (const commandName in DEFINITIONS) {
+    for (const commandName in sorted) {
       if (commandName === command) {
         printHelp(commandName, true);
-
         break;
       }
     }

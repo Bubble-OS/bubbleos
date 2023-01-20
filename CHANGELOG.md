@@ -8,6 +8,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added
 
+  - Added alphabetised sorting for the `help` command
   - Added better validation for the PID for `taskkill`.
   - Added help information for the `cls` command.
   - Added error codes.

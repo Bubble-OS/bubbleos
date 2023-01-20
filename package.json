@@ -1,6 +1,6 @@
 {
   "name": "bubbleos-lite",
-  "version": "0.2.4",
+  "version": "0.2.7",
   "description": "BubbleOS Lite - a command-line interface version of the BubbleOS concept!",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "chalk": "^4.1.2",
     "istextorbinary": "^6.0.0",
     "ps-list": "^7.2.0",
-    "readline-sync": "^1.4.10"
+    "readline-sync": "^1.4.10",
+    "sort-keys": "^4.2.0"
   }
 }
