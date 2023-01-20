@@ -13,15 +13,12 @@ const errors = require("../../variables/constants").ERRORS;
  *
  * @param {string} errorCode The error code from the `ERRORS` object. Make sure it exists before adding it.
  * @param {} options An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
- * @param {boolean} newLine Optional; decides whether an error should have a newline/line break at the end or not.
  */
 const _errorInterpret = (
   errorCode,
   options = {
     variable: undefined,
-    type: undefined,
     wordCode: undefined,
-    example: undefined,
   }
 ) => {
   if (typeof errors[errorCode] === "undefined") {
@@ -32,9 +29,7 @@ const _errorInterpret = (
 
   const stringVars = {
     "%VARIABLE%": options.variable,
-    "%TYPE%": options.type,
     "%WORD_CODE%": options.wordCode,
-    "%EXAMPLE%": options.example,
   };
 
   let errorMessage = errors[errorCode];

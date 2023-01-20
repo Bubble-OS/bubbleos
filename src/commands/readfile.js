@@ -1,17 +1,14 @@
 const chalk = require("chalk");
+const { isText } = require("istextorbinary");
 
 const fs = require("fs");
 const path = require("path");
 
+const _errorInterpret = require("../functions/errorInt");
+
 const readfile = (file) => {
   if (typeof file === "undefined") {
-    console.log(
-      `Please enter a file to view. Example: ${chalk.yellow(
-        "readfile 3d-space-cadet-pinball.txt"
-      )}.`
-    );
-    console.log();
-
+    _errorInterpret("0x0002", { type: "a file", example: "readfile 3d-space-cadet-pinball.txt" });
     return;
   }
 
@@ -24,15 +21,18 @@ const readfile = (file) => {
   }
 
   if (!fs.existsSync(fileName)) {
-    console.log(chalk.red(`The file, ${chalk.bold(fileName)}, does not exist.`));
-    console.log();
-
+    _errorInterpret("0x0003", { variable: fileName, type: "file", wordCode: "N/A" });
     return;
   }
 
-  console.log(chalk.bold.underline.redBright(`${file} Contents\n`));
-
   try {
+    if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
+      _errorInterpret("0x0006");
+      return;
+    }
+
+    console.log(chalk.bold.underline.redBright(`${file} Contents\n`));
+
     console.log(fs.readFileSync(fileName, { encoding: "utf-8", flag: "r" }));
     console.log();
   } catch (err) {

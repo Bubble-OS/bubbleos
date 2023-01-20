@@ -31,18 +31,28 @@ const ERRORS = {
   "0x0001": `The command '${chalkBold("%VARIABLE%")}' is unrecognized. Type ${chalkItalic(
     "'help'"
   )} for a list of available commands.`,
-  "0x0002": `The argument(s) is/are blank. Please pass %TYPE% like so: ${chalkItalic(
-    "'%EXAMPLE%'"
+  "0x0002": `The directory is blank. Please pass a directory like so: ${chalkItalic("'cd test'")}`,
+  "0x0003": `The directory, '${chalkBold("%VARIABLE%")}', does not exist (error message ENOENT).`,
+  "0x0004": `You do not have permission to change into the directory '${chalkBold(
+    "%VARIABLE%"
+  )}' (error message EPERM).`,
+  "0x0005": `An unknown error occured while changing into the directory '${chalkBold(
+    "%VARIABLE%"
+  )}' (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  "0x0006": `The source and/or destination is/are not provided. Please provide the files, like so: ${chalkItalic(
+    "'copyfile test.txt D:\\test.txt'"
   )}`,
-  "0x0003": `The %TYPE%, '${chalkBold(
+  "0x0007": `The operation was cancelled by the user.`,
+  "0x0008": `You do not have permission to copy the source file to the destination: '${chalkBold(
     "%VARIABLE%"
-  )}', does/do not exist (error message %WORD_CODE%).`,
-  "0x0004": `You do not have permission to %TYPE% '${chalkBold(
+  )}'. Make sure you have the correct permissions and try again. (error message EPERM).`,
+  "0x0009": `Either the source or destination folder, '${chalkBold(
     "%VARIABLE%"
-  )}' (error message %WORD_CODE%).`,
-  "0x0005": `An unknown error occured while %TYPE% '${chalkBold(
+  )}', do not exist. Make sure that they exist and are readable/writable and try again. (error message ENOENT).`,
+  "0x0010": `An unknown error occured while copying into '${chalkBold(
     "%VARIABLE%"
-  )}' (error message %WORD_CODE%).`,
+  )}' (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  // "0x0006": `Cannot read any files other than ones encoded in UTF-8.`,
 };
 
 const DEFINITIONS = {
