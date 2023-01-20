@@ -1,4 +1,4 @@
-const { red: chalkRed, bold: chalkBold } = require("chalk");
+const chalk = require("chalk");
 
 const errors = require("../../variables/constants").ERRORS;
 
@@ -12,18 +12,17 @@ const errors = require("../../variables/constants").ERRORS;
  * ```
  *
  * @param {string} errorCode The error code from the `ERRORS` object. Make sure it exists before adding it.
- * @param {} vars An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
+ * @param {} options An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
  * @param {boolean} newLine Optional; decides whether an error should have a newline/line break at the end or not.
  */
 const _errorInterpret = (
   errorCode,
-  vars = {
+  options = {
     variable: undefined,
     type: undefined,
     wordCode: undefined,
     example: undefined,
-  },
-  newLine = true
+  }
 ) => {
   if (typeof errors[errorCode] === "undefined") {
     throw new Error(
@@ -31,15 +30,22 @@ const _errorInterpret = (
     );
   }
 
-  console.log(
-    chalkRed(
-      `${chalkBold(`Error code ${errorCode}:`)} ${errors[errorCode]
-        .replace("%VARIABLE%", vars.variable)
-        .replace("%TYPE%", vars.type)
-        .replace("%WORD_CODE%", vars.wordCode)
-        .replace("%EXAMPLE%", vars.example)}${newLine ? "\n" : ""}`
-    )
-  );
+  const stringVars = {
+    "%VARIABLE%": options.variable,
+    "%TYPE%": options.type,
+    "%WORD_CODE%": options.wordCode,
+    "%EXAMPLE%": options.example,
+  };
+
+  let errorMessage = errors[errorCode];
+  for (let i = 0; i < Object.keys(stringVars).length; i++) {
+    if (typeof Object.values(stringVars)[i] === "undefined") {
+      continue;
+    }
+    errorMessage = errorMessage.replace(Object.keys(stringVars)[i], Object.values(stringVars)[i]);
+  }
+
+  console.log(chalk.red(`${chalk.bold(`Error code ${errorCode}:`)} ${errorMessage}\n`));
 };
 
 module.exports = _errorInterpret;

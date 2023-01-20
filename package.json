@@ -1,6 +1,6 @@
 {
   "name": "bubbleos-lite",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "BubbleOS Lite - a command-line interface version of the BubbleOS concept!",
   "main": "index.js",
   "scripts": {

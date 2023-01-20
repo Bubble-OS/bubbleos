@@ -4,15 +4,11 @@ const readline = require("readline-sync");
 const { copyFileSync } = require("fs");
 const path = require("path");
 
+const _errorInterpret = require("../functions/errorInt");
+
 const copyfile = (src, dest) => {
   if (!src || !dest) {
-    console.log(
-      `You must specify the source/destination. Example: ${chalk.yellow(
-        "copyfile test.txt D:\\test.txt"
-      )}.`
-    );
-    console.log();
-
+    _errorInterpret("0x0002", { type: "the files", example: "copyfile test.txt D:\\test.txt" });
     return;
   }
 
@@ -43,8 +39,6 @@ const copyfile = (src, dest) => {
     .toLowerCase();
   if (confirmText.includes("n") || !confirmText.includes("y")) {
     console.log(chalk.yellow(`Operation cancelled.`));
-    console.log();
-
     return;
   }
 
@@ -52,29 +46,32 @@ const copyfile = (src, dest) => {
     copyFileSync(srcPath, destPath);
 
     console.log(chalk.italic.blueBright("Please wait...\n"));
-
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EPERM") {
-      console.log(
-        chalk.red(
-          `You do not have permission to copy to: ${chalk.bold(destPath)}. Try another path.\n`
-        )
-      );
+      _errorInterpret("0x0004", {
+        variable: dest,
+        type: "copy to the directory",
+        wordCode: err.code,
+      });
     } else if (err.code === "ENOENT") {
       console.log(
         chalk.red(
           `The source or destination folder (or file, source) is non-existant. Please confirm that they exist.\n`
         )
       );
+
+      _errorInterpret("0x0003", {
+        variable: `${src} and/or ${dest}`,
+        type: "directories",
+        wordCode: err.code,
+      });
     } else {
-      console.log(
-        chalk.red(
-          `An unknown error occured while copying from ${chalk.bold(srcPath)} to ${chalk.bold(
-            destPath
-          )}.\n`
-        )
-      );
+      _errorInterpret("0x0005", {
+        variable: `to ${dest}`,
+        type: "copying",
+        wordCode: err.code,
+      });
     }
   }
 };

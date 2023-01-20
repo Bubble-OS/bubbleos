@@ -1,5 +1,3 @@
-const { red: chalkRed, italic: chalkItalic } = require("chalk");
-
 const _errorInterpret = require("./functions/errorInt");
 
 /**
@@ -10,9 +8,7 @@ const _errorInterpret = require("./functions/errorInt");
  * @param {boolean} isEmpty If the input is empty or not.
  */
 const error = (isEmpty) => {
-  if (isEmpty) {
-    _errorInterpret("0x0000");
-  }
+  if (isEmpty) _errorInterpret("0x0000");
 };
 
 module.exports = error;

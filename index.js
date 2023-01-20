@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-const { red: chalkRed, bold: chalkBold, italic: chalkItalic } = require("chalk");
-
 const _singleParam = require("./src/functions/singleParam");
 const _errorInterpret = require("./src/functions/errorInt");
 
@@ -58,18 +56,9 @@ while (true) {
   } else if (command.startsWith("readfile")) {
     readfile(_singleParam(command, "readfile"));
   } else if (command.startsWith("copyfile")) {
-    const params = command.command.split(" ");
+    const params = command.split(" ");
     copyfile(params[1], params[2]);
   } else {
-    // if (command !== "")
-    //   console.log(
-    //     chalkRed(
-    //       `The command '${chalkBold(command)}' is unrecognized. Type ${chalkItalic(
-    //         "'help'"
-    //       )} for a list of available commands.\n`
-    //     )
-    //   );
-
     if (command !== "") {
       _errorInterpret("0x0001", { variable: command });
     }

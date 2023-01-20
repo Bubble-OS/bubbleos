@@ -31,12 +31,16 @@ const ERRORS = {
   "0x0001": `The command '${chalkBold("%VARIABLE%")}' is unrecognized. Type ${chalkItalic(
     "'help'"
   )} for a list of available commands.`,
-  "0x0002": `The argument is blank. Please pass a %TYPE% like so: ${chalkItalic("'%EXAMPLE%'")}`,
-  "0x0003": `The %TYPE%, '${chalkBold("%VARIABLE%")}', does not exist (error message %WORD_CODE%).`,
-  "0x0004": `You do not have permission to view the %TYPE% '${chalkBold(
+  "0x0002": `The argument(s) is/are blank. Please pass %TYPE% like so: ${chalkItalic(
+    "'%EXAMPLE%'"
+  )}`,
+  "0x0003": `The %TYPE%, '${chalkBold(
+    "%VARIABLE%"
+  )}', does/do not exist (error message %WORD_CODE%).`,
+  "0x0004": `You do not have permission to %TYPE% '${chalkBold(
     "%VARIABLE%"
   )}' (error message %WORD_CODE%).`,
-  "0x0005": `An unknown error occured while reading the %TYPE% '${chalkBold(
+  "0x0005": `An unknown error occured while %TYPE% '${chalkBold(
     "%VARIABLE%"
   )}' (error message %WORD_CODE%).`,
 };
