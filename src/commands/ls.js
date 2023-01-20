@@ -1,7 +1,14 @@
 const chalk = require("chalk");
 const fs = require("fs");
 
+const _errorInterpret = require("../functions/errorInt");
+
 const ls = (directory = process.cwd()) => {
+  if (!fs.existsSync(directory)) {
+    _errorInterpret("0x0015", { variable: directory });
+    return;
+  }
+
   const files = fs
     .readdirSync(directory, { withFileTypes: true })
     .filter((item) => !item.isDirectory())

@@ -1,45 +1,31 @@
 const chalk = require("chalk");
 const fs = require("fs");
 
+const _errorInterpret = require("../functions/errorInt");
+
 const mkdir = (dirName) => {
   if (typeof dirName === "undefined") {
-    console.log(`Please enter a directory name to create. Example: ${chalk.yellow("mkdir Test")}.`);
-    console.log();
-
+    _errorInterpret("0x0016");
     return;
   }
 
   const dir = `./${dirName}`;
+  const fullDir = process.cwd() + "\\" + dirName;
 
-  console.log(`Making directory: ${chalk.bold.blueBright(process.cwd() + "\\" + dirName)}...`);
+  console.log(`Making directory: ${chalk.bold.blueBright(fullDir)}...`);
 
   try {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
-
       console.log(chalk.green("The operation completed successfully.\n"));
     } else {
-      console.log(
-        chalk.red(`The folder already exists in the current directory: ${chalk.bold(dirName)}.\n`)
-      );
+      _errorInterpret("0x0017", { variable: fullDir });
     }
   } catch (err) {
-    if (err.message.includes("EPERM")) {
-      console.log(
-        chalk.red(
-          `You do not have permission to write to the folder: ${chalk.bold(
-            process.cwd() + "\\" + dirName
-          )}. Try running Bubble as an administrator.\n`
-        )
-      );
+    if (err.code === "EPERM") {
+      _errorInterpret("0x0018", { variable: fullDir });
     } else {
-      console.log(
-        chalk.red(
-          `An unknown error occured while creating the folder: ${chalk.bold(
-            process.cwd() + "\\" + dirName
-          )}.\n`
-        )
-      );
+      _errorInterpret("0x0019", { variable: fullDir, wordCode: err.code });
     }
   }
 };

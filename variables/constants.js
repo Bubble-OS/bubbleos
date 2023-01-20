@@ -1,4 +1,4 @@
-const { italic: chalkItalic, bold: chalkBold } = require("chalk");
+const chalk = require("chalk");
 
 const VERSION = "0.2.4";
 
@@ -25,33 +25,54 @@ const RECOGNIZED_COMMANDS = [
 ];
 
 const ERRORS = {
-  "0x0000": `Please enter a command. Type ${chalkItalic(
+  "0x0000": `Please enter a command. Type ${chalk.italic(
     "'help'"
   )} for a list of available commands.`,
-  "0x0001": `The command '${chalkBold("%VARIABLE%")}' is unrecognized. Type ${chalkItalic(
+  "0x0001": `The command '${chalk.bold("%VARIABLE%")}' is unrecognized. Type ${chalk.italic(
     "'help'"
   )} for a list of available commands.`,
-  "0x0002": `The directory is blank. Please pass a directory like so: ${chalkItalic("'cd test'")}`,
-  "0x0003": `The directory, '${chalkBold("%VARIABLE%")}', does not exist (error message ENOENT).`,
-  "0x0004": `You do not have permission to change into the directory '${chalkBold(
+  "0x0002": `The directory is blank. Please pass a directory like so: ${chalk.italic("'cd test'")}`,
+  "0x0003": `The directory, '${chalk.bold("%VARIABLE%")}', does not exist (error message ENOENT).`,
+  "0x0004": `You do not have permission to change into the directory '${chalk.bold(
     "%VARIABLE%"
   )}' (error message EPERM).`,
-  "0x0005": `An unknown error occured while changing into the directory '${chalkBold(
+  "0x0005": `An unknown error occured while changing into the directory '${chalk.bold(
     "%VARIABLE%"
   )}' (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
-  "0x0006": `The source and/or destination is/are not provided. Please provide the files, like so: ${chalkItalic(
+  "0x0006": `The source and/or destination is/are not provided. Please provide the files, like so: ${chalk.italic(
     "'copyfile test.txt D:\\test.txt'"
   )}`,
   "0x0007": `The operation was cancelled by the user.`,
-  "0x0008": `You do not have permission to copy the source file to the destination: '${chalkBold(
+  "0x0008": `You do not have permission to copy the source file to the destination: '${chalk.bold(
     "%VARIABLE%"
   )}'. Make sure you have the correct permissions and try again. (error message EPERM).`,
-  "0x0009": `Either the source or destination folder, '${chalkBold(
+  "0x0009": `Either the source or destination folder, '${chalk.bold(
     "%VARIABLE%"
   )}', do not exist. Make sure that they exist and are readable/writable and try again. (error message ENOENT).`,
-  "0x0010": `An unknown error occured while copying into '${chalkBold(
+  "0x0010": `An unknown error occured while copying into '${chalk.bold(
     "%VARIABLE%"
   )}' (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  "0x0011": `Please enter a file name to execute. Example: ${chalk.italic("'exec explorer'")}`,
+  "0x0012": `This command only works on the Windows operating system (as it is the only one which supports ${chalk.italic(
+    "'exe'"
+  )} files).`,
+  "0x0013": `The file, ${chalk.bold(
+    "%VARIABLE%"
+  )}, does not exist. Verify the file name and try again.`,
+  "0x0014": `The execution failed for an unknown reason (if you want, create a new Issue on GitHub by finding the link by running 'about').`,
+  "0x0015": `The folder, ${chalk.bold("%VARIABLE%")}, does not exist (error message ENOENT).`,
+  "0x0016": `Please enter a folder name to create. Example: ${chalk.italic("'mkdir test'")}`,
+  "0x0017": `The folder, ${chalk.bold(
+    "%VARIABLE%"
+  )}, already exists. Please choose another directory name or delete the existing directory using ${chalk.italic(
+    "'rmdir'"
+  )}.`,
+  "0x0018": `You do not have permission to create a folder in ${chalk.bold(
+    "%VARIABLE%"
+  )} (error message EPERM).`,
+  "0x0019": `An unknown exception occurred when creating the folder: ${chalk.bold(
+    "%VARIABLE%"
+  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
   // "0x0006": `Cannot read any files other than ones encoded in UTF-8.`,
 };
 

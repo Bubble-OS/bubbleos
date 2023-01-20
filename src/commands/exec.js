@@ -2,43 +2,33 @@ const chalk = require("chalk");
 const exec = require("child_process").execFile;
 const fs = require("fs");
 
+const _errorInterpret = require("../functions/errorInt");
+
 // Named 'execFile' to avoid naming conflicts
 const execFile = (execFilename) => {
   if (typeof execFilename === "undefined") {
-    console.log(
-      `Please enter a valid file name to execute. Example: ${chalk.yellow("exec explorer")}.`
-    );
-    console.log();
-
+    _errorInterpret("0x0011");
     return;
   } else if (process.platform !== "win32") {
-    console.log(chalk.red("This command only works with the Windows operating system."));
-    console.log();
-
+    _errorInterpret("0x0012");
     return;
   }
 
   const execFilenameExe = execFilename.endsWith(".exe") ? execFilename : `${execFilename}.exe`;
+  const fullPath = process.cwd() + "\\" + execFilenameExe;
 
   if (!fs.existsSync(execFilenameExe)) {
-    console.log(
-      chalk.red(`The file, ${chalk.bold(process.cwd() + "\\" + execFilenameExe)}, does not exist.`)
-    );
-    console.log();
-
+    _errorInterpret("0x0013");
     return;
   }
 
-  console.log(
-    `Executing file: ${chalk.bold.blueBright(process.cwd() + "\\" + execFilenameExe)}...`
-  );
+  console.log(`Executing file: ${chalk.bold.blueBright(fullPath)}...`);
 
   try {
-    exec(execFilenameExe, (err, data) => {});
-
+    exec(execFilenameExe, () => {});
     console.log(chalk.green("Executed successfully.\n"));
   } catch (err) {
-    console.log(chalk.red("Execution failed for an unknown reason.\n"));
+    _errorInterpret("0x0014");
   }
 };
 
