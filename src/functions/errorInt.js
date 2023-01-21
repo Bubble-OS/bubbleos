@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const errors = require("../../variables/constants").ERRORS;
+const { ERRORS: errors } = require("../../variables/constants");
 
 /**
  * Interpret an error from the `ERRORS` object and `console.log` a formatted string with the error code, error message, and stylings with `chalk`.
