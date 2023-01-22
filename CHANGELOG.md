@@ -4,7 +4,13 @@ _Note: Only from BubbleOS v0.2.2 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 23-25 (v0.2.3-v0.2.5)
+## Build 27-30 (v0.2.7-0.3.0)
+
+### Changed
+
+  - Changed the name of the OS from BubbleOS Lite to BubbleOS.
+
+## Build 23-27 (v0.2.3-v0.2.7)
 
 ### Added
 
