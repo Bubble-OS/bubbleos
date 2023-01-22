@@ -1,6 +1,6 @@
-# BubbleOS Lite
+# BubbleOS
 
-BubbleOS Lite is a command-line interface of the BubbleOS PowerPoint concept!
+BubbleOS is a shell for your current operating system!
 
 Please note that this is not an operating system, but a shell (i.e. like WSL<sup>*B</sup>, Windows Subsystem for Linux<sup>*Bubble</sup>).
 
