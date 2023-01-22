@@ -128,6 +128,7 @@ const ERRORS = {
   "0x0044": `An unknown error occurred while killing the process with PID: ${chalk.bold(
     "%VARIABLE%"
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  "0x0045": `No text was provided to output.`,
 };
 
 const DEFINITIONS = {
@@ -205,6 +206,11 @@ const DEFINITIONS = {
     description: "Clear the terminal screen.",
     all: "What more do you need to know? :)",
     usage: ["cls"],
+  },
+  print: {
+    description: "Print text to screen.",
+    all: "Shows whatever text you enter to the terminal output (stdout).",
+    usage: ["print <text>"],
   },
 };
 
