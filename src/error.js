@@ -5,6 +5,7 @@ const _errorInterpret = require("./functions/errorInt");
  *
  * _Note: As of `v0.2.3`, the unrecognized command checking has been moved to the `index.js` file._
  *
+ * @deprecated As of `v0.2.8`, this function is deprecated and not in use.
  * @param {boolean} isEmpty If the input is empty or not.
  */
 const error = (isEmpty) => {

@@ -12,6 +12,9 @@ const about = () => {
   console.log(`Made by ${chalk.red("Arnav Thorat")}`);
   console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/Bubble-OS/bubbleos")}`);
   console.log(`YouTube: ${chalk.underline.blueBright("https://youtube.com/InfiniTech78")}\n`);
+
+  if (process.platform === "linux")
+    console.log(chalk.black.dim("What's your favorite Linux distro, BTW?"));
 };
 
 module.exports = about;

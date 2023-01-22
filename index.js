@@ -6,7 +6,6 @@ const _errorInterpret = require("./src/functions/errorInt");
 
 // Importing some more main commands
 const prompt = require("./src/prompt");
-const error = require("./src/error");
 const help = require("./src/help");
 
 // Importing all of the commands
@@ -32,7 +31,7 @@ while (true) {
   const { command, isEmpty, isExit } = prompt();
 
   // If the command is empty, throw an error
-  error(isEmpty);
+  if (isEmpty) _errorInterpret("0x0000");
 
   if (isExit) {
     // If the user typed in 'exit'
