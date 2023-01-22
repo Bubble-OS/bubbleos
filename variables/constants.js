@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const VERSION = "0.2.7";
+const VERSION = "0.2.8";
 
 /**
  * Recognized commands that the shell knows.
@@ -137,7 +137,7 @@ const DEFINITIONS = {
     usage: ["help", "help <command>"],
   },
   exit: {
-    description: "Exits the BubbleOS Lite shell.",
+    description: "Exits the BubbleOS shell.",
     all: "You can also exit the BubbleOS shell by pressing Ctrl + C, which will invoke the same function as if you were typing 'exit'.",
     usage: ["exit"],
   },
@@ -172,7 +172,7 @@ const DEFINITIONS = {
     usage: ["exec <execfile>"],
   },
   about: {
-    description: "Display information about BubbleOS Lite.",
+    description: "Display information about BubbleOS.",
     all: "Display information including the version number, author, and GitHub URL.",
     usage: ["about"],
   },
