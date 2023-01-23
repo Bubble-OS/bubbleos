@@ -6,6 +6,11 @@ Please note that not all versions will have respectible executables with them.
 
 ## Build 27-30 (v0.2.7-0.3.0)
 
+### Added
+
+- Added the `print` command.
+- Added the `userinfo` command.
+
 ### Changed
 
 - Changed the name of the OS from BubbleOS Lite to BubbleOS.
@@ -14,7 +19,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added
 
-- Added alphabetised sorting for the `help` command
+- Added alphabetised sorting for the `help` command.
 - Added better validation for the PID for `taskkill`.
 - Added help information for the `cls` command.
 - Added error codes.

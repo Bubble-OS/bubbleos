@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const VERSION = "0.2.8";
+const VERSION = "0.3.0";
 
 /**
  * Recognized commands that the shell knows.
