@@ -4,10 +4,11 @@ _Note: Only from BubbleOS v0.2.2 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 27-30 (v0.2.7-0.3.0)
+## Build 27-32 (v0.2.7-0.3.2)
 
 ### Added
 
+- Added the `wcount` command.
 - Added the `print` command.
 - Added the `userinfo` command.
 

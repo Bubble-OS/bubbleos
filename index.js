@@ -23,6 +23,7 @@ const readfile = require("./src/commands/readfile");
 const copyfile = require("./src/commands/copyfile");
 const printText = require("./src/commands/print");
 const userinfocmd = require("./src/commands/userinfo");
+const wcount = require("./src/commands/wcount");
 
 // Running the introduction one-time
 require("./src/intro");
@@ -56,7 +57,6 @@ while (true) {
   } else if (command.startsWith("exec")) {
     execFile(_singleParam(command, "exec"));
   } else if (command.startsWith("about")) {
-    // No params required
     about();
   } else if (command.startsWith("rmdir")) {
     rmdir(_singleParam(command, "rmdir"));
@@ -73,6 +73,8 @@ while (true) {
     printText(_singleParam(command, "print"));
   } else if (command.startsWith("userinfo")) {
     userinfocmd();
+  } else if (command.startsWith("wcount")) {
+    wcount(_singleParam(command, "wcount"));
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {

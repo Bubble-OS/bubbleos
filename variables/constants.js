@@ -1,11 +1,11 @@
 const chalk = require("chalk");
 
-const VERSION = "0.3.0";
+const VERSION = "0.3.2";
 
 /**
  * Recognized commands that the shell knows.
  *
- * @deprecated As of `v0.2.3`, this constant is unused.
+ * @deprecated As of `v0.2.3`, this constant is unused and not updated.
  */
 const RECOGNIZED_COMMANDS = [
   "help",
@@ -130,6 +130,22 @@ const ERRORS = {
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
   "0x0045": `No text was provided to output.`,
   "0x0046": `An unknown error occurred while getting user information. This is most likely because your user does not have a username or home directory.`,
+  "0x0047": `Please enter a file to count the number of words/characters in. Example: ${chalk.italic(
+    "'wcount file.txt'"
+  )}.`,
+  "0x0048": `The file, %VARIABLE%, does not exist. Verify that the file exists and try again.`,
+  "0x0049": `Cannot count words/characters in any files other than ones encoded in UTF-8 (plain text files).`,
+  "0x0050": `You cannot count words/characters in directories. Error while reading directory: ${chalk.bold(
+    "%VARIABLE%"
+  )} (error message EISDIR).`,
+  "0x0051": `An unknown error occurred while counting the words/characters in the file ${chalk.bold(
+    "%VARIABLE%"
+  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  "0x0052": `The command, ${chalk.bold(
+    "%VARIABLE%"
+  )}, was not found. Please try again; run ${chalk.italic(
+    "'help'"
+  )} standalone to see all available commands.`,
 };
 
 const DEFINITIONS = {
@@ -217,6 +233,11 @@ const DEFINITIONS = {
     description: "Get information about the current logged-in user.",
     all: "Get the GID, home directory, shell, UID, and username of the logged-in user. Note that GID, shell and UID are not available on Windows.",
     usage: ["userinfo"],
+  },
+  wcount: {
+    description: "Get the words and characters from a plain text file.",
+    all: "Get all characters (including whitespace) and words from a plain text file.",
+    usage: ["wcount <filename>"],
   },
 };
 

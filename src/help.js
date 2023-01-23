@@ -1,6 +1,7 @@
 const chalk = require("chalk");
 const sortKeys = require("sort-keys");
 const { DEFINITIONS } = require("../variables/constants");
+const _errorInterpret = require("./functions/errorInt");
 
 const help = (command) => {
   const sorted = sortKeys(DEFINITIONS);
@@ -32,9 +33,11 @@ const help = (command) => {
     for (const commandName in sorted) {
       if (commandName === command) {
         printHelp(commandName, true);
-        break;
+        return;
       }
     }
+
+    _errorInterpret("0x0052", { variable: command });
   }
 };
 
