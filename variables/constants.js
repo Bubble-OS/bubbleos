@@ -129,6 +129,7 @@ const ERRORS = {
     "%VARIABLE%"
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
   "0x0045": `No text was provided to output.`,
+  "0x0046": `An unknown error occurred while getting user information. This is most likely because your user does not have a username or home directory.`,
 };
 
 const DEFINITIONS = {
@@ -211,6 +212,11 @@ const DEFINITIONS = {
     description: "Print text to screen.",
     all: "Shows whatever text you enter to the terminal output (stdout).",
     usage: ["print <text>"],
+  },
+  userinfo: {
+    description: "Get information about the current logged-in user.",
+    all: "Get the GID, home directory, shell, UID, and username of the logged-in user. Note that GID, shell and UID are not available on Windows.",
+    usage: ["userinfo"],
   },
 };
 

@@ -22,6 +22,7 @@ const rmfile = require("./src/commands/rmfile");
 const readfile = require("./src/commands/readfile");
 const copyfile = require("./src/commands/copyfile");
 const printText = require("./src/commands/print");
+const userinfocmd = require("./src/commands/userinfo");
 
 // Running the introduction one-time
 require("./src/intro");
@@ -70,6 +71,8 @@ while (true) {
     copyfile(params[1], params[2]);
   } else if (command.startsWith("print")) {
     printText(_singleParam(command, "print"));
+  } else if (command.startsWith("userinfo")) {
+    userinfocmd();
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {
