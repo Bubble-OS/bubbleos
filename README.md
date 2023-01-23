@@ -2,7 +2,7 @@
 
 BubbleOS is a shell for your current operating system!
 
-Please note that this is not an operating system, but a shell (i.e. like WSL<sup>*B</sup>, Windows Subsystem for Linux<sup>*Bubble</sup>).
+Please note that this is not an operating system, but a shell.
 
 ## Install
 
@@ -64,3 +64,15 @@ $ npm link
 ```
 
 Now, you can run BubbleOS anywhere from the command prompt/terminal by just typing in `bubble`.
+
+## Using Bubble
+
+If you have downloaded the executable, just run the file like usual. If you have downloaded the source code and already followed the above steps, run `bubble` in your command interpreter/terminal.
+
+### Commands
+
+To get all of the commands in Bubble straight away, run `help`. Run `help <command>` to get more information about a specific command.
+
+#### `about`
+
+Get information about BubbleOS.
