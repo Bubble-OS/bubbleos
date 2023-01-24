@@ -1,8 +1,18 @@
 # BubbleOS Changelog
 
-_Note: Only from BubbleOS v0.2.2 will changes be recorded._
+_Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
+
+## Build 35-42 (v0.2.7-v0.4.2)
+
+### Added Features
+
+- Added the `size` command.
+
+### Changed/Fixed Features
+
+### Removed Features
 
 ## Build 27-35 (v0.2.7-v0.3.5)
 

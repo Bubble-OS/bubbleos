@@ -23,6 +23,7 @@ const printText = require("./src/commands/print");
 const userinfocmd = require("./src/commands/userinfo");
 const wcount = require("./src/commands/wcount");
 const del = require("./src/commands/del");
+const size = require("./src/commands/size");
 
 // Running the introduction one-time
 require("./src/intro");
@@ -74,6 +75,8 @@ while (true) {
     del(_singleParam(command, "del"));
   } else if (command.startsWith("tasklist")) {
     console.log("This command did not work so I removed it :(\n    - Arnav, the dev\n");
+  } else if (command.startsWith("size")) {
+    size(_singleParam(command, "size"));
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {

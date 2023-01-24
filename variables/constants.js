@@ -132,6 +132,14 @@ const ERRORS = {
   )}, was not found. Please try again; run ${chalk.italic(
     "'help'"
   )} standalone to see all available commands.`,
+  "0x0047": `Please enter a file to show the size of it. Example: ${chalk.italic(
+    "'size file.txt'"
+  )}.`,
+  "0x0048": `The file, %VARIABLE%, does not exist. Make sure that the file exists and try again.`,
+  "0x0049": `Directories are not valid. You can only enter in a file to get the size of.`,
+  "0x0050": `An unknown error occurred while getting the size of the file ${chalk.bold(
+    "%VARIABLE%"
+  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
 };
 
 const DEFINITIONS = {
@@ -219,6 +227,11 @@ const DEFINITIONS = {
     description: "Remove a file or directory from the file system.",
     all: "Remove a file or directory that you specify permanently.",
     usage: ["del <filename>", "del <foldername>"],
+  },
+  size: {
+    description: "Get the size of a file in bytes, kilobytes, megabytes, and gigabytes.",
+    all: "In case a value is 0, the value shown on-screen with be 'N/A'. If a value is 0 bytes in size, all values will say 'N/A'.",
+    usage: ["size <filename>"],
   },
 };
 
