@@ -2,9 +2,9 @@ const chalk = require("chalk");
 const readline = require("readline-sync");
 
 const { copyFileSync } = require("fs");
-const path = require("path");
 
 const _errorInterpret = require("../functions/errorInt");
+const _convertAbsolute = require("../functions/convAbs");
 
 const copyfile = (src, dest) => {
   if (!src || !dest) {
@@ -12,21 +12,8 @@ const copyfile = (src, dest) => {
     return;
   }
 
-  const convertToAbsolute = (param) => {
-    const isAbsolutePath = path.isAbsolute(param);
-    let pathName = "";
-
-    if (!isAbsolutePath) {
-      pathName = process.cwd() + "\\" + param;
-    } else {
-      pathName = param;
-    }
-
-    return pathName;
-  };
-
-  const srcPath = convertToAbsolute(src.trim());
-  const destPath = convertToAbsolute(dest.trim());
+  const srcPath = _convertAbsolute(src.trim());
+  const destPath = _convertAbsolute(dest.trim());
 
   const confirmText = readline
     .question(

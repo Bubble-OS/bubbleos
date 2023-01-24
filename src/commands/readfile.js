@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 
 const _errorInterpret = require("../functions/errorInt");
+const _convertAbsolute = require("../functions/convAbs");
 
 const readfile = (file) => {
   if (typeof file === "undefined") {
@@ -12,13 +13,7 @@ const readfile = (file) => {
     return;
   }
 
-  const isAbsolutePath = path.isAbsolute(file);
-  let fileName = "";
-  if (!isAbsolutePath) {
-    fileName = process.cwd() + "\\" + file;
-  } else {
-    fileName = file;
-  }
+  const fileName = _convertAbsolute(file);
 
   if (!fs.existsSync(fileName)) {
     _errorInterpret("0x0025", { variable: fileName });

@@ -1,5 +1,6 @@
 const chalk = require("chalk");
 const fs = require("fs");
+const _convertAbsolute = require("../functions/convAbs");
 
 const _errorInterpret = require("../functions/errorInt");
 
@@ -9,23 +10,21 @@ const mkdir = (dirName) => {
     return;
   }
 
-  const dir = `./${dirName}`;
-  const fullDir = process.cwd() + "\\" + dirName;
-
-  console.log(`Making directory: ${chalk.bold.blueBright(fullDir)}...`);
+  const dir = _convertAbsolute(dirName);
+  console.log(`Making directory: ${chalk.bold.blueBright(dir)}...`);
 
   try {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
       console.log(chalk.green("The operation completed successfully.\n"));
     } else {
-      _errorInterpret("0x0017", { variable: fullDir });
+      _errorInterpret("0x0017", { variable: dir });
     }
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret("0x0018", { variable: fullDir });
+      _errorInterpret("0x0018", { variable: dir });
     } else {
-      _errorInterpret("0x0019", { variable: fullDir, wordCode: err.code });
+      _errorInterpret("0x0019", { variable: dir, wordCode: err.code });
     }
   }
 };

@@ -1,6 +1,7 @@
 const chalk = require("chalk");
 const exec = require("child_process").execFile;
 const fs = require("fs");
+const _convertAbsolute = require("../functions/convAbs");
 
 const _errorInterpret = require("../functions/errorInt");
 
@@ -15,7 +16,7 @@ const execFile = (execFilename) => {
   }
 
   const execFilenameExe = execFilename.endsWith(".exe") ? execFilename : `${execFilename}.exe`;
-  const fullPath = process.cwd() + "\\" + execFilenameExe;
+  const fullPath = _convertAbsolute(execFilenameExe);
 
   if (!fs.existsSync(execFilenameExe)) {
     _errorInterpret("0x0013");

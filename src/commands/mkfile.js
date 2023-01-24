@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 
 const _errorInterpret = require("../functions/errorInt");
+const _convertAbsolute = require("../functions/convAbs");
 
 const mkfile = (fileNameParam) => {
   if (typeof fileNameParam === "undefined") {
@@ -12,13 +13,7 @@ const mkfile = (fileNameParam) => {
     return;
   }
 
-  const isAbsolutePath = path.isAbsolute(fileNameParam);
-  let fileName = "";
-  if (!isAbsolutePath) {
-    fileName = process.cwd() + "\\" + fileNameParam;
-  } else {
-    fileName = fileNameParam;
-  }
+  const fileName = _convertAbsolute(fileNameParam);
 
   const contents = readline.question(
     `Please enter the file contents (or press 'Enter' to make a blank file): `
