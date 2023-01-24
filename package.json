@@ -1,6 +1,6 @@
 {
   "name": "bubbleos",
-  "version": "0.3.0",
+  "version": "0.3.5",
   "description": "BubbleOS is a shell for your current operating system!",
   "main": "index.js",
   "scripts": {

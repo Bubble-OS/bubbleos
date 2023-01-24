@@ -4,10 +4,11 @@ _Note: Only from BubbleOS v0.2.2 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 27-34 (v0.2.7-0.3.4)
+## Build 27-35 (v0.2.7-v0.3.5)
 
 ### Added
 
+- Added the `tasklist` command _(Note: this command is still in development)_.
 - Added the `del` command in place of `rmdir` and `rmfile`.
 - Added the `wcount` command.
 - Added the `print` command.
