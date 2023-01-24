@@ -220,11 +220,6 @@ const DEFINITIONS = {
     all: "Remove a file or directory that you specify permanently.",
     usage: ["del <filename>", "del <foldername>"],
   },
-  tasklist: {
-    description: "Get all running processes on your computer.",
-    all: "WARNING: This command is still in development and subject to changes.\nDisplays the process name, PID, PPID (as well as CMD, CPU, memory, and UID, but these are not available on Windows).\nIf the number to display is <0 or not a number, it is set to 1 and the default size, respectively.",
-    usage: ["tasklist", "tasklist <display>"],
-  },
 };
 
 module.exports = {

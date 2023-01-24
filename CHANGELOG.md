@@ -8,11 +8,11 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added
 
-- Added the `tasklist` command _(Note: this command is still in development)_.
 - Added the `del` command in place of `rmdir` and `rmfile`.
 - Added the `wcount` command.
 - Added the `print` command.
 - Added the `userinfo` command.
+- _Tried to add the `tasklist` command, but it didn't work, so I had to remove it :(_
 
 ### Changed
 

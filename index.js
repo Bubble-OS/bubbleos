@@ -23,66 +23,61 @@ const printText = require("./src/commands/print");
 const userinfocmd = require("./src/commands/userinfo");
 const wcount = require("./src/commands/wcount");
 const del = require("./src/commands/del");
-const tasklist = require("./src/commands/tasklist");
 
 // Running the introduction one-time
 require("./src/intro");
 
 // Repeat until the user exits
-const loop = async () => {
-  while (true) {
-    // Ask the user for a command
-    const { command, isEmpty, isExit } = prompt();
+while (true) {
+  // Ask the user for a command
+  const { command, isEmpty, isExit } = prompt();
 
-    // If the command is empty, throw an error
-    if (isEmpty) _errorInterpret("0x0000");
+  // If the command is empty, throw an error
+  if (isEmpty) _errorInterpret("0x0000");
 
-    if (isExit) {
-      // If the user typed in 'exit'
-      require("./src/exit");
-    } else if (command.startsWith("help")) {
-      help(_singleParam(command, "help"));
-    } else if (command.startsWith("cd")) {
-      cd(_singleParam(command, "cd"));
-    } else if (command.startsWith("ls")) {
-      ls(_singleParam(command, "ls"));
-    } else if (command.startsWith("sysinfo")) {
-      command.includes("-a") ? sysinfo(true) : sysinfo();
-    } else if (command.startsWith("taskkill")) {
-      taskkill(_singleParam(command, "taskkill"));
-    } else if (command.startsWith("cls")) {
-      // Simple enough that it doesn't need its own file
-      console.clear();
-    } else if (command.startsWith("mkdir")) {
-      mkdir(_singleParam(command, "mkdir"));
-    } else if (command.startsWith("exec")) {
-      execFile(_singleParam(command, "exec"));
-    } else if (command.startsWith("about")) {
-      about();
-    } else if (command.startsWith("mkfile")) {
-      mkfile(_singleParam(command, "mkfile"));
-    } else if (command.startsWith("readfile")) {
-      readfile(_singleParam(command, "readfile"));
-    } else if (command.startsWith("copyfile")) {
-      const params = command.split(" ");
-      copyfile(params[1], params[2]);
-    } else if (command.startsWith("print")) {
-      printText(_singleParam(command, "print"));
-    } else if (command.startsWith("userinfo")) {
-      userinfocmd();
-    } else if (command.startsWith("wcount")) {
-      wcount(_singleParam(command, "wcount"));
-    } else if (command.startsWith("del")) {
-      del(_singleParam(command, "del"));
-    } else if (command.startsWith("tasklist")) {
-      await tasklist(_singleParam(command, "tasklist"));
-    } else {
-      // If the command didn't match any of the above, throw an unrecognized command error
-      if (command !== "") {
-        _errorInterpret("0x0001", { variable: command });
-      }
+  if (isExit) {
+    // If the user typed in 'exit'
+    require("./src/exit");
+  } else if (command.startsWith("help")) {
+    help(_singleParam(command, "help"));
+  } else if (command.startsWith("cd")) {
+    cd(_singleParam(command, "cd"));
+  } else if (command.startsWith("ls")) {
+    ls(_singleParam(command, "ls"));
+  } else if (command.startsWith("sysinfo")) {
+    command.includes("-a") ? sysinfo(true) : sysinfo();
+  } else if (command.startsWith("taskkill")) {
+    taskkill(_singleParam(command, "taskkill"));
+  } else if (command.startsWith("cls")) {
+    // Simple enough that it doesn't need its own file
+    console.clear();
+  } else if (command.startsWith("mkdir")) {
+    mkdir(_singleParam(command, "mkdir"));
+  } else if (command.startsWith("exec")) {
+    execFile(_singleParam(command, "exec"));
+  } else if (command.startsWith("about")) {
+    about();
+  } else if (command.startsWith("mkfile")) {
+    mkfile(_singleParam(command, "mkfile"));
+  } else if (command.startsWith("readfile")) {
+    readfile(_singleParam(command, "readfile"));
+  } else if (command.startsWith("copyfile")) {
+    const params = command.split(" ");
+    copyfile(params[1], params[2]);
+  } else if (command.startsWith("print")) {
+    printText(_singleParam(command, "print"));
+  } else if (command.startsWith("userinfo")) {
+    userinfocmd();
+  } else if (command.startsWith("wcount")) {
+    wcount(_singleParam(command, "wcount"));
+  } else if (command.startsWith("del")) {
+    del(_singleParam(command, "del"));
+  } else if (command.startsWith("tasklist")) {
+    console.log("This command did not work so I removed it :(\n    - Arnav, the dev\n");
+  } else {
+    // If the command didn't match any of the above, throw an unrecognized command error
+    if (command !== "") {
+      _errorInterpret("0x0001", { variable: command });
     }
   }
-};
-
-loop();
+}
