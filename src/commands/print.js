@@ -7,7 +7,7 @@ const _errorInterpret = require("../functions/errorInt");
  */
 const printText = (text) => {
   if (typeof text === "undefined") {
-    _errorInterpret("0x0045");
+    _errorInterpret("0x0039");
     return;
   }
 

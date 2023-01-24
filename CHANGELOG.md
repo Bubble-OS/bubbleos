@@ -4,17 +4,23 @@ _Note: Only from BubbleOS v0.2.2 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 27-32 (v0.2.7-0.3.2)
+## Build 27-34 (v0.2.7-0.3.4)
 
 ### Added
 
+- Added the `del` command in place of `rmdir` and `rmfile`.
 - Added the `wcount` command.
 - Added the `print` command.
 - Added the `userinfo` command.
 
 ### Changed
 
+- Updated error codes and error messages.
 - Changed the name of the OS from BubbleOS Lite to BubbleOS.
+
+### Removed
+
+- Removed the `rmdir` and `rmfile` commands in favor for the `del` command.
 
 ## Build 23-27 (v0.2.3-v0.2.7)
 

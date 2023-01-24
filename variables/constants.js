@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const VERSION = "0.3.2";
+const VERSION = "0.3.4";
 
 /**
  * Recognized commands that the shell knows.
@@ -64,9 +64,7 @@ const ERRORS = {
   "0x0016": `Please enter a folder name to create. Example: ${chalk.italic("'mkdir test'")}`,
   "0x0017": `The folder, ${chalk.bold(
     "%VARIABLE%"
-  )}, already exists. Please choose another directory name or delete the existing directory using ${chalk.italic(
-    "'rmdir'"
-  )}.`,
+  )}, already exists. If a file with the same name already exists, delete/rename the existing file.`,
   "0x0018": `You do not have permission to create a folder in ${chalk.bold(
     "%VARIABLE%"
   )} (error message EPERM).`,
@@ -74,9 +72,7 @@ const ERRORS = {
     "%VARIABLE%"
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
   "0x0020": `Please enter a file name to create. Example: ${chalk.italic("'mkfile test.txt'")}`,
-  "0x0021": `The file, %VARIABLE%, already exists in the current directory. Please choose another file name, or delete the exist file using ${chalk.italic(
-    "'rmfile'"
-  )}.`,
+  "0x0021": `The file, %VARIABLE%, already exists in the current directory. If a folder with the same name already exists, delete/rename the existing folder.`,
   "0x0022": `You do not have permission to create a file in ${chalk.bold(
     "%VARIABLE%"
   )} (error message EPERM).`,
@@ -96,52 +92,42 @@ const ERRORS = {
   "0x0028": `An unknown error occurred when reading the file: ${chalk.bold(
     "%VARIABLE%"
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
-  "0x0029": `Please enter a folder name to remove. Example: ${chalk.italic("'rmdir test'")}.`,
-  "0x0030": `The folder, %VARIABLE%, does not exist. Make sure that the folder exists and try again.`,
-  "0x0031": `The operation was cancelled by the user.`,
-  "0x0032": `The folder, %VARIABLE%, is being used by another program. End the program and try again (error message EBUSY).`,
-  "0x0033": `You do not have permission to remove the folder ${chalk.bold(
-    "%VARIABLE%"
-  )} (error message EPERM).`,
-  "0x0034": `An unknown error occurred while deleting the directory: ${chalk.bold(
-    "%VARIABLE%"
-  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
-  "0x0035": `Please enter a file name to remove. Example: ${chalk.italic(
-    "'rmfile never-gonna-give-you-up.txt'"
+  "0x0029": `Please enter a file/folder name to remove. Example: ${chalk.italic(
+    "'del never-gonna-give-you-up.txt'"
   )}.`,
-  "0x0036": `The file, %VARIABLE%, does not exist. Confirm that the file exists and try again.`,
-  "0x0037": `The operation was cancelled by the user.`,
-  "0x0038": `The file, %VARIABLE%, is being used by another program. End the program and try again (error message EBUSY).`,
-  "0x0039": `You do not have permission to remove the file ${chalk.bold(
+  "0x0030": `The file/folder, %VARIABLE%, does not exist. Confirm that the file/folder exists, and try again.`,
+  "0x0031": `The operation was cancelled by the user.`,
+  "0x0032": `The file/folder, %VARIABLE%, is being used by another program. End the program and try again (error message EBUSY).`,
+  "0x0033": `You do not have permission to remove the file/folder ${chalk.bold(
     "%VARIABLE%"
   )} (error message EPERM).`,
-  "0x0040": `An unknown error occurred while deleting the file: ${chalk.bold(
+  "0x0034": `An unknown error occurred while deleting the file/folder: ${chalk.bold(
     "%VARIABLE%"
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
-  "0x0041": `Please enter a PID for the respective task to kill. Example: ${chalk.italic(
+  "0x0035": `Please enter a PID for the respective task to kill. Example: ${chalk.italic(
     "'taskkill 1234'"
   )}.`,
-  "0x0042": `The PID must consist of only numbers and cannot consist of letters and special characters.`,
-  "0x0043": `You do not have permission to kill the process with PID ${chalk.bold(
+  "0x0036": `The PID must consist of only numbers and cannot consist of letters and special characters.`,
+  "0x0037": `You do not have permission to kill the process with PID ${chalk.bold(
     "%VARIABLE%"
   )} (error message EPERM).`,
-  "0x0044": `An unknown error occurred while killing the process with PID: ${chalk.bold(
+  "0x0038": `An unknown error occurred while killing the process with PID: ${chalk.bold(
     "%VARIABLE%"
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
-  "0x0045": `No text was provided to output.`,
-  "0x0046": `An unknown error occurred while getting user information. This is most likely because your user does not have a username or home directory.`,
-  "0x0047": `Please enter a file to count the number of words/characters in. Example: ${chalk.italic(
+  "0x0039": `No text was provided to output.`,
+  "0x0040": `An unknown error occurred while getting user information. This is most likely because your user does not have a username or home directory.`,
+  "0x0041": `Please enter a file to count the number of words/characters in. Example: ${chalk.italic(
     "'wcount file.txt'"
   )}.`,
-  "0x0048": `The file, %VARIABLE%, does not exist. Verify that the file exists and try again.`,
-  "0x0049": `Cannot count words/characters in any files other than ones encoded in UTF-8 (plain text files).`,
-  "0x0050": `You cannot count words/characters in directories. Error while reading directory: ${chalk.bold(
+  "0x0042": `The file, %VARIABLE%, does not exist. Verify that the file exists and try again.`,
+  "0x0043": `Cannot count words/characters in any files other than ones encoded in UTF-8 (plain text files).`,
+  "0x0044": `You cannot count words/characters in directories. Error while reading directory: ${chalk.bold(
     "%VARIABLE%"
   )} (error message EISDIR).`,
-  "0x0051": `An unknown error occurred while counting the words/characters in the file ${chalk.bold(
+  "0x0045": `An unknown error occurred while counting the words/characters in the file ${chalk.bold(
     "%VARIABLE%"
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
-  "0x0052": `The command, ${chalk.bold(
+  "0x0046": `The command, ${chalk.bold(
     "%VARIABLE%"
   )}, was not found. Please try again; run ${chalk.italic(
     "'help'"
@@ -194,20 +180,10 @@ const DEFINITIONS = {
     all: "Display information including the version number, author, and GitHub URL.",
     usage: ["about"],
   },
-  rmdir: {
-    description: "Remove a directory from the file system.",
-    all: "Remove a directory using an absolute or relative path. For Windows users: uses UNC paths (\\\\?\\).",
-    usage: ["rmdir <foldername>"],
-  },
   mkfile: {
     description: "Make a file in the current working directory.",
     all: "Make a new file in a specified directory. If only the file name is specified, it will create a file in the current working directory.",
     usage: ["mkfile <filename>"],
-  },
-  rmfile: {
-    description: "Remove a file from the file system.",
-    all: "Remove a file in the specified directory, either absolute or relative.",
-    usage: ["rmfile <filename>"],
   },
   readfile: {
     description: "Read a file's contents.",
@@ -238,6 +214,11 @@ const DEFINITIONS = {
     description: "Get the words and characters from a plain text file.",
     all: "Get all characters (including whitespace) and words from a plain text file.",
     usage: ["wcount <filename>"],
+  },
+  del: {
+    description: "Remove a file or directory from the file system.",
+    all: "Remove a file or directory that you specify permanently.",
+    usage: ["del <filename>", "del <foldername>"],
   },
 };
 

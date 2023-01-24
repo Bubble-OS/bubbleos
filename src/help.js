@@ -37,7 +37,7 @@ const help = (command) => {
       }
     }
 
-    _errorInterpret("0x0052", { variable: command });
+    _errorInterpret("0x0046", { variable: command });
   }
 };
 

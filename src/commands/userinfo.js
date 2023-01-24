@@ -19,7 +19,7 @@ const userinfocmd = () => {
     console.log(`Home directory: ${chalk.bold(homedir)}`);
     console.log(`Username: ${chalk.bold(username)}\n`);
   } catch (err) {
-    _errorInterpret("0x0046");
+    _errorInterpret("0x0040");
   }
 };
 

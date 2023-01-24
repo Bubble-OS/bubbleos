@@ -16,14 +16,13 @@ const taskkill = require("./src/commands/taskkill");
 const mkdir = require("./src/commands/mkdir");
 const execFile = require("./src/commands/exec");
 const about = require("./src/commands/about");
-const rmdir = require("./src/commands/rmdir");
 const mkfile = require("./src/commands/mkfile");
-const rmfile = require("./src/commands/rmfile");
 const readfile = require("./src/commands/readfile");
 const copyfile = require("./src/commands/copyfile");
 const printText = require("./src/commands/print");
 const userinfocmd = require("./src/commands/userinfo");
 const wcount = require("./src/commands/wcount");
+const del = require("./src/commands/del");
 
 // Running the introduction one-time
 require("./src/intro");
@@ -58,12 +57,8 @@ while (true) {
     execFile(_singleParam(command, "exec"));
   } else if (command.startsWith("about")) {
     about();
-  } else if (command.startsWith("rmdir")) {
-    rmdir(_singleParam(command, "rmdir"));
   } else if (command.startsWith("mkfile")) {
     mkfile(_singleParam(command, "mkfile"));
-  } else if (command.startsWith("rmfile")) {
-    rmfile(_singleParam(command, "rmfile"));
   } else if (command.startsWith("readfile")) {
     readfile(_singleParam(command, "readfile"));
   } else if (command.startsWith("copyfile")) {
@@ -75,6 +70,8 @@ while (true) {
     userinfocmd();
   } else if (command.startsWith("wcount")) {
     wcount(_singleParam(command, "wcount"));
+  } else if (command.startsWith("del")) {
+    del(_singleParam(command, "del"));
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {

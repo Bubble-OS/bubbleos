@@ -4,7 +4,7 @@ const _errorInterpret = require("../functions/errorInt");
 
 const taskkill = (pid) => {
   if (typeof pid === "undefined") {
-    _errorInterpret("0x0041");
+    _errorInterpret("0x0035");
     return;
   }
 
@@ -14,7 +14,7 @@ const taskkill = (pid) => {
   };
 
   if (!isNumeric(pid)) {
-    _errorInterpret("0x0042");
+    _errorInterpret("0x0036");
     return;
   }
 
@@ -25,9 +25,9 @@ const taskkill = (pid) => {
     console.log(`Successfully killed process ${chalk.green(pid)}.\n`);
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret("0x0043", { variable: pid });
+      _errorInterpret("0x0037", { variable: pid });
     } else {
-      _errorInterpret("0x0044", { variable: pid, wordCode: err.code });
+      _errorInterpret("0x0038", { variable: pid, wordCode: err.code });
     }
   }
 };

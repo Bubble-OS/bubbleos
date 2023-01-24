@@ -8,7 +8,7 @@ const _errorInterpret = require("../functions/errorInt");
 
 const wcount = (file) => {
   if (typeof file === "undefined") {
-    _errorInterpret("0x0047");
+    _errorInterpret("0x0041");
     return;
   }
 
@@ -21,13 +21,13 @@ const wcount = (file) => {
   }
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret("0x0048", { variable: fileName });
+    _errorInterpret("0x0042", { variable: fileName });
     return;
   }
 
   try {
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret("0x0049");
+      _errorInterpret("0x0043");
       return;
     }
 
@@ -38,9 +38,9 @@ const wcount = (file) => {
     console.log(`Words: ${chalk.bold(fileContents.split(" ").length)}\n`);
   } catch (err) {
     if (err.code === "EISDIR") {
-      _errorInterpret("0x0050", { variable: fileName });
+      _errorInterpret("0x0044", { variable: fileName });
     } else {
-      _errorInterpret("0x0051", { variable: fileName, wordCode: err.code });
+      _errorInterpret("0x0045", { variable: fileName, wordCode: err.code });
     }
   }
 };
