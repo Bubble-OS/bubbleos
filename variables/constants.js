@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const VERSION = "0.3.8";
+const VERSION = "0.3.9";
 
 /**
  * Recognized commands that the shell knows.
@@ -169,8 +169,8 @@ const DEFINITIONS = {
   },
   cd: {
     description: "Changes the current working directory.",
-    all: "Change into another directory using absolute (e.g. C:\\Windows) or relative (e.g. '..') paths, changing the current working directory.",
-    usage: ["cd <directory>"],
+    all: "Use absolute (C:\\Windows) or relative (..) paths. Also, you can use '--verbose' to troubleshoot an error.",
+    usage: ["cd <directory>", "cd <directory> --verbose"],
   },
   sysinfo: {
     description: "Displays system information.",

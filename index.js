@@ -2,6 +2,7 @@
 
 // Import some private helper functions
 const _singleParam = require("./src/functions/singleParam");
+const _multiParam = require("./src/functions/multiParam");
 const _errorInterpret = require("./src/functions/errorInt");
 
 // Importing some more main commands
@@ -44,7 +45,19 @@ while (true) {
   } else if (command.startsWith("help")) {
     help(_singleParam(command, "help"));
   } else if (command.startsWith("cd")) {
-    cd(_singleParam(command, "cd"));
+    const cdCommands = _multiParam(command);
+    let cdVerbose = false;
+    let cdPath = "";
+
+    if (cdCommands[cdCommands.length - 1] === "--verbose") {
+      cdCommands.pop();
+      cdVerbose = true;
+    } else {
+      cdVerbose = false;
+    }
+
+    cdPath = cdCommands.join(" ");
+    cd(cdPath, cdVerbose);
   } else if (command.startsWith("ls")) {
     ls(_singleParam(command, "ls"));
   } else if (command.startsWith("sysinfo")) {
