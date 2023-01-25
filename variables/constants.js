@@ -140,6 +140,20 @@ const ERRORS = {
   "0x0050": `An unknown error occurred while getting the size of the file ${chalk.bold(
     "%VARIABLE%"
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  "0x0051": `Please enter the filename and what to call the file. Example: ${chalk.italic(
+    "'rename file.txt test.txt'"
+  )}.`,
+  "0x0052": `You cannot rename a file/folder to the same name (${chalk.bold("%VARIABLE%")}).`,
+  "0x0053": `The file/folder, %VARIABLE%, does not exist. Verify that the file exists and try again.`,
+  "0x0054": `You do not have permission to rename ${chalk.bold(
+    "%VARIABLE%"
+  )}. Verify that you have the correct permissions and try again.`,
+  "0x0055": `The file/folder, ${chalk.bold(
+    "%VARIABLE%"
+  )}, is in use by another program. End the program and try again.`,
+  "0x0056": `An unknown error occurred while renaming ${chalk.bold(
+    "%VARIABLE%"
+  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
 };
 
 const DEFINITIONS = {
@@ -232,6 +246,11 @@ const DEFINITIONS = {
     description: "Get the size of a file in bytes, kilobytes, megabytes, and gigabytes.",
     all: "In case a value is 0, the value shown on-screen with be 'N/A'. If a value is 0 bytes in size, all values will say 'N/A'.",
     usage: ["size <filename>"],
+  },
+  rename: {
+    description: "Rename a file/folder to another name.",
+    all: "You can also move files and folder using this command, similar to 'copyfile', but with unintended side effects.",
+    usage: ["rename <beforename> <aftername>"],
   },
 };
 

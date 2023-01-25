@@ -30,9 +30,8 @@ const copyfile = (src, dest) => {
   }
 
   try {
-    copyFileSync(srcPath, destPath);
-
     console.log(chalk.italic.blueBright("Please wait...\n"));
+    copyFileSync(srcPath, destPath);
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EPERM") {
