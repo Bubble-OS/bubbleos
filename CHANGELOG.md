@@ -4,10 +4,11 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 35-42 (v0.2.7-v0.4.2)
+## Build 35-39 (v0.2.7-v0.3.9)
 
 ### Added Features
 
+- Added verbose status messages for the `cd` command. More are coming for later versions.
 - Added the `time` and `date` command (both are aliases).
 - Added the `rename` command.
 - Added the `size` command.
@@ -15,7 +16,11 @@ Please note that not all versions will have respectible executables with them.
 
 ### Changed/Fixed Features
 
+_No features have been changed/fixed in this release._
+
 ### Removed Features
+
+- Deprecated the `date` variable.
 
 ## Build 27-35 (v0.2.7-v0.3.5)
 
