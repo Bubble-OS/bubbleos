@@ -8,6 +8,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added Features
 
+- Added the `time` and `date` command (both are aliases).
 - Added the `rename` command.
 - Added the `size` command.
 - Extracted absolute path convertion into a seperate function: `_convertAbsolute`.

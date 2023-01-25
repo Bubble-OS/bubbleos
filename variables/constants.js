@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const VERSION = "0.3.5";
+const VERSION = "0.3.8";
 
 /**
  * Recognized commands that the shell knows.
@@ -251,6 +251,16 @@ const DEFINITIONS = {
     description: "Rename a file/folder to another name.",
     all: "You can also move files and folder using this command, similar to 'copyfile', but with unintended side effects.",
     usage: ["rename <beforename> <aftername>"],
+  },
+  time: {
+    description: "Get the current time and date.",
+    all: "This gets the local time and date that is on your system (NOT online).",
+    usage: ["time", "date"],
+  },
+  date: {
+    description: "Get the current time and date.",
+    all: "This gets the local time and date that is on your system (NOT online).",
+    usage: ["time", "date"],
   },
 };
 

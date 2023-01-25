@@ -25,6 +25,7 @@ const wcount = require("./src/commands/wcount");
 const del = require("./src/commands/del");
 const size = require("./src/commands/size");
 const rename = require("./src/commands/rename");
+const time = require("./src/commands/time");
 
 // Running the introduction one-time
 require("./src/intro");
@@ -81,6 +82,8 @@ while (true) {
   } else if (command.startsWith("rename")) {
     const params = command.split(" ");
     rename(params[1], params[2]);
+  } else if (command.startsWith("time") || command.startsWith("date")) {
+    time();
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {
