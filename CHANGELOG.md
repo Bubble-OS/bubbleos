@@ -4,7 +4,21 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 35-39 (v0.2.7-v0.3.9)
+## Build 39-42 (v0.3.9-v0.4.2)
+
+### Added Features
+
+- Added the `history` command.
+
+### Changed/Fixed Features
+
+_No features have been changed/fixed in this release._
+
+### Removed Features
+
+_No features have been removed in this release._
+
+## Build 35-39 (v0.3.5-v0.3.9)
 
 ### Added Features
 

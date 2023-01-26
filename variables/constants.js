@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const VERSION = "0.3.9";
+const VERSION = "0.4.0";
 
 /**
  * Recognized commands that the shell knows.
@@ -154,6 +154,13 @@ const ERRORS = {
   "0x0056": `An unknown error occurred while renaming ${chalk.bold(
     "%VARIABLE%"
   )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
+  "0x0057": `No history is available to display.`,
+  "0x0058": `The number must be a whole number (not containing letters, symbols, or decimals). Received ${chalk.bold(
+    "%VARIABLE%"
+  )}.`,
+  "0x0059": `No command was found in history point ${chalk.bold(
+    "%VARIABLE%"
+  )}. Try running ${chalk.italic("'history'")} to see all commands in history.`,
 };
 
 const DEFINITIONS = {
@@ -261,6 +268,12 @@ const DEFINITIONS = {
     description: "Get the current time and date.",
     all: "This gets the local time and date that is on your system (NOT online).",
     usage: ["time", "date"],
+  },
+  history: {
+    description:
+      "Get the last twenty commands that you entered in a session. Also, get a specific command in history.",
+    all: "Please note that once you cancel the BubbleOS session, all history is cleared. Also, after twenty commands, the oldest command is cleared.",
+    usage: ["history", "history <commandNum>"],
   },
 };
 

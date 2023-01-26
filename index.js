@@ -27,6 +27,7 @@ const del = require("./src/commands/del");
 const size = require("./src/commands/size");
 const rename = require("./src/commands/rename");
 const time = require("./src/commands/time");
+const { _addToHist, historyCmd } = require("./src/commands/history");
 
 // Running the introduction one-time
 require("./src/intro");
@@ -97,10 +98,14 @@ while (true) {
     rename(params[1], params[2]);
   } else if (command.startsWith("time") || command.startsWith("date")) {
     time();
+  } else if (command.startsWith("history")) {
+    historyCmd(_singleParam(command, "history"));
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {
       _errorInterpret("0x0001", { variable: command });
     }
   }
+
+  if (!isEmpty) _addToHist(command);
 }
