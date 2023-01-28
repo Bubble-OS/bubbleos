@@ -1,28 +1,6 @@
 const chalk = require("chalk");
 
-const VERSION = "0.4.1";
-
-/**
- * Recognized commands that the shell knows.
- *
- * @deprecated As of `v0.2.3`, this constant is unused and not updated.
- */
-const RECOGNIZED_COMMANDS = [
-  "help",
-  "exit",
-  "cd",
-  "sysinfo",
-  "ls",
-  "taskkill",
-  "mkdir",
-  "exec",
-  "about",
-  "rmdir",
-  "mkfile",
-  "rmfile",
-  "readfile",
-  "copyfile",
-];
+const VERSION = "0.4.3";
 
 const ERRORS = {
   "0x0000": `Please enter a command. Type ${chalk.italic(
@@ -251,8 +229,8 @@ const DEFINITIONS = {
   },
   size: {
     description: "Get the size of a file in bytes, kilobytes, megabytes, and gigabytes.",
-    all: "In case a value is 0, the value shown on-screen with be 'N/A'. If a value is 0 bytes in size, all values will say 'N/A'.",
-    usage: ["size <filename>"],
+    all: "In case a value is 0, the value shown on-screen with be 'N/A'. You can also get specific sizes by using '--size=' and then listing sizes like 'mb' for megabytes, making sure they are comma-seperated.",
+    usage: ["size <filename>", "size <filename> --size=[b | kb | mb | gb]"],
   },
   rename: {
     description: "Rename a file/folder to another name.",
@@ -279,7 +257,6 @@ const DEFINITIONS = {
 
 module.exports = {
   VERSION,
-  RECOGNIZED_COMMANDS,
   ERRORS,
   DEFINITIONS,
 };

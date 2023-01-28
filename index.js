@@ -81,7 +81,7 @@ while (true) {
   } else if (command.startsWith("tasklist")) {
     console.log("This command did not work so I removed it :(\n    - Arnav, the dev\n");
   } else if (command.startsWith("size")) {
-    size(_singleParam(command, "size"));
+    size(..._multiParam(command));
   } else if (command.startsWith("rename")) {
     const params = command.split(" ");
     rename(params[1], params[2]);

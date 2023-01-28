@@ -4,19 +4,24 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 39-42 (v0.3.9-v0.4.2)
+## Build 39-42 (v0.3.9-v0.4.3)
 
 ### Added Features
 
+- Added the `--size=(sizes)` flag for the `size` command.
 - Added the `history` command.
+- Added the `--verbose` flag for the `ls` command.
 
 ### Changed/Fixed Features
 
-_No features have been changed/fixed in this release._
+- Increased decimal places for the `size` command from _2_ to _4_.
+- Changed file structure slightly (moved `variables` into `src`).
 
 ### Removed Features
 
-_No features have been removed in this release._
+- Removed the file `variables.js`.
+- Removed the file `error.js`.
+- Removed the `RECOGNIZED_COMMANDS` variable.
 
 ## Build 35-39 (v0.3.5-v0.3.9)
 
