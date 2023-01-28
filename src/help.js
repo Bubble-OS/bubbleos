@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 const sortKeys = require("sort-keys");
-const { DEFINITIONS } = require("../variables/constants");
+const { DEFINITIONS } = require("./variables/constants");
 const _errorInterpret = require("./functions/errorInt");
 
 const help = (command) => {

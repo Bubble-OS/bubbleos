@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const { VERSION } = require("../../variables/constants");
+const { VERSION } = require("../variables/constants");
 
 const about = () => {
   const year = new Date().getFullYear();

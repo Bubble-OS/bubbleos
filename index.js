@@ -28,6 +28,7 @@ const size = require("./src/commands/size");
 const rename = require("./src/commands/rename");
 const time = require("./src/commands/time");
 const { _addToHist, historyCmd } = require("./src/commands/history");
+const _prepVerbose = require("./src/functions/prepVerbose");
 
 // Running the introduction one-time
 require("./src/intro");
@@ -46,21 +47,9 @@ while (true) {
   } else if (command.startsWith("help")) {
     help(_singleParam(command, "help"));
   } else if (command.startsWith("cd")) {
-    const cdCommands = _multiParam(command);
-    let cdVerbose = false;
-    let cdPath = "";
-
-    if (cdCommands[cdCommands.length - 1] === "--verbose") {
-      cdCommands.pop();
-      cdVerbose = true;
-    } else {
-      cdVerbose = false;
-    }
-
-    cdPath = cdCommands.join(" ");
-    cd(cdPath, cdVerbose);
+    cd(..._prepVerbose(_multiParam(command)));
   } else if (command.startsWith("ls")) {
-    ls(_singleParam(command, "ls"));
+    ls(..._prepVerbose(_multiParam(command)));
   } else if (command.startsWith("sysinfo")) {
     command.includes("-a") ? sysinfo(true) : sysinfo();
   } else if (command.startsWith("taskkill")) {
