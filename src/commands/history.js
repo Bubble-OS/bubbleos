@@ -2,7 +2,7 @@ const chalk = require("chalk");
 const _errorInterpret = require("../functions/errorInt");
 
 const history = [];
-const NUMBER_TO_STORE = 20;
+const NUMBER_TO_STORE = 50;
 
 const historyCmd = (numToDisplay) => {
   const _formatHist = (index, histCmd) => {

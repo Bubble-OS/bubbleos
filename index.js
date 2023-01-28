@@ -28,7 +28,6 @@ const size = require("./src/commands/size");
 const rename = require("./src/commands/rename");
 const time = require("./src/commands/time");
 const { _addToHist, historyCmd } = require("./src/commands/history");
-const _prepVerbose = require("./src/functions/prepVerbose");
 
 // Running the introduction one-time
 require("./src/intro");

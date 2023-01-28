@@ -1,6 +1,5 @@
 const chalk = require("chalk");
 const fs = require("fs");
-const path = require("path");
 
 const _errorInterpret = require("../functions/errorInt");
 const _convertSize = require("../functions/convSize");

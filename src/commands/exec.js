@@ -1,8 +1,8 @@
 const chalk = require("chalk");
-const exec = require("child_process").execFile;
+const { execFile: exec } = require("child_process");
 const fs = require("fs");
-const _convertAbsolute = require("../functions/convAbs");
 
+const _convertAbsolute = require("../functions/convAbs");
 const _errorInterpret = require("../functions/errorInt");
 
 // Named 'execFile' to avoid naming conflicts

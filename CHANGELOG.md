@@ -12,6 +12,7 @@ _No features have been added in this release._
 
 ### Changed/Fixed Features
 
+- Changed the number of history stores from 20 to 50.
 - Fixed a major bug where `ls` would not read out of the current working directory.
 
 ### Removed Features

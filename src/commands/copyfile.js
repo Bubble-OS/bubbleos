@@ -32,7 +32,6 @@ const copyfile = (src, dest) => {
   try {
     console.log(chalk.italic.blueBright("Please wait...\n"));
     copyFileSync(srcPath, destPath);
-    console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EPERM") {
       _errorInterpret("0x0008", {
@@ -44,11 +43,13 @@ const copyfile = (src, dest) => {
       });
     } else {
       _errorInterpret("0x0010", {
-        variable: `${dest}`,
+        variable: dest,
         wordCode: err.code,
       });
     }
   }
+
+  console.log(chalk.green("The operation completed successfully.\n"));
 };
 
 module.exports = copyfile;
