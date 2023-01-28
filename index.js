@@ -47,9 +47,9 @@ while (true) {
   } else if (command.startsWith("help")) {
     help(_singleParam(command, "help"));
   } else if (command.startsWith("cd")) {
-    cd(..._prepVerbose(_multiParam(command)));
+    cd(_singleParam(command, "cd"));
   } else if (command.startsWith("ls")) {
-    ls(..._prepVerbose(_multiParam(command)));
+    ls(_singleParam(command, "ls"));
   } else if (command.startsWith("sysinfo")) {
     command.includes("-a") ? sysinfo(true) : sysinfo();
   } else if (command.startsWith("taskkill")) {

@@ -4,7 +4,21 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 39-42 (v0.3.9-v0.4.3)
+## Build 43-4? (v0.4.3-v0.4.?)
+
+### Added Features
+
+_No features have been added in this release._
+
+### Changed/Fixed Features
+
+- Fixed a major bug where `ls` would not read out of the current working directory.
+
+### Removed Features
+
+- Removed the `--verbose` flag ability for the `cd` and `ls` commands temporarily (help documentation for it still exists).
+
+## Build 39-43 (v0.3.9-v0.4.3)
 
 ### Added Features
 
