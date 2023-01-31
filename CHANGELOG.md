@@ -8,7 +8,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added Features
 
-_No features have been added in this release._
+- Added the `fif` (find in file) command.
 
 ### Changed/Fixed Features
 

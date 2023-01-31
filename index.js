@@ -28,6 +28,7 @@ const size = require("./src/commands/size");
 const rename = require("./src/commands/rename");
 const time = require("./src/commands/time");
 const { _addToHist, historyCmd } = require("./src/commands/history");
+const fif = require("./src/commands/fif");
 
 // Running the introduction one-time
 require("./src/intro");
@@ -88,6 +89,8 @@ while (true) {
     time();
   } else if (command.startsWith("history")) {
     historyCmd(_singleParam(command, "history"));
+  } else if (command.startsWith("fif")) {
+    fif(..._multiParam(command));
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {

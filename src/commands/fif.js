@@ -6,30 +6,35 @@ const fs = require("fs");
 const _errorInterpret = require("../functions/errorInt");
 const _convertAbsolute = require("../functions/convAbs");
 
-const readfile = (file) => {
-  if (typeof file === "undefined") {
-    _errorInterpret("0x0024");
+const fif = (file, toFind) => {
+  if (typeof file === "undefined" || typeof toFind === "undefined") {
+    _errorInterpret("0x0060");
     return;
   }
 
   const fileName = _convertAbsolute(file);
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret("0x0025", { variable: fileName });
+    _errorInterpret("0x0061", { variable: fileName });
     return;
   }
 
   try {
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret("0x0026");
+      _errorInterpret("0x0062");
       return;
     }
 
-    console.log(chalk.bold.underline.redBright(`${file} Contents\n`));
+    console.log(
+      `Number of occurances: ${chalk.bold.green(str.match(new RegExp(toFind, "ig") || [])).length}`
+    );
 
-    console.log(fs.readFileSync(fileName, { encoding: "utf-8", flag: "r" }));
-    console.log();
+    console.log(chalk.dim("_".repeat(process.stdout.columns)));
+
+    const contents = fs.readFileSync(fileName, { encoding: "utf-8", flag: "r" });
+    contents.replaceAll(toFind, chalk.bgYellow(toFind));
   } catch (err) {
+    // TODO Fix error codes; add help documentation
     if (err.code === "EISDIR") {
       _errorInterpret("0x0027", { variable: fileName });
     } else {
@@ -38,4 +43,4 @@ const readfile = (file) => {
   }
 };
 
-module.exports = readfile;
+module.exports = fif;

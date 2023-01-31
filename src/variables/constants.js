@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const VERSION = "0.4.4";
+const VERSION = "0.4.5";
 
 const ERRORS = {
   "0x0000": `Please enter a command. Type ${chalk.italic(
@@ -139,6 +139,11 @@ const ERRORS = {
   "0x0059": `No command was found in history point ${chalk.bold(
     "%VARIABLE%"
   )}. Try running ${chalk.italic("'history'")} to see all commands in history.`,
+  "0x0060": `Enter the filename/the phrase to find as parameters. Example: ${chalk.italic(
+    "'fif test.txt hello'"
+  )}.`,
+  "0x0061": `The file, %VARIABLE%, does not exist. Verify that the file exists and try again.`,
+  "0x0062": `Cannot read any files other than plain-text files.`,
 };
 
 const DEFINITIONS = {
