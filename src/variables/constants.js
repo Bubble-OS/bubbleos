@@ -144,6 +144,11 @@ const ERRORS = {
   )}.`,
   "0x0061": `The file, %VARIABLE%, does not exist. Verify that the file exists and try again.`,
   "0x0062": `Cannot read any files other than plain-text files.`,
+  "0x0027": `You cannot pass a directory as an argument."
+  )} (error message EISDIR).`,
+  "0x0064": `An unknown error occurred while reading ${chalk.bold(
+    "%VARIABLE%"
+  )} (use %WORD_CODE% to help find what caused the error, then create a new Issue on GitHub; find the link by running 'about').`,
 };
 
 const DEFINITIONS = {
