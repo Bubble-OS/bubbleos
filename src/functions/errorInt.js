@@ -14,7 +14,7 @@ const { ERRORS: errors } = require("../variables/constants");
  * ```
  *
  * @param {string} errorCode The error code from the `ERRORS` object. Make sure it exists before adding it.
- * @param {} options An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
+ * @param {object} options An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
  */
 const _errorInterpret = (
   errorCode,
