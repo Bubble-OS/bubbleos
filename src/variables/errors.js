@@ -176,6 +176,26 @@ const _inUseError = (item) =>
   )}, is being used by another program. End the program and try again.`;
 
 /**
+ * An 'encoding' error message. Make sure to fill in the arguments correctly to make it gramatically correct.
+ *
+ * Example:
+ * ```js
+ * _encodingError("UTF-8", "plain text files");
+ * ```
+ *
+ * This should return:
+ * ```js
+ * "Cannot read any files other than ones encoded in UTF-8 (plain text files)."
+ * ```
+ *
+ * @param {string} encode The encoding that the file needs to be in.
+ * @param {string} other A more friendlier way of the type of encoding. Optional; defaults to `""` (empty string).
+ * @returns A string with the error message.
+ */
+const _encodingError = (encode, other = "") =>
+  `Cannot read any files other than ones encoded in ${encode}${other ? `(${other})` : ""}.`;
+
+/**
  * An object of errors that are used globally by BubbleOS.
  *
  * **DO NOT** modify any error codes without modifying the called error.
@@ -199,6 +219,11 @@ const ERRORS = {
   13: _alreadyExistsError("directory"),
   14: _permissionError("create the directory"),
   15: _enterParamError("a file name", "mkfile never-gonna-give-you-up.txt"),
+  16: _alreadyExistsError("file"),
+  17: _permissionError("remove the file"),
+  18: _enterParamError("a file name", "readfile test.txt"),
+  19: _doesNotExistError("file"),
+  20: _encodingError("UTF-8", "plain text files"),
   // 11: _enterParamError("a file/directory", "del never-gonna-let-you-down.txt"),
   // 12: _nonExistentError("file/directory"),
   // 13: _cancelledError("user"),
