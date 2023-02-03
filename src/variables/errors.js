@@ -196,15 +196,62 @@ const _encodingError = (encode, other = "") =>
   `Cannot read any files other than ones encoded in ${encode}${other ? `(${other})` : ""}.`;
 
 /**
+ * A 'view directory' error message. Make sure to fill in the arguments correctly to make it gramatically correct.
+ *
+ * Example:
+ * ```js
+ * _viewDirectoryError("command", true);
+ * ```
+ *
+ * This should return:
+ * ```js
+ * "Viewing directories using the 'command' command is not supported (use 'ls' for that)."
+ * ```
+ *
+ * @param {string} command The command that the user entered to attempt to read a directory.
+ * @param {boolean} useLs Whether to use the _(use 'ls' for that)_ text in the error message. Optional; defaults to `false`.
+ * @returns A string with the error message.
+ */
+const _viewDirectoryError = (command, useLs = false) =>
+  `Viewing directories using the ${chalk.bold.italic(`'${command}'`)} command is not supported${
+    useLs ? ` (use ${chalk.bold.italic("'ls'")} for that)` : ""
+  }.`;
+
+/**
+ * A 'contains invalid characters' error message. Make sure to fill in the arguments correctly to make it gramatically correct.
+ *
+ * Example:
+ * ```js
+ * _containsInvalidCharactersError("identification number", "numbers", "letters and special characters");
+ * ```
+ *
+ * This should return:
+ * ```js
+ * "The identification number can only contain numbers and not contain letters and special characters (received %VARIABLE%)."
+ * ```
+ *
+ * Please note that `%VARIABLE%` will be replaced in the `_errorInterpret` function if passed.
+ *
+ * @param {string} item The name of the invalid character item (e.g. 'ID').
+ * @param {string} supposedTo The type of characters that the command excepts.
+ * @param {string} notContain The type of characters that the command **DOES NOT** except.
+ * @returns A string with the error message.
+ */
+const _containsInvalidCharactersError = (item, supposedTo, notContain) =>
+  `The ${item} can only contain ${supposedTo} and not contain ${notContain} (received ${chalk.bold.italic(
+    "%VARIABLE%"
+  )}).`;
+
+/**
  * An object of errors that are used globally by BubbleOS.
  *
  * **DO NOT** modify any error codes without modifying the called error.
  */
 const ERRORS = {
-  0: `Please enter a command. Type ${chalk.italic("'help'")} for a list of available commands.`,
+  0: `Please enter a command. Type ${chalk.italic("'help'")} for a list of available commands.`, // No need for a function, since this error message is only used once
   1: `The command '${chalk.bold("%VARIABLE%")}' is unrecognized. Type ${chalk.italic(
     "'help'"
-  )} for a list of available commands.`,
+  )} for a list of available commands.`, // No need for a function, since this error message is only used once
   2: _enterParamError("a directory", "cd test"),
   3: _doesNotExistError("directory"),
   4: _permissionError("change into"),
@@ -224,9 +271,19 @@ const ERRORS = {
   18: _enterParamError("a file name", "readfile test.txt"),
   19: _doesNotExistError("file"),
   20: _encodingError("UTF-8", "plain text files"),
-  // 11: _enterParamError("a file/directory", "del never-gonna-let-you-down.txt"),
-  // 12: _nonExistentError("file/directory"),
-  // 13: _cancelledError("user"),
-  // 14: _inUseError("file/directory"),
-  // 15: _permissionError("delete the file/directory"),
+  21: _viewDirectoryError("readfile", true),
+  22: _enterParamError("a file/directory", "del never-gonna-let-you-down.txt"),
+  23: _nonExistentError("file/directory"),
+  24: _cancelledError("user"),
+  25: _inUseError("file/directory"),
+  26: _permissionError("delete the file/directory"),
+  27: _enterParamError("a PID to terminate", "taskkill 1234"),
+  28: _containsInvalidCharactersError("PID", "numbers", "letters and special characters"),
+  29: _permissionError("kill the process with PID"),
+  30: "No text was provided to output.", // No need for a function, since this is a very simple error message and only used once
+  31: _enterParamError("a file", "wcount file.txt"),
+  32: _doesNotExistError("file"),
+  33: _encodingError("UTF-8", "plain text files"),
+  34: _viewDirectoryError("wcount", true),
+  // Start with error code 0x0046 :)
 };
