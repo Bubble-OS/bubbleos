@@ -9,19 +9,20 @@ Please note that not all versions will have respectible executables with them.
 ### Added Features
 
 - Added the `fif` (find in file) command.
+- Added a fatal error screen which will occur when there is an unknown/unhandled exception.
 - Added a beta software disclaimer.
-- Made the _BubbleOS_ name universally changable from a single variable, as well as others including the author, version, and the beta state.
+- Made the _BubbleOS_ name universally changeable from a single variable, as well as others including the author, version, and the beta state.
 
 ### Changed/Fixed Features
 
-- Changed error codes (from a `0x00--` style to `--` style) and error messages.
-- Changed the number of history stores from 20 to 50.
+- Changed error codes (from a `0x00--` style to `--` style, e.g. `0x0078` would be `78`), and error messages.
+- Changed the number of historical stores from 20 to 50.
 - Fixed a major bug where `ls` would not read out of the current working directory.
 - Fixed a major issue in the `cd` command where it would crash the entire shell if no argument was passed.
 
 ### Removed Features
 
-- Removed the `constants.js` file and reloacated/recoded the `DEFINITIONS` and `ERROR_MESSAGES` objects.
+- Removed the `constants.js` file and relocated/recoded the `DEFINITIONS` and `ERROR_MESSAGES` objects.
 - Removed the `--verbose` flag ability for the `cd` and `ls` commands temporarily (help documentation for it still exists).
 
 ## Build 39-43 (v0.3.9-v0.4.3)
