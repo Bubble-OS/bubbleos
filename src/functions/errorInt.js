@@ -41,7 +41,7 @@ const _errorInterpret = (
     errorMessage = errorMessage.replace(Object.keys(stringVars)[i], Object.values(stringVars)[i]);
   }
 
-  console.log(chalk.red(`${chalk.bold(`Error code ${errorCode}:`)} ${errorMessage}\n`));
+  console.log(chalk.red(`${chalk.bold(`[${errorCode}]`)} ${errorMessage}\n`));
 };
 
 module.exports = _errorInterpret;
