@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const VERSION = "0.4.5";
+const VERSION = "0.4.6";
 
 const ERRORS = {
   "0x0000": `Please enter a command. Type ${chalk.italic(

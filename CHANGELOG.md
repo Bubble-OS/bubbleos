@@ -12,6 +12,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Changed/Fixed Features
 
+- Changed error codes (from a `0x00--` style to `--` style) and error messages.
 - Changed the number of history stores from 20 to 50.
 - Fixed a major bug where `ls` would not read out of the current working directory.
 
