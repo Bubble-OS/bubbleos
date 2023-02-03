@@ -1,5 +1,7 @@
 const chalk = require("chalk");
 
+const { GLOBAL_NAME } = require("../variables/aboutConsts");
+
 /**
  * End BubbleOS with a fatal exception with exit code `1`.
  *
@@ -9,7 +11,7 @@ const _fatalError = (err) => {
   console.log(`${chalk.bgRed.bold.underline("!!! FATAL ERROR !!!")}\n`);
   console.log(
     `${chalk.red.bold(
-      `A fatal error has occured which caused BubbleOS to crash. To make sure the OS does not get damaged, BubbleOS has been exited (with status code 1).`
+      `A fatal error has occured which caused ${GLOBAL_NAME} to crash. To make sure the OS does not get damaged, ${GLOBAL_NAME} has been exited (with status code 1).`
     )}\n\n${chalk.red.bold(
       `Make sure that the arguments passed are correct. Also, you can make a new GitHub Issue on the project's repo (find by running ${chalk.italic(
         "about"

@@ -4,11 +4,13 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 43-4? (v0.4.3-v0.4.?)
+## Build 43-48 (v0.4.3-v0.4.8)
 
 ### Added Features
 
 - Added the `fif` (find in file) command.
+- Added a beta software disclaimer.
+- Made the _BubbleOS_ name universally changable from a single variable, as well as others including the author, version, and the beta state.
 
 ### Changed/Fixed Features
 
@@ -19,7 +21,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Removed Features
 
-- Removed the `DEFINITIONS` and `ERROR_MESSAGES` objects from `constants.js` in place for seperate files.
+- Removed the `constants.js` file and reloacated/recoded the `DEFINITIONS` and `ERROR_MESSAGES` objects.
 - Removed the `--verbose` flag ability for the `cd` and `ls` commands temporarily (help documentation for it still exists).
 
 ## Build 39-43 (v0.3.9-v0.4.3)
