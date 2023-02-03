@@ -1,18 +1,17 @@
 const chalk = require("chalk");
 const sortKeys = require("sort-keys");
-const { DEFINITIONS } = require("./variables/constants");
+const HELP_DEFINITIONS = require("./variables/helpMessages");
+
 const _errorInterpret = require("./functions/errorInt");
 
 const help = (command) => {
-  const sorted = sortKeys(DEFINITIONS);
+  const sorted = sortKeys(HELP_DEFINITIONS);
 
   const printHelp = (commandChosen, all) => {
     console.log(`${chalk.red(commandChosen)}: ${chalk.italic(sorted[commandChosen].description)}`);
 
     if (all) {
-      console.log();
-      console.log(sorted[commandChosen].all);
-      console.log();
+      console.log(`\n${sorted[commandChosen].all}\n`);
     }
 
     console.log(`\t${chalk.grey(sorted[commandChosen].usage.join(", "))}\n`);
@@ -37,7 +36,7 @@ const help = (command) => {
       }
     }
 
-    _errorInterpret("0x0046", { variable: command });
+    _errorInterpret(35, { variable: command });
   }
 };
 

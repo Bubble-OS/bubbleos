@@ -1,9 +1,11 @@
 const chalk = require("chalk");
 const fs = require("fs");
 
-const _errorInterpret = require("../functions/errorInt");
 const _convertSize = require("../functions/convSize");
 const _convertAbsolute = require("../functions/convAbs");
+
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const size = (file, sizesToDisplay) => {
   let sizes = undefined;
@@ -15,7 +17,7 @@ const size = (file, sizesToDisplay) => {
   };
 
   if (typeof sizesToDisplay !== "undefined" && !sizesToDisplay.startsWith("--size=")) {
-    console.log("Error must start with --size=");
+    _errorInterpret(52);
   } else if (typeof sizesToDisplay !== "undefined") {
     sizes = sizesToDisplay.replace("--size=", "").split(",");
 
@@ -27,18 +29,18 @@ const size = (file, sizesToDisplay) => {
   }
 
   if (typeof file === "undefined") {
-    _errorInterpret("0x0047");
+    _errorInterpret(36);
     return;
   }
 
   const fileName = _convertAbsolute(file);
   if (!fs.existsSync(fileName)) {
-    _errorInterpret("0x0048", { variable: fileName });
+    _errorInterpret(37, { variable: fileName });
     return;
   }
 
   if (fs.lstatSync(fileName).isDirectory()) {
-    _errorInterpret("0x0049");
+    _errorInterpret(38);
     return;
   }
 
@@ -67,7 +69,7 @@ const size = (file, sizesToDisplay) => {
 
     console.log();
   } catch (err) {
-    _errorInterpret("0x0050", { variable: fileName, wordCode: err.code });
+    _fatalError(err);
   }
 };
 

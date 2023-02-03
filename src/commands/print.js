@@ -6,8 +6,8 @@ const _errorInterpret = require("../functions/errorInt");
  * @param {string} text The text to output.
  */
 const printText = (text) => {
-  if (typeof text === "undefined") {
-    _errorInterpret("0x0039");
+  if (!text) {
+    _errorInterpret(30);
     return;
   }
 

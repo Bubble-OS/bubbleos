@@ -3,12 +3,14 @@ const readline = require("readline-sync");
 
 const { copyFileSync } = require("fs");
 
-const _errorInterpret = require("../functions/errorInt");
 const _convertAbsolute = require("../functions/convAbs");
+
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const copyfile = (src, dest) => {
   if (!src || !dest) {
-    _errorInterpret("0x0006");
+    _errorInterpret(5);
     return;
   }
 
@@ -25,7 +27,7 @@ const copyfile = (src, dest) => {
     )
     .toLowerCase();
   if (confirmText.includes("n") || !confirmText.includes("y")) {
-    _errorInterpret("0x0007");
+    _errorInterpret(6);
     return;
   }
 
@@ -34,18 +36,15 @@ const copyfile = (src, dest) => {
     copyFileSync(srcPath, destPath);
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret("0x0008", {
+      _errorInterpret(7, {
         variable: dest,
       });
     } else if (err.code === "ENOENT") {
-      _errorInterpret("0x0009", {
+      _errorInterpret(8, {
         variable: `${src} and/or ${dest}`,
       });
     } else {
-      _errorInterpret("0x0010", {
-        variable: dest,
-        wordCode: err.code,
-      });
+      _fatalError(err);
     }
   }
 

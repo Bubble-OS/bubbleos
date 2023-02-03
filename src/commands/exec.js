@@ -1,17 +1,20 @@
 const chalk = require("chalk");
+
 const { execFile: exec } = require("child_process");
 const fs = require("fs");
 
-const _convertAbsolute = require("../functions/convAbs");
 const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
+
+const _convertAbsolute = require("../functions/convAbs");
 
 // Named 'execFile' to avoid naming conflicts
 const execFile = (execFilename) => {
   if (typeof execFilename === "undefined") {
-    _errorInterpret("0x0011");
+    _errorInterpret(9);
     return;
   } else if (process.platform !== "win32") {
-    _errorInterpret("0x0012");
+    _errorInterpret(10);
     return;
   }
 
@@ -19,7 +22,7 @@ const execFile = (execFilename) => {
   const fullPath = _convertAbsolute(execFilenameExe);
 
   if (!fs.existsSync(execFilenameExe)) {
-    _errorInterpret("0x0013");
+    _errorInterpret(11, { variable: execFilenameExe });
     return;
   }
 
@@ -29,7 +32,7 @@ const execFile = (execFilename) => {
     exec(execFilenameExe, () => {});
     console.log(chalk.green("Executed successfully.\n"));
   } catch (err) {
-    _errorInterpret("0x0014");
+    _fatalError(err);
   }
 };
 

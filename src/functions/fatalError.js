@@ -1,8 +1,11 @@
 const chalk = require("chalk");
 
+/**
+ * End BubbleOS with a fatal exception with exit code `1`.
+ *
+ * @param {Error} err The error.
+ */
 const _fatalError = (err) => {
-  const restRedBg = chalk.bgRed(" ").repeat(process.stdout.columns);
-
   console.log(`${chalk.bgRed.bold.underline("!!! FATAL ERROR !!!")}\n`);
   console.log(
     `${chalk.red.bold(

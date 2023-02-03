@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-const { ERRORS: errors } = require("../variables/constants");
+const errors = require("../variables/errors");
 
 /**
  * Interpret an error from the `ERRORS` object and `console.log` a formatted string with the error code, error message, and stylings with `chalk`.
@@ -10,17 +10,17 @@ const { ERRORS: errors } = require("../variables/constants");
  * Example:
  *
  * ```js
- * _errorInterpret("0x0001", { variable: command });
+ * _errorInterpret(1, { variable: command });
  * ```
  *
- * @param {string} errorCode The error code from the `ERRORS` object. Make sure it exists before adding it.
+ * @throws An `Error` if the error code does not exist.
+ * @param {number} errorCode The error code from the `ERRORS` object. Make sure it exists before adding it.
  * @param {object} options An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
  */
 const _errorInterpret = (
   errorCode,
   options = {
     variable: undefined,
-    wordCode: undefined,
   }
 ) => {
   if (typeof errors[errorCode] === "undefined") {
@@ -31,7 +31,6 @@ const _errorInterpret = (
 
   const stringVars = {
     "%VARIABLE%": options.variable,
-    "%WORD_CODE%": options.wordCode,
   };
 
   let errorMessage = errors[errorCode];

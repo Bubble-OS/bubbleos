@@ -2,27 +2,28 @@ const chalk = require("chalk");
 const { isText } = require("istextorbinary");
 
 const fs = require("fs");
-const path = require("path");
 
-const _errorInterpret = require("../functions/errorInt");
 const _convertAbsolute = require("../functions/convAbs");
 
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
+
 const wcount = (file) => {
-  if (typeof file === "undefined") {
-    _errorInterpret("0x0041");
+  if (!file) {
+    _errorInterpret(31);
     return;
   }
 
   const fileName = _convertAbsolute(file);
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret("0x0042", { variable: fileName });
+    _errorInterpret(32, { variable: fileName });
     return;
   }
 
   try {
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret("0x0043");
+      _errorInterpret(33);
       return;
     }
 
@@ -33,9 +34,9 @@ const wcount = (file) => {
     console.log(`Words: ${chalk.bold(fileContents.split(" ").length)}\n`);
   } catch (err) {
     if (err.code === "EISDIR") {
-      _errorInterpret("0x0044", { variable: fileName });
+      _errorInterpret(34, { variable: fileName });
     } else {
-      _errorInterpret("0x0045", { variable: fileName, wordCode: err.code });
+      _fatalError(err);
     }
   }
 };

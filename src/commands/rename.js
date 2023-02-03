@@ -2,15 +2,17 @@ const chalk = require("chalk");
 
 const fs = require("fs");
 
-const _errorInterpret = require("../functions/errorInt");
 const _convertAbsolute = require("../functions/convAbs");
+
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const rename = (file, renamed) => {
   if (!file || !renamed) {
-    _errorInterpret("0x0051");
+    _errorInterpret(39);
     return;
   } else if (file.trim() === renamed.trim()) {
-    _errorInterpret("0x0052", { variable: `${file} to ${renamed}` });
+    _errorInterpret(40, { variable: `${file} to ${renamed}` });
     return;
   }
 
@@ -18,7 +20,7 @@ const rename = (file, renamed) => {
   const renamedName = _convertAbsolute(renamed.trim());
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret("0x0053", { variable: fileName });
+    _errorInterpret(41, { variable: fileName });
     return;
   }
 
@@ -27,18 +29,15 @@ const rename = (file, renamed) => {
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret("0x0054", {
+      _errorInterpret(42, {
         variable: fileName,
       });
     } else if (err.code === "EBUSY") {
-      _errorInterpret("0x0055", {
+      _errorInterpret(43, {
         variable: fileName,
       });
     } else {
-      _errorInterpret("0x0056", {
-        variable: fileName,
-        wordCode: err.code,
-      });
+      _fatalError(err);
     }
   }
 };

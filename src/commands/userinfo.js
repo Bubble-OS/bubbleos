@@ -1,6 +1,7 @@
 const chalk = require("chalk");
 const { userInfo } = require("os");
-const _errorInterpret = require("../functions/errorInt");
+
+const _fatalError = require("../functions/fatalError");
 
 /**
  * Get user information. Renamed to not cause issues with naming conventions.
@@ -19,7 +20,7 @@ const userinfocmd = () => {
     console.log(`Home directory: ${chalk.bold(homedir)}`);
     console.log(`Username: ${chalk.bold(username)}\n`);
   } catch (err) {
-    _errorInterpret("0x0040");
+    _fatalError(err);
   }
 };
 

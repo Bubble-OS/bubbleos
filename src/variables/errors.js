@@ -1,3 +1,5 @@
+const chalk = require("chalk");
+
 const {
   _alreadyExistsError,
   _cancelledError,
@@ -40,7 +42,7 @@ const ERRORS = {
   // 'exec' command
   9: _enterParamError("a file name to execute", "exec explorer.exe"),
   10: _osCompatibilityError("Windows"),
-  11: _nonExistentError("directory"),
+  11: _nonExistentError("file"),
   // 'mkdir' command
   12: _enterParamError("a directory name", "mkdir test"),
   13: _alreadyExistsError("directory"),
@@ -71,6 +73,7 @@ const ERRORS = {
   32: _doesNotExistError("file"),
   33: _encodingError("UTF-8", "plain text files"),
   34: _viewDirectoryError("wcount", true),
+  // 'help' command
   35: _unrecognizedCommandError(),
   // 'size' command
   36: _enterParamError("a file", "size test.bub"),
@@ -91,8 +94,12 @@ const ERRORS = {
   // 'fif' command
   47: _enterParamError("the filename/the phrase", "fif hello.bub world"),
   48: _doesNotExistError("file"),
-  49: _encodingError("UTF-8", "plain text files"),
-  50: _viewDirectoryError("fif", false),
+  49: _viewDirectoryError("fif", false),
+  50: _encodingError("UTF-8", "plain text files"),
+  // 'ls' command (IDK why it is at the end, just forgot to add it earlier ¯\_(ツ)_/¯)
+  51: _nonExistentError("directory"),
+  // More 'size' command error messages :)
+  52: `The 'sizes' flag must start with ${chalk.italic("'--sizes='")}.`, // No need for a function, since this is only used once, although it may be extracted later
 };
 
 module.exports = ERRORS;

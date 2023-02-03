@@ -39,7 +39,7 @@ while (true) {
   const { command, isEmpty, isExit } = prompt();
 
   // If the command is empty, throw an error
-  if (isEmpty) _errorInterpret("0x0000");
+  if (isEmpty) _errorInterpret(0);
 
   if (isExit) {
     // If the user typed in 'exit'
@@ -94,7 +94,7 @@ while (true) {
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {
-      _errorInterpret("0x0001", { variable: command });
+      _errorInterpret(1, { variable: command });
     }
   }
 

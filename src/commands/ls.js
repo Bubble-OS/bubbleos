@@ -5,7 +5,7 @@ const _errorInterpret = require("../functions/errorInt");
 
 const ls = (directory = process.cwd()) => {
   if (!fs.existsSync(directory)) {
-    _errorInterpret("0x0015", { variable: directory });
+    _errorInterpret(51, { variable: directory });
     return;
   }
 

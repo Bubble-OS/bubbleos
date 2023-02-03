@@ -1,10 +1,11 @@
 const chalk = require("chalk");
 
 const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const cd = (dir) => {
-  if (dir === "") {
-    _errorInterpret("0x0002");
+  if (!dir) {
+    _errorInterpret(2);
     return;
   }
 
@@ -12,14 +13,11 @@ const cd = (dir) => {
     process.chdir(dir);
   } catch (err) {
     if (err.code === "ENOENT") {
-      _errorInterpret("0x0003", { variable: dir });
+      _errorInterpret(3, { variable: dir });
     } else if (err.code === "EPERM") {
-      _errorInterpret("0x0004", { variable: dir });
+      _errorInterpret(4, { variable: dir });
     } else {
-      _errorInterpret("0x0005", {
-        variable: dir,
-        wordCode: err.code,
-      });
+      _fatalError(err);
     }
     return;
   }

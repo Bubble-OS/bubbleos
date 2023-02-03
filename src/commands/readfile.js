@@ -3,25 +3,27 @@ const { isText } = require("istextorbinary");
 
 const fs = require("fs");
 
-const _errorInterpret = require("../functions/errorInt");
 const _convertAbsolute = require("../functions/convAbs");
+
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const readfile = (file) => {
   if (typeof file === "undefined") {
-    _errorInterpret("0x0024");
+    _errorInterpret(18);
     return;
   }
 
   const fileName = _convertAbsolute(file);
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret("0x0025", { variable: fileName });
+    _errorInterpret(19, { variable: fileName });
     return;
   }
 
   try {
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret("0x0026");
+      _errorInterpret(20);
       return;
     }
 
@@ -31,9 +33,9 @@ const readfile = (file) => {
     console.log();
   } catch (err) {
     if (err.code === "EISDIR") {
-      _errorInterpret("0x0027", { variable: fileName });
+      _errorInterpret(21, { variable: fileName });
     } else {
-      _errorInterpret("0x0028", { variable: fileName, wordCode: err.code });
+      _fatalError(err);
     }
   }
 };

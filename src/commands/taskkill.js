@@ -1,10 +1,11 @@
 const chalk = require("chalk");
 
 const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const taskkill = (pid) => {
   if (typeof pid === "undefined") {
-    _errorInterpret("0x0035");
+    _errorInterpret(27);
     return;
   }
 
@@ -14,7 +15,7 @@ const taskkill = (pid) => {
   };
 
   if (!isNumeric(pid)) {
-    _errorInterpret("0x0036");
+    _errorInterpret(28);
     return;
   }
 
@@ -25,9 +26,9 @@ const taskkill = (pid) => {
     console.log(`Successfully killed process ${chalk.green(pid)}.\n`);
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret("0x0037", { variable: pid });
+      _errorInterpret(29, { variable: pid });
     } else {
-      _errorInterpret("0x0038", { variable: pid, wordCode: err.code });
+      _fatalError(err);
     }
   }
 };

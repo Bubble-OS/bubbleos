@@ -29,8 +29,8 @@ const _fatalError = require("../functions/fatalError");
  */
 const fif = (file, toFind) => {
   // Check to make sure the file/phrase to find is not empty
-  if (typeof file === "undefined" || typeof toFind === "undefined") {
-    _errorInterpret("0x0060");
+  if (!file || !toFind) {
+    _errorInterpret(47);
     return;
   }
 
@@ -39,19 +39,19 @@ const fif = (file, toFind) => {
 
   // Make sure the file exists
   if (!fs.existsSync(fileName)) {
-    _errorInterpret("0x0061", { variable: fileName });
+    _errorInterpret(48, { variable: fileName });
     return;
   }
 
   try {
     if (fs.lstatSync(fileName).isDirectory()) {
-      _errorInterpret("0x0065", { variable: fileName });
+      _errorInterpret(49, { variable: fileName });
       return;
     }
 
     // Make sure the file IS a text file
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret("0x0062");
+      _errorInterpret(50);
       return;
     }
 
@@ -59,7 +59,7 @@ const fif = (file, toFind) => {
     const contents = fs.readFileSync(fileName, { encoding: "utf-8", flag: "r" });
 
     // You gotta be careful with this
-    // The brackets seem to confuse a few ??
+    // The brackets seem to confuse a few
 
     // Log the number of occurances
     console.log(
@@ -73,13 +73,7 @@ const fif = (file, toFind) => {
     // Even when paired with Chalk
     // For loops will not help
   } catch (err) {
-    if (err.code === "EISDIR") {
-      // If the path is a directory
-      _errorInterpret("0x0065", { variable: fileName });
-    } else {
-      // Another error
-      _fatalError(err);
-    }
+    _fatalError(err);
   }
 };
 
