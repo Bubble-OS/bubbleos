@@ -1,10 +1,8 @@
 const chalk = require("chalk");
 
-const { GLOBAL_NAME, AUTHOR, VERSION, IN_BETA } = require("./variables/aboutConsts");
+const { GLOBAL_NAME, AUTHOR, VERSION, BUILD, IN_BETA } = require("./variables/aboutConsts");
 
-const year = new Date().getFullYear();
-
-console.log(`${chalk.bold(`${GLOBAL_NAME}, ${year} (v${VERSION})`)}`);
+console.log(`${chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`)}`);
 console.log(`Made by ${AUTHOR}!\n`);
 
 if (IN_BETA)

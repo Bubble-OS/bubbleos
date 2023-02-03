@@ -4,6 +4,21 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
+## Build 48-5? (v0.4.8-v0.5.?)
+
+### Added Features
+
+_No features have been added in this release._
+
+### Changed/Fixed Features
+
+- Changed the intro; added build number and removed year.
+- Changed the way error messages display (from `Error code 1` to `[1]`).
+
+### Removed Features
+
+_No features have been removed in this release._
+
 ## Build 43-48 (v0.4.3-v0.4.8)
 
 ### Added Features
