@@ -12,6 +12,7 @@ _No features have been added in this release._
 
 ### Changed/Fixed Features
 
+- Changed the way the OS displays in `sysinfo` to be more user-friendly.
 - Changed the intro; added build number and removed year.
 - Changed the way error messages display (from `Error code 1` to `[1]`).
 

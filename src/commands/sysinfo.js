@@ -1,14 +1,22 @@
 const chalk = require("chalk");
 
+const os = require("os");
+
 const sysinfo = (all) => {
+  const friendlyOS = () => {
+    let friendlyName = os.type();
+    if (os.type() === "Darwin") {
+      friendlyName = "macOS";
+    } else if (os.type() === "Windows_NT") {
+      friendlyName = "Windows";
+    }
+    return friendlyName;
+  };
+
   console.log(`${chalk.bold.underline("BASIC INFORMATION")}`);
 
-  console.log(`Operating System: ${chalk.bold(process.platform)}`);
+  console.log(`Operating System: ${chalk.bold(friendlyOS())}`);
   console.log(`Architecture: ${chalk.bold(process.arch)}`);
-
-  if (process.platform === "linux") {
-    console.log(chalk.red.dim("Hello, Linux user!"));
-  }
 
   if (!all) {
     console.log(chalk.cyan(`\nUse ${chalk.italic("-a")} to see all information.\n`));
