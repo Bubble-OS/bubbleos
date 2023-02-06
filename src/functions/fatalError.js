@@ -22,9 +22,9 @@ const _fatalError = (err) => {
       )} flag to see in detail what and when the error occurs.`
     )}\n`
   );
-  console.log(`${chalk.red.bold.dim.underline("Technical Error Information")}\n`);
+  console.log(`${chalk.red.dim.underline("Technical Error Information")}\n`);
   console.log(
-    `${chalk.red.bold.dim(
+    `${chalk.red.dim(
       `Message: ${err.message}\nTechnical error number: ${err.errno}\nTechnical error code: ${err.code}\nSystem call: ${err.syscall}`
     )}\n`
   );

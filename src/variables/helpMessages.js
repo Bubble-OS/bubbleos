@@ -116,6 +116,11 @@ const HELP_DEFINITIONS = {
     all: `Get the number of occurrences a word/phrase has in a specified file.`,
     usage: [`fif <filename> <phrase>`],
   },
+  cwd: {
+    description: `Get the current working directory.`,
+    all: `Get the current working directory that BubbleOS is currently in.`,
+    usage: [`cwd`],
+  },
 };
 
 module.exports = HELP_DEFINITIONS;

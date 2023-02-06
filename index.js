@@ -91,6 +91,8 @@ while (true) {
     historyCmd(_singleParam(command, "history"));
   } else if (command.startsWith("fif")) {
     fif(..._multiParam(command));
+  } else if (command.startsWith("cwd")) {
+    console.log(process.cwd() + "\n");
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {
