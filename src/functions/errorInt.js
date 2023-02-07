@@ -23,23 +23,18 @@ const _errorInterpret = (
     variable: undefined,
   }
 ) => {
-  if (typeof errors[errorCode] === "undefined") {
+  if (typeof errors[errorCode] === "undefined")
     throw new Error(
       "The error code provided is invalid. Make sure you have added it in constants.js."
     );
-  }
 
   const stringVars = {
     "%VARIABLE%": options.variable,
   };
 
   let errorMessage = errors[errorCode];
-  for (let i = 0; i < Object.keys(stringVars).length; i++) {
-    if (typeof Object.values(stringVars)[i] === "undefined") {
-      continue;
-    }
+  for (let i = 0; i < Object.keys(stringVars).length; i++)
     errorMessage = errorMessage.replace(Object.keys(stringVars)[i], Object.values(stringVars)[i]);
-  }
 
   console.log(chalk.red(`${chalk.bold(`[${errorCode}]`)} ${errorMessage}\n`));
 };

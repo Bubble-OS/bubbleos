@@ -48,7 +48,7 @@ while (true) {
   } else if (command.startsWith("help")) {
     help(_singleParam(command, "help"));
   } else if (command.startsWith("cd")) {
-    cd(_singleParam(command, "cd"));
+    cd(..._multiParam(command));
   } else if (command.startsWith("ls")) {
     ls(_singleParam(command, "ls"));
   } else if (command.startsWith("sysinfo")) {

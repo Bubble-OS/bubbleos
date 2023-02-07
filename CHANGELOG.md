@@ -10,6 +10,7 @@ Please note that not all versions will have respectible executables with them.
 
 - Added the `ifnet` command, which returns all network interfaces and information about them running on your computer.
 - Added the `cwd` command, which returns the current working directory.
+- Added the `--verbose` flag for the `cd` command again, but it has changed (e.g. messages)!
 - Added the ability to use `/s` to use any file/directory that contains spaces.
 
 ### Changed/Fixed Features
