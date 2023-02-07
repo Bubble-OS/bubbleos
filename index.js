@@ -29,6 +29,7 @@ const rename = require("./src/commands/rename");
 const time = require("./src/commands/time");
 const { _addToHist, historyCmd } = require("./src/commands/history");
 const fif = require("./src/commands/fif");
+const ifnet = require("./src/commands/ifnet");
 
 // Running the introduction one-time
 require("./src/intro");
@@ -93,6 +94,8 @@ while (true) {
     fif(..._multiParam(command));
   } else if (command.startsWith("cwd")) {
     console.log(process.cwd() + "\n");
+  } else if (command.startsWith("ifnet")) {
+    ifnet();
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {
