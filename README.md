@@ -4,15 +4,15 @@ BubbleOS is a shell for your current operating system!
 
 Please note that this is not an operating system, but a shell.
 
-## Install
+## Installation
 
-There is no installer, but just an executable. You can also download the zip file and add the `index.js` to your PATH.
+There is no installer, but just a portable executable. You can also download the `zip` file and add the `index.js` to your `PATH`.
 
 ### Executable
 
 For the portable executable, go the the [Releases](https://github.com/Bubble-OS/bubbleos/releases) page and download the file for your respective operating system (Windows, macOS, Linux).
 
-Run the executable and it should open in a terminal-like window. You can also run this through command prompt (Windows), or the terminal (Mac/Linux), or other command prompt-like apps (e.g. PowerShell).
+Runing the executable should open it in a terminal-like window. You can also run this through command prompt (Windows), or the terminal (Mac/Linux), or other command prompt-like apps (e.g. PowerShell).
 
 ### `PATH` Installer <sup>(\*Recommended for advanced users only)</sup>
 
@@ -69,10 +69,24 @@ Now, you can run BubbleOS anywhere from the command prompt/terminal by just typi
 
 If you have downloaded the executable, just run the file like usual. If you have downloaded the source code and already followed the above steps, run `bubble` in your command interpreter/terminal.
 
-### Commands
+## Commands
 
 To get all of the commands in Bubble straight away, run `help`. Run `help <command>` to get more information about a specific command.
 
-#### `about`
+A `FATAL ERROR` occurs when there is an unknown/unhandled exception in the code. In these circumstances, you can run the command that caused the error with the `--verbose` flag.
 
-Get information about BubbleOS.
+### `about`
+
+Get information about BubbleOS, such as the version number, build number, author name, and links to various websites relating to the author.
+
+### `cd`
+
+Change into another directory on your local machine. You can do this by running `cd <directory>`. This will automatically change the path that Bubble is in and update the [current working directory](https://en.wikipedia.org/wiki/Working_directory) automatically.
+
+Should any issues arise using the `cd` command, you can run it with the `--verbose` flag after the directory (so, like `cd <directory> --verbose`) to see detailed information about what happens, if there is an error, for example.
+
+The possible error codes are:
+
+- `[2]` - The `directory` has not been passed (is `undefined`).
+- `[3]` - The `directory` does not exist (`ENOENT`).
+- `[4]` - The `directory` is not readable (`EPERM`).
