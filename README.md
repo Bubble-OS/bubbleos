@@ -4,6 +4,20 @@ BubbleOS is a shell for your current operating system!
 
 Please note that this is not an operating system, but a shell.
 
+## Table of Contents
+
+1. [Installation](#installation)
+    1. [Executable](#executable)
+    2. [`PATH` Installer](#path-installer)
+        1. [`EXE` File](#exe-file)
+            1. [Windows](#windows)
+            2. [macOS/Linux](#macoslinux)
+        2. [`ZIP` File](#zip-file)
+3. [Using Bubble](#using-bubble)
+    1. [Commands](#commands)
+        1. [`about`](#about)
+        2. [`cd`](#cd)
+
 ## Installation
 
 There is no installer, but just a portable executable. You can also download the `zip` file and add the `index.js` to your `PATH`.
@@ -14,7 +28,9 @@ For the portable executable, go the the [Releases](https://github.com/Bubble-OS/
 
 Runing the executable should open it in a terminal-like window. You can also run this through command prompt (Windows), or the terminal (Mac/Linux), or other command prompt-like apps (e.g. PowerShell).
 
-### `PATH` Installer <sup>(\*Recommended for advanced users only)</sup>
+### `PATH` Installer
+
+**Recommended for advanced users only!**
 
 #### `EXE` File
 
