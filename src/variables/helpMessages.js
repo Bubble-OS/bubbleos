@@ -121,6 +121,11 @@ const HELP_DEFINITIONS = {
     all: `Get the current working directory that BubbleOS is currently in.`,
     usage: [`cwd`],
   },
+  ifnet: {
+    description: `Get all available network interfaces on your computer.`,
+    all: `Get information such as the IP/MAC addresses, net masks, and more for all network interfaces on your computer.`,
+    usage: [`ifnet`],
+  },
 };
 
 module.exports = HELP_DEFINITIONS;

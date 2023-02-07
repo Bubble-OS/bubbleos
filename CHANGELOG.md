@@ -4,16 +4,17 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 48-5? (v0.4.8-v0.5.?)
+## Build 48-52 (v0.4.8-v0.5.2)
 
 ### Added Features
 
-_No features have been added in this release._
+- Added the `ifnet` command, which returns all network interfaces and information about them running on your computer.
+- Added the `cwd` command, which returns the current working directory.
 
 ### Changed/Fixed Features
 
 - Changed the way the OS displays in `sysinfo` to be more user-friendly.
-- Changed the intro; added build number and removed year.
+- Changed the intro; added the build number and removed the year.
 - Changed the way error messages display (from `Error code 1` to `[1]`).
 
 ### Removed Features

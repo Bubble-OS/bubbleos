@@ -1,4 +1,6 @@
 const chalk = require("chalk");
+const sortKeys = require("sort-keys");
+
 const { networkInterfaces } = require("os");
 
 const ifnet = () => {
@@ -24,8 +26,14 @@ const ifnet = () => {
     }
   };
 
+  const makeValueFriendly = (value) => {
+    if (typeof value === "boolean" && value) value = "Yes";
+    else if (typeof value === "boolean") value = "No";
+    return value;
+  };
+
   const netInts = {
-    func: networkInterfaces(),
+    func: sortKeys(networkInterfaces(), { deep: true }),
     keys: Object.keys(networkInterfaces()),
     values: Object.values(networkInterfaces()),
   };
@@ -34,13 +42,13 @@ const ifnet = () => {
 
     for (ele of netInts.func[value]) {
       for (network in ele) {
-        console.log(`    ${makeUserFriendly(network)}: ${chalk.bold(ele[network])}`);
+        console.log(
+          `    ${makeUserFriendly(network)}: ${chalk.bold(makeValueFriendly(ele[network]))}`
+        );
       }
 
       console.log();
     }
-
-    console.log();
   }
 };
 
