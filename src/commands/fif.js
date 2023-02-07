@@ -8,7 +8,10 @@ const path = require("path");
 
 // Custom-made functions
 const _errorInterpret = require("../functions/errorInt");
+
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
+
 const _fatalError = require("../functions/fatalError");
 
 /**
@@ -28,6 +31,8 @@ const _fatalError = require("../functions/fatalError");
  * @param {string} toFind The word or phrase to find
  */
 const fif = (file, toFind) => {
+  file = _replaceSpaces(file);
+
   // Check to make sure the file/phrase to find is not empty
   if (!file || !toFind) {
     _errorInterpret(47);

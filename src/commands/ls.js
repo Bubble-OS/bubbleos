@@ -1,11 +1,15 @@
 const chalk = require("chalk");
 const fs = require("fs");
 
+const _replaceSpaces = require("../functions/replaceSpaces");
+
 const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
 const ls = (directory = process.cwd()) => {
   try {
+    directory = _replaceSpaces(directory);
+
     if (!fs.existsSync(directory)) {
       _errorInterpret(51, { variable: directory });
       return;

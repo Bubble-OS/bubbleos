@@ -3,12 +3,16 @@ const readline = require("readline-sync");
 
 const { copyFileSync } = require("fs");
 
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
 const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
 const copyfile = (src, dest) => {
+  src = _replaceSpaces(src);
+  dest = _replaceSpaces(dest);
+
   if (!src || !dest) {
     _errorInterpret(5);
     return;

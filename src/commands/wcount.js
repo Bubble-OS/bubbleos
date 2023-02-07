@@ -3,12 +3,15 @@ const { isText } = require("istextorbinary");
 
 const fs = require("fs");
 
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
 const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
 const wcount = (file) => {
+  file = _replaceSpaces(file);
+
   if (!file) {
     _errorInterpret(31);
     return;

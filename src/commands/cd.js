@@ -1,9 +1,12 @@
 const chalk = require("chalk");
 
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
 const cd = (dir) => {
+  dir = _replaceSpaces(dir);
+
   if (!dir) {
     _errorInterpret(2);
     return;

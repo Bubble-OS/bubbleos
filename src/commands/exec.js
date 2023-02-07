@@ -6,10 +6,13 @@ const fs = require("fs");
 const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
 // Named 'execFile' to avoid naming conflicts
 const execFile = (execFilename) => {
+  execFilename = _replaceSpaces(execFilename);
+
   if (typeof execFilename === "undefined") {
     _errorInterpret(9);
     return;

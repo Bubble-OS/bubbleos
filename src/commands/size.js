@@ -1,6 +1,7 @@
 const chalk = require("chalk");
 const fs = require("fs");
 
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertSize = require("../functions/convSize");
 const _convertAbsolute = require("../functions/convAbs");
 
@@ -8,6 +9,8 @@ const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
 const size = (file, sizesToDisplay) => {
+  file = _replaceSpaces(file);
+
   let sizes = undefined;
   const sizesTrans = {
     b: "Bytes",

@@ -2,12 +2,16 @@ const chalk = require("chalk");
 
 const fs = require("fs");
 
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
 const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
 const rename = (file, renamed) => {
+  file = _replaceSpaces(file);
+  renamed = _replaceSpaces(renamed);
+
   if (!file || !renamed) {
     _errorInterpret(39);
     return;

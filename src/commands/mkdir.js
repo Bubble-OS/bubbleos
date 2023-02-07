@@ -1,12 +1,15 @@
 const chalk = require("chalk");
 const fs = require("fs");
 
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
 const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
 const mkdir = (dirName) => {
+  dirName = _replaceSpaces(dirName);
+
   if (!dirName) {
     _errorInterpret(12);
     return;

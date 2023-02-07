@@ -3,12 +3,15 @@ const readline = require("readline-sync");
 
 const fs = require("fs");
 
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
 const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
 const del = (file) => {
+  file = _replaceSpaces(file);
+
   if (!file) {
     _errorInterpret(22);
     return;
