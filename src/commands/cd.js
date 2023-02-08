@@ -7,7 +7,8 @@ const _verbInt = require("../functions/verboseInt");
 
 const _verbMsgs = [
   `Replacing '/s' with spaces...`,
-  `Checking if directory exists (not possible if running with '--verbose')...`,
+  `Checking if directory exists...`,
+  `The directory, '%VARIABLE%', is not provided (is 'undefined') (error code '%ERROR%')!`,
   `Check complete, continuing...`,
   `Changing directory to '%VARIABLE%'...`,
   `The directory '%VARIABLE%' does not exist (error code '%ERROR%')!`,
@@ -19,39 +20,47 @@ const _verbMsgs = [
 
 const cd = (dir, ...params) => {
   let verbose = false;
-  if (params.includes("--verbose") || params.includes("/verbose")) verbose = true;
+  if (
+    params.includes("--verbose") ||
+    params.includes("/verbose") ||
+    dir === "--verbose" ||
+    dir === "/verbose"
+  )
+    verbose = true;
 
   _verbInt(_verbMsgs[0], verbose);
   dir = _replaceSpaces(dir);
 
   _verbInt(_verbMsgs[1], verbose);
   if (typeof dir === "undefined") {
+    _verbInt(_verbMsgs[2], verbose, { variable: dir, error: 2 });
     _errorInterpret(2);
+    _verbInt(_verbMsgs[8], verbose);
     return;
   }
-  _verbInt(_verbMsgs[2], verbose);
+  _verbInt(_verbMsgs[3], verbose);
 
   try {
-    _verbInt(_verbMsgs[3], verbose, { variable: dir });
+    _verbInt(_verbMsgs[4], verbose, { variable: dir });
     process.chdir(dir);
   } catch (err) {
     if (err.code === "ENOENT") {
-      _verbInt(_verbMsgs[4], verbose, { variable: dir, error: 3 });
+      _verbInt(_verbMsgs[5], verbose, { variable: dir, error: 3 });
       _errorInterpret(3, { variable: dir });
     } else if (err.code === "EPERM") {
-      _verbInt(_verbMsgs[5], verbose, { variable: dir, error: 4 });
+      _verbInt(_verbMsgs[6], verbose, { variable: dir, error: 4 });
       _errorInterpret(4, { variable: dir });
     } else {
-      _verbInt(_verbMsgs[6], verbose, { variable: dir, error: err.code });
+      _verbInt(_verbMsgs[7], verbose, { error: err.code });
       _fatalError(err);
     }
 
-    _verbInt(_verbMsgs[7], verbose, { variable: dir, error: err.code });
+    _verbInt(_verbMsgs[8], verbose, { variable: dir, error: err.code });
     return;
   }
 
   console.log(`Changed directory to ${chalk.green(process.cwd())}.\n`);
-  _verbInt(_verbMsgs[8], verbose, { variable: dir });
+  _verbInt(_verbMsgs[9], verbose, { variable: dir });
 };
 
 module.exports = cd;
