@@ -10,6 +10,7 @@ Please note that not all versions will have respectible executables with them.
 
 - Added the `-l`/`/l` flag for the `about` command to display the MIT license.
 - Added the `/verbose` flag alongside the `--verbose` flag.
+- Added the verbose option for the `copyfile` command.
 
 ### Changed/Fixed Features
 

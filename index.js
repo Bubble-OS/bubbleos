@@ -69,8 +69,7 @@ while (true) {
   } else if (command.startsWith("readfile")) {
     readfile(_singleParam(command, "readfile"));
   } else if (command.startsWith("copyfile")) {
-    const params = command.split(" ");
-    copyfile(params[1], params[2]);
+    copyfile(..._multiParam(command));
   } else if (command.startsWith("print")) {
     printText(_singleParam(command, "print"));
   } else if (command.startsWith("userinfo")) {
