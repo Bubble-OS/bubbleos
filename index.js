@@ -63,7 +63,7 @@ while (true) {
   } else if (command.startsWith("exec")) {
     execFile(_singleParam(command, "exec"));
   } else if (command.startsWith("about")) {
-    about();
+    about(..._multiParam(command));
   } else if (command.startsWith("mkfile")) {
     mkfile(_singleParam(command, "mkfile"));
   } else if (command.startsWith("readfile")) {

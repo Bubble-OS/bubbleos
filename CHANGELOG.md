@@ -4,6 +4,21 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
+## Build 52-5? (v0.5.2-v0.5.?)
+
+### Added Features
+
+- Added the `-l`/`/l` flag for the `about` command to display the MIT license.
+- Added the `/verbose` flag alongside the `--verbose` flag.
+
+### Changed/Fixed Features
+
+_No features have been changed/fixed in this release._
+
+### Removed Features
+
+_No features have been removed in this release._
+
 ## Build 48-52 (v0.4.8-v0.5.2)
 
 ### Added Features

@@ -19,7 +19,7 @@ const verbMsgs = [
 
 const cd = (dir, ...params) => {
   let verbose = false;
-  if (params.includes("--verbose")) verbose = true;
+  if (params.includes("--verbose") || params.includes("/verbose")) verbose = true;
 
   _verbInt(verbMsgs[0], verbose);
   dir = _replaceSpaces(dir);
