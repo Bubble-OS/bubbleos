@@ -100,6 +100,8 @@ const ERRORS = {
   51: _nonExistentError("directory"),
   // More 'size' command error messages :)
   52: `The 'sizes' flag must start with ${chalk.italic("'--sizes='")}.`, // No need for a function, since this is only used once, although it may be extracted later
+  // 'ls' again!
+  53: `The directory passed is not a directory.`,
 };
 
 module.exports = ERRORS;

@@ -48,6 +48,9 @@ const ls = (directory = process.cwd()) => {
 
     console.log();
   } catch (err) {
+    if (err.code === "ENOTDIR") {
+      _errorInterpret(53);
+    }
     _fatalError(err);
   }
 };

@@ -14,7 +14,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Changed/Fixed Features
 
-_No features have been changed/fixed in this release._
+- Fixed an issue where `ls` would crash BubbleOS with a `FATAL ERROR` if a file was passed.
 
 ### Removed Features
 
