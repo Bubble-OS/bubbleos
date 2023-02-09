@@ -33,8 +33,6 @@ const copyfile = (src, dest, ...params) => {
   if (
     params.includes("--verbose") ||
     params.includes("/verbose") ||
-    src === "--verbose" ||
-    src === "/verbose" ||
     dest === "--verbose" ||
     dest === "/verbose"
   )
@@ -47,7 +45,10 @@ const copyfile = (src, dest, ...params) => {
   _verbInt(_verbMsgs[1], verbose);
   if (!src || !dest) {
     _verbInt(_verbMsgs[2], verbose, { error: 5 });
-    _errorInterpret(5);
+    _errorInterpret(2, {
+      type: "the source and destination",
+      example: "copyfile test.txt D:\\test.txt",
+    });
     _verbInt(_verbMsgs[3], verbose);
     return;
   }
@@ -69,7 +70,7 @@ const copyfile = (src, dest, ...params) => {
   _verbInt(_verbMsgs[6], verbose);
   if (confirmText.includes("n") || !confirmText.includes("y")) {
     _verbInt(_verbMsgs[7], verbose, { error: 6 });
-    _errorInterpret(6);
+    console.log(chalk.yellow("Operation cancelled.\n"));
     _verbInt(_verbMsgs[3], verbose);
     return;
   }
@@ -82,13 +83,12 @@ const copyfile = (src, dest, ...params) => {
   } catch (err) {
     if (err.code === "EPERM") {
       _verbInt(_verbMsgs[10], verbose, { variable: `${srcPath} and/or ${destPath}`, error: 7 });
-      _errorInterpret(7, {
-        variable: dest,
-      });
+      _errorInterpret(4, { todo: "read/write to", variable: `${srcPath} and/or ${destPath}` });
     } else if (err.code === "ENOENT") {
       _verbInt(_verbMsgs[11], verbose, { variable: srcPath, error: 8 });
-      _errorInterpret(8, {
-        variable: `${src} and/or ${dest}`,
+      _errorInterpret(3, {
+        type: "source and/or destination",
+        variable: `${srcPath} and/or ${destPath}`,
       });
     } else {
       _verbInt(_verbMsgs[12], verbose, { error: err.code });

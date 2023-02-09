@@ -8,18 +8,19 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added Features
 
-- Changed error codes dramatically; they are now reused and only 12 are available to make it easier to troubleshoot.
 - Added the `-l`/`/l` flag for the `about` command to display the MIT license.
 - Added the `/verbose` flag alongside the `--verbose` flag.
 - Added the verbose option for the `copyfile` command.
 
 ### Changed/Fixed Features
 
+- Changed error codes dramatically; they are now reused and only 12 are available to make it easier to troubleshoot.
 - Fixed an issue where `ls` would crash BubbleOS with a `FATAL ERROR` if a file was passed.
+- Changed a few error messages to warning messages.
 
 ### Removed Features
 
-_No features have been removed in this release._
+- Removed lots of error codes (around 50-60) and messages.
 
 ## Build 48-52 (v0.4.8-v0.5.2)
 

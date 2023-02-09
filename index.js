@@ -98,7 +98,7 @@ while (true) {
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {
-      _errorInterpret(1, { variable: command });
+      _errorInterpret(1, { command });
     }
   }
 

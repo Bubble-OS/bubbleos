@@ -1,4 +1,4 @@
-const _errorInterpret = require("../functions/errorInt");
+const chalk = require("chalk");
 
 /**
  * Print text to screen. Named `printText` instead of `print` to avoid naming collisions.
@@ -7,7 +7,7 @@ const _errorInterpret = require("../functions/errorInt");
  */
 const printText = (text) => {
   if (!text) {
-    _errorInterpret(30);
+    console.log(chalk.yellow("No text was provided to output.\n"));
     return;
   }
 

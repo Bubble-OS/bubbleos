@@ -25,10 +25,15 @@ const historyCmd = (numToDisplay) => {
   }
 
   if (numToDisplay % 1 !== 0) {
-    _errorInterpret(45, { variable: numToDisplay });
+    _errorInterpret(10, {
+      type: "history point",
+      supposedTo: "numbers",
+      notContain: "letters/symbols",
+      variable: numToDisplay,
+    });
     return;
   } else if (typeof history[numToDisplay - 1] === "undefined") {
-    _errorInterpret(46, { variable: numToDisplay });
+    console.log(chalk.yellow("No history is available."));
     return;
   }
 

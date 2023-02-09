@@ -13,20 +13,20 @@ const readfile = (file) => {
   file = _replaceSpaces(file);
 
   if (typeof file === "undefined") {
-    _errorInterpret(18);
+    _errorInterpret(2, { type: "a file", example: "readfile test.txt" });
     return;
   }
 
   const fileName = _convertAbsolute(file);
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret(19, { variable: fileName });
+    _errorInterpret(3, { type: "file", variable: fileName });
     return;
   }
 
   try {
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret(20);
+      _errorInterpret(8, { encoding: "UTF-8 (plain text files)" });
       return;
     }
 
@@ -36,7 +36,7 @@ const readfile = (file) => {
     console.log();
   } catch (err) {
     if (err.code === "EISDIR") {
-      _errorInterpret(21, { variable: fileName });
+      _errorInterpret(9, { command: "readfile" });
     } else {
       _fatalError(err);
     }

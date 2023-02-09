@@ -35,7 +35,7 @@ const fif = (file, toFind) => {
 
   // Check to make sure the file/phrase to find is not empty
   if (!file || !toFind) {
-    _errorInterpret(47);
+    _errorInterpret(2, { type: "the file and the phrase to find", example: "fif test.txt hello" });
     return;
   }
 
@@ -44,19 +44,19 @@ const fif = (file, toFind) => {
 
   // Make sure the file exists
   if (!fs.existsSync(fileName)) {
-    _errorInterpret(48, { variable: fileName });
+    _errorInterpret(3, { type: "file", variable: fileName });
     return;
   }
 
   try {
     if (fs.lstatSync(fileName).isDirectory()) {
-      _errorInterpret(49, { variable: fileName });
+      _errorInterpret(9, { command: "fif" });
       return;
     }
 
     // Make sure the file IS a text file
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret(50);
+      _errorInterpret(8, { encoding: "UTF-8 (plain text files)" });
       return;
     }
 

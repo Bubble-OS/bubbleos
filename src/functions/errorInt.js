@@ -19,7 +19,17 @@ const errors = require("../variables/errors");
  *
  * `4` - You do not have permission to `%TODO%` `'%VARIABLE%'`. Make sure you have the correct permissions and try again.
  *
- * `5` -
+ * `5` - This command only works on `%OS%`.
+ *
+ * `6` - The `%TYPE%`, `'%VARIABLE%'`, already exists. Make sure that no file/directory with the same name exists and try again.
+ *
+ * `7` - The `%TYPE%`, `'%VARIABLE%'`, is being used by another program. End the program and try again.
+ *
+ * `8` - Cannot read any files other than ones encoded in `%ENCODING%`.
+ *
+ * `9` - Viewing directories using the `'%COMMAND%'` command is not supported.
+ *
+ * `10` - The `%TYPE%` can only contain `%SUPPOSED_TO%` and not contain `%NOT_CONTAIN%` (received `'%VARIABLE%'`).
  *
  * Example:
  *

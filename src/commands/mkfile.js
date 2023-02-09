@@ -13,14 +13,14 @@ const mkfile = (file) => {
   file = _replaceSpaces(file);
 
   if (!file) {
-    _errorInterpret(15);
+    _errorInterpret(2, { type: "a file", example: "mkfile test.txt" });
     return;
   }
 
   const fileName = _convertAbsolute(file);
 
   const contents = readline.question(
-    `Please enter the file contents (or press 'Enter' to make a blank file): `
+    `Please enter the file contents (leave blank for an empty file): `
   );
 
   try {
@@ -29,11 +29,11 @@ const mkfile = (file) => {
       fs.writeFileSync(fileName, contents);
       console.log(chalk.green("The operation completed successfully.\n"));
     } else {
-      _errorInterpret(16, { variable: fileName });
+      _errorInterpret(6, { type: "file", variable: fileName });
     }
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret(17, { variable: fileName });
+      _errorInterpret(4, { todo: "make the file", variable: fileName });
     } else {
       _fatalError(err);
     }

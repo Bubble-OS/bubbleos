@@ -13,20 +13,20 @@ const wcount = (file) => {
   file = _replaceSpaces(file);
 
   if (!file) {
-    _errorInterpret(31);
+    _errorInterpret(2, { type: "a file", example: "wcount test.txt" });
     return;
   }
 
   const fileName = _convertAbsolute(file);
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret(32, { variable: fileName });
+    _errorInterpret(3, { type: "file", variable: fileName });
     return;
   }
 
   try {
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret(33);
+      _errorInterpret(8, { encoding: "UTF-8 (plain text files)" });
       return;
     }
 
@@ -37,7 +37,7 @@ const wcount = (file) => {
     console.log(`Words: ${chalk.bold(fileContents.split(" ").length)}\n`);
   } catch (err) {
     if (err.code === "EISDIR") {
-      _errorInterpret(34, { variable: fileName });
+      _errorInterpret(9, { command: "wcount" });
     } else {
       _fatalError(err);
     }

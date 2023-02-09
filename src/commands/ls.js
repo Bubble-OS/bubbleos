@@ -11,7 +11,7 @@ const ls = (directory = process.cwd()) => {
     directory = _replaceSpaces(directory);
 
     if (!fs.existsSync(directory)) {
-      _errorInterpret(51, { variable: directory });
+      _errorInterpret(3, { type: "directory", variable: directory });
       return;
     }
 
@@ -49,7 +49,10 @@ const ls = (directory = process.cwd()) => {
     console.log();
   } catch (err) {
     if (err.code === "ENOTDIR") {
-      _errorInterpret(53);
+      // TODO Add an error message for 'ENOTDIR'
+      // _errorInterpret(53);
+      console.log("Cannot use dir (temp err msg)");
+      return;
     }
     _fatalError(err);
   }

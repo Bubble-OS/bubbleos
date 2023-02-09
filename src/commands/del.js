@@ -13,14 +13,14 @@ const del = (file) => {
   file = _replaceSpaces(file);
 
   if (!file) {
-    _errorInterpret(22);
+    _errorInterpret(2, { type: "a file/directory", example: "del test" });
     return;
   }
 
   const fileName = _convertAbsolute(file);
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret(23, { variable: fileName });
+    _errorInterpret(3, { type: "file/directory", variable: fileName });
     return;
   }
 
@@ -32,20 +32,19 @@ const del = (file) => {
     )
     .toLowerCase();
   if (confirmText.includes("n") || !confirmText.includes("y")) {
-    _errorInterpret(24);
+    console.log(chalk.yellow("Operation cancelled.\n"));
     return;
   }
 
-  console.log(`\nDeleting ${chalk.bold.blueBright(fileName)}...`);
-
   try {
+    console.log(`\nDeleting ${chalk.bold.blueBright(fileName)}...`);
     fs.rmSync(fileName, { recursive: true, force: true });
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EBUSY") {
-      _errorInterpret(25, { variable: fileName });
+      _errorInterpret(7, { todo: "file/directory", variable: fileName });
     } else if (err.code === "EPERM") {
-      _errorInterpret(26, { variable: fileName });
+      _errorInterpret(4, { todo: "delete the file/directory", variable: fileName });
     } else {
       _fatalError(err);
     }

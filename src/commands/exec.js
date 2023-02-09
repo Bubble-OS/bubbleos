@@ -14,25 +14,24 @@ const execFile = (execFilename) => {
   execFilename = _replaceSpaces(execFilename);
 
   if (typeof execFilename === "undefined") {
-    _errorInterpret(9);
+    _errorInterpret(2, { type: "a file", example: "exec test" });
     return;
   } else if (process.platform !== "win32") {
-    _errorInterpret(10);
+    _errorInterpret(5, { os: "Windows" });
     return;
   }
 
   const execFilenameExe = execFilename.endsWith(".exe") ? execFilename : `${execFilename}.exe`;
   const fullPath = _convertAbsolute(execFilenameExe);
 
-  if (!fs.existsSync(execFilenameExe)) {
-    _errorInterpret(11, { variable: execFilenameExe });
+  if (!fs.existsSync(fullPath)) {
+    _errorInterpret(3, { type: "file", variable: fullPath });
     return;
   }
 
-  console.log(`Executing file: ${chalk.bold.blueBright(fullPath)}...`);
-
   try {
-    exec(execFilenameExe, () => {});
+    console.log(`Executing file: ${chalk.bold.blueBright(fullPath)}...`);
+    exec(fullPath, () => {});
     console.log(chalk.green("Executed successfully.\n"));
   } catch (err) {
     _fatalError(err);

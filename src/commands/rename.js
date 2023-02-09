@@ -13,10 +13,13 @@ const rename = (file, renamed) => {
   renamed = _replaceSpaces(renamed);
 
   if (!file || !renamed) {
-    _errorInterpret(39);
+    _errorInterpret(2, {
+      type: "the filename and the new name",
+      example: "rename hello.txt world.txt",
+    });
     return;
   } else if (file.trim() === renamed.trim()) {
-    _errorInterpret(40, { variable: `${file} to ${renamed}` });
+    console.log("Cannot be the same name (temp err msg)");
     return;
   }
 

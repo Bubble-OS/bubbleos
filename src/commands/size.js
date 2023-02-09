@@ -20,7 +20,8 @@ const size = (file, sizesToDisplay) => {
   };
 
   if (typeof sizesToDisplay !== "undefined" && !sizesToDisplay.startsWith("--size=")) {
-    _errorInterpret(52);
+    console.log("This check will be removed (ACTUAL ERR MSG: 'sizes' must start with '--size=')\n");
+    return;
   } else if (typeof sizesToDisplay !== "undefined") {
     sizes = sizesToDisplay.replace("--size=", "").split(",");
 
@@ -32,18 +33,18 @@ const size = (file, sizesToDisplay) => {
   }
 
   if (typeof file === "undefined") {
-    _errorInterpret(36);
+    _errorInterpret(2, { type: "a file", example: "size test.txt" });
     return;
   }
 
   const fileName = _convertAbsolute(file);
   if (!fs.existsSync(fileName)) {
-    _errorInterpret(37, { variable: fileName });
+    _errorInterpret(3, { type: "file", variable: fileName });
     return;
   }
 
   if (fs.lstatSync(fileName).isDirectory()) {
-    _errorInterpret(38);
+    _errorInterpret(9, { command: "size" });
     return;
   }
 

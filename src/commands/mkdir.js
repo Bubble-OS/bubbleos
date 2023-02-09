@@ -11,7 +11,7 @@ const mkdir = (dirName) => {
   dirName = _replaceSpaces(dirName);
 
   if (!dirName) {
-    _errorInterpret(12);
+    _errorInterpret(2, { type: "a directory", example: "mkdir test" });
     return;
   }
 
@@ -23,11 +23,11 @@ const mkdir = (dirName) => {
       fs.mkdirSync(dir);
       console.log(chalk.green("The operation completed successfully.\n"));
     } else {
-      _errorInterpret(13, { variable: dir });
+      _errorInterpret(6, { type: "directory", variable: dir });
     }
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret(14, { variable: dir });
+      _errorInterpret(4, { todo: "make the directory", variable: dir });
     } else {
       _fatalError(err);
     }

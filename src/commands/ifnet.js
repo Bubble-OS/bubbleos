@@ -37,6 +37,12 @@ const ifnet = () => {
     keys: Object.keys(networkInterfaces()),
     values: Object.values(networkInterfaces()),
   };
+
+  if (!netInts.keys.length) {
+    console.log(chalk.yellow("No active network interfaces found.\n"));
+    return;
+  }
+
   for (value in netInts.func) {
     console.log(chalk.red.underline.bold(`${value}`));
 
