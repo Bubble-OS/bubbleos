@@ -34,7 +34,7 @@ const cd = (dir, ...params) => {
   _verbInt(_verbMsgs[1], verbose);
   if (typeof dir === "undefined") {
     _verbInt(_verbMsgs[2], verbose, { variable: dir, error: 2 });
-    _errorInterpret(2);
+    _errorInterpret(2, { type: "a directory", example: "cd test" });
     _verbInt(_verbMsgs[8], verbose);
     return;
   }
@@ -46,10 +46,10 @@ const cd = (dir, ...params) => {
   } catch (err) {
     if (err.code === "ENOENT") {
       _verbInt(_verbMsgs[5], verbose, { variable: dir, error: 3 });
-      _errorInterpret(3, { variable: dir });
+      _errorInterpret(3, { type: "directory", variable: dir });
     } else if (err.code === "EPERM") {
       _verbInt(_verbMsgs[6], verbose, { variable: dir, error: 4 });
-      _errorInterpret(4, { variable: dir });
+      _errorInterpret(4, { todo: "change into the directory", variable: dir });
     } else {
       _verbInt(_verbMsgs[7], verbose, { error: err.code });
       _fatalError(err);

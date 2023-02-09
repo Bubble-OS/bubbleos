@@ -8,6 +8,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added Features
 
+- Changed error codes dramatically; they are now reused and only 12 are available to make it easier to troubleshoot.
 - Added the `-l`/`/l` flag for the `about` command to display the MIT license.
 - Added the `/verbose` flag alongside the `--verbose` flag.
 - Added the verbose option for the `copyfile` command.
