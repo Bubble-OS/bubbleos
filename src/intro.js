@@ -1,6 +1,6 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
-const { GLOBAL_NAME, AUTHOR, VERSION, BUILD, IN_BETA } = require("./variables/aboutConsts");
+import { GLOBAL_NAME, AUTHOR, VERSION, BUILD, IN_BETA } from "./variables/aboutConsts.js";
 
 console.log(`${chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`)}`);
 console.log(`Made by ${AUTHOR}!\n`);

@@ -1,38 +1,38 @@
 #!/usr/bin/env node
 
 // Import some private helper functions
-const _singleParam = require("./src/functions/singleParam");
-const _multiParam = require("./src/functions/multiParam");
-const _errorInterpret = require("./src/functions/errorInt");
+import _singleParam from "./src/functions/singleParam.js";
+import _multiParam from "./src/functions/multiParam.js";
+import _errorInterpret from "./src/functions/errorInt.js";
 
 // Importing some more main commands
-const prompt = require("./src/prompt");
-const help = require("./src/help");
+import prompt from "./src/prompt.js";
+import help from "./src/help.js";
 
 // Importing all of the commands
-const cd = require("./src/commands/cd");
-const ls = require("./src/commands/ls");
-const sysinfo = require("./src/commands/sysinfo");
-const taskkill = require("./src/commands/taskkill");
-const mkdir = require("./src/commands/mkdir");
-const execFile = require("./src/commands/exec");
-const about = require("./src/commands/about");
-const mkfile = require("./src/commands/mkfile");
-const readfile = require("./src/commands/readfile");
-const copyfile = require("./src/commands/copyfile");
-const printText = require("./src/commands/print");
-const userinfocmd = require("./src/commands/userinfo");
-const wcount = require("./src/commands/wcount");
-const del = require("./src/commands/del");
-const size = require("./src/commands/size");
-const rename = require("./src/commands/rename");
-const time = require("./src/commands/time");
-const { _addToHist, historyCmd } = require("./src/commands/history");
-const fif = require("./src/commands/fif");
-const ifnet = require("./src/commands/ifnet");
+import cd from "./src/commands/cd.js";
+import ls from "./src/commands/ls.js";
+import sysinfo from "./src/commands/sysinfo.js";
+import taskkill from "./src/commands/taskkill.js";
+import mkdir from "./src/commands/mkdir.js";
+import execFile from "./src/commands/exec.js";
+import about from "./src/commands/about.js";
+import mkfile from "./src/commands/mkfile.js";
+import readfile from "./src/commands/readfile.js";
+import copyfile from "./src/commands/copyfile.js";
+import printText from "./src/commands/print.js";
+import userinfocmd from "./src/commands/userinfo.js";
+import wcount from "./src/commands/wcount.js";
+import del from "./src/commands/del.js";
+import size from "./src/commands/size.js";
+import rename from "./src/commands/rename.js";
+import time from "./src/commands/time.js";
+import { _addToHist, historyCmd } from "./src/commands/history.js";
+import fif from "./src/commands/fif.js";
+import ifnet from "./src/commands/ifnet.js";
 
 // Running the introduction one-time
-require("./src/intro");
+import "./src/intro.js";
 
 // Repeat until the user exits
 while (true) {

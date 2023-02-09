@@ -11,4 +11,4 @@ const _convertSize = (bytes, decimals = 3) => {
   };
 };
 
-module.exports = _convertSize;
+export default _convertSize;

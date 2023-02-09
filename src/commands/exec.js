@@ -1,13 +1,13 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
-const { execFile: exec } = require("child_process");
-const fs = require("fs");
+import { execFile as exec } from "child_process";
+import { existsSync } from "fs";
 
-const _errorInterpret = require("../functions/errorInt");
-const _fatalError = require("../functions/fatalError");
+import _errorInterpret from "../functions/errorInt.js";
+import _fatalError from "../functions/fatalError.js";
 
-const _replaceSpaces = require("../functions/replaceSpaces");
-const _convertAbsolute = require("../functions/convAbs");
+import _replaceSpaces from "../functions/replaceSpaces.js";
+import _convertAbsolute from "../functions/convAbs.js";
 
 // Named 'execFile' to avoid naming conflicts
 const execFile = (execFilename) => {
@@ -24,7 +24,7 @@ const execFile = (execFilename) => {
   const execFilenameExe = execFilename.endsWith(".exe") ? execFilename : `${execFilename}.exe`;
   const fullPath = _convertAbsolute(execFilenameExe);
 
-  if (!fs.existsSync(fullPath)) {
+  if (!existsSync(fullPath)) {
     _errorInterpret(3, { type: "file", variable: fullPath });
     return;
   }
@@ -38,4 +38,4 @@ const execFile = (execFilename) => {
   }
 };
 
-module.exports = execFile;
+export default execFile;

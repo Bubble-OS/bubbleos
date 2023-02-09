@@ -1,13 +1,13 @@
-const chalk = require("chalk");
-const { isText } = require("istextorbinary");
+import chalk from "chalk";
+import { isText } from "istextorbinary";
 
-const fs = require("fs");
+import { existsSync, readFileSync } from "fs";
 
-const _replaceSpaces = require("../functions/replaceSpaces");
-const _convertAbsolute = require("../functions/convAbs");
+import _replaceSpaces from "../functions/replaceSpaces.js";
+import _convertAbsolute from "../functions/convAbs.js";
 
-const _errorInterpret = require("../functions/errorInt");
-const _fatalError = require("../functions/fatalError");
+import _errorInterpret from "../functions/errorInt.js";
+import _fatalError from "../functions/fatalError.js";
 
 const readfile = (file) => {
   file = _replaceSpaces(file);
@@ -19,20 +19,20 @@ const readfile = (file) => {
 
   const fileName = _convertAbsolute(file);
 
-  if (!fs.existsSync(fileName)) {
+  if (!existsSync(fileName)) {
     _errorInterpret(3, { type: "file", variable: fileName });
     return;
   }
 
   try {
-    if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
+    if (!isText(fileName, readFileSync(fileName, { flag: "r" }))) {
       _errorInterpret(8, { encoding: "UTF-8 (plain text files)" });
       return;
     }
 
     console.log(chalk.bold.underline.redBright(`${file} Contents\n`));
 
-    console.log(fs.readFileSync(fileName, { encoding: "utf-8", flag: "r" }));
+    console.log(readFileSync(fileName, { encoding: "utf-8", flag: "r" }));
     console.log();
   } catch (err) {
     if (err.code === "EISDIR") {
@@ -43,4 +43,4 @@ const readfile = (file) => {
   }
 };
 
-module.exports = readfile;
+export default readfile;

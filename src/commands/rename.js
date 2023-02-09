@@ -1,12 +1,12 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
-const fs = require("fs");
+import { existsSync, renameSync } from "fs";
 
-const _replaceSpaces = require("../functions/replaceSpaces");
-const _convertAbsolute = require("../functions/convAbs");
+import _replaceSpaces from "../functions/replaceSpaces.js";
+import _convertAbsolute from "../functions/convAbs.js";
 
-const _errorInterpret = require("../functions/errorInt");
-const _fatalError = require("../functions/fatalError");
+import _errorInterpret from "../functions/errorInt.js";
+import _fatalError from "../functions/fatalError.js";
 
 const rename = (file, renamed) => {
   file = _replaceSpaces(file);
@@ -26,13 +26,13 @@ const rename = (file, renamed) => {
   const fileName = _convertAbsolute(file.trim());
   const renamedName = _convertAbsolute(renamed.trim());
 
-  if (!fs.existsSync(fileName)) {
+  if (!existsSync(fileName)) {
     _errorInterpret(41, { variable: fileName });
     return;
   }
 
   try {
-    fs.renameSync(fileName, renamedName);
+    renameSync(fileName, renamedName);
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EPERM") {
@@ -49,4 +49,4 @@ const rename = (file, renamed) => {
   }
 };
 
-module.exports = rename;
+export default rename;

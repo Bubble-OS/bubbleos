@@ -1,10 +1,10 @@
-const chalk = require("chalk");
-const readline = require("readline-sync");
+import chalk from "chalk";
+import { question } from "readline-sync";
 
 const prompt = () => {
-  let command = readline
-    .question(`${chalk.bold.green("bubble")} ${chalk.blueBright(process.cwd())} ${chalk.red("$")} `)
-    .trim();
+  let command = question(
+    `${chalk.bold.green("bubble")} ${chalk.blueBright(process.cwd())} ${chalk.red("$")} `
+  ).trim();
 
   const isEmpty = command.length === 0;
   const isExit = command === "exit";
@@ -16,4 +16,4 @@ const prompt = () => {
   };
 };
 
-module.exports = prompt;
+export default prompt;

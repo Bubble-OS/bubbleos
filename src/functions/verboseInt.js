@@ -1,4 +1,4 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
 const _verboseInterpret = (
   message,
@@ -11,7 +11,7 @@ const _verboseInterpret = (
 ) => {
   if (verbose) {
     const date = new Date();
-    const formattedDate = chalk.dim(
+    const formattedDate = dim(
       `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}]`
     );
 
@@ -30,4 +30,4 @@ const _verboseInterpret = (
   }
 };
 
-module.exports = _verboseInterpret;
+export default _verboseInterpret;

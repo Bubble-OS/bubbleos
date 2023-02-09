@@ -1,13 +1,13 @@
-const chalk = require("chalk");
-const readline = require("readline-sync");
+import chalk from "chalk";
+import { question } from "readline-sync";
 
-const fs = require("fs");
+import { existsSync, writeFileSync } from "fs";
 
-const _replaceSpaces = require("../functions/replaceSpaces");
-const _convertAbsolute = require("../functions/convAbs");
+import _replaceSpaces from "../functions/replaceSpaces.js";
+import _convertAbsolute from "../functions/convAbs.js";
 
-const _errorInterpret = require("../functions/errorInt");
-const _fatalError = require("../functions/fatalError");
+import _errorInterpret from "../functions/errorInt.js";
+import _fatalError from "../functions/fatalError.js";
 
 const mkfile = (file) => {
   file = _replaceSpaces(file);
@@ -19,14 +19,12 @@ const mkfile = (file) => {
 
   const fileName = _convertAbsolute(file);
 
-  const contents = readline.question(
-    `Please enter the file contents (leave blank for an empty file): `
-  );
+  const contents = question(`Please enter the file contents (leave blank for an empty file): `);
 
   try {
-    if (!fs.existsSync(fileName)) {
+    if (!existsSync(fileName)) {
       console.log(`\nMaking file: ${chalk.bold.blueBright(fileName)}...`);
-      fs.writeFileSync(fileName, contents);
+      writeFileSync(fileName, contents);
       console.log(chalk.green("The operation completed successfully.\n"));
     } else {
       _errorInterpret(6, { type: "file", variable: fileName });
@@ -40,4 +38,4 @@ const mkfile = (file) => {
   }
 };
 
-module.exports = mkfile;
+export default mkfile;

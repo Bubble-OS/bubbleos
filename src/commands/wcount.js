@@ -1,13 +1,13 @@
-const chalk = require("chalk");
-const { isText } = require("istextorbinary");
+import chalk from "chalk";
+import { isText } from "istextorbinary";
 
-const fs = require("fs");
+import { existsSync, readFileSync } from "fs";
 
-const _replaceSpaces = require("../functions/replaceSpaces");
-const _convertAbsolute = require("../functions/convAbs");
+import _replaceSpaces from "../functions/replaceSpaces.js";
+import _convertAbsolute from "../functions/convAbs.js";
 
-const _errorInterpret = require("../functions/errorInt");
-const _fatalError = require("../functions/fatalError");
+import _errorInterpret from "../functions/errorInt.js";
+import _fatalError from "../functions/fatalError.js";
 
 const wcount = (file) => {
   file = _replaceSpaces(file);
@@ -19,20 +19,20 @@ const wcount = (file) => {
 
   const fileName = _convertAbsolute(file);
 
-  if (!fs.existsSync(fileName)) {
+  if (!existsSync(fileName)) {
     _errorInterpret(3, { type: "file", variable: fileName });
     return;
   }
 
   try {
-    if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
+    if (!isText(fileName, readFileSync(fileName, { flag: "r" }))) {
       _errorInterpret(8, { encoding: "UTF-8 (plain text files)" });
       return;
     }
 
     console.log(chalk.italic.blueBright("Please wait..."));
 
-    const fileContents = fs.readFileSync(fileName, { encoding: "utf-8", flag: "r" });
+    const fileContents = readFileSync(fileName, { encoding: "utf-8", flag: "r" });
     console.log(`Characters (including whitespace): ${chalk.bold(fileContents.length)}`);
     console.log(`Words: ${chalk.bold(fileContents.split(" ").length)}\n`);
   } catch (err) {
@@ -44,4 +44,4 @@ const wcount = (file) => {
   }
 };
 
-module.exports = wcount;
+export default wcount;

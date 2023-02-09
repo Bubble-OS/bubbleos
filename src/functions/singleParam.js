@@ -3,4 +3,4 @@ const _singleParam = (command, commandName) =>
     ? undefined
     : command.replace(`${commandName} `, "");
 
-module.exports = _singleParam;
+export default _singleParam;

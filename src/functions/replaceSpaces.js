@@ -12,4 +12,4 @@ const _replaceSpaces = (text, spaceChar = "/s", space = " ") => {
   }
 };
 
-module.exports = _replaceSpaces;
+export default _replaceSpaces;

@@ -1,12 +1,12 @@
-const chalk = require("chalk");
-const fs = require("fs");
+import chalk from "chalk";
+import { existsSync, lstatSync, statSync } from "fs";
 
-const _replaceSpaces = require("../functions/replaceSpaces");
-const _convertSize = require("../functions/convSize");
-const _convertAbsolute = require("../functions/convAbs");
+import _replaceSpaces from "../functions/replaceSpaces.js";
+import _convertSize from "../functions/convSize.js";
+import _convertAbsolute from "../functions/convAbs.js";
 
-const _errorInterpret = require("../functions/errorInt");
-const _fatalError = require("../functions/fatalError");
+import _errorInterpret from "../functions/errorInt.js";
+import _fatalError from "../functions/fatalError.js";
 
 const size = (file, sizesToDisplay) => {
   file = _replaceSpaces(file);
@@ -38,18 +38,18 @@ const size = (file, sizesToDisplay) => {
   }
 
   const fileName = _convertAbsolute(file);
-  if (!fs.existsSync(fileName)) {
+  if (!existsSync(fileName)) {
     _errorInterpret(3, { type: "file", variable: fileName });
     return;
   }
 
-  if (fs.lstatSync(fileName).isDirectory()) {
+  if (lstatSync(fileName).isDirectory()) {
     _errorInterpret(9, { command: "size" });
     return;
   }
 
   try {
-    const allSizes = _convertSize(fs.statSync(fileName).size, 4);
+    const allSizes = _convertSize(statSync(fileName).size, 4);
 
     if (typeof sizes !== "undefined") {
       Object.values(sizesTrans).forEach((value) => {
@@ -77,4 +77,4 @@ const size = (file, sizesToDisplay) => {
   }
 };
 
-module.exports = size;
+export default size;

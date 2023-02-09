@@ -1,11 +1,11 @@
-const chalk = require("chalk");
-const fs = require("fs");
+import chalk from "chalk";
+import { existsSync, mkdirSync } from "fs";
 
-const _replaceSpaces = require("../functions/replaceSpaces");
-const _convertAbsolute = require("../functions/convAbs");
+import _replaceSpaces from "../functions/replaceSpaces.js";
+import _convertAbsolute from "../functions/convAbs.js";
 
-const _errorInterpret = require("../functions/errorInt");
-const _fatalError = require("../functions/fatalError");
+import _errorInterpret from "../functions/errorInt.js";
+import _fatalError from "../functions/fatalError.js";
 
 const mkdir = (dirName) => {
   dirName = _replaceSpaces(dirName);
@@ -18,9 +18,9 @@ const mkdir = (dirName) => {
   const dir = _convertAbsolute(dirName);
 
   try {
-    if (!fs.existsSync(dir)) {
+    if (!existsSync(dir)) {
       console.log(`Making directory: ${chalk.bold.blueBright(dir)}...`);
-      fs.mkdirSync(dir);
+      mkdirSync(dir);
       console.log(chalk.green("The operation completed successfully.\n"));
     } else {
       _errorInterpret(6, { type: "directory", variable: dir });
@@ -34,4 +34,4 @@ const mkdir = (dirName) => {
   }
 };
 
-module.exports = mkdir;
+export default mkdir;

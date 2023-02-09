@@ -1,13 +1,13 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
-const os = require("os");
+import { type } from "os";
 
 const sysinfo = (all) => {
   const friendlyOS = () => {
-    let friendlyName = os.type();
-    if (os.type() === "Darwin") {
+    let friendlyName = type();
+    if (type() === "Darwin") {
       friendlyName = "macOS";
-    } else if (os.type() === "Windows_NT") {
+    } else if (type() === "Windows_NT") {
       friendlyName = "Windows";
     }
     return friendlyName;
@@ -19,7 +19,7 @@ const sysinfo = (all) => {
   console.log(`Architecture: ${chalk.bold(process.arch)}`);
 
   if (!all) {
-    console.log(chalk.cyan(`\nUse ${chalk.italic("-a")} to see all information.\n`));
+    console.log(cyan(`\nUse ${chalk.italic("-a")} to see all information.\n`));
     return;
   }
 
@@ -32,4 +32,4 @@ const sysinfo = (all) => {
   console.log();
 };
 
-module.exports = sysinfo;
+export default sysinfo;

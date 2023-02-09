@@ -1,4 +1,4 @@
-const { isAbsolute } = require("path");
+import { isAbsolute } from "path";
 
 /**
  * Convert a path to an absolute path, unless the path is already an absolute path.
@@ -23,4 +23,4 @@ const _convertAbsolute = (path) => {
   return pathName;
 };
 
-module.exports = _convertAbsolute;
+export default _convertAbsolute;

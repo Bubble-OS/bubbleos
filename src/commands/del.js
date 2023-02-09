@@ -1,13 +1,13 @@
-const chalk = require("chalk");
-const readline = require("readline-sync");
+import chalk from "chalk";
+import { question } from "readline-sync";
 
-const fs = require("fs");
+import { existsSync, rmSync } from "fs";
 
-const _replaceSpaces = require("../functions/replaceSpaces");
-const _convertAbsolute = require("../functions/convAbs");
+import _replaceSpaces from "../functions/replaceSpaces.js";
+import _convertAbsolute from "../functions/convAbs.js";
 
-const _errorInterpret = require("../functions/errorInt");
-const _fatalError = require("../functions/fatalError");
+import _errorInterpret from "../functions/errorInt.js";
+import _fatalError from "../functions/fatalError.js";
 
 const del = (file) => {
   file = _replaceSpaces(file);
@@ -19,18 +19,16 @@ const del = (file) => {
 
   const fileName = _convertAbsolute(file);
 
-  if (!fs.existsSync(fileName)) {
+  if (!existsSync(fileName)) {
     _errorInterpret(3, { type: "file/directory", variable: fileName });
     return;
   }
 
-  const confirmText = readline
-    .question(
-      `Are you sure you want to delete ${chalk.bold(fileName)}? [${chalk.green(
-        "y"
-      )}/${chalk.red.bold("N")}] `
-    )
-    .toLowerCase();
+  const confirmText = question(
+    `Are you sure you want to delete ${chalk.bold(fileName)}? [${chalk.green("y")}/${chalk.red.bold(
+      "N"
+    )}] `
+  ).toLowerCase();
   if (confirmText.includes("n") || !confirmText.includes("y")) {
     console.log(chalk.yellow("Operation cancelled.\n"));
     return;
@@ -38,7 +36,7 @@ const del = (file) => {
 
   try {
     console.log(`\nDeleting ${chalk.bold.blueBright(fileName)}...`);
-    fs.rmSync(fileName, { recursive: true, force: true });
+    rmSync(fileName, { recursive: true, force: true });
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EBUSY") {
@@ -51,4 +49,4 @@ const del = (file) => {
   }
 };
 
-module.exports = del;
+export default del;

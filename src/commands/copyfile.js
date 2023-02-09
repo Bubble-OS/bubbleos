@@ -1,14 +1,14 @@
-const chalk = require("chalk");
-const readline = require("readline-sync");
+import chalk from "chalk";
+import { question } from "readline-sync";
 
-const { copyFileSync } = require("fs");
+import { copyFileSync } from "fs";
 
-const _replaceSpaces = require("../functions/replaceSpaces");
-const _convertAbsolute = require("../functions/convAbs");
+import _replaceSpaces from "../functions/replaceSpaces.js";
+import _convertAbsolute from "../functions/convAbs.js";
 
-const _errorInterpret = require("../functions/errorInt");
-const _fatalError = require("../functions/fatalError");
-const _verbInt = require("../functions/verboseInt");
+import _errorInterpret from "../functions/errorInt.js";
+import _fatalError from "../functions/fatalError.js";
+import _verbInt from "../functions/verboseInt.js";
 
 const _verbMsgs = [
   `Replacing spaces in 'src' and 'dest'...`,
@@ -58,15 +58,13 @@ const copyfile = (src, dest, ...params) => {
   const destPath = _convertAbsolute(dest.trim());
 
   _verbInt(_verbMsgs[5], verbose);
-  const confirmText = readline
-    .question(
-      `${chalk.bold.red("WARNING!")} If ${chalk.bold(
-        destPath
-      )} exists in the destination, it will be overwriten. Continue? [${chalk.green(
-        "y"
-      )}/${chalk.red.bold("N")}] `
-    )
-    .toLowerCase();
+  const confirmText = question(
+    `${chalk.bold.red("WARNING!")} If ${chalk.bold(
+      destPath
+    )} exists in the destination, it will be overwriten. Continue? [${chalk.green(
+      "y"
+    )}/${chalk.red.bold("N")}] `
+  ).toLowerCase();
   _verbInt(_verbMsgs[6], verbose);
   if (confirmText.includes("n") || !confirmText.includes("y")) {
     _verbInt(_verbMsgs[7], verbose, { error: 6 });
@@ -103,4 +101,4 @@ const copyfile = (src, dest, ...params) => {
   _verbInt(_verbMsgs[14], verbose);
 };
 
-module.exports = copyfile;
+export default copyfile;

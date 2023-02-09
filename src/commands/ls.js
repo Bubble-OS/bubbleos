@@ -1,30 +1,28 @@
-const chalk = require("chalk");
-const fs = require("fs");
+import chalk from "chalk";
+import { existsSync, readdirSync } from "fs";
 
-const _replaceSpaces = require("../functions/replaceSpaces");
+import _replaceSpaces from "../functions/replaceSpaces.js";
 
-const _errorInterpret = require("../functions/errorInt");
-const _fatalError = require("../functions/fatalError");
+import _errorInterpret from "../functions/errorInt.js";
+import _fatalError from "../functions/fatalError.js";
 
 const ls = (directory = process.cwd()) => {
   try {
     directory = _replaceSpaces(directory);
 
-    if (!fs.existsSync(directory)) {
+    if (!existsSync(directory)) {
       _errorInterpret(3, { type: "directory", variable: directory });
       return;
     }
 
-    const files = fs
-      .readdirSync(directory, { withFileTypes: true })
+    const files = readdirSync(directory, { withFileTypes: true })
       .filter((item) => !item.isDirectory())
       .map((item) => {
         return { name: item.name, type: "file" };
       })
       .sort();
 
-    const folders = fs
-      .readdirSync(directory, { withFileTypes: true })
+    const folders = readdirSync(directory, { withFileTypes: true })
       .filter((item) => item.isDirectory())
       .map((item) => {
         return { name: item.name, type: "folder" };
@@ -58,4 +56,4 @@ const ls = (directory = process.cwd()) => {
   }
 };
 
-module.exports = ls;
+export default ls;

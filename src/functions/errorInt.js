@@ -1,6 +1,6 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
-const errors = require("../variables/errors");
+import errors from "../variables/errors.js";
 
 /**
  * Interpret an error from the `ERRORS` object and `console.log` a formatted string with the error code, error message, and stylings with `chalk`.
@@ -79,4 +79,4 @@ const _errorInterpret = (
   console.log(chalk.red(`${chalk.bold(`[${errorCode}]`)} ${errorMessage}\n`));
 };
 
-module.exports = _errorInterpret;
+export default _errorInterpret;

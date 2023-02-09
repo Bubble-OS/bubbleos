@@ -1,6 +1,6 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
-const { GLOBAL_NAME } = require("../variables/aboutConsts");
+import { GLOBAL_NAME } from "../variables/aboutConsts.js";
 
 /**
  * End BubbleOS with a fatal exception with exit code `1`.
@@ -13,11 +13,11 @@ const _fatalError = (err) => {
     `${chalk.red.bold(
       `A fatal error has occured which caused ${GLOBAL_NAME} to crash. To make sure the OS does not get damaged, ${GLOBAL_NAME} has been exited (with status code 1).`
     )}\n\n${chalk.red.bold(
-      `Make sure that the arguments passed are correct. Also, you can make a new GitHub Issue on the project's repo (find by running ${chalk.italic(
+      `Make sure that the arguments passed are correct. Also, you can make a new GitHub Issue on the project's repo (find by running ${italic(
         "about"
       )}) to inform the developer of the issue.`
     )}\n${chalk.red.bold(
-      `To attempt to resolve this issue yourself, try running the same command with the ${chalk.italic(
+      `To attempt to resolve this issue yourself, try running the same command with the ${italic(
         "--verbose"
       )} flag to see in detail what and when the error occurs.`
     )}\n`
@@ -32,4 +32,4 @@ const _fatalError = (err) => {
   process.exit(1);
 };
 
-module.exports = _fatalError;
+export default _fatalError;

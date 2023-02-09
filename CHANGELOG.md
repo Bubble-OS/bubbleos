@@ -4,7 +4,17 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 52-5? (v0.5.2-v0.5.?)
+## Build 55-6? (v0.5.5-v0.6.?)
+
+### Added Features
+
+- Made the application much faster and more responsive (around 30% faster).
+
+### Changed/Fixed Features
+
+### Removed Features
+
+## Build 52-55 (v0.5.2-v0.5.5)
 
 ### Added Features
 

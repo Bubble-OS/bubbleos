@@ -1,6 +1,6 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
-const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/aboutConsts");
+import { GLOBAL_NAME, AUTHOR, VERSION, BUILD } from "../variables/aboutConsts.js";
 
 const about = (...params) => {
   let license = false;
@@ -41,4 +41,4 @@ const about = (...params) => {
   console.log(`YouTube: ${chalk.underline.blueBright("https://youtube.com/InfiniTech78")}\n`);
 };
 
-module.exports = about;
+export default about;

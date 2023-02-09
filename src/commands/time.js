@@ -1,4 +1,4 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
 const time = () => {
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -25,4 +25,4 @@ const time = () => {
   console.log(chalk.dim(`${days[date.getDay()]}, ${months[date.getMonth()]}`));
 };
 
-module.exports = time;
+export default time;

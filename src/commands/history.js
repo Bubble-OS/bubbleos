@@ -1,6 +1,6 @@
-const chalk = require("chalk");
+import chalk from "chalk";
 
-const _errorInterpret = require("../functions/errorInt");
+import _errorInterpret from "../functions/errorInt.js";
 
 const history = [];
 const NUMBER_TO_STORE = 50;
@@ -48,4 +48,4 @@ const _addToHist = (command) => {
   }
 };
 
-module.exports = { historyCmd, _addToHist };
+export { historyCmd, _addToHist };

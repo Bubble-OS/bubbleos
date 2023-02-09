@@ -1,7 +1,7 @@
-const chalk = require("chalk");
-const sortKeys = require("sort-keys");
+import chalk from "chalk";
+import sortKeys from "sort-keys";
 
-const { networkInterfaces } = require("os");
+import { networkInterfaces } from "os";
 
 const ifnet = () => {
   const makeUserFriendly = (network) => {
@@ -48,9 +48,7 @@ const ifnet = () => {
 
     for (ele of netInts.func[value]) {
       for (network in ele) {
-        console.log(
-          `    ${makeUserFriendly(network)}: ${chalk.bold(makeValueFriendly(ele[network]))}`
-        );
+        console.log(`    ${makeUserFriendly(network)}: ${bold(makeValueFriendly(ele[network]))}`);
       }
 
       console.log();
@@ -58,4 +56,4 @@ const ifnet = () => {
   }
 };
 
-module.exports = ifnet;
+export default ifnet;
