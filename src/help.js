@@ -36,7 +36,7 @@ const help = (command) => {
       }
     }
 
-    _errorInterpret(35, { variable: command });
+    console.log("Command unknown (temp err msg)\n");
   }
 };
 
