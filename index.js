@@ -8,6 +8,7 @@ import _errorInterpret from "./src/functions/errorInt.js";
 // Importing some more main commands
 import prompt from "./src/prompt.js";
 import help from "./src/help.js";
+import exitBubble from "./src/exit.js";
 
 // Importing all of the commands
 import cd from "./src/commands/cd.js";
@@ -45,7 +46,7 @@ while (true) {
 
   if (isExit) {
     // If the user typed in 'exit'
-    require("./src/exit");
+    exitBubble(0);
   } else if (command.startsWith("help")) {
     help(_singleParam(command, "help"));
   } else if (command.startsWith("cd")) {

@@ -19,7 +19,7 @@ const sysinfo = (all) => {
   console.log(`Architecture: ${chalk.bold(process.arch)}`);
 
   if (!all) {
-    console.log(cyan(`\nUse ${chalk.italic("-a")} to see all information.\n`));
+    console.log(chalk.cyan(`\nUse ${chalk.italic("-a")} to see all information.\n`));
     return;
   }
 

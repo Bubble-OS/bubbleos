@@ -43,12 +43,14 @@ const ifnet = () => {
     return;
   }
 
-  for (value in netInts.func) {
+  for (let value in netInts.func) {
     console.log(chalk.red.underline.bold(`${value}`));
 
-    for (ele of netInts.func[value]) {
-      for (network in ele) {
-        console.log(`    ${makeUserFriendly(network)}: ${bold(makeValueFriendly(ele[network]))}`);
+    for (let ele of netInts.func[value]) {
+      for (let network in ele) {
+        console.log(
+          `    ${makeUserFriendly(network)}: ${chalk.bold(makeValueFriendly(ele[network]))}`
+        );
       }
 
       console.log();
