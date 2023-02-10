@@ -97,14 +97,14 @@ const HELP_DEFINITIONS = {
     usage: [`rename <beforename> <aftername>`],
   },
   time: {
-    description: `Get the current time and date.`,
-    all: `This gets the local time and date that is on your system (NOT online).`,
-    usage: [`time`, `date`],
+    description: `Get the current time.`,
+    all: `This gets the local time that is on your system (NOT online).`,
+    usage: [`time`],
   },
   date: {
-    description: `Get the current time and date.`,
-    all: `This gets the local time and date that is on your system (NOT online).`,
-    usage: [`time`, `date`],
+    description: `Get the current date.`,
+    all: `This gets the local date that is on your system (NOT online).`,
+    usage: [`date`],
   },
   history: {
     description: `Get the last fifty commands that you entered in a session. Also, get a specific command in history.`,

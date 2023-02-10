@@ -33,6 +33,7 @@ import ifnet from "./src/commands/ifnet.js";
 
 // Running the introduction one-time
 import "./src/intro.js";
+import date from "./src/commands/date.js";
 
 // Repeat until the user exits
 while (true) {
@@ -85,7 +86,7 @@ while (true) {
   } else if (command.startsWith("rename")) {
     const params = command.split(" ");
     rename(params[1], params[2]);
-  } else if (command.startsWith("time") || command.startsWith("date")) {
+  } else if (command.startsWith("time")) {
     time();
   } else if (command.startsWith("history")) {
     historyCmd(_singleParam(command, "history"));
@@ -95,6 +96,8 @@ while (true) {
     console.log(process.cwd() + "\n");
   } else if (command.startsWith("ifnet")) {
     ifnet();
+  } else if (command.startsWith("date")) {
+    date();
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (command !== "") {
