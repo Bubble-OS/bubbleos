@@ -13,6 +13,8 @@ Please note that not all versions will have respectible executables with them.
 
 ### Changed/Fixed Features
 
+- Made underlying code of `ls` reuseable.
+
 ### Removed Features
 
 ## Build 52-55 (v0.5.2-v0.5.5)

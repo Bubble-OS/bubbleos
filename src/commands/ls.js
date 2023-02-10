@@ -7,6 +7,25 @@ import _errorInterpret from "../functions/errorInt.js";
 import _fatalError from "../functions/fatalError.js";
 
 const ls = (directory = process.cwd(), ...params) => {
+  const _logDirContents = (contents, withBrackets = false) => {
+    let dirArr = [];
+    contents.forEach((item) => {
+      if (item.type === "file") {
+        dirArr.push(chalk.green(item.name));
+      } else if (
+        item.type === "folder" &&
+        (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
+      ) {
+        if (withBrackets) dirArr.push(chalk.bold.grey(`[${item.name}]`));
+        else dirArr.push(chalk.bold.grey(item.name));
+      } else {
+        if (withBrackets) dirArr.push(chalk.bold.blue(`[${item.name}]`));
+        else dirArr.push(chalk.bold.blue(item.name));
+      }
+    });
+    return dirArr;
+  };
+
   try {
     let isShort = false;
     if (
@@ -42,38 +61,8 @@ const ls = (directory = process.cwd(), ...params) => {
 
     const all = [...folders, ...files];
 
-    if (isShort) {
-      let listArr = [];
-      all.forEach((item) => {
-        if (item.type === "file") {
-          listArr.push(chalk.green(item.name));
-        } else if (
-          item.type === "folder" &&
-          (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
-        ) {
-          listArr.push(chalk.bold.grey(`[${item.name}]`));
-        } else {
-          listArr.push(chalk.bold.blue(`[${item.name}]`));
-        }
-      });
-
-      console.log(listArr.join("  ") + "\n");
-    } else {
-      all.forEach((item) => {
-        if (item.type === "file") {
-          console.log(chalk.green(item.name));
-        } else if (
-          item.type === "folder" &&
-          (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
-        ) {
-          console.log(chalk.bold.grey(item.name));
-        } else {
-          console.log(chalk.bold.blue(item.name));
-        }
-      });
-
-      console.log();
-    }
+    if (isShort) console.log(_logDirContents(all, true).join("  ") + "\n");
+    else console.log(_logDirContents(all, false).join("\n") + "\n");
   } catch (err) {
     if (err.code === "ENOTDIR") {
       // TODO Add an error message for 'ENOTDIR'
