@@ -7,7 +7,7 @@ import _errorInterpret from "../functions/errorInt.js";
 import _fatalError from "../functions/fatalError.js";
 
 const ls = (directory = process.cwd(), ...params) => {
-  const _logDirContents = (contents, withBrackets = false) => {
+  const _logDirContents = (contents, withHighlight = false) => {
     let dirArr = [];
     contents.forEach((item) => {
       if (item.type === "file") {
@@ -16,10 +16,10 @@ const ls = (directory = process.cwd(), ...params) => {
         item.type === "folder" &&
         (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
       ) {
-        if (withBrackets) dirArr.push(chalk.bold.grey(`[${item.name}]`));
+        if (withHighlight) dirArr.push(chalk.bgGrey(` ${item.name} `));
         else dirArr.push(chalk.bold.grey(item.name));
       } else {
-        if (withBrackets) dirArr.push(chalk.bold.blue(`[${item.name}]`));
+        if (withHighlight) dirArr.push(chalk.bgBlue(` ${item.name} `));
         else dirArr.push(chalk.bold.blue(item.name));
       }
     });

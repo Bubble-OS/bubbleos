@@ -27,13 +27,13 @@ import del from "./src/commands/del.js";
 import size from "./src/commands/size.js";
 import rename from "./src/commands/rename.js";
 import time from "./src/commands/time.js";
+import date from "./src/commands/date.js";
 import { _addToHist, historyCmd } from "./src/commands/history.js";
 import fif from "./src/commands/fif.js";
 import ifnet from "./src/commands/ifnet.js";
 
 // Running the introduction one-time
 import "./src/intro.js";
-import date from "./src/commands/date.js";
 
 // Repeat until the user exits
 while (true) {

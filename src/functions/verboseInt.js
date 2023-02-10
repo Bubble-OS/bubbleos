@@ -11,7 +11,7 @@ const _verboseInterpret = (
 ) => {
   if (verbose) {
     const date = new Date();
-    const formattedDate = dim(
+    const formattedDate = chalk.dim(
       `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}]`
     );
 

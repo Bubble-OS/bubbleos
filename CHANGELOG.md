@@ -8,15 +8,19 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added Features
 
-- Seperated the `time` and `date` commands, adding two seperate ones (not aliases).
+- Seperated the `time` and `date` commands, adding two seperate ones (**not** aliases).
 - Added the `-s`/`/s` flag for the `ls` command to display folder contents in a shorter view.
 - Made the application much faster and more responsive (around 30% faster).
 
 ### Changed/Fixed Features
 
+- Fixed an issue where viewing the license using `about -l` would sometimes show as nothing on a low-color _stdout_.
+- Made the year/name of the license in `about` dynamic.
 - Made underlying code of `ls` reuseable.
 
 ### Removed Features
+
+_No features have been removed in this release._
 
 ## Build 52-55 (v0.5.2-v0.5.5)
 
