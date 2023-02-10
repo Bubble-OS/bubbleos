@@ -126,6 +126,11 @@ const HELP_DEFINITIONS = {
     all: `Get information such as the IP/MAC addresses, net masks, and more for all network interfaces on your computer.`,
     usage: [`ifnet`],
   },
+  bub: {
+    description: `Execute BubbleOS commands in a file.`,
+    all: `Read commands in a '.bub' file, and execute them synchronously.`,
+    usage: [`bub <filename>`],
+  },
 };
 
 export default HELP_DEFINITIONS;

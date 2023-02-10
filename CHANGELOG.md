@@ -8,6 +8,7 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added Features
 
+- Added the `bub` command, which can interpret BubbleOS commands line-by-line in a file, similar to a `.bat`/`.cmd` file.
 - Seperated the `time` and `date` commands, adding two seperate ones (**not** aliases).
 - Added the `-s`/`/s` flag for the `ls` command to display folder contents in a shorter view.
 - Made the application much faster and more responsive (around 30% faster).

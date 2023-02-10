@@ -25,6 +25,7 @@ import date from "./commands/date.js";
 import { _addToHist, historyCmd } from "./commands/history.js";
 import fif from "./commands/fif.js";
 import ifnet from "./commands/ifnet.js";
+import bub from "./commands/bub.js";
 
 const intCmds = (command, isEmpty) => {
   if (isEmpty) _errorInterpret(0);
@@ -84,9 +85,11 @@ const intCmds = (command, isEmpty) => {
     ifnet();
   } else if (command.startsWith("date")) {
     date();
+  } else if (command.startsWith("bub")) {
+    bub(..._multiParam(command));
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
-    if (command !== "") {
+    if (!isEmpty) {
       _errorInterpret(1, { command });
     }
   }
