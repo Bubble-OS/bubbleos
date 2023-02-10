@@ -6,8 +6,19 @@ import _replaceSpaces from "../functions/replaceSpaces.js";
 import _errorInterpret from "../functions/errorInt.js";
 import _fatalError from "../functions/fatalError.js";
 
-const ls = (directory = process.cwd()) => {
+const ls = (directory = process.cwd(), ...params) => {
   try {
+    let isShort = false;
+    if (
+      params.includes("-s") ||
+      params.includes("/s") ||
+      directory.includes("-s") ||
+      directory.includes("/s")
+    )
+      isShort = true;
+
+    if (directory.includes("-s") || directory.includes("/s")) directory = process.cwd();
+
     directory = _replaceSpaces(directory);
 
     if (!existsSync(directory)) {
@@ -31,20 +42,38 @@ const ls = (directory = process.cwd()) => {
 
     const all = [...folders, ...files];
 
-    all.forEach((item) => {
-      if (item.type === "file") {
-        console.log(chalk.green(item.name));
-      } else if (
-        item.type === "folder" &&
-        (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
-      ) {
-        console.log(chalk.bold.grey(item.name));
-      } else {
-        console.log(chalk.bold.blue(item.name));
-      }
-    });
+    if (isShort) {
+      let listArr = [];
+      all.forEach((item) => {
+        if (item.type === "file") {
+          listArr.push(chalk.green(item.name));
+        } else if (
+          item.type === "folder" &&
+          (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
+        ) {
+          listArr.push(chalk.bold.grey(`[${item.name}]`));
+        } else {
+          listArr.push(chalk.bold.blue(`[${item.name}]`));
+        }
+      });
 
-    console.log();
+      console.log(listArr.join("  ") + "\n");
+    } else {
+      all.forEach((item) => {
+        if (item.type === "file") {
+          console.log(chalk.green(item.name));
+        } else if (
+          item.type === "folder" &&
+          (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
+        ) {
+          console.log(chalk.bold.grey(item.name));
+        } else {
+          console.log(chalk.bold.blue(item.name));
+        }
+      });
+
+      console.log();
+    }
   } catch (err) {
     if (err.code === "ENOTDIR") {
       // TODO Add an error message for 'ENOTDIR'

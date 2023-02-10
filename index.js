@@ -50,7 +50,7 @@ while (true) {
   } else if (command.startsWith("cd")) {
     cd(..._multiParam(command));
   } else if (command.startsWith("ls")) {
-    ls(_singleParam(command, "ls"));
+    ls(..._multiParam(command));
   } else if (command.startsWith("sysinfo")) {
     command.includes("-a") ? sysinfo(true) : sysinfo();
   } else if (command.startsWith("taskkill")) {

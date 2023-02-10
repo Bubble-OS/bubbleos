@@ -4,10 +4,11 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 55-6? (v0.5.5-v0.6.?)
+## Build 55-61 (v0.5.5-v0.6.1)
 
 ### Added Features
 
+- Added the `-s`/`/s` flag for the `ls` command to display folder contents in a shorter view.
 - Made the application much faster and more responsive (around 30% faster).
 
 ### Changed/Fixed Features

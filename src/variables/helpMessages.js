@@ -24,7 +24,7 @@ const HELP_DEFINITIONS = {
   ls: {
     description: `Displays the contents of the current working directory or other directories.`,
     all: `Color-codes the contents of the CWD or another directory that you specify and shows it on-screen. Note: To view files, use the 'readfile' command.`,
-    usage: [`ls`, `ls <directory>`],
+    usage: [`ls [-s]`, `ls <directory> [-s]`],
   },
   taskkill: {
     description: `Terminates a process using a PID.`,
