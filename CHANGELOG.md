@@ -8,13 +8,14 @@ Please note that not all versions will have respectible executables with them.
 
 ### Added Features
 
-- Added the `bub` command, which can interpret BubbleOS commands line-by-line in a file, similar to a `.bat`/`.cmd` file.
+- Added the `bub` command, which can interpret BubbleOS commands line-by-line in a file, similar to a `.bat`/`.cmd` file. You can also run it with the `-d` flag to show the commands that it is executing.
 - Seperated the `time` and `date` commands, adding two seperate ones (**not** aliases).
 - Added the `-s`/`/s` flag for the `ls` command to display folder contents in a shorter view.
 - Made the application much faster and more responsive (around 30% faster).
 
 ### Changed/Fixed Features
 
+- Edited some error messages.
 - Fixed an issue where viewing the license using `about -l` would sometimes show as nothing on a low-color _stdout_.
 - Made the year/name of the license in `about` dynamic.
 - Made underlying code of `ls` reuseable.
