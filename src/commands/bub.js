@@ -9,6 +9,8 @@ const _convertAbsolute = require("../functions/convAbs");
 const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
+const intCmds = require("../interpret");
+
 const _interpretBubbleFile = (path, displayCommand = true) => {
   const contents = readFileSync(path, { encoding: "utf-8", flag: "r" }).split("\n");
 

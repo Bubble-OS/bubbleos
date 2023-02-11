@@ -3,7 +3,6 @@
   "version": "0.6.3",
   "description": "BubbleOS is a shell for your current operating system!",
   "main": "index.js",
-  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bubble-OS/bubbleos.git"

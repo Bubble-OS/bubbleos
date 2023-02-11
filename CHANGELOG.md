@@ -4,6 +4,22 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
+## Build 63-6? (v0.6.5-v0.6.?)
+
+### Added Features
+
+_No features have been added in this release._
+
+### Changed/Fixed Features
+
+- Fixed an issue where on some systems, BubbleOS could not be run successfully (crash on startup).
+- Fixed an issue where the `bub` command would crash BubbleOS.
+- Fixed an issue where `help` would crash BubbleOS
+
+### Removed Features
+
+_No features have been removed in this release._
+
 ## Build 55-63 (v0.5.5-v0.6.3)
 
 ### Added Features

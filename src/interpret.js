@@ -2,6 +2,7 @@ const _singleParam = require("./functions/singleParam");
 const _multiParam = require("./functions/multiParam");
 const _errorInterpret = require("./functions/errorInt");
 
+const help = require("./help");
 const cd = require("./commands/cd");
 const ls = require("./commands/ls");
 const sysinfo = require("./commands/sysinfo");
