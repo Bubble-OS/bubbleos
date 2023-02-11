@@ -10,6 +10,7 @@ _No features have been added in this release._
 
 ### Changed/Fixed Features
 
+- Updated the _FATAL ERROR_ screen to include more technical information.
 - Fixed an issue where on some systems, BubbleOS could not be run successfully (crash on startup).
 - Fixed an issue where the `bub` command would crash BubbleOS.
 - Fixed an issue where the `help` command would crash BubbleOS.
