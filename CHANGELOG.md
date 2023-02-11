@@ -7,6 +7,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Added Features
 
 - Added more error messages, and replaced placeholder ones. Also added a technical error code at the end of some errors.
+- Added the BubbleOS Discord server link in the `about` command.
 
 ### Changed/Fixed Features
 
