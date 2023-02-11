@@ -40,7 +40,7 @@ const del = (file) => {
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EBUSY") {
-      _errorInterpret(7, { todo: "file/directory", variable: fileName });
+      _errorInterpret(7, { type: "file/directory", variable: fileName });
     } else if (err.code === "EPERM") {
       _errorInterpret(4, { todo: "delete the file/directory", variable: fileName });
     } else {

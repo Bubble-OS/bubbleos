@@ -6,7 +6,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
-_No features have been added in this release._
+- Added more error messages, and replaced placeholder ones. Also added a technical error code at the end of some errors.
 
 ### Changed/Fixed Features
 

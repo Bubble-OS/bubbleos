@@ -15,21 +15,33 @@ const errors = require("../variables/errors");
  *
  * `2` - You must enter `%TYPE%`. For example, enter it like `'%EXAMPLE%'`.
  *
- * `3` - The `%TYPE%`, `'%VARIABLE%'`, does not exist. Make sure that it exists and try again.
+ * `3` - The `%TYPE%`, `'%VARIABLE%'`, does not exist in the file system (ENOENT).
  *
- * `4` - You do not have permission to `%TODO%` `'%VARIABLE%'`. Make sure you have the correct permissions and try again.
+ * `4` - You do not have permission to `%TODO%` `'%VARIABLE%'`. You need elevated privileges (EPERM).
  *
  * `5` - This command only works on `%OS%`.
  *
- * `6` - The `%TYPE%`, `'%VARIABLE%'`, already exists. Make sure that no file/directory with the same name exists and try again.
+ * `6` - The `%TYPE%`, `'%VARIABLE%'`, already exists (EEXIST).
  *
- * `7` - The `%TYPE%`, `'%VARIABLE%'`, is being used by another program. End the program and try again.
+ * `7` - The `%TYPE%`, `'%VARIABLE%'`, is currently being used (EBUSY).
  *
  * `8` - Cannot read any files other than ones encoded in `%ENCODING%`.
  *
- * `9` - Viewing directories using the `'%COMMAND%'` command is not supported.
+ * `9` - The `'%COMMAND%'` command expected a file, but got a directory (EISDIR).
  *
  * `10` - The `%TYPE%` can only contain `%SUPPOSED_TO%` and not contain `%NOT_CONTAIN%` (received `'%VARIABLE%'`).
+ *
+ * `11` - The `'%COMMAND%'` command expected a directory, but got a file (ENOTDIR).
+ *
+ * `12` - The directory, `'%VARIABLE%'`, is not empty (ENOTEMPTY).
+ *
+ * `13` - An attempt was made to access `'%VARIABLE%'`, which is forbidden by its permissions (EACCES).
+ *
+ * `14` - There are too many files open in the system. Close at least one to continue (EMFILE).
+ *
+ * `15` - The `%TYPE%` cannot be the same name. Please choose a different name.
+ *
+ * `16` - The `%TYPE%` can only end in the `'%EXTENTION%'` file extention.
  *
  * Example:
  *
@@ -39,7 +51,7 @@ const errors = require("../variables/errors");
  *
  * @throws An `Error` if the error code does not exist.
  * @param {number} errorCode The error code from the `ERRORS` object. Make sure it exists before adding it.
- * @param {{ variable: string, command: string, type: string, example: string, todo: string, os: string, encoding: string, supposedTo: string, notContain: string }} options An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
+ * @param {{ variable: string, command: string, type: string, example: string, todo: string, os: string, encoding: string, supposedTo: string, notContain: string, extention: string }} options An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).
  */
 const _errorInterpret = (
   errorCode,
@@ -53,6 +65,7 @@ const _errorInterpret = (
     encoding: "",
     supposedTo: "",
     notContain: "",
+    extention: "",
   }
 ) => {
   if (typeof errors[errorCode] === "undefined")
@@ -70,6 +83,7 @@ const _errorInterpret = (
     "%ENCODING%": options.encoding,
     "%SUPPOSED_TO%": options.supposedTo,
     "%NOT_CONTAIN%": options.notContain,
+    "%EXTENTION%": options.extention,
   };
 
   let errorMessage = errors[errorCode];

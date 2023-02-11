@@ -65,9 +65,7 @@ const ls = (directory = process.cwd(), ...params) => {
     else console.log(_logDirContents(all, false).join("\n") + "\n");
   } catch (err) {
     if (err.code === "ENOTDIR") {
-      // TODO Add an error message for 'ENOTDIR'
-      // _errorInterpret(53);
-      console.log("Cannot use dir (temp err msg)");
+      _errorInterpret(11, { command: "ls" });
       return;
     }
     _fatalError(err);

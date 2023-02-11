@@ -48,7 +48,7 @@ const bub = (file, ...params) => {
       _errorInterpret(8, { encoding: "UTF-8 (plain text files)" });
       return;
     } else if (!file.endsWith(".bub")) {
-      console.log("File must end with '.bub' (temp err msg)");
+      _errorInterpret(16, { type: "file", extention: ".bub" });
       return;
     }
 

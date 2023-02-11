@@ -19,7 +19,7 @@ const rename = (file, renamed) => {
     });
     return;
   } else if (file.trim() === renamed.trim()) {
-    console.log("Cannot be the same name (temp err msg)");
+    _errorInterpret(15, { type: "file" });
     return;
   }
 
