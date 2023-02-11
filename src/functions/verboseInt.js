@@ -1,4 +1,4 @@
-import chalk from "chalk";
+const chalk = require("chalk");
 
 const _verboseInterpret = (
   message,
@@ -30,4 +30,4 @@ const _verboseInterpret = (
   }
 };
 
-export default _verboseInterpret;
+module.exports = _verboseInterpret;

@@ -1,7 +1,7 @@
-import chalk from "chalk";
-import sortKeys from "sort-keys";
+const chalk = require("chalk");
+const sortKeys = require("sort-keys");
 
-import { networkInterfaces } from "os";
+const { networkInterfaces } = require("os");
 
 const ifnet = () => {
   const makeUserFriendly = (network) => {
@@ -58,4 +58,4 @@ const ifnet = () => {
   }
 };
 
-export default ifnet;
+module.exports = ifnet;

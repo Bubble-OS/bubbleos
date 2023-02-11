@@ -1,4 +1,4 @@
-import chalk from "chalk";
+const chalk = require("chalk");
 
 const date = () => {
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -25,4 +25,4 @@ const date = () => {
   console.log(`${days[date.getDay()]}, ${months[date.getMonth()]}\n`);
 };
 
-export default date;
+module.exports = date;

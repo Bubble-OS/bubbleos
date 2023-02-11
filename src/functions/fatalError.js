@@ -1,6 +1,6 @@
-import chalk from "chalk";
+const chalk = require("chalk");
 
-import { GLOBAL_NAME } from "../variables/aboutConsts.js";
+const { GLOBAL_NAME } = require("../variables/aboutConsts");
 
 /**
  * End BubbleOS with a fatal exception with exit code `1`.
@@ -32,4 +32,4 @@ const _fatalError = (err) => {
   process.exit(1);
 };
 
-export default _fatalError;
+module.exports = _fatalError;

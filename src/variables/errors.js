@@ -1,4 +1,4 @@
-import chalk from "chalk";
+const chalk = require("chalk");
 
 const ERRORS = {
   0: `Please enter a command. Type ${chalk.italic("'help'")} for a list of available commands.`,
@@ -18,4 +18,4 @@ const ERRORS = {
   )}).`,
 };
 
-export default ERRORS;
+module.exports = ERRORS;

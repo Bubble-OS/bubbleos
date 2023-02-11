@@ -1,7 +1,7 @@
-import chalk from "chalk";
+const chalk = require("chalk");
 
-import _errorInterpret from "../functions/errorInt.js";
-import _fatalError from "../functions/fatalError.js";
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const taskkill = (pid) => {
   if (typeof pid === "undefined") {
@@ -38,4 +38,4 @@ const taskkill = (pid) => {
   }
 };
 
-export default taskkill;
+module.exports = taskkill;

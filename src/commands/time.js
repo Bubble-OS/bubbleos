@@ -1,4 +1,4 @@
-import chalk from "chalk";
+const chalk = require("chalk");
 
 const time = () => {
   const time = new Date();
@@ -7,4 +7,4 @@ const time = () => {
   console.log(chalk.bold(`${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}\n`));
 };
 
-export default time;
+module.exports = time;

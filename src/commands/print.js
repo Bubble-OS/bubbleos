@@ -1,4 +1,4 @@
-import chalk from "chalk";
+const chalk = require("chalk");
 
 /**
  * Print text to screen. Named `printText` instead of `print` to avoid naming collisions.
@@ -14,4 +14,4 @@ const printText = (text) => {
   console.log(`${text}\n`);
 };
 
-export default printText;
+module.exports = printText;

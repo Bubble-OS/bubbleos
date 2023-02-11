@@ -1,18 +1,17 @@
 // Color the terminal and check to make sure that the file is plain text
-import chalk from "chalk";
-import { isText } from "istextorbinary";
+const chalk = require("chalk");
+const { isText } = require("istextorbinary");
 
 // Node.js built-in file system module
-import { existsSync, lstatSync, readFileSync } from "fs";
-import path from "path";
+const fs = require("fs");
 
 // Custom-made functions
-import _errorInterpret from "../functions/errorInt.js";
+const _errorInterpret = require("../functions/errorInt");
 
-import _replaceSpaces from "../functions/replaceSpaces.js";
-import _convertAbsolute from "../functions/convAbs.js";
+const _replaceSpaces = require("../functions/replaceSpaces");
+const _convertAbsolute = require("../functions/convAbs");
 
-import _fatalError from "../functions/fatalError.js";
+const _fatalError = require("../functions/fatalError");
 
 /**
  * Find a word or phrase in a file.
@@ -43,25 +42,25 @@ const fif = (file, toFind) => {
   const fileName = _convertAbsolute(file);
 
   // Make sure the file exists
-  if (!existsSync(fileName)) {
+  if (!fs.existsSync(fileName)) {
     _errorInterpret(3, { type: "file", variable: fileName });
     return;
   }
 
   try {
-    if (lstatSync(fileName).isDirectory()) {
+    if (fs.lstatSync(fileName).isDirectory()) {
       _errorInterpret(9, { command: "fif" });
       return;
     }
 
     // Make sure the file IS a text file
-    if (!isText(fileName, readFileSync(fileName, { flag: "r" }))) {
+    if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
       _errorInterpret(8, { encoding: "UTF-8 (plain text files)" });
       return;
     }
 
     // Just to clean it up :)
-    const contents = readFileSync(fileName, { encoding: "utf-8", flag: "r" });
+    const contents = fs.readFileSync(fileName, { encoding: "utf-8", flag: "r" });
 
     // You gotta be careful with this
     // The brackets seem to confuse a few
@@ -82,4 +81,4 @@ const fif = (file, toFind) => {
   }
 };
 
-export default fif;
+module.exports = fif;

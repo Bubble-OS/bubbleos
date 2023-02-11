@@ -1,13 +1,13 @@
-import chalk from "chalk";
-import { question } from "readline-sync";
+const chalk = require("chalk");
+const { question } = require("readline-sync");
 
-import { existsSync, rmSync } from "fs";
+const { existsSync, rmSync } = require("fs");
 
-import _replaceSpaces from "../functions/replaceSpaces.js";
-import _convertAbsolute from "../functions/convAbs.js";
+const _replaceSpaces = require("../functions/replaceSpaces");
+const _convertAbsolute = require("../functions/convAbs");
 
-import _errorInterpret from "../functions/errorInt.js";
-import _fatalError from "../functions/fatalError.js";
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const del = (file) => {
   file = _replaceSpaces(file);
@@ -49,4 +49,4 @@ const del = (file) => {
   }
 };
 
-export default del;
+module.exports = del;

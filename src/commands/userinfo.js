@@ -1,7 +1,7 @@
-import chalk from "chalk";
-import { userInfo } from "os";
+const chalk = require("chalk");
+const { userInfo } = require("os");
 
-import _fatalError from "../functions/fatalError.js";
+const _fatalError = require("../functions/fatalError");
 
 /**
  * Get user information. Renamed to not cause issues with naming conventions.
@@ -24,4 +24,4 @@ const userinfocmd = () => {
   }
 };
 
-export default userinfocmd;
+module.exports = userinfocmd;

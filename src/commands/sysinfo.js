@@ -1,13 +1,13 @@
-import chalk from "chalk";
+const chalk = require("chalk");
 
-import { type } from "os";
+const os = require("os");
 
 const sysinfo = (all) => {
   const friendlyOS = () => {
-    let friendlyName = type();
-    if (type() === "Darwin") {
+    let friendlyName = os.type();
+    if (friendlyName === "Darwin") {
       friendlyName = "macOS";
-    } else if (type() === "Windows_NT") {
+    } else if (friendlyName === "Windows_NT") {
       friendlyName = "Windows";
     }
     return friendlyName;
@@ -32,4 +32,4 @@ const sysinfo = (all) => {
   console.log();
 };
 
-export default sysinfo;
+module.exports = sysinfo;

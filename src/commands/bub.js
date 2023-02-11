@@ -1,15 +1,13 @@
-import chalk from "chalk";
-import { isText } from "istextorbinary";
+const chalk = require("chalk");
+const { isText } = require("istextorbinary");
 
-import { existsSync, readFileSync } from "fs";
+const { existsSync, readFileSync } = require("fs");
 
-import _replaceSpaces from "../functions/replaceSpaces.js";
-import _convertAbsolute from "../functions/convAbs.js";
+const _replaceSpaces = require("../functions/replaceSpaces");
+const _convertAbsolute = require("../functions/convAbs");
 
-import _errorInterpret from "../functions/errorInt.js";
-import _fatalError from "../functions/fatalError.js";
-
-import intCmds from "../interpret.js";
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const _interpretBubbleFile = (path, displayCommand = true) => {
   const contents = readFileSync(path, { encoding: "utf-8", flag: "r" }).split("\n");
@@ -62,4 +60,4 @@ const bub = (file, ...params) => {
   }
 };
 
-export default bub;
+module.exports = bub;

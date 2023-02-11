@@ -1,10 +1,10 @@
-import chalk from "chalk";
-import { existsSync, readdirSync } from "fs";
+const chalk = require("chalk");
+const { existsSync, readdirSync } = require("fs");
 
-import _replaceSpaces from "../functions/replaceSpaces.js";
+const _replaceSpaces = require("../functions/replaceSpaces");
 
-import _errorInterpret from "../functions/errorInt.js";
-import _fatalError from "../functions/fatalError.js";
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const ls = (directory = process.cwd(), ...params) => {
   const _logDirContents = (contents, withHighlight = false) => {
@@ -74,4 +74,4 @@ const ls = (directory = process.cwd(), ...params) => {
   }
 };
 
-export default ls;
+module.exports = ls;

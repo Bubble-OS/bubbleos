@@ -1,11 +1,11 @@
-import chalk from "chalk";
-import { existsSync, lstatSync, statSync } from "fs";
+const chalk = require("chalk");
+const { existsSync, lstatSync, statSync } = require("fs");
 
-import _replaceSpaces from "../functions/replaceSpaces.js";
-import _convertAbsolute from "../functions/convAbs.js";
+const _replaceSpaces = require("../functions/replaceSpaces");
+const _convertAbsolute = require("../functions/convAbs");
 
-import _errorInterpret from "../functions/errorInt.js";
-import _fatalError from "../functions/fatalError.js";
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const _convertSize = (bytes, decimals = 3) => {
   const kilobytes = parseFloat((bytes / 1000).toFixed(decimals));
@@ -89,4 +89,4 @@ const size = (file, sizesToDisplay) => {
   }
 };
 
-export default size;
+module.exports = size;

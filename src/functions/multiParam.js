@@ -7,4 +7,4 @@ const _multiParam = (command, limit = undefined) => {
   return params;
 };
 
-export default _multiParam;
+module.exports = _multiParam;

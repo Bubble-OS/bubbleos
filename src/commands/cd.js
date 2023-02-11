@@ -1,9 +1,9 @@
-import chalk from "chalk";
+const chalk = require("chalk");
 
-import _replaceSpaces from "../functions/replaceSpaces.js";
-import _errorInterpret from "../functions/errorInt.js";
-import _fatalError from "../functions/fatalError.js";
-import _verbInt from "../functions/verboseInt.js";
+const _replaceSpaces = require("../functions/replaceSpaces");
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
+const _verbInt = require("../functions/verboseInt");
 
 const _verbMsgs = [
   `Replacing '/s' with spaces...`,
@@ -54,4 +54,4 @@ const cd = (dir, ...params) => {
   _verbInt(_verbMsgs[8], verbose, { variable: dir });
 };
 
-export default cd;
+module.exports = cd;

@@ -1,8 +1,8 @@
-import chalk from "chalk";
-import sortKeys from "sort-keys";
-import HELP_DEFINITIONS from "./variables/helpMessages.js";
+const chalk = require("chalk");
+const sortKeys = require("sort-keys");
+const HELP_DEFINITIONS = require("./variables/helpMessages");
 
-import _errorInterpret from "./functions/errorInt.js";
+const _errorInterpret = require("./functions/errorInt");
 
 const help = (command) => {
   const sorted = sortKeys(HELP_DEFINITIONS);
@@ -40,4 +40,4 @@ const help = (command) => {
   }
 };
 
-export default help;
+module.exports = help;

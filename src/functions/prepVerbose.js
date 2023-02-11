@@ -13,4 +13,4 @@ const _prepVerbose = (commands) => {
   return [arg, verbose];
 };
 
-export default _prepVerbose;
+module.exports = _prepVerbose;

@@ -3,4 +3,4 @@ const _mainArgs = () => {
   return args.splice(2);
 };
 
-export default _mainArgs;
+module.exports = _mainArgs;

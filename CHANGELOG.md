@@ -12,7 +12,6 @@ Please note that not all versions will have respectible executables with them.
 - Added a pre-boot interpreter, which can execute one command when run (for example, `bubble.exe mkdir test`). It will exit as soon as the command has executed.
 - Seperated the `time` and `date` commands, adding two seperate ones (**not** aliases).
 - Added the `-s`/`/s` flag for the `ls` command to display folder contents in a shorter view.
-- Made the application much faster and more responsive (around 30% faster).
 
 ### Changed/Fixed Features
 

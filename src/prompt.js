@@ -1,5 +1,5 @@
-import chalk from "chalk";
-import { question } from "readline-sync";
+const chalk = require("chalk");
+const { question } = require("readline-sync");
 
 const prompt = () => {
   let command = question(
@@ -16,4 +16,4 @@ const prompt = () => {
   };
 };
 
-export default prompt;
+module.exports = prompt;

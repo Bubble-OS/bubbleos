@@ -1,11 +1,11 @@
-import chalk from "chalk";
-import { existsSync, mkdirSync } from "fs";
+const chalk = require("chalk");
+const { existsSync, mkdirSync } = require("fs");
 
-import _replaceSpaces from "../functions/replaceSpaces.js";
-import _convertAbsolute from "../functions/convAbs.js";
+const _replaceSpaces = require("../functions/replaceSpaces");
+const _convertAbsolute = require("../functions/convAbs");
 
-import _errorInterpret from "../functions/errorInt.js";
-import _fatalError from "../functions/fatalError.js";
+const _errorInterpret = require("../functions/errorInt");
+const _fatalError = require("../functions/fatalError");
 
 const mkdir = (dirName) => {
   dirName = _replaceSpaces(dirName);
@@ -34,4 +34,4 @@ const mkdir = (dirName) => {
   }
 };
 
-export default mkdir;
+module.exports = mkdir;

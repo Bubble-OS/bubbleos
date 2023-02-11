@@ -5,4 +5,4 @@ const VERSION = "0.6.3";
 const BUILD = "63";
 const IN_BETA = true;
 
-export { GLOBAL_NAME, AUTHOR, VERSION, BUILD, IN_BETA };
+module.exports = { GLOBAL_NAME, AUTHOR, VERSION, BUILD, IN_BETA };

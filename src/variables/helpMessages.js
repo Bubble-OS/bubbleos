@@ -1,4 +1,4 @@
-import { GLOBAL_NAME } from "./aboutConsts.js";
+const { GLOBAL_NAME } = require("./aboutConsts");
 
 const HELP_DEFINITIONS = {
   help: {
@@ -133,4 +133,4 @@ const HELP_DEFINITIONS = {
   },
 };
 
-export default HELP_DEFINITIONS;
+module.exports = HELP_DEFINITIONS;

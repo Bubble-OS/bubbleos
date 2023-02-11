@@ -1,38 +1,36 @@
-import _errorInterpret from "./functions/errorInt.js";
-import _singleParam from "./functions/singleParam.js";
-import _multiParam from "./functions/multiParam.js";
+const _singleParam = require("./functions/singleParam");
+const _multiParam = require("./functions/multiParam");
+const _errorInterpret = require("./functions/errorInt");
 
-import help from "./help.js";
-import exitBubble from "./exit.js";
-import cd from "./commands/cd.js";
-import ls from "./commands/ls.js";
-import sysinfo from "./commands/sysinfo.js";
-import taskkill from "./commands/taskkill.js";
-import mkdir from "./commands/mkdir.js";
-import execFile from "./commands/exec.js";
-import about from "./commands/about.js";
-import mkfile from "./commands/mkfile.js";
-import readfile from "./commands/readfile.js";
-import copyfile from "./commands/copyfile.js";
-import printText from "./commands/print.js";
-import userinfocmd from "./commands/userinfo.js";
-import wcount from "./commands/wcount.js";
-import del from "./commands/del.js";
-import size from "./commands/size.js";
-import rename from "./commands/rename.js";
-import time from "./commands/time.js";
-import date from "./commands/date.js";
-import { _addToHist, historyCmd } from "./commands/history.js";
-import fif from "./commands/fif.js";
-import ifnet from "./commands/ifnet.js";
-import bub from "./commands/bub.js";
+const cd = require("./commands/cd");
+const ls = require("./commands/ls");
+const sysinfo = require("./commands/sysinfo");
+const taskkill = require("./commands/taskkill");
+const mkdir = require("./commands/mkdir");
+const execFile = require("./commands/exec");
+const about = require("./commands/about");
+const mkfile = require("./commands/mkfile");
+const readfile = require("./commands/readfile");
+const copyfile = require("./commands/copyfile");
+const printText = require("./commands/print");
+const userinfocmd = require("./commands/userinfo");
+const wcount = require("./commands/wcount");
+const del = require("./commands/del");
+const size = require("./commands/size");
+const rename = require("./commands/rename");
+const time = require("./commands/time");
+const date = require("./commands/date");
+const { _addToHist, historyCmd } = require("./commands/history");
+const fif = require("./commands/fif");
+const ifnet = require("./commands/ifnet");
+const bub = require("./commands/bub");
 
 const intCmds = (command, isEmpty) => {
   if (isEmpty) _errorInterpret(0);
 
   if (command.startsWith("exit")) {
     // If the user typed in 'exit'
-    exitBubble(0);
+    require("./exit");
   } else if (command.startsWith("help")) {
     help(_singleParam(command, "help"));
   } else if (command.startsWith("cd")) {
@@ -97,4 +95,4 @@ const intCmds = (command, isEmpty) => {
   if (!isEmpty) _addToHist(command);
 };
 
-export default intCmds;
+module.exports = intCmds;
