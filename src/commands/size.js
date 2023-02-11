@@ -2,11 +2,23 @@ import chalk from "chalk";
 import { existsSync, lstatSync, statSync } from "fs";
 
 import _replaceSpaces from "../functions/replaceSpaces.js";
-import _convertSize from "../functions/convSize.js";
 import _convertAbsolute from "../functions/convAbs.js";
 
 import _errorInterpret from "../functions/errorInt.js";
 import _fatalError from "../functions/fatalError.js";
+
+const _convertSize = (bytes, decimals = 3) => {
+  const kilobytes = parseFloat((bytes / 1000).toFixed(decimals));
+  const megabytes = parseFloat((kilobytes / 1000).toFixed(decimals));
+  const gigabytes = parseFloat((megabytes / 1000).toFixed(decimals));
+
+  return {
+    Bytes: bytes,
+    Kilobytes: kilobytes,
+    Megabytes: megabytes,
+    Gigabytes: gigabytes,
+  };
+};
 
 const size = (file, sizesToDisplay) => {
   file = _replaceSpaces(file);

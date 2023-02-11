@@ -1,18 +1,15 @@
 {
   "name": "bubbleos",
-  "version": "0.6.0",
+  "version": "0.6.3",
   "description": "BubbleOS is a shell for your current operating system!",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bubble-OS/bubbleos.git"
   },
   "author": "Arnav Thorat",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Bubble-OS/bubbleos/issues"
   },

@@ -4,11 +4,12 @@ _Note: Only from BubbleOS v0.2.3 will changes be recorded._
 
 Please note that not all versions will have respectible executables with them.
 
-## Build 55-61 (v0.5.5-v0.6.1)
+## Build 55-63 (v0.5.5-v0.6.3)
 
 ### Added Features
 
 - Added the `bub` command, which can interpret BubbleOS commands line-by-line in a file, similar to a `.bat`/`.cmd` file. You can also run it with the `-d` flag to show the commands that it is executing.
+- Added a pre-boot interpreter, which can execute one command when run (for example, `bubble.exe mkdir test`). It will exit as soon as the command has executed.
 - Seperated the `time` and `date` commands, adding two seperate ones (**not** aliases).
 - Added the `-s`/`/s` flag for the `ls` command to display folder contents in a shorter view.
 - Made the application much faster and more responsive (around 30% faster).
