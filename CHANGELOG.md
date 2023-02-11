@@ -1,10 +1,8 @@
 # BubbleOS Changelog
 
-_Note: Only from BubbleOS v0.2.3 will changes be recorded._
+This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-Please note that not all versions will have respectible executables with them.
-
-## Build 63-6? (v0.6.5-v0.6.?)
+## Build 63-6? (v0.6.3-v0.6.?)
 
 ### Added Features
 
@@ -14,7 +12,7 @@ _No features have been added in this release._
 
 - Fixed an issue where on some systems, BubbleOS could not be run successfully (crash on startup).
 - Fixed an issue where the `bub` command would crash BubbleOS.
-- Fixed an issue where `help` would crash BubbleOS
+- Fixed an issue where the `help` command would crash BubbleOS.
 
 ### Removed Features
 
