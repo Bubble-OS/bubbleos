@@ -49,6 +49,7 @@ const errors = require("../variables/errors");
  * _errorInterpret(1, { variable: command });
  * ```
  *
+ * @deprecated As of `v0.6.6`, this function is deprecated. Use the new `Errors` class instead.
  * @throws An `Error` if the error code does not exist.
  * @param {number} errorCode The error code from the `ERRORS` object. Make sure it exists before adding it.
  * @param {{ variable: string, command: string, type: string, example: string, todo: string, os: string, encoding: string, supposedTo: string, notContain: string, extention: string }} options An object containing configuration of the message (e.g. a dynamic variable to display to replace `%VARIABLE%`).

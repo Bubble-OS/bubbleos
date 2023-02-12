@@ -6,11 +6,13 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
+- Added a new `Errors` class internally to make error messages streamlined.
 - Added more error messages, and replaced placeholder ones. Also added a technical error code at the end of some errors.
 - Added the BubbleOS Discord server link in the `about` command.
 
 ### Changed/Fixed Features
 
+- Updated the errors' internal code and updated some messages.
 - Updated the _FATAL ERROR_ screen to include more technical information.
 - Fixed an issue where on some systems, BubbleOS could not be run successfully (crash on startup).
 - Fixed an issue where the `bub` command would crash BubbleOS.
