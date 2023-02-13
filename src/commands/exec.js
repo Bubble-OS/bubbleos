@@ -3,21 +3,22 @@ const chalk = require("chalk");
 const { execFile: exec } = require("child_process");
 const { existsSync } = require("fs");
 
-const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
+
+const Errors = require("../classes/Errors");
 
 // Named 'execFile' to avoid naming conflicts
 const execFile = (execFilename) => {
   execFilename = _replaceSpaces(execFilename);
 
   if (typeof execFilename === "undefined") {
-    _errorInterpret(2, { type: "a file", example: "exec test" });
+    Errors.enterParameter("a file", "exec test");
     return;
   } else if (process.platform !== "win32") {
-    _errorInterpret(5, { os: "Windows" });
+    Errors.invalidOS("Windows");
     return;
   }
 
@@ -25,7 +26,7 @@ const execFile = (execFilename) => {
   const fullPath = _convertAbsolute(execFilenameExe);
 
   if (!existsSync(fullPath)) {
-    _errorInterpret(3, { type: "file", variable: fullPath });
+    Errors.doesNotExist("file", fullPath);
     return;
   }
 

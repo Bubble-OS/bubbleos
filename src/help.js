@@ -2,7 +2,7 @@ const chalk = require("chalk");
 const sortKeys = require("sort-keys");
 const HELP_DEFINITIONS = require("./variables/helpMessages");
 
-const _errorInterpret = require("./functions/errorInt");
+const Errors = require("./classes/Errors");
 
 const help = (command) => {
   const sorted = sortKeys(HELP_DEFINITIONS);
@@ -36,7 +36,7 @@ const help = (command) => {
       }
     }
 
-    _errorInterpret(1, { command });
+    Errors.unrecognizedCommand(command);
   }
 };
 

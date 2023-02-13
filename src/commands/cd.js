@@ -1,9 +1,11 @@
 const chalk = require("chalk");
 
 const _replaceSpaces = require("../functions/replaceSpaces");
-const _errorInterpret = require("../functions/errorInt");
+
 const _fatalError = require("../functions/fatalError");
 const _verbInt = require("../functions/verboseInt");
+
+const Errors = require("../classes/Errors");
 
 const _verbMsgs = [
   `Replacing '/s' with spaces...`,
@@ -26,7 +28,7 @@ const cd = (dir, ...params) => {
 
   _verbInt(_verbMsgs[1], verbose);
   if (typeof dir === "undefined") {
-    _errorInterpret(2, { type: "a directory", example: "cd test" });
+    Errors.enterParameter("a directory", "cd test");
     return;
   }
   _verbInt(_verbMsgs[2], verbose);
@@ -37,10 +39,10 @@ const cd = (dir, ...params) => {
   } catch (err) {
     if (err.code === "ENOENT") {
       _verbInt(_verbMsgs[4], verbose, { variable: dir, error: 3 });
-      _errorInterpret(3, { type: "directory", variable: dir });
+      Errors.doesNotExist("directory", dir);
     } else if (err.code === "EPERM") {
       _verbInt(_verbMsgs[5], verbose, { variable: dir, error: 4 });
-      _errorInterpret(4, { todo: "change into the directory", variable: dir });
+      Errors.noPermissions("change into the directory", dir);
     } else {
       _verbInt(_verbMsgs[6], verbose, { error: err.code });
       _fatalError(err);

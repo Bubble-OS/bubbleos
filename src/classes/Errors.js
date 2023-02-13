@@ -28,7 +28,7 @@ const chalk = require("chalk");
  * - `8` - `expectedDir()`
  * - `9` - `invalidOS()`
  * - `10` - `invalidEncoding()`
- * - `11` - `invalidExtention()`
+ * - `11` - `invalidExtension()`
  * - `12` - `invalidCharacters()`
  */
 class Errors {
@@ -161,6 +161,20 @@ class Errors {
     this.#interpretError(CODE, MESSAGE);
   }
 
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Does not exist / Non-existant_
+   *
+   * **Parameters:** `type`, `variable`
+   *
+   * **Error code:** `3`
+   *
+   * **Message:** The `type`, **_'`variable`'_**, does not exist. (ENOENT)
+   *
+   * @param {string} type The type of thing that does not exist. For example: _directory_, or, _file_.
+   * @param {string} variable The value that the user entered.
+   */
   static doesNotExist(type, variable) {
     const CODE = 3;
     const MESSAGE = `The ${type}, ${chalk.italic.bold(
@@ -170,6 +184,20 @@ class Errors {
     this.#interpretError(CODE, MESSAGE);
   }
 
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _No permissions_
+   *
+   * **Parameters:** `todo`, `variable`
+   *
+   * **Error code:** `4`
+   *
+   * **Message:** Invalid permissions to `todo` **_'`variable`'_**. You need elevated privileges. (EPERM)
+   *
+   * @param {string} todo The thing that the user was attempting to do (e.g. _read the file_).
+   * @param {string} variable The value that the user entered.
+   */
   static noPermissions(todo, variable) {
     const CODE = 4;
     const MESSAGE = `Invalid permissions to ${todo} ${chalk.italic.bold(
@@ -179,6 +207,20 @@ class Errors {
     this.#interpretError(CODE, MESSAGE);
   }
 
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _In use_
+   *
+   * **Parameters:** `type`, `variable`
+   *
+   * **Error code:** `5`
+   *
+   * **Message:** The `type`, **_'`variable`'_**, is currently being used. (EBUSY)
+   *
+   * @param {string} type The type of thing that is in use. For example: _directory_, or, _file_.
+   * @param {string} variable The value that the user entered.
+   */
   static inUse(type, variable) {
     const CODE = 5;
     const MESSAGE = `The ${type}, ${chalk.bold.italic(
@@ -188,6 +230,20 @@ class Errors {
     this.#interpretError(CODE, MESSAGE);
   }
 
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Already exists_
+   *
+   * **Parameters:** `type`, `variable`
+   *
+   * **Error code:** `6`
+   *
+   * **Message:** The `type`, **_'`variable`'_**, already exists. (EEXIST)
+   *
+   * @param {string} type The type of thing that already exists. For example: _directory_, or, _file_.
+   * @param {string} variable The value that the user entered.
+   */
   static alreadyExists(type, variable) {
     const CODE = 6;
     const MESSAGE = `The ${type}, ${chalk.bold.italic(
@@ -197,6 +253,19 @@ class Errors {
     this.#interpretError(CODE, MESSAGE);
   }
 
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Expected file_
+   *
+   * **Parameters:** `variable`
+   *
+   * **Error code:** `7`
+   *
+   * **Message:** Expected a file, but got a directory (**_'`variable`'_**) instead. (EISDIR)
+   *
+   * @param {string} variable The value that the user entered.
+   */
   static expectedFile(variable) {
     const CODE = 7;
     const MESSAGE = `Expected a file, but got a directory (${chalk.bold.italic(
@@ -206,6 +275,19 @@ class Errors {
     this.#interpretError(CODE, MESSAGE);
   }
 
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Expected directory_
+   *
+   * **Parameters:** `variable`
+   *
+   * **Error code:** `8`
+   *
+   * **Message:** Expected a directory, but got a file (**_'`variable`'_**) instead. (ENOTDIR)
+   *
+   * @param {string} variable The value that the user entered.
+   */
   static expectedDir(variable) {
     const CODE = 8;
     const MESSAGE = `Expected a directory, but got a file (${chalk.bold.italic(
@@ -215,31 +297,84 @@ class Errors {
     this.#interpretError(CODE, MESSAGE);
   }
 
-  static invalidOS(command, os) {
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Invalid OS_
+   *
+   * **Parameters:** `os`
+   *
+   * **Error code:** `9`
+   *
+   * **Message:** This command can only run on `os`.
+   *
+   * @param {string} os The operating system that the command can run on.
+   */
+  static invalidOS(os) {
     const CODE = 9;
-    const MESSAGE = `The command, ${chalk.italic.bold(`'${command}'`)}, can only run on ${os}.`;
+    const MESSAGE = `This command can only run on ${os}.`;
 
     this.#interpretError(CODE, MESSAGE);
   }
 
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Invalid encoding_
+   *
+   * **Parameters:** `encoding`
+   *
+   * **Error code:** `10`
+   *
+   * **Message:** This command can only read `encoding` files.
+   *
+   * @param {string} encoding The encoding that the command can read.
+   */
   static invalidEncoding(encoding) {
     const CODE = 10;
-    const MESSAGE = `The command, ${chalk.italic.bold(
-      `'${command}'`
-    )}, can only read ${encoding} files.`;
+    const MESSAGE = `This command can only read ${encoding} files.`;
 
     this.#interpretError(CODE, MESSAGE);
   }
 
-  static invalidExtention(extention) {
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Invalid extension_
+   *
+   * **Parameters:** `extension`
+   *
+   * **Error code:** `11`
+   *
+   * **Message:** Only files ending with the **_'`extension`'_** extension can be used.
+   *
+   * @param {string} extension The extension that was expected.
+   */
+  static invalidExtension(extension) {
     const CODE = 11;
     const MESSAGE = `Only files ending with the ${chalk.italic.bold(
-      `'${extention}'`
-    )} extention can be used.`;
+      `'${extension}'`
+    )} extension can be used.`;
 
     this.#interpretError(CODE, MESSAGE);
   }
 
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Invalid characters_
+   *
+   * **Parameters:** `type`, `supposedTo`, `notContain`, `variable`
+   *
+   * **Error code:** `12`
+   *
+   * **Message:** The `type` can only contain `supposedTo` and not contain `notContain` (received **_'`variable`'_**).
+   *
+   * @param {string} type The type of thing that was validated (e.g. _file name_).
+   * @param {string} supposedTo The characters that the item **can** contain.
+   * @param {string} notContain The characters that the item **cannot** contain.
+   * @param {string} variable The variable passed from the user.
+   */
   static invalidCharacters(type, supposedTo, notContain, variable) {
     const CODE = 12;
     const MESSAGE = `The ${type} can only contain ${supposedTo} and not contain ${notContain} (received ${chalk.bold.italic(

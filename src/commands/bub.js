@@ -6,8 +6,9 @@ const { existsSync, readFileSync } = require("fs");
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
-const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
+
+const Errors = require("../classes/Errors");
 
 const intCmds = require("../interpret");
 
@@ -27,7 +28,7 @@ const _interpretBubbleFile = (path, displayCommand = true) => {
 
 const bub = (file, ...params) => {
   if (typeof file === "undefined") {
-    _errorInterpret(2, { type: "a file", example: "bub test.bub" });
+    Errors.enterParameter("a file", "bub test.bub");
     return;
   }
 
@@ -39,23 +40,24 @@ const bub = (file, ...params) => {
   if (params.includes("-d") || params.includes("/d")) displayCmd = true;
 
   if (!existsSync(file)) {
-    _errorInterpret(3, { type: "file", variable: file });
+    Errors.doesNotExist("file", file);
     return;
   }
 
   try {
     if (!isText(file, readFileSync(file, { flag: "r" }))) {
-      _errorInterpret(8, { encoding: "UTF-8 (plain text files)" });
+      Errors.invalidEncoding("plain text");
       return;
     } else if (!file.endsWith(".bub")) {
-      _errorInterpret(16, { type: "file", extention: ".bub" });
+      Errors.invalidExtension(".bub");
       return;
     }
 
     _interpretBubbleFile(file, displayCmd);
   } catch (err) {
     if (err.code === "EISDIR") {
-      _errorInterpret(9, { command: "readfile" });
+      Errors.expectedFile(file);
+      return;
     } else {
       _fatalError(err);
     }

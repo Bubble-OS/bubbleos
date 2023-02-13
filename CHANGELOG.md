@@ -20,7 +20,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Removed Features
 
-_No features have been removed in this release._
+- Deprecated the `ERRORS` variable and the `errorInt` function.
 
 ## Build 55-63 (v0.5.5-v0.6.3)
 

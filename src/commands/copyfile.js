@@ -6,9 +6,10 @@ const { copyFileSync } = require("fs");
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
-const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
 const _verbInt = require("../functions/verboseInt");
+
+const Errors = require("../classes/Errors");
 
 const _verbMsgs = [
   `Replacing spaces in 'src' and 'dest'...`,
@@ -30,13 +31,7 @@ const _verbMsgs = [
 
 const copyfile = (src, dest, ...params) => {
   let verbose = false;
-  if (
-    params.includes("--verbose") ||
-    params.includes("/verbose") ||
-    dest === "--verbose" ||
-    dest === "/verbose"
-  )
-    verbose = true;
+  if (params.includes("--verbose") || params.includes("/verbose")) verbose = true;
 
   _verbInt(_verbMsgs[0], verbose);
   src = _replaceSpaces(src);
@@ -45,10 +40,7 @@ const copyfile = (src, dest, ...params) => {
   _verbInt(_verbMsgs[1], verbose);
   if (!src || !dest) {
     _verbInt(_verbMsgs[2], verbose, { error: 5 });
-    _errorInterpret(2, {
-      type: "the source and destination",
-      example: "copyfile test.txt D:\\test.txt",
-    });
+    Errors.enterParameter("the source and destination", "copyfile test.txt D:\\test.txt");
     _verbInt(_verbMsgs[3], verbose);
     return;
   }
@@ -81,13 +73,10 @@ const copyfile = (src, dest, ...params) => {
   } catch (err) {
     if (err.code === "EPERM") {
       _verbInt(_verbMsgs[10], verbose, { variable: `${srcPath} and/or ${destPath}`, error: 7 });
-      _errorInterpret(4, { todo: "read/write to", variable: `${srcPath} and/or ${destPath}` });
+      Errors.noPermissions("read/write to", `${srcPath} and/or ${destPath}`);
     } else if (err.code === "ENOENT") {
       _verbInt(_verbMsgs[11], verbose, { variable: srcPath, error: 8 });
-      _errorInterpret(3, {
-        type: "source and/or destination",
-        variable: `${srcPath} and/or ${destPath}`,
-      });
+      Errors.doesNotExist("source and/or destination", `${srcPath} and/or ${destPath}`);
     } else {
       _verbInt(_verbMsgs[12], verbose, { error: err.code });
       _fatalError(err);

@@ -1,6 +1,7 @@
 const _singleParam = require("./functions/singleParam");
 const _multiParam = require("./functions/multiParam");
-const _errorInterpret = require("./functions/errorInt");
+
+const Errors = require("./classes/Errors");
 
 const help = require("./help");
 const cd = require("./commands/cd");
@@ -26,8 +27,15 @@ const fif = require("./commands/fif");
 const ifnet = require("./commands/ifnet");
 const bub = require("./commands/bub");
 
-const intCmds = (command, isEmpty) => {
-  if (isEmpty) _errorInterpret(0);
+/**
+ * Interpret all available BubbleOS commands.
+ *
+ * @param {string} command The command that was requested to be interpretted by the user.
+ */
+const intCmds = (command) => {
+  const isEmpty = command.length === 0;
+
+  if (isEmpty) Errors.enterCommand();
 
   if (command.startsWith("exit")) {
     // If the user typed in 'exit'
@@ -88,9 +96,7 @@ const intCmds = (command, isEmpty) => {
     bub(..._multiParam(command));
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
-    if (!isEmpty) {
-      _errorInterpret(1, { command });
-    }
+    if (!isEmpty) Errors.unrecognizedCommand(command);
   }
 
   if (!isEmpty) _addToHist(command);

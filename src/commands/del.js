@@ -6,21 +6,22 @@ const { existsSync, rmSync } = require("fs");
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
-const _errorInterpret = require("../functions/errorInt");
 const _fatalError = require("../functions/fatalError");
+
+const Errors = require("../classes/Errors");
 
 const del = (file) => {
   file = _replaceSpaces(file);
 
   if (!file) {
-    _errorInterpret(2, { type: "a file/directory", example: "del test" });
+    Errors.enterParameter("a file/directory", "del test");
     return;
   }
 
   const fileName = _convertAbsolute(file);
 
   if (!existsSync(fileName)) {
-    _errorInterpret(3, { type: "file/directory", variable: fileName });
+    Errors.doesNotExist("file/directory", fileName);
     return;
   }
 
@@ -40,9 +41,9 @@ const del = (file) => {
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EBUSY") {
-      _errorInterpret(7, { type: "file/directory", variable: fileName });
+      Errors.inUse("file/directory", fileName);
     } else if (err.code === "EPERM") {
-      _errorInterpret(4, { todo: "delete the file/directory", variable: fileName });
+      Errors.noPermissions("delete the file/directory", fileName);
     } else {
       _fatalError(err);
     }
