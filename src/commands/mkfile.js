@@ -6,14 +6,14 @@ const { existsSync, writeFileSync } = require("fs");
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
-const _errorInterpret = require("../functions/errorInt");
+const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
 const mkfile = (file) => {
   file = _replaceSpaces(file);
 
   if (!file) {
-    _errorInterpret(2, { type: "a file", example: "mkfile test.txt" });
+    Errors.enterParameter("a file", "mkfile test.txt");
     return;
   }
 
@@ -27,11 +27,11 @@ const mkfile = (file) => {
       writeFileSync(fileName, contents);
       console.log(chalk.green("The operation completed successfully.\n"));
     } else {
-      _errorInterpret(6, { type: "file", variable: fileName });
+      Errors.alreadyExists("file", fileName);
     }
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret(4, { todo: "make the file", variable: fileName });
+      Errors.noPermissions("make the file", fileName);
     } else {
       _fatalError(err);
     }

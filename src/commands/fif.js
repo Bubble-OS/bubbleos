@@ -6,12 +6,13 @@ const { isText } = require("istextorbinary");
 const fs = require("fs");
 
 // Custom-made functions
-const _errorInterpret = require("../functions/errorInt");
 
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
 const _fatalError = require("../functions/fatalError");
+
+const Errors = require("../classes/Errors");
 
 /**
  * Find a word or phrase in a file.
@@ -34,7 +35,7 @@ const fif = (file, toFind) => {
 
   // Check to make sure the file/phrase to find is not empty
   if (!file || !toFind) {
-    _errorInterpret(2, { type: "the file and the phrase to find", example: "fif test.txt hello" });
+    Errors.enterParameter("the file and the phrase to find", "fif test.txt hello");
     return;
   }
 
@@ -43,19 +44,19 @@ const fif = (file, toFind) => {
 
   // Make sure the file exists
   if (!fs.existsSync(fileName)) {
-    _errorInterpret(3, { type: "file", variable: fileName });
+    Errors.doesNotExist("file", fileName);
     return;
   }
 
   try {
     if (fs.lstatSync(fileName).isDirectory()) {
-      _errorInterpret(9, { command: "fif" });
+      Errors.expectedFile(fileName);
       return;
     }
 
     // Make sure the file IS a text file
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret(8, { encoding: "UTF-8 (plain text files)" });
+      Errors.invalidEncoding("plain text");
       return;
     }
 

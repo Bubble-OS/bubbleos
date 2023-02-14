@@ -1,8 +1,11 @@
 const chalk = require("chalk");
 
-const _errorInterpret = require("../functions/errorInt");
+const Errors = require("../classes/Errors");
 
 const history = [];
+/**
+ * The number of history commands to store before deleting the oldest ones.
+ */
 const NUMBER_TO_STORE = 50;
 
 const historyCmd = (numToDisplay) => {
@@ -12,7 +15,7 @@ const historyCmd = (numToDisplay) => {
 
   if (typeof numToDisplay === "undefined") {
     if (history.length === 0) {
-      _errorInterpret(44);
+      console.log(chalk.yellow("No commands in history yet.\n"));
       return;
     } else {
       for (const [idx, value] of history.entries()) {
@@ -25,15 +28,10 @@ const historyCmd = (numToDisplay) => {
   }
 
   if (numToDisplay % 1 !== 0) {
-    _errorInterpret(10, {
-      type: "history point",
-      supposedTo: "numbers",
-      notContain: "letters/symbols",
-      variable: numToDisplay,
-    });
+    Errors.invalidCharacters("history point", "numbers", "letters/symbols", numToDisplay);
     return;
   } else if (typeof history[numToDisplay - 1] === "undefined") {
-    console.log(chalk.yellow("No history is available."));
+    console.log(chalk.yellow(`Cannot find the command in history point ${numToDisplay}.\n`));
     return;
   }
 

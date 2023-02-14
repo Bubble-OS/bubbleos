@@ -4,14 +4,14 @@ const { existsSync, mkdirSync } = require("fs");
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
-const _errorInterpret = require("../functions/errorInt");
+const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
 const mkdir = (dirName) => {
   dirName = _replaceSpaces(dirName);
 
   if (!dirName) {
-    _errorInterpret(2, { type: "a directory", example: "mkdir test" });
+    Errors.enterParameter("a directory", "mkdir test");
     return;
   }
 
@@ -23,11 +23,11 @@ const mkdir = (dirName) => {
       mkdirSync(dir);
       console.log(chalk.green("The operation completed successfully.\n"));
     } else {
-      _errorInterpret(6, { type: "directory", variable: dir });
+      Errors.alreadyExists("directory", dir);
     }
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret(4, { todo: "make the directory", variable: dir });
+      Errors.noPermissions("make the directory", dir);
     } else {
       _fatalError(err);
     }

@@ -3,7 +3,7 @@ const { existsSync, readdirSync } = require("fs");
 
 const _replaceSpaces = require("../functions/replaceSpaces");
 
-const _errorInterpret = require("../functions/errorInt");
+const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
 const ls = (directory = process.cwd(), ...params) => {
@@ -41,7 +41,7 @@ const ls = (directory = process.cwd(), ...params) => {
     directory = _replaceSpaces(directory);
 
     if (!existsSync(directory)) {
-      _errorInterpret(3, { type: "directory", variable: directory });
+      Errors.doesNotExist("folder", directory);
       return;
     }
 
@@ -65,7 +65,7 @@ const ls = (directory = process.cwd(), ...params) => {
     else console.log(_logDirContents(all, false).join("\n") + "\n");
   } catch (err) {
     if (err.code === "ENOTDIR") {
-      _errorInterpret(11, { command: "ls" });
+      Errors.expectedDir(directory);
       return;
     }
     _fatalError(err);

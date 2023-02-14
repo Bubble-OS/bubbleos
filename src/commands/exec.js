@@ -39,4 +39,4 @@ const execFile = (execFilename) => {
   }
 };
 
-module.exports = exec;
+module.exports = execFile;
