@@ -11,6 +11,10 @@ const about = (...params) => {
   console.log(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`);
   console.log(`Made by ${AUTHOR}!\n`);
 
+  console.log(
+    chalk.italic("Thanks to Erik (and B-Kernel) for helping out with a few command ideas!\n")
+  );
+
   if (license) {
     console.log(
       chalk.dim(`    MIT License
