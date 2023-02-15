@@ -5,7 +5,7 @@ const fs = require("fs");
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
-const _errorInterpret = require("../functions/errorInt");
+const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
 const rename = (file, renamed) => {
@@ -13,13 +13,10 @@ const rename = (file, renamed) => {
   renamed = _replaceSpaces(renamed);
 
   if (!file || !renamed) {
-    _errorInterpret(2, {
-      type: "the filename and the new name",
-      example: "rename hello.txt world.txt",
-    });
+    Errors.enterParameter("the filename and the new name", "rename hello.txt world.txt");
     return;
   } else if (file.trim() === renamed.trim()) {
-    _errorInterpret(15, { type: "file" });
+    console.log(chalk.yellow("The old filename and the new filename cannot be the same name.\n"));
     return;
   }
 
@@ -27,7 +24,7 @@ const rename = (file, renamed) => {
   const renamedName = _convertAbsolute(renamed.trim());
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret(41, { variable: fileName });
+    Errors.doesNotExist("file", fileName);
     return;
   }
 
@@ -36,13 +33,9 @@ const rename = (file, renamed) => {
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret(42, {
-        variable: fileName,
-      });
+      Errors.noPermissions("copy the file/read the directory", `${fileName}/${renamedName}`);
     } else if (err.code === "EBUSY") {
-      _errorInterpret(43, {
-        variable: fileName,
-      });
+      Errors.inUse("file/folder", `${fileName}/${renamedName}`);
     } else {
       _fatalError(err);
     }

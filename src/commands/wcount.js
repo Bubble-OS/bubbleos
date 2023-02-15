@@ -6,27 +6,27 @@ const fs = require("fs");
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
-const _errorInterpret = require("../functions/errorInt");
+const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
 const wcount = (file) => {
   file = _replaceSpaces(file);
 
   if (!file) {
-    _errorInterpret(2, { type: "a file", example: "wcount test.txt" });
+    Errors.enterParameter("a file", "wcount text.txt");
     return;
   }
 
   const fileName = _convertAbsolute(file);
 
   if (!fs.existsSync(fileName)) {
-    _errorInterpret(3, { type: "file", variable: fileName });
+    Errors.doesNotExist("file", fileName);
     return;
   }
 
   try {
     if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
-      _errorInterpret(8, { encoding: "UTF-8 (plain text files)" });
+      Errors.invalidEncoding("plain text");
       return;
     }
 
@@ -37,7 +37,7 @@ const wcount = (file) => {
     console.log(`Words: ${chalk.bold(fileContents.split(" ").length)}\n`);
   } catch (err) {
     if (err.code === "EISDIR") {
-      _errorInterpret(9, { command: "wcount" });
+      Errors.expectedFile(fileName);
     } else {
       _fatalError(err);
     }

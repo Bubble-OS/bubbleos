@@ -4,7 +4,7 @@ const { existsSync, lstatSync, statSync } = require("fs");
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 
-const _errorInterpret = require("../functions/errorInt");
+const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
 const _convertSize = (bytes, decimals = 3) => {
@@ -45,18 +45,18 @@ const size = (file, sizesToDisplay) => {
   }
 
   if (typeof file === "undefined") {
-    _errorInterpret(2, { type: "a file", example: "size test.txt" });
+    Errors.enterParameter("a file", "size test.txt");
     return;
   }
 
   const fileName = _convertAbsolute(file);
   if (!existsSync(fileName)) {
-    _errorInterpret(3, { type: "file", variable: fileName });
+    Errors.doesNotExist("file", fileName);
     return;
   }
 
   if (lstatSync(fileName).isDirectory()) {
-    _errorInterpret(9, { command: "size" });
+    Errors.expectedFile(fileName);
     return;
   }
 

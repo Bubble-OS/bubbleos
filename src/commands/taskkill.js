@@ -1,11 +1,11 @@
 const chalk = require("chalk");
 
-const _errorInterpret = require("../functions/errorInt");
+const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
 const taskkill = (pid) => {
   if (typeof pid === "undefined") {
-    _errorInterpret(2, { type: "a PID", example: "taskkill 1234" });
+    Errors.enterParameter("a PID", "taskkill 1234");
     return;
   }
 
@@ -15,12 +15,7 @@ const taskkill = (pid) => {
   };
 
   if (!isNumeric(pid)) {
-    _errorInterpret(10, {
-      type: "PID",
-      supposedTo: "numbers",
-      notContain: "letters/symbols",
-      variable: pid,
-    });
+    Errors.invalidCharacters("PID", "numbers", "letters/symbols", pid);
     return;
   }
 
@@ -31,7 +26,7 @@ const taskkill = (pid) => {
     console.log(`Successfully killed process ${chalk.green(pid)}.\n`);
   } catch (err) {
     if (err.code === "EPERM") {
-      _errorInterpret(4, { todo: "kill the process with PID", variable: pid });
+      Errors.noPermissions("kill the process with PID", pid);
     } else {
       _fatalError(err);
     }
