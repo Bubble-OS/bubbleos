@@ -26,6 +26,7 @@ const { _addToHist, historyCmd } = require("./commands/history");
 const fif = require("./commands/fif");
 const ifnet = require("./commands/ifnet");
 const bub = require("./commands/bub");
+const tips = require("./commands/tips");
 
 /**
  * Interpret all available BubbleOS commands.
@@ -94,6 +95,8 @@ const intCmds = (command) => {
     date();
   } else if (command.startsWith("bub")) {
     bub(..._multiParam(command));
+  } else if (command.startsWith("tips")) {
+    tips();
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (!isEmpty) Errors.unrecognizedCommand(command);
