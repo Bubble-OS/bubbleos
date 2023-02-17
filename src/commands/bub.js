@@ -10,9 +10,7 @@ const _fatalError = require("../functions/fatalError");
 
 const Errors = require("../classes/Errors");
 
-const intCmds = require("../interpret");
-
-const _interpretBubbleFile = (path, displayCommand = true) => {
+const _interpretBubbleFile = (intCmds, path, displayCommand = true) => {
   const contents = readFileSync(path, { encoding: "utf-8", flag: "r" }).split("\n");
 
   for (let i = 0; i < contents.length; i++) {
@@ -22,11 +20,11 @@ const _interpretBubbleFile = (path, displayCommand = true) => {
     }
 
     if (displayCommand) console.log(chalk.italic.bold.red(line));
-    intCmds(line, line.length === 0);
+    intCmds(line);
   }
 };
 
-const bub = (file, ...params) => {
+const bub = (intCmds, file, ...params) => {
   if (typeof file === "undefined") {
     Errors.enterParameter("a file", "bub test.bub");
     return;
@@ -48,12 +46,9 @@ const bub = (file, ...params) => {
     if (!isText(file, readFileSync(file, { flag: "r" }))) {
       Errors.invalidEncoding("plain text");
       return;
-    } else if (!file.endsWith(".bub")) {
-      Errors.invalidExtension(".bub");
-      return;
     }
 
-    _interpretBubbleFile(file, displayCmd);
+    _interpretBubbleFile(intCmds, file, displayCmd);
   } catch (err) {
     if (err.code === "EISDIR") {
       Errors.expectedFile(file);

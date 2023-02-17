@@ -6,12 +6,7 @@ const prompt = () => {
     .question(`${chalk.bold.green("bubble")} ${chalk.blueBright(process.cwd())} ${chalk.red("$")} `)
     ?.trim();
 
-  const isEmpty = command.length === 0;
-
-  return {
-    command,
-    isEmpty,
-  };
+  return command;
 };
 
 module.exports = prompt;

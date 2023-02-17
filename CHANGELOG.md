@@ -11,6 +11,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
+- Fixed an issue where `bub` would crash with a `FATAL ERROR`.
 - Renamed the `symblnk` command to `symlink`.
 
 ### Removed Features

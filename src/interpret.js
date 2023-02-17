@@ -95,7 +95,7 @@ const intCmds = (command) => {
   } else if (command.startsWith("date")) {
     date();
   } else if (command.startsWith("bub")) {
-    bub(..._multiParam(command));
+    bub(intCmds, ..._multiParam(command));
   } else if (command.startsWith("tips")) {
     tips();
   } else if (command.startsWith("symlink")) {
