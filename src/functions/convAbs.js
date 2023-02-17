@@ -22,7 +22,7 @@ const _convertAbsolute = (path) => {
     pathName = path;
   }
 
-  return pathName;
+  return pathName.replaceAll("\\", "/").replaceAll("//", "/");
 };
 
 module.exports = _convertAbsolute;
