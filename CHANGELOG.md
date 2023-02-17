@@ -7,6 +7,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Added Features
 
 - Added a function in the `symlink` command which creates a symbolic link! (You can use `-c` to check if it is a symbolic link.)
+- Added the ability to use the `-y` flag on the `del` command to skip the confirmation prompt.
 
 ### Changed/Fixed Features
 

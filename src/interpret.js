@@ -74,7 +74,7 @@ const intCmds = (command) => {
   } else if (command.startsWith("wcount")) {
     wcount(_singleParam(command, "wcount"));
   } else if (command.startsWith("del")) {
-    del(_singleParam(command, "del"));
+    del(..._multiParam(command));
   } else if (command.startsWith("tasklist")) {
     console.log("This command did not work so I removed it :(\n    - Arnav, the dev\n");
   } else if (command.startsWith("size")) {
