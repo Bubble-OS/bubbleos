@@ -2,7 +2,21 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 63-6? (v0.6.3-v0.6.9)
+## Build 69-7? (v0.6.9-v0.7.?)
+
+### Added Features
+
+- Added a function in the `symlink` command which creates a symbolic link! (You can use `-c` to check if it is a symbolic link.)
+
+### Changed/Fixed Features
+
+- Renamed the `symblnk` command to `symlink`.
+
+### Removed Features
+
+_No features have been removed in this release._
+
+## Build 63-69 (v0.6.3-v0.6.9)
 
 ### Added Features
 

@@ -27,7 +27,7 @@ const fif = require("./commands/fif");
 const ifnet = require("./commands/ifnet");
 const bub = require("./commands/bub");
 const tips = require("./commands/tips");
-const symblnk = require("./commands/symblnk");
+const symlink = require("./commands/symlink");
 
 /**
  * Interpret all available BubbleOS commands.
@@ -98,8 +98,8 @@ const intCmds = (command) => {
     bub(..._multiParam(command));
   } else if (command.startsWith("tips")) {
     tips();
-  } else if (command.startsWith("symblnk")) {
-    symblnk(..._multiParam(command));
+  } else if (command.startsWith("symlink")) {
+    symlink(..._multiParam(command));
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (!isEmpty) Errors.unrecognizedCommand(command);
