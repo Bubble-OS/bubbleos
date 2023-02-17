@@ -11,11 +11,13 @@ const { isAbsolute } = require("path");
  * @returns A string of the new absolute path.
  */
 const _convertAbsolute = (path) => {
+  path = path.replaceAll("\\", "/");
+
   const isAbsolutePath = isAbsolute(path);
   let pathName = "";
 
   if (!isAbsolutePath) {
-    pathName = `${process.cwd()}\\${path}`;
+    pathName = `${process.cwd()}/${path}`;
   } else {
     pathName = path;
   }

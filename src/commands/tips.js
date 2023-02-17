@@ -1,10 +1,6 @@
 const chalk = require("chalk");
 
-const ALL_TIPS = [
-  "Use '-s' on the 'ls' command to view files and directories in a shorter view!",
-  "There is a fatal error screen, but if you haven't seen it, it's for the better...",
-  "You can use the 'rename' command to move a file, like 'copyfile'!",
-];
+const ALL_TIPS = [`No tips yet... new tips will come in a later version.`];
 
 const doneTips = [];
 

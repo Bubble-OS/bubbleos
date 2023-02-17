@@ -2,17 +2,19 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 63-6? (v0.6.3-v0.6.?)
+## Build 63-6? (v0.6.3-v0.6.9)
 
 ### Added Features
 
-- Added the `tips` command.
+- Added the `symblnk` comamnd, which checks if a path is a [symbolic link](https://en.wikipedia.org/wiki/Symbolic_link).
+- Added the `tips` command (however, there are no tips currently).
 - Added a new `Errors` class internally to make error messages streamlined.
 - Added more error messages, and replaced placeholder ones. Also added a technical error code at the end of some errors.
 - Added the BubbleOS Discord server link in the `about` command.
 
 ### Changed/Fixed Features
 
+- Fixed an issue where Linux and macOS could not read out of files/directories.
 - Updated the errors' internal code and updated some messages.
 - Updated the _FATAL ERROR_ screen to include more technical information.
 - Fixed an issue where on some systems, BubbleOS could not be run successfully (crash on startup).
