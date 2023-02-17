@@ -20,7 +20,7 @@ const symlink = (path, newPath, ...params) => {
     check = true;
 
   if (typeof path === "undefined" || (!check && typeof newPath === "undefined")) {
-    Errors.enterParameter("a path/the paths", "symlink test hello");
+    Errors.enterParameter("a path/the paths", "symlink notSymbol symbol");
     return;
   }
 
@@ -31,8 +31,8 @@ const symlink = (path, newPath, ...params) => {
     newPath = _convertAbsolute(newPath);
   }
 
-  if (!check && !fs.existsSync(newPath)) {
-    Errors.doesNotExist("file/directory", newPath);
+  if (!check && !fs.existsSync(path)) {
+    Errors.doesNotExist("file/directory", path);
     return;
   }
 
@@ -56,7 +56,7 @@ const symlink = (path, newPath, ...params) => {
       return;
     }
 
-    fs.symlinkSync(newPath, path);
+    fs.symlinkSync(path, newPath);
 
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
