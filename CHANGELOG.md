@@ -10,12 +10,13 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 - Added the `tips` command (however, there are no tips currently).
 - Added a new `Errors` class internally to make error messages streamlined.
 - Added more error messages, and replaced placeholder ones. Also added a technical error code at the end of some errors.
+- Added a thanks to Erik and B-Kernel in the `about` command.
 - Added the BubbleOS Discord server link in the `about` command.
 
 ### Changed/Fixed Features
 
-- Fixed an issue where Linux and macOS could not read out of files/directories.
-- Updated the errors' internal code and updated some messages.
+- Fixed an issue where Linux and macOS could not read files/directories.
+- Updated the errors' internal code and messages.
 - Updated the _FATAL ERROR_ screen to include more technical information.
 - Fixed an issue where on some systems, BubbleOS could not be run successfully (crash on startup).
 - Fixed an issue where the `bub` command would crash BubbleOS.
@@ -23,7 +24,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Removed Features
 
-- Deprecated the `ERRORS` variable and the `errorInt` function.
+- Removed the `ERRORS` variable and the `errorInt` function.
 
 ## Build 55-63 (v0.5.5-v0.6.3)
 
