@@ -10,7 +10,14 @@ const ls = (directory = process.cwd(), ...params) => {
   const _logDirContents = (contents, withHighlight = false) => {
     let dirArr = [];
     contents.forEach((item) => {
-      if (item.type === "file") {
+      if (item.isSymlink) {
+        if (item.type === "file") {
+          dirArr.push(chalk.red(item.name));
+        } else if (item.type === "folder") {
+          if (withHighlight) dirArr.push(chalk.bgRed(` ${item.name} `));
+          else dirArr.push(chalk.bold.red(item.name));
+        }
+      } else if (item.type === "file") {
         dirArr.push(chalk.green(item.name));
       } else if (
         item.type === "folder" &&
@@ -48,18 +55,23 @@ const ls = (directory = process.cwd(), ...params) => {
     const files = readdirSync(directory, { withFileTypes: true })
       .filter((item) => !item.isDirectory())
       .map((item) => {
-        return { name: item.name, type: "file" };
+        return { name: item.name, type: "file", isSymlink: item.isSymbolicLink() };
       })
       .sort();
 
     const folders = readdirSync(directory, { withFileTypes: true })
       .filter((item) => item.isDirectory())
       .map((item) => {
-        return { name: item.name, type: "folder" };
+        return { name: item.name, type: "folder", isSymlink: item.isSymbolicLink() };
       })
       .sort();
 
     const all = [...folders, ...files];
+
+    if (all.length === 0) {
+      console.log(chalk.yellow("There are no files/directories in the directory.\n"));
+      return;
+    }
 
     if (isShort) console.log(_logDirContents(all, true).join("  ") + "\n");
     else console.log(_logDirContents(all, false).join("\n") + "\n");

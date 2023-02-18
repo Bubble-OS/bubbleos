@@ -61,7 +61,12 @@ const symlink = (path, newPath, ...params) => {
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EPERM") {
-      Errors.noPermissions("read the file/directory", path);
+      console.log(
+        chalk.yellow(
+          "Note: You may have to run this command with elevated privileges to make a symbolic link."
+        )
+      );
+      Errors.noPermissions("make the symbolic link", newPath);
       return;
     } else {
       _fatalError(err);
