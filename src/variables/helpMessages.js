@@ -1,5 +1,7 @@
 const { GLOBAL_NAME } = require("./aboutConsts");
 
+const chalk = require("chalk");
+
 const HELP_DEFINITIONS = {
   help: {
     description: `Displays a list of available commands.`,
