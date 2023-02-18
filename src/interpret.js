@@ -28,6 +28,7 @@ const ifnet = require("./commands/ifnet");
 const bub = require("./commands/bub");
 const tips = require("./commands/tips");
 const symlink = require("./commands/symlink");
+const copydir = require("./commands/copydir");
 
 /**
  * Interpret all available BubbleOS commands.
@@ -100,6 +101,8 @@ const intCmds = (command) => {
     tips();
   } else if (command.startsWith("symlink")) {
     symlink(..._multiParam(command));
+  } else if (command.startsWith("copydir")) {
+    copydir(..._multiParam(command));
   } else {
     // If the command didn't match any of the above, throw an unrecognized command error
     if (!isEmpty) Errors.unrecognizedCommand(command);
