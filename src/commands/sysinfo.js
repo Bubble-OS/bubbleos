@@ -2,7 +2,10 @@ const chalk = require("chalk");
 
 const os = require("os");
 
-const sysinfo = (all) => {
+const sysinfo = (...params) => {
+  let all = false;
+  if (params.includes("-a") || params.includes("/a")) all = true;
+
   const friendlyOS = () => {
     let friendlyName = os.type();
     if (friendlyName === "Darwin") {

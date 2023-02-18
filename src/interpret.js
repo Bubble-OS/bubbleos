@@ -29,6 +29,7 @@ const bub = require("./commands/bub");
 const tips = require("./commands/tips");
 const symlink = require("./commands/symlink");
 const copydir = require("./commands/copydir");
+const cls = require("./commands/cls");
 
 /**
  * Interpret all available BubbleOS commands.
@@ -50,12 +51,11 @@ const intCmds = (command) => {
   } else if (command.startsWith("ls")) {
     ls(..._multiParam(command));
   } else if (command.startsWith("sysinfo")) {
-    command.includes("-a") ? sysinfo(true) : sysinfo();
+    sysinfo(..._multiParam(command));
   } else if (command.startsWith("taskkill")) {
     taskkill(_singleParam(command, "taskkill"));
   } else if (command.startsWith("cls")) {
-    // Simple enough that it doesn't need its own file
-    console.clear();
+    cls();
   } else if (command.startsWith("mkdir")) {
     mkdir(_singleParam(command, "mkdir"));
   } else if (command.startsWith("exec")) {

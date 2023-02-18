@@ -15,6 +15,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
+- Fixed a major issue (which was present ever since the command was first available) where the `cls` command would not clear the _entire_ screen, but just the contents displayed.
 - Fixed an issue where `bub` would crash with a `FATAL ERROR`.
 - Renamed the `symblnk` command to `symlink`.
 
