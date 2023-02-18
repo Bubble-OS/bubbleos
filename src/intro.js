@@ -36,7 +36,7 @@ if (IN_BETA) {
   }
 }
 
-console.log(`For help on some available commands, type ${chalk.italic("help")}.`);
-console.log(`For more information about a command, type ${chalk.italic("help <command>")}.\n`);
+console.log(`For help on some available commands, type ${chalk.italic("'help'")}.`);
+console.log(`For more information about a command, type ${chalk.italic("'help <command>'")}.\n`);
 
-console.log(`To exit the ${GLOBAL_NAME} shell, type ${chalk.italic("exit")}.\n`);
+console.log(`To exit the ${GLOBAL_NAME} shell, type ${chalk.italic("'exit'")}.\n`);

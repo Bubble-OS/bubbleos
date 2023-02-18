@@ -1,8 +1,8 @@
 const GLOBAL_NAME = "BubbleOS";
 const AUTHOR = "Arnav Thorat";
 
-const VERSION = "0.6.9";
-const BUILD = "69";
+const VERSION = "0.7.1";
+const BUILD = 71;
 
 const IN_BETA = true;
 const TIMEBOMB_ACTIVATED = true;

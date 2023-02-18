@@ -29,8 +29,6 @@ if (command.length !== 0) {
   process.exit(0);
 }
 
-if (showTimebomb) timebomb();
-
 require("./src/intro");
 
 // Repeat until the user exits
