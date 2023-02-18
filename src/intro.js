@@ -1,7 +1,5 @@
 const chalk = require("chalk");
 
-const { question } = require("readline-sync");
-
 const {
   GLOBAL_NAME,
   AUTHOR,
@@ -12,22 +10,6 @@ const {
   EXPIRY_DATE,
   TIMEBOMB_COUNT,
 } = require("./variables/aboutConsts");
-
-if (IN_BETA && TIMEBOMB_ACTIVATED) {
-  const currentDate = new Date();
-
-  if (EXPIRY_DATE.getTime() < currentDate.getTime()) {
-    console.log(
-      chalk.red(
-        "This beta build of BubbleOS has expired. Please upgrade to a new version of BubbleOS."
-      )
-    );
-    question(chalk.red("Press any key to continue . . ."));
-
-    console.log();
-    process.exit(1);
-  }
-}
 
 console.log(`${chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`)}`);
 console.log(`Made by ${AUTHOR}!\n`);
