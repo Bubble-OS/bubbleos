@@ -11,21 +11,24 @@ const args = _mainArgs();
 
 let command = "";
 let showTimebomb = true;
+
 if (args.length !== 0) {
   if (args.includes("--no-timebomb") || args.includes("/no-timebomb")) {
     showTimebomb = false;
   }
 
-  command = args.filter((v) => {
-    if (v.startsWith("-") || v.startsWith("/")) return false;
-    return true;
-  });
+  command = args
+    .filter((v) => {
+      if (v.startsWith("-") || v.startsWith("/")) return false;
+      return true;
+    })
+    .join(" ");
 }
 
 if (showTimebomb) timebomb();
 
 if (command.length !== 0) {
-  intCmds(command.join(" "));
+  intCmds(command);
   process.exit(0);
 }
 

@@ -13,7 +13,7 @@ const _timebomb = () => {
           "This beta build of BubbleOS has expired. Please upgrade to a new version of BubbleOS."
         )
       );
-      question(chalk.red("Press any key to continue . . ."));
+      question(chalk.red("Press any key to continue . . . "));
 
       console.log();
       process.exit(1);

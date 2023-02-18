@@ -44,7 +44,7 @@ const HELP_DEFINITIONS = {
   about: {
     description: `Display information about ${GLOBAL_NAME}.`,
     all: `Display information including the version number, author, and GitHub URL.`,
-    usage: [`about`],
+    usage: [`about [-l]`],
   },
   mkfile: {
     description: `Make a file in the current working directory.`,
@@ -84,7 +84,7 @@ const HELP_DEFINITIONS = {
   del: {
     description: `Remove a file or directory from the file system.`,
     all: `Remove a file or directory that you specify permanently.`,
-    usage: [`del <filename>`, `del <foldername>`],
+    usage: [`del <name> [-y]`],
   },
   size: {
     description: `Get the size of a file in bytes, kilobytes, megabytes, and gigabytes.`,
@@ -129,7 +129,19 @@ const HELP_DEFINITIONS = {
   bub: {
     description: `Execute BubbleOS commands in a file.`,
     all: `Read commands in a '.bub' file, and execute them synchronously.`,
-    usage: [`bub <filename>`],
+    usage: [`bub <filename> [-d]`],
+  },
+  symlink: {
+    description: `Creates a symbolic link, or checks if a path is a symbolic link.`,
+    all: `To check if a path is a symbolic link, add ${chalk.italic(
+      "'-c'"
+    )} to the end. Also, you may have to run ${GLOBAL_NAME} as admin to create a symbolic link.`,
+    usage: [`symlink <target> <path>`, `symlink <path> -c`],
+  },
+  tips: {
+    description: `Get randomized tips about ${GLOBAL_NAME}.`,
+    all: `If there are no more tips available, then a warning will show.`,
+    usage: [`tips`],
   },
 };
 
