@@ -18,10 +18,12 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 - Fixed a major issue (which was present ever since the command was first available) where the `cls` command would not clear the _entire_ screen, but just the contents displayed.
 - Fixed an issue where `bub` would crash with a `FATAL ERROR`.
 - Renamed the `symblnk` command to `symlink`.
+- Changed the underlying code of interpretting commands to make it faster.
 
 ### Removed Features
 
-_No features have been removed in this release._
+- Removed the `_prepVerbose` function internally.
+- Removed the `_singleParam` function internally.
 
 ## Build 63-69 (v0.6.3-v0.6.9)
 

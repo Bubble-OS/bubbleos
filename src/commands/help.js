@@ -1,8 +1,8 @@
 const chalk = require("chalk");
 const sortKeys = require("sort-keys");
-const HELP_DEFINITIONS = require("./variables/helpMessages");
+const HELP_DEFINITIONS = require("../variables/helpMessages");
 
-const Errors = require("./classes/Errors");
+const Errors = require("../classes/Errors");
 
 const help = (command) => {
   const sorted = sortKeys(HELP_DEFINITIONS);
