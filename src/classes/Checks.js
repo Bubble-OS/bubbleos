@@ -2,95 +2,70 @@ const fs = require("fs");
 
 const { isText } = require("istextorbinary");
 
+const _fatalError = require("../functions/fatalError");
+
 /**
  * Validate multiple aspects of BubbleOS.
- *
- * @deprecated Unused right now
  */
 class Checks {
-  constructor() {}
-
-  /**
-   * Validate parameters that were passed from a command.
-   *
-   * Returns `true` if the `length` is not `0` or the parameters does not include `undefined`. Otherwise, it returns `false`.
-   *
-   * @param  {...string | undefined} params The list of parameters the user entered.
-   * @returns Either `true` if there are valid parameters or `false` if the check failed.
-   */
-  static validateParams(...params) {
-    if (params.length === 0) return false;
-    else if (params.includes(undefined)) return false;
-    else return true;
+  constructor(param) {
+    this.param = param;
   }
 
   /**
-   * Validate multiple files' existance.
+   * Check if the parameter is `undefined`.
    *
-   * Returns an array of booleans; `true` for if the respective exists, or `false` for if the respective does not exist.
+   * Returns `true` if the parameter is `undefined`, else, returns `false`.
    *
-   * @param {...fs.PathLike | string} files The files to validate.
-   * @returns An array of booleans.
+   * @returns Either `true` if the parameter is `undefined`, else, returns `false`.
    */
-  static validateExistance(...files) {
-    const existArr = [];
-    files.forEach((file) => {
-      existArr.push(fs.existsSync(file));
-    });
-    return existArr;
+  paramUndefined() {
+    return typeof this.param === "undefined";
   }
 
   /**
-   * Validate the encoding of multiple files.
+   * Check if the path exists.
    *
-   * Returns an array of booleans; `true` for if the respective is a text file, or `false` for if the respective is not a text file.
+   * Returns `true` if the path exists, else, returns `false`.
    *
-   * @param {...fs.PathLike | string} files The list of files to validate.
-   * @returns An array of booleans.
+   * @returns Either `true` if the path exists, else, returns `false`.
    */
-  static validateEncoding(...files) {
-    const encodeArr = [];
-    files.forEach((file) => {
-      existArr.push(isText(file, fs.readFileSync(file, { flag: "r" })));
-    });
-    return encodeArr;
+  doesExist() {
+    try {
+      return fs.existsSync(this.param);
+    } catch (err) {
+      _fatalError(err);
+    }
   }
 
   /**
-   * Validate the type (e.g. is file or directory) of multiple paths.
+   * Check if the path is a text file.
    *
-   * Returns an array of booleans; `true` for if the respective is a directory, or `false` for if the respective is a file.
+   * Returns `true` if the file is a text file, else, returns `false`.
    *
-   * @param {...fs.PathLike | string} paths The list of paths to validate.
-   * @returns An array of booleans.
+   * @returns Either `true` if the file is a text file, else, returns `false`.
    */
-  static validateType(...paths) {
-    const typeArr = [];
-    paths.forEach((path) => {
-      typeArr.push(fs.lstatSync(path).isDirectory());
-    });
-    return typeArr;
+  validEncoding() {
+    try {
+      isText(this.param, fs.readFileSync(this.param, { flag: "r" }));
+    } catch (err) {
+      _fatalError(err);
+    }
   }
 
   /**
-   * Validate the permissions of multiple paths.
+   * Check if the path is a directory.
    *
-   * Returns an array of booleans; `true` for if the respective is accessible, or `false` for if the respective is not accessible.
+   * Returns `true` if the path is a directory, else, returns `false`.
    *
-   * @param {...fs.PathLike | string} paths The list of paths to validate.
-   * @returns An array of booleans.
+   * @returns Either `true` if the path is a directory, else, returns `false`.
    */
-  static validatePerms(...paths) {
-    const permsArr = [];
-    paths.forEach((path) => {
-      try {
-        fs.accessSync(path, fs.constants.R_OK | fs.constants.W_OK);
-        permsArr.push(true);
-      } catch (err) {
-        permsArr.push(false);
-      }
-    });
-    return permsArr;
+  validateType() {
+    try {
+      return fs.lstatSync(this.param).isDirectory();
+    } catch (err) {
+      _fatalError(err);
+    }
   }
 }
 

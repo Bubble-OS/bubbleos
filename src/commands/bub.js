@@ -9,6 +9,7 @@ const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
 const Errors = require("../classes/Errors");
+const Checks = require("../classes/Checks");
 
 const _interpretBubbleFile = (intCmds, path, displayCommand = true) => {
   const contents = readFileSync(path, { encoding: "utf-8", flag: "r" }).split("\n");
@@ -25,7 +26,9 @@ const _interpretBubbleFile = (intCmds, path, displayCommand = true) => {
 };
 
 const bub = (intCmds, file, ...params) => {
-  if (typeof file === "undefined") {
+  let fileChk = new Checks(file);
+
+  if (fileChk.paramUndefined()) {
     Errors.enterParameter("a file", "bub test.bub");
     return;
   }
@@ -34,28 +37,26 @@ const bub = (intCmds, file, ...params) => {
   file = file.endsWith(".bub") ? file : `${file}.bub`;
   file = _convertAbsolute(file);
 
+  fileChk = new Checks(file);
+
   let displayCmd = false;
   if (params.includes("-d") || params.includes("/d")) displayCmd = true;
 
-  if (!existsSync(file)) {
+  if (!fileChk.doesExist()) {
     Errors.doesNotExist("file", file);
+    return;
+  } else if (!fileChk.validEncoding()) {
+    Errors.invalidEncoding("plain text");
+    return;
+  } else if (fileChk.validateType()) {
+    Errors.expectedFile(file);
     return;
   }
 
   try {
-    if (!isText(file, readFileSync(file, { flag: "r" }))) {
-      Errors.invalidEncoding("plain text");
-      return;
-    }
-
     _interpretBubbleFile(intCmds, file, displayCmd);
   } catch (err) {
-    if (err.code === "EISDIR") {
-      Errors.expectedFile(file);
-      return;
-    } else {
-      _fatalError(err);
-    }
+    _fatalError(err);
   }
 };
 
