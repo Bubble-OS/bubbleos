@@ -4,11 +4,16 @@ const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/aboutConst
 
 const about = (...params) => {
   let license = false;
+  let binary = false;
   if (params.includes("-l") || params.includes("/l")) license = true;
+  if (params.includes("--ilovetech") || params.includes("/ilovetech")) binary = true;
 
-  console.log(chalk.underline.bold.red(`About ${GLOBAL_NAME}\n`));
+  let aboutName = GLOBAL_NAME;
+  if (binary) aboutName = "01000010 01110101 01100010 01100010 01101100 01100101 01001111 01010011";
 
-  console.log(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`);
+  console.log(chalk.underline.bold.red(`About ${aboutName}\n`));
+
+  console.log(`${aboutName}, v${VERSION} (build ${BUILD})`);
   console.log(`Made by ${AUTHOR}!\n`);
 
   console.log(
@@ -19,7 +24,7 @@ const about = (...params) => {
     console.log(
       chalk.dim(`    MIT License
 
-    Copyright (c) ${new Date().getFullYear()} ${GLOBAL_NAME}
+    Copyright (c) ${new Date().getFullYear()} ${aboutName}
     
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal

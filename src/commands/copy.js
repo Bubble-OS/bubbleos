@@ -10,7 +10,7 @@ const Errors = require("../classes/Errors");
 
 const copy = (src, dest, ...params) => {
   if (typeof src === "undefined" || typeof dest === "undefined") {
-    Errors.enterParameter("the source/destination", "copydir srcDir destDir");
+    Errors.enterParameter("the source/destination", "copy src dest");
     return;
   }
 
