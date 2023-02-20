@@ -2,8 +2,7 @@ const about = require("../commands/about");
 const bub = require("../commands/bub");
 const cd = require("../commands/cd");
 const cls = require("../commands/cls");
-const copydir = require("../commands/copydir");
-const copyfile = require("../commands/copyfile");
+const copy = require("../commands/copy");
 const date = require("../commands/date");
 const del = require("../commands/del");
 const execFile = require("../commands/exec");
@@ -34,8 +33,7 @@ const COMMANDS = {
   bub,
   cd,
   cls,
-  copydir,
-  copyfile,
+  copy,
   date,
   del,
   exec: execFile,

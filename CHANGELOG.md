@@ -6,6 +6,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
+- Combined the `copyfile` and `copydir` commands into the `copy` command.
 - Added the `-v`/`--version` flag to BubbleOS to display the version of it (e.g. `bubble.exe -v`).
 - Added the `--kill` flag to BubbleOS, which crashes it at startup. **ONLY TO BE USED FOR TESTING PURPOSES!**
 
@@ -15,7 +16,7 @@ _No features have been changed/fixed in this release._
 
 ### Removed Features
 
-_No features have been removed in this release._
+- Removed the `copyfile` and `copydir` commands in favor of the `copy` command.
 
 ## Build 69-75 (v0.6.9-v0.7.5)
 

@@ -58,11 +58,6 @@ const HELP_DEFINITIONS = {
     all: `Read a specified file's contents and output it to the terminal. Only UTF-8 encodings are supported. WARNING: Viewing non-plain text files can temporarily corrupt your terminal.`,
     usage: [`readfile <filename>`],
   },
-  copyfile: {
-    description: `Copy a file from the source to a destination.`,
-    all: `Copies a file from a location to another, overwriting it if it exists in the destination folder. THIS COMMAND IS VERY UNSTABLE RIGHT NOW.`,
-    usage: [`copyfile <filename>`],
-  },
   cls: {
     description: `Clear the terminal screen.`,
     all: `What more do you need to know? :)`,
@@ -95,7 +90,7 @@ const HELP_DEFINITIONS = {
   },
   rename: {
     description: `Rename a file/folder to another name.`,
-    all: `You can also move files and folder using this command, similar to 'copyfile', but with unintended side effects.`,
+    all: `You can also move files and folder using this command, similar to 'copy', but with unintended side effects.`,
     usage: [`rename <beforename> <aftername>`],
   },
   time: {

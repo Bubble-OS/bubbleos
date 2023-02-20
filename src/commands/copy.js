@@ -4,15 +4,17 @@ const fs = require("fs");
 
 const _convertAbsolute = require("../functions/convAbs");
 const _replaceSpaces = require("../functions/replaceSpaces");
-
-const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
-const copydir = (src, dest, ...params) => {
+const Errors = require("../classes/Errors");
+
+const copy = (src, dest, ...params) => {
   if (typeof src === "undefined" || typeof dest === "undefined") {
     Errors.enterParameter("the source/destination", "copydir srcDir destDir");
     return;
   }
+
+  const isDir = fs.lstatSync(src).isDirectory();
 
   let rmSymlinkReference = false;
   let keepTimes = false;
@@ -31,20 +33,27 @@ const copydir = (src, dest, ...params) => {
 
   try {
     console.log(chalk.italic.blueBright("Please wait..."));
-    fs.cpSync(src, dest, {
-      recursive: true,
-      dereference: rmSymlinkReference,
-      preserveTimestamps: keepTimes,
-    });
+
+    if (isDir) {
+      fs.cpSync(src, dest, {
+        recursive: true,
+        dereference: rmSymlinkReference,
+        preserveTimestamps: keepTimes,
+      });
+    } else {
+      fs.copyFileSync(src, dest);
+    }
+
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
     if (err.code === "EPERM") {
-      console.log(
-        chalk.yellow(
-          "Note: If the directory contains a symbolic link, either run this command as an administrator, or add '--rm-symlink' at the end of this command."
-        )
-      );
-      Errors.noPermissions("copy parts of", src);
+      if (isDir)
+        console.log(
+          chalk.yellow(
+            "Note: If the directory contains a symbolic link, either run this command as an administrator, or add '--rm-symlink' at the end of this command."
+          )
+        );
+      Errors.noPermissions("copy", src);
       return;
     } else {
       _fatalError(err);
@@ -52,4 +61,4 @@ const copydir = (src, dest, ...params) => {
   }
 };
 
-module.exports = copydir;
+module.exports = copy;
