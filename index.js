@@ -7,6 +7,7 @@ const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/aboutCo
 // Import private helper functions
 const _mainArgs = require("./src/functions/mainArgs");
 const _timebomb = require("./src/functions/timebomb");
+const _fatalError = require("./src/functions/fatalError");
 
 // Import helper functions
 const prompt = require("./src/prompt");
@@ -18,6 +19,7 @@ const args = _mainArgs();
 let command = "";
 let showTimebomb = true;
 let showVersion = false;
+let killBubble = false;
 
 if (args.length !== 0) {
   if (args.includes("--no-timebomb") || args.includes("/no-timebomb")) showTimebomb = false;
@@ -28,6 +30,7 @@ if (args.length !== 0) {
     args.includes("/version")
   )
     showVersion = true;
+  if (args.includes("--kill") || args.includes("/kill")) killBubble = true;
 
   command = args
     .filter((v) => {
@@ -38,6 +41,14 @@ if (args.length !== 0) {
 }
 
 if (showTimebomb) _timebomb();
+
+if (killBubble) {
+  try {
+    throw new Error("BubbleOS was run with the --kill flag.");
+  } catch (err) {
+    _fatalError(err);
+  }
+}
 
 if (showVersion) {
   console.log(chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`));

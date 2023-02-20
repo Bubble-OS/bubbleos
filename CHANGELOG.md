@@ -7,6 +7,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Added Features
 
 - Added the `-v`/`--version` flag to BubbleOS to display the version of it (e.g. `bubble.exe -v`).
+- Added the `--kill` flag to BubbleOS, which crashes it at startup. **ONLY TO BE USED FOR TESTING PURPOSES!**
 
 ### Changed/Fixed Features
 
