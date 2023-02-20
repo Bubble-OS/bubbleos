@@ -1,21 +1,33 @@
 #!/usr/bin/env node
 
-const _mainArgs = require("./src/functions/mainArgs");
+const chalk = require("chalk");
 
+const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/aboutConsts");
+
+// Import private helper functions
+const _mainArgs = require("./src/functions/mainArgs");
+const _timebomb = require("./src/functions/timebomb");
+
+// Import helper functions
 const prompt = require("./src/prompt");
 const intCmds = require("./src/interpret");
 
-const timebomb = require("./src/functions/timebomb");
-
+// Get all of the arguments passed directly into BubbleOS
 const args = _mainArgs();
 
 let command = "";
 let showTimebomb = true;
+let showVersion = false;
 
 if (args.length !== 0) {
-  if (args.includes("--no-timebomb") || args.includes("/no-timebomb")) {
-    showTimebomb = false;
-  }
+  if (args.includes("--no-timebomb") || args.includes("/no-timebomb")) showTimebomb = false;
+  if (
+    args.includes("-v") ||
+    args.includes("/v") ||
+    args.includes("--version") ||
+    args.includes("/version")
+  )
+    showVersion = true;
 
   command = args
     .filter((v) => {
@@ -25,7 +37,14 @@ if (args.length !== 0) {
     .join(" ");
 }
 
-if (showTimebomb) timebomb();
+if (showTimebomb) _timebomb();
+
+if (showVersion) {
+  console.log(chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`));
+  console.log(`Made by ${AUTHOR}!\n`);
+
+  process.exit(0);
+}
 
 if (command.length !== 0) {
   intCmds(command);

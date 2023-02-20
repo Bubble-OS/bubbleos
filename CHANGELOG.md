@@ -6,7 +6,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
-_No features have been added in this release._
+- Added the `-v`/`--version` flag to BubbleOS to display the version of it (e.g. `bubble.exe -v`).
 
 ### Changed/Fixed Features
 
