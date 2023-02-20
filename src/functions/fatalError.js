@@ -51,6 +51,8 @@ const _fatalError = (err) => {
       console.log(chalk.red.dim(`${chalk.italic(error)}: ${errProperties[error]}`));
   }
 
+  console.log();
+
   process.exit(1);
 };
 
