@@ -39,13 +39,8 @@ const _fatalError = (err) => {
       )} flag to see in detail what and when the error occurs.`
     )}\n`
   );
-  console.log(`${chalk.red.dim.underline("Technical Error Information")}\n`);
-  // console.log(
-  //   `${chalk.red.dim(
-  //     `Message: ${err.message}\nTechnical error number: ${err.errno}\nTechnical error code: ${err.code}\nSystem call: ${err.syscall}`
-  //   )}\n`
-  // );
 
+  console.log(`${chalk.red.dim.underline("Technical Error Information\n")}`);
   for (let error in errProperties) {
     if (typeof errProperties[error] !== "undefined")
       console.log(chalk.red.dim(`${chalk.italic(error)}: ${errProperties[error]}`));
@@ -53,7 +48,8 @@ const _fatalError = (err) => {
 
   console.log();
 
-  process.exit(1);
+  console.log(`${chalk.underline("Memory Dump")}`);
+  process.abort();
 };
 
 module.exports = _fatalError;

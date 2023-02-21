@@ -59,44 +59,6 @@ class Errors {
   }
 
   /**
-   * A **private** method inside of the `Errors` class to validate an error parameter.
-   *
-   * Throws a `TypeError` if the [`typeof`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof) `param` is not equal to `mustBe`. However, `mustBe` must be a valid `typeof` string. Possible values are below.
-   *
-   * - `undefined`
-   * - `object`
-   * - `boolean`
-   * - `number`
-   * - `bigint`
-   * - `string`
-   * - `symbol`
-   * - `function`
-   * - `object`
-   *
-   * All of these values are strings.
-   *
-   * Usage (inside):
-   *
-   * ```js
-   * // Usually run this before starting the function execution
-   * // Running inside of a function in the 'Errors' class
-   * this.#paramValidation(command, "command", "string")
-   * ```
-   *
-   * @deprecated This method is not in use, but may be in future releases.
-   * @throws A `TypeError` if the check run returns `true`.
-   * @param {string} param The parameter to check against.
-   * @param {string} paramName The parameter name that has been passed to include in the error message.
-   * @param {string} mustBe Optional; defaults to `'string'`. The string to check with `typeof`; the type of parameter expected.
-   */
-  static #paramValidation(param, paramName, mustBe = "string") {
-    if (typeof param === "undefined" || typeof param !== mustBe)
-      throw new TypeError(
-        `The '${paramName}' must be of type '${mustBe}'. Received '${typeof param}'.`
-      );
-  }
-
-  /**
    * Information about the error message:
    *
    * **Name:** _Enter command_
@@ -156,7 +118,7 @@ class Errors {
     const CODE = 2;
     const MESSAGE = `You must enter ${type}, for example, like so: ${chalk.italic.bold(
       `'${example}'`
-    )}.`;
+    )}. ${chalk.dim("(NO_PARAMS_ENTERED)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -179,7 +141,7 @@ class Errors {
     const CODE = 3;
     const MESSAGE = `The ${type}, ${chalk.italic.bold(
       `'${variable}'`
-    )}, does not exist. ${chalk.dim("(ENOENT)")}`;
+    )}, does not exist. ${chalk.dim("(NON_EXISTANT_PATH)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -202,7 +164,7 @@ class Errors {
     const CODE = 4;
     const MESSAGE = `Invalid permissions to ${todo} ${chalk.italic.bold(
       `'${variable}'`
-    )}. You need elevated privileges. ${chalk.dim("(EPERM)")}`;
+    )}. You need elevated privileges. ${chalk.dim("(INVALID_PERMS)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -225,7 +187,7 @@ class Errors {
     const CODE = 5;
     const MESSAGE = `The ${type}, ${chalk.bold.italic(
       `'${variable}'`
-    )}, is currently being used. ${chalk.dim("(EBUSY)")}`;
+    )}, is currently being used. ${chalk.dim("(PATH_BUSY)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -248,7 +210,7 @@ class Errors {
     const CODE = 6;
     const MESSAGE = `The ${type}, ${chalk.bold.italic(
       `'${variable}'`
-    )}, already exists. ${chalk.dim("(EEXIST)")}`;
+    )}, already exists. ${chalk.dim("(PATH_EXISTS)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -270,7 +232,7 @@ class Errors {
     const CODE = 7;
     const MESSAGE = `Expected a file, but got a directory (${chalk.bold.italic(
       `'${variable}'`
-    )}) instead. ${chalk.dim("(EISDIR)")}`;
+    )}) instead. ${chalk.dim("(PATH_IS_DIR)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -292,7 +254,7 @@ class Errors {
     const CODE = 8;
     const MESSAGE = `Expected a directory, but got a file (${chalk.bold.italic(
       `'${variable}'`
-    )}) instead. ${chalk.dim("(ENOTDIR)")}`;
+    )}) instead. ${chalk.dim("(PATH_IS_NOT_DIR)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -312,7 +274,7 @@ class Errors {
    */
   static invalidOS(os) {
     const CODE = 9;
-    const MESSAGE = `This command can only run on ${os}.`;
+    const MESSAGE = `This command can only run on ${os}. ${chalk.dim("(INVALID_OS)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -332,7 +294,9 @@ class Errors {
    */
   static invalidEncoding(encoding) {
     const CODE = 10;
-    const MESSAGE = `This command can only read ${encoding} files.`;
+    const MESSAGE = `This command can only read ${encoding} files. ${chalk.dim(
+      "(INVALID_ENCODING)"
+    )}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -354,7 +318,7 @@ class Errors {
     const CODE = 11;
     const MESSAGE = `Only files ending with the ${chalk.italic.bold(
       `'${extension}'`
-    )} extension can be used.`;
+    )} extension can be used. ${chalk.dim("(INVALID_EXTENTION)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -379,7 +343,7 @@ class Errors {
     const CODE = 12;
     const MESSAGE = `The ${type} can only contain ${supposedTo} and not contain ${notContain} (received ${chalk.bold.italic(
       `'${variable}'`
-    )}).`;
+    )}). ${chalk.dim("(INVALID_CHARS)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }

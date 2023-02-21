@@ -6,11 +6,13 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
-- Changed the confirmation prompt to automatically enter when you press a key.
+- Added a memory dump to the fatal error.
+- Added more verbose messages.
+- Added new error codes (e.g. `NON_EXISTANT_PATH`).
 
 ### Changed/Fixed Features
 
-_No features have been changed/fixed in this release._
+- Changed the confirmation prompt to automatically enter when you press a key.
 
 ### Removed Features
 

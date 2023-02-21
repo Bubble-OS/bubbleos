@@ -19,9 +19,7 @@ class Verbose {
   startCmd(command) {
     if (this.isVerbose)
       this.#formVerbMsg(
-        `Starting up function ${chalk.bold.italic(
-          `'${command}'`
-        )} and initializing verbose state...`
+        `Starting up function ${chalk.italic(`'${command}'`)} and initializing verbose state...`
       );
   }
 
@@ -31,6 +29,60 @@ class Verbose {
         `Checking if variable ${chalk.bold.italic(`'${variable}'`)} is ${chalk.italic(
           "'undefined'"
         )} or ${chalk.italic("--verbose")}/${chalk.italic("/verbose")}...`
+      );
+  }
+
+  enterParam() {
+    if (this.isVerbose)
+      this.#formVerbMsg(
+        `${chalk.bold.underline("ERROR!")} The parameter is either ${chalk.italic(
+          `'undefined'`
+        )} or ${chalk.italic("--verbose")}/${chalk.italic("/verbose")}.`
+      );
+  }
+
+  wasError(command, withNewline = true) {
+    if (this.isVerbose)
+      this.#formVerbMsg(
+        `An error occurred, and the ${chalk.italic(`'${command}'`)} command has been terminated.${
+          withNewline ? "\n" : ""
+        }`
+      );
+  }
+
+  chkComplete() {
+    if (this.isVerbose) this.#formVerbMsg(`The check has been completed, continuing...`);
+  }
+
+  replaceSpacesAndConvAbs(variable) {
+    if (this.isVerbose)
+      this.#formVerbMsg(
+        `Replacing spaces in ${chalk.bold.italic(
+          `'${variable}'`
+        )} and coverting it to an absolute path...`
+      );
+  }
+
+  attemptTo(todo, variable) {
+    if (this.isVerbose)
+      this.#formVerbMsg(`Attempting to ${todo} ${chalk.bold.italic(`'${variable}'`)}...`);
+  }
+
+  nonExistant(variable) {
+    if (this.isVerbose)
+      this.#formVerbMsg(
+        `${chalk.bold.underline("ERROR!")} The path, ${chalk.bold.italic(
+          `'${variable}'`
+        )}, does not exist.`
+      );
+  }
+
+  operationSuccess(command, withNewline = true) {
+    if (this.isVerbose)
+      this.#formVerbMsg(
+        `The command, ${chalk.italic(`'${command}'`)}, has executed successfully!${
+          withNewline ? "\n" : ""
+        }`
       );
   }
 }
