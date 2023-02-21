@@ -2,7 +2,21 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 75-7? (v0.6.9-v0.7.?)
+## Build 75-78 (v0.6.9-v0.7.8)
+
+### Added Features
+
+- Changed the confirmation prompt to automatically enter when you press a key.
+
+### Changed/Fixed Features
+
+_No features have been changed/fixed in this release._
+
+### Removed Features
+
+_No features have been removed in this release._
+
+## Build 75-78 (v0.6.9-v0.7.8)
 
 ### Added Features
 

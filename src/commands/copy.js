@@ -16,10 +16,8 @@ const copy = (src, dest, ...params) => {
 
   const isDir = fs.lstatSync(src).isDirectory();
 
-  let rmSymlinkReference = false;
-  let keepTimes = false;
-  if (params.includes("--rm-symlink") || params.includes("/rm-symlink")) rmSymlinkReference = true;
-  if (params.includes("-t") || params.includes("/t")) keepTimes = true;
+  const rmSymlinkReference = params.includes("--rm-symlink") || params.includes("/rm-symlink");
+  const keepTimes = params.includes("-t") || params.includes("/t");
 
   src = _replaceSpaces(src);
   src = _convertAbsolute(src);

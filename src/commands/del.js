@@ -5,19 +5,18 @@ const { existsSync, rmSync } = require("fs");
 
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
-
+const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 
 const Errors = require("../classes/Errors");
 
 const del = (file, ...params) => {
-  let confirm = true;
-  if (params.includes("-y") || params.includes("/y")) confirm = false;
-
   if (!file) {
     Errors.enterParameter("a file/directory", "del test");
     return;
   }
+
+  const confirm = !(params.includes("-y") || params.includes("/y"));
 
   file = _replaceSpaces(file);
   file = _convertAbsolute(file);
@@ -28,15 +27,12 @@ const del = (file, ...params) => {
   }
 
   if (confirm) {
-    const confirmText = question(
-      `Are you sure you want to delete ${chalk.bold(file)}? [${chalk.green("y")}/${chalk.red.bold(
-        "N"
-      )}] `
-    ).toLowerCase();
-    if (confirmText.includes("n") || !confirmText.includes("y")) {
+    if (!_promptForYN(`Are you sure you want to delete ${chalk.bold(file)}?`)) {
       console.log(chalk.yellow("Operation cancelled.\n"));
       return;
     }
+
+    console.log();
   }
 
   try {
