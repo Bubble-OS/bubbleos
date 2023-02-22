@@ -8,6 +8,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 - Added a memory dump to the fatal error, as well as a heap snapshot and saved error files.
 - Added more reuseable verbose messages to more command.
+- Added a new `-s` flag for the `cd` command, which silences all outputs to _stdout_ (except verbose and error messages).
 - Added new error codes (e.g. `NON_EXISTANT_PATH`).
 
 ### Changed/Fixed Features

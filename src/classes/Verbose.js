@@ -99,6 +99,10 @@ class Verbose {
         }`
       );
   }
+
+  intParams() {
+    if (this.isVerbose) this.#formVerbMsg("Interpretting parameters/arguments...");
+  }
 }
 
 module.exports = Verbose;

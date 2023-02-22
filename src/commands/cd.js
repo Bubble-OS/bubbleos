@@ -18,6 +18,9 @@ const cd = (dir, ...params) => {
   );
   verb.startCmd("cd");
 
+  verb.intParams();
+  const silent = params?.includes("-s") || params?.includes("/s");
+
   verb.chkUndefined(dir);
   if (typeof dir === "undefined" || dir === "--verbose" || dir === "/verbose") {
     verb.enterParam();
@@ -42,7 +45,7 @@ const cd = (dir, ...params) => {
   try {
     verb.attemptTo("change into the directory", dir);
     process.chdir(dir);
-    console.log(`Changed directory to ${chalk.green(process.cwd())}.\n`);
+    if (!silent) console.log(`Changed directory to ${chalk.green(process.cwd())}.\n`);
     verb.operationSuccess("cd");
   } catch (err) {
     if (err.code === "EPERM") {
