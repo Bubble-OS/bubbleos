@@ -30,11 +30,14 @@ const cd = (dir, ...params) => {
   verb.replaceSpacesAndConvAbs(dir);
   dir = _replaceSpaces(dir);
 
+  verb.chkExistant(dir);
   if (!fs.existsSync(dir)) {
+    verb.nonExistant(dir);
     Errors.doesNotExist("directory", dir);
     verb.wasError("cd");
     return;
   }
+  verb.chkComplete();
 
   try {
     verb.attemptTo("change into the directory", dir);
@@ -42,7 +45,12 @@ const cd = (dir, ...params) => {
     console.log(`Changed directory to ${chalk.green(process.cwd())}.\n`);
     verb.operationSuccess("cd");
   } catch (err) {
-    _fatalError(err);
+    if (err.code === "EPERM") {
+      verb.permsErr(dir);
+      Errors.noPermissions("change into", dir);
+    } else {
+      _fatalError(err);
+    }
 
     verb.wasError("cd");
     return;

@@ -68,12 +68,26 @@ class Verbose {
       this.#formVerbMsg(`Attempting to ${todo} ${chalk.bold.italic(`'${variable}'`)}...`);
   }
 
+  chkExistant(variable) {
+    if (this.isVerbose)
+      this.#formVerbMsg(`Checking if the path ${chalk.bold.italic(`'${variable}'`)} exists...`);
+  }
+
   nonExistant(variable) {
     if (this.isVerbose)
       this.#formVerbMsg(
         `${chalk.bold.underline("ERROR!")} The path, ${chalk.bold.italic(
           `'${variable}'`
         )}, does not exist.`
+      );
+  }
+
+  permsErr(variable) {
+    if (this.isVerbose)
+      this.#formVerbMsg(
+        `${chalk.bold.underline(
+          "ERROR!"
+        )} A permission error occurred with the file ${chalk.bold.italic(`'${variable}'`)}.`
       );
   }
 
