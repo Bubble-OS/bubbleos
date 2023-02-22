@@ -1,3 +1,6 @@
+const { writeHeapSnapshot } = require("v8");
+const fs = require("fs");
+
 const chalk = require("chalk");
 
 const { GLOBAL_NAME } = require("../variables/aboutConsts");
@@ -26,11 +29,11 @@ const _fatalError = (err) => {
   console.log(`${chalk.bgRed.bold.underline("!!! FATAL ERROR !!!")}\n`);
   console.log(
     `${chalk.red.bold(
-      `A fatal error has occured which caused ${GLOBAL_NAME} to crash. To make sure the OS does not get damaged, ${GLOBAL_NAME} has been exited (with failure code ${chalk.italic(
+      `A fatal error has occurred which has caused ${GLOBAL_NAME} to crash. To make sure the OS does not get damaged, ${GLOBAL_NAME} has been exited (with exit code ${chalk.italic(
         "'1'"
       )}).`
     )}\n\n${chalk.red.bold(
-      `Make sure that the arguments passed are correct. Also, you can make a new GitHub Issue on the project's repository (find by running ${chalk.italic(
+      `Make sure that the arguments passed are correct. Also, you can make a new Github Issue on the project's repository (find by running ${chalk.italic(
         "'about'"
       )}) to inform the developer of the issue.`
     )}\n${chalk.red.bold(
@@ -48,7 +51,42 @@ const _fatalError = (err) => {
 
   console.log();
 
-  console.log(`${chalk.underline("Memory Dump")}`);
+  try {
+    console.log(chalk.underline("File Dump Status"));
+
+    const FILENAMES = {
+      errorInfo: `${GLOBAL_NAME}_error_info.txt`.toUpperCase(),
+      heapSnap: `${GLOBAL_NAME}_heap_snapshot.txt`.toUpperCase(),
+    };
+
+    let errorArr = [];
+
+    for (let error in errProperties) {
+      if (typeof errProperties[error] !== "undefined")
+        errorArr.push(`${error}: ${errProperties[error]}`);
+    }
+
+    fs.writeFileSync(FILENAMES.errorInfo, errorArr.join("\n"));
+    writeHeapSnapshot(FILENAMES.heapSnap);
+
+    console.log(
+      chalk.green(
+        `${chalk.white.bgGreen(" SUCCESS ")}: Saved files ${chalk.bold(
+          FILENAMES.errorInfo
+        )} and ${chalk.bold(FILENAMES.heapSnap)} in ${chalk.bold(process.cwd())}.`
+      )
+    );
+  } catch (saveErr) {
+    console.log(
+      chalk.red(
+        `${chalk.white.bgRed(" ERROR ")}: Could not save files ${chalk.bold(
+          FILENAMES.errorInfo
+        )} and ${chalk.bold(FILENAMES.heapSnap)} in ${chalk.bold(process.cwd())}.`
+      )
+    );
+  }
+
+  console.log(`${chalk.underline("\nMemory Dump")}`);
   process.abort();
 };
 

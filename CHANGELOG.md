@@ -6,8 +6,8 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
-- Added a memory dump to the fatal error.
-- Added more verbose messages.
+- Added a memory dump to the fatal error, as well as a heap snapshot and saved error files.
+- Added more reuseable verbose messages to more command.
 - Added new error codes (e.g. `NON_EXISTANT_PATH`).
 
 ### Changed/Fixed Features
