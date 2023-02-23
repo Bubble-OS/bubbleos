@@ -6,6 +6,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
+- Added the `crash` command, which crashes BubbleOS (and your computer ;) ) in multiple different ways!
 - Added a memory dump to the fatal error, as well as a heap snapshot and saved error files.
 - Added more reuseable verbose messages to more command.
 - Added a new `-s` flag for the `cd` command, which silences all outputs to _stdout_ (except verbose and error messages).
@@ -19,7 +20,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 _No features have been removed in this release._
 
-## Build 75-78 (v0.6.9-v0.7.8)
+## Build 75-78 (v0.7.5-v0.7.8)
 
 ### Added Features
 

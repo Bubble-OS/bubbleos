@@ -1,5 +1,4 @@
 const chalk = require("chalk");
-const { question } = require("readline-sync");
 
 const { existsSync, rmSync } = require("fs");
 

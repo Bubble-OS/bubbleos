@@ -3,6 +3,7 @@ const bub = require("../commands/bub");
 const cd = require("../commands/cd");
 const cls = require("../commands/cls");
 const copy = require("../commands/copy");
+const crash = require("../commands/crash");
 const date = require("../commands/date");
 const del = require("../commands/del");
 const execFile = require("../commands/exec");
@@ -34,6 +35,7 @@ const COMMANDS = {
   cd,
   cls,
   copy,
+  crash,
   date,
   del,
   exec: execFile,
