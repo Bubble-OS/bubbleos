@@ -2,7 +2,7 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 75-78 (v0.6.9-v0.7.8)
+## Build 78-84 (v0.7.8-v0.8.4)
 
 ### Added Features
 

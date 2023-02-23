@@ -66,7 +66,14 @@ const _fatalError = (err) => {
         errorArr.push(`${error}: ${errProperties[error]}`);
     }
 
-    fs.writeFileSync(FILENAMES.errorInfo, errorArr.join("\n"));
+    const date = new Date();
+    const errorInfoTxt = `BubbleOS encountered a fatal error at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} on ${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}.\nGive the developer this information by running 'about' in ${GLOBAL_NAME} and going to the Github page, then the Issues tab, and creating a new issue with the text below. Thanks for helping!\n\n${errorArr.join(
+      "\n"
+    )}`;
+
+    fs.writeFileSync(FILENAMES.errorInfo, errorInfoTxt);
     writeHeapSnapshot(FILENAMES.heapSnap);
 
     console.log(

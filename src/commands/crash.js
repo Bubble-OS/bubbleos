@@ -6,7 +6,7 @@ const _promptForYN = require("../functions/promptForYN");
 const { GLOBAL_NAME } = require("../variables/aboutConsts");
 
 const crash = (...params) => {
-  const AVAILABLE_CRASHES = ["Fatal Error (BubbleOS)", "Hang", "Memory Leak"];
+  const AVAILABLE_CRASHES = [`Fatal Error (${GLOBAL_NAME})`, "Hang", "Memory Leak"];
 
   console.log(
     chalk.red.bold(
@@ -50,7 +50,7 @@ const crash = (...params) => {
       chalk.yellow(
         `${chalk.bold(
           "NOTE:"
-        )} BubbleOS will crash once memory usage has hit its maximum allocated memory space.`
+        )} BubbleOS will crash once memory usage has hit its maximum allocated memory space.\n`
       )
     );
 
