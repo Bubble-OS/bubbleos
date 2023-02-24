@@ -10,7 +10,7 @@ const Errors = require("./classes/Errors");
  *
  * @param {string} command The command that was requested to be interpretted by the user.
  */
-const intCmds = (command) => {
+const _intCmds = (command) => {
   const isEmpty = command.length === 0;
 
   if (isEmpty) Errors.enterCommand();
@@ -35,4 +35,4 @@ const intCmds = (command) => {
   recognized = false;
 };
 
-module.exports = intCmds;
+module.exports = _intCmds;

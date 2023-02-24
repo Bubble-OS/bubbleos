@@ -18,7 +18,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Removed Features
 
-_No features have been removed in this release._
+- Removed the `--kill` flag (use the `crash` command instead).
 
 ## Build 75-78 (v0.7.5-v0.7.8)
 

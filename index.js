@@ -1,28 +1,30 @@
 #!/usr/bin/env node
 
+// Import non-built-in modules
 const chalk = require("chalk");
 
+// Import variable constants
 const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/aboutConsts");
 
 // Import private helper functions
 const _mainArgs = require("./src/functions/mainArgs");
 const _timebomb = require("./src/functions/timebomb");
-const _fatalError = require("./src/functions/fatalError");
 
 // Import helper functions
 const prompt = require("./src/prompt");
-const intCmds = require("./src/interpret");
+const _intCmds = require("./src/interpret");
 
 // Get all of the arguments passed directly into BubbleOS
+// For the pre-boot interpreter
 const args = _mainArgs();
 
-let command = "";
+// Argument variables
 let showTimebomb = true;
 let showVersion = false;
-let killBubble = false;
 
+// Get all arguments and entered commands that were passed
 if (args.length !== 0) {
-  if (args.includes("--no-timebomb") || args.includes("/no-timebomb")) showTimebomb = false;
+  if (args.includes("--no-timebomb") || args.includes("--no-timebomb")) showTimebomb = false;
   if (
     args.includes("-v") ||
     args.includes("/v") ||
@@ -30,26 +32,12 @@ if (args.length !== 0) {
     args.includes("/version")
   )
     showVersion = true;
-  if (args.includes("--kill") || args.includes("/kill")) killBubble = true;
-
-  command = args
-    .filter((v) => {
-      if (v.startsWith("-") || v.startsWith("/")) return false;
-      return true;
-    })
-    .join(" ");
 }
 
+// If '--no-timebomb' wasn't in the arguments list, show the timebomb
 if (showTimebomb) _timebomb();
 
-if (killBubble) {
-  try {
-    throw new Error("BubbleOS was run with the --kill flag.");
-  } catch (err) {
-    _fatalError(err);
-  }
-}
-
+// If '-v' was in the arguments list
 if (showVersion) {
   console.log(chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`));
   console.log(`Made by ${AUTHOR}!\n`);
@@ -57,15 +45,17 @@ if (showVersion) {
   process.exit(0);
 }
 
-if (command.length !== 0) {
-  intCmds(command);
+// If there are arguments, run the commands passed
+if (args.length !== 0) {
+  _intCmds(args.join(" "));
   process.exit(0);
 }
 
+// Run the intro (only works if no commands have been entered in the pre-boot interpreter)
 require("./src/intro");
 
-// Repeat until the user exits
+// Repeat forever until the user exits
 while (true) {
   // Ask the user for a command
-  intCmds(prompt());
+  _intCmds(prompt());
 }
