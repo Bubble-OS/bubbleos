@@ -8,54 +8,58 @@ const _fatalError = require("../functions/fatalError");
 
 const Verbose = require("../classes/Verbose");
 const Errors = require("../classes/Errors");
+const Checks = require("../classes/Checks");
 
 const cd = (dir, ...params) => {
-  const verb = new Verbose(
+  let dirChk = new Checks(dir);
+
+  const verbose = new Verbose(
     params?.includes("--verbose") ||
       params?.includes("/verbose") ||
       dir?.includes("--verbose") ||
       dir?.includes("/verbose")
   );
-  verb.startCmd("cd");
+  verbose.startCmd("cd");
 
-  verb.intParams();
+  verbose.intParams();
   const silent = params?.includes("-s") || params?.includes("/s");
 
-  verb.chkUndefined(dir);
-  if (typeof dir === "undefined" || dir === "--verbose" || dir === "/verbose") {
-    verb.enterParam();
+  verbose.chkUndefined(dir);
+  if (dirChk.paramUndefined()) {
+    verbose.enterParam();
     Errors.enterParameter("a directory", "cd test");
-    verb.wasError("cd");
+    verbose.wasError("cd");
     return;
   }
-  verb.chkComplete();
+  verbose.chkComplete();
 
-  verb.replaceSpacesAndConvAbs(dir);
+  verbose.replaceSpacesAndConvAbs(dir);
   dir = _replaceSpaces(dir);
 
-  verb.chkExistant(dir);
-  if (!fs.existsSync(dir)) {
-    verb.nonExistant(dir);
+  verbose.chkExistant(dir);
+  if (dirChk.doesExist()) {
+    verbose.nonExistant(dir);
     Errors.doesNotExist("directory", dir);
-    verb.wasError("cd");
+    verbose.wasError("cd");
     return;
   }
-  verb.chkComplete();
+  verbose.chkComplete();
 
   try {
-    verb.attemptTo("change into the directory", dir);
+    verbose.attemptTo("change into the directory", dir);
     process.chdir(dir);
+
     if (!silent) console.log(`Changed directory to ${chalk.green(process.cwd())}.\n`);
-    verb.operationSuccess("cd");
+    verbose.operationSuccess("cd");
   } catch (err) {
     if (err.code === "EPERM") {
-      verb.permsErr(dir);
+      verbose.permsErr(dir);
       Errors.noPermissions("change into", dir);
     } else {
       _fatalError(err);
     }
 
-    verb.wasError("cd");
+    verbose.wasError("cd");
     return;
   }
 };

@@ -30,6 +30,7 @@ const chalk = require("chalk");
  * - `10` - `invalidEncoding()`
  * - `11` - `invalidExtension()`
  * - `12` - `invalidCharacters()`
+ * - `13` - `pathTooLong()`
  */
 class Errors {
   constructor() {}
@@ -344,6 +345,28 @@ class Errors {
     const MESSAGE = `The ${type} can only contain ${supposedTo} and not contain ${notContain} (received ${chalk.bold.italic(
       `'${variable}'`
     )}). ${chalk.dim("(INVALID_CHARS)")}`;
+
+    this.#interpretError(CODE, MESSAGE);
+  }
+
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Path too long_
+   *
+   * **Parameters:** `path`
+   *
+   * **Error code:** `13`
+   *
+   * **Message:** The path (**_'`path`'_**) is too long. Please choose a shorter path.
+   *
+   * @param {string} path The path that the user entered.
+   */
+  static pathTooLong(path) {
+    const CODE = 13;
+    const MESSAGE = `The path (${chalk.bold.italic(
+      `'${path}'`
+    )}) is too long. Please choose a shorter path. ${chalk.dim("(PATH_TOO_LONG)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }

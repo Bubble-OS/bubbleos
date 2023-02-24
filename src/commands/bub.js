@@ -1,7 +1,6 @@
 const chalk = require("chalk");
-const { isText } = require("istextorbinary");
 
-const { existsSync, readFileSync } = require("fs");
+const fs = require("fs");
 
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
@@ -12,7 +11,7 @@ const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
 const _interpretBubbleFile = (intCmds, path, displayCommand = true) => {
-  const contents = readFileSync(path, { encoding: "utf-8", flag: "r" }).split("\n");
+  const contents = fs.readFileSync(path, { encoding: "utf-8", flag: "r" }).split("\n");
 
   for (let i = 0; i < contents.length; i++) {
     const line = contents[i]?.trim();

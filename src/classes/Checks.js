@@ -15,12 +15,14 @@ class Checks {
   /**
    * Check if the parameter is `undefined`.
    *
-   * Returns `true` if the parameter is `undefined`, else, returns `false`.
+   * Returns `true` if the parameter is `undefined` or `--verbose`, else, returns `false`.
    *
    * @returns Either `true` if the parameter is `undefined`, else, returns `false`.
    */
   paramUndefined() {
-    return typeof this.param === "undefined";
+    return (
+      typeof this.param === "undefined" || this.param === "--verbose" || this.param === "/verbose"
+    );
   }
 
   /**
