@@ -10,7 +10,7 @@ const { GLOBAL_NAME } = require("../variables/aboutConsts");
  *
  * @param {Error} err The error.
  */
-const _fatalError = (err) => {
+const _fatalError = (err, doFileDump = true) => {
   const errProperties = {
     // For 'Error':
     Code: err?.code,
@@ -51,49 +51,51 @@ const _fatalError = (err) => {
 
   console.log();
 
-  try {
-    console.log(chalk.underline("File Dump Status"));
+  if (doFileDump) {
+    try {
+      console.log(chalk.underline("File Dump Status"));
 
-    const FILENAMES = {
-      errorInfo: `${GLOBAL_NAME}_error_info.txt`.toUpperCase(),
-      heapSnap: `${GLOBAL_NAME}_heap_snapshot.txt`.toUpperCase(),
-    };
+      const FILENAMES = {
+        errorInfo: `${GLOBAL_NAME}_error_info.txt`.toUpperCase(),
+        heapSnap: `${GLOBAL_NAME}_heap_snapshot.txt`.toUpperCase(),
+      };
 
-    let errorArr = [];
+      let errorArr = [];
 
-    for (let error in errProperties) {
-      if (typeof errProperties[error] !== "undefined")
-        errorArr.push(`${error}: ${errProperties[error]}`);
+      for (let error in errProperties) {
+        if (typeof errProperties[error] !== "undefined")
+          errorArr.push(`${error}: ${errProperties[error]}`);
+      }
+
+      const date = new Date();
+      const errorInfoTxt = `BubbleOS encountered a fatal error at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} on ${date.getDate()}/${
+        date.getMonth() + 1
+      }/${date.getFullYear()}.\nGive the developer this information by running 'about' in ${GLOBAL_NAME} and going to the Github page, then the Issues tab, and creating a new issue with the text below. Thanks for helping!\n\n${errorArr.join(
+        "\n"
+      )}`;
+
+      fs.writeFileSync(FILENAMES.errorInfo, errorInfoTxt);
+      writeHeapSnapshot(FILENAMES.heapSnap);
+
+      console.log(
+        chalk.green(
+          `${chalk.white.bgGreen(" SUCCESS ")}: Saved files ${chalk.bold(
+            FILENAMES.errorInfo
+          )} and ${chalk.bold(FILENAMES.heapSnap)} in ${chalk.bold(process.cwd())}.\n`
+        )
+      );
+    } catch (saveErr) {
+      console.log(
+        chalk.red(
+          `${chalk.white.bgRed(" ERROR ")}: Could not save files ${chalk.bold(
+            FILENAMES.errorInfo
+          )} and ${chalk.bold(FILENAMES.heapSnap)} in ${chalk.bold(process.cwd())}.`
+        )
+      );
     }
-
-    const date = new Date();
-    const errorInfoTxt = `BubbleOS encountered a fatal error at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} on ${date.getDate()}/${
-      date.getMonth() + 1
-    }/${date.getFullYear()}.\nGive the developer this information by running 'about' in ${GLOBAL_NAME} and going to the Github page, then the Issues tab, and creating a new issue with the text below. Thanks for helping!\n\n${errorArr.join(
-      "\n"
-    )}`;
-
-    fs.writeFileSync(FILENAMES.errorInfo, errorInfoTxt);
-    writeHeapSnapshot(FILENAMES.heapSnap);
-
-    console.log(
-      chalk.green(
-        `${chalk.white.bgGreen(" SUCCESS ")}: Saved files ${chalk.bold(
-          FILENAMES.errorInfo
-        )} and ${chalk.bold(FILENAMES.heapSnap)} in ${chalk.bold(process.cwd())}.`
-      )
-    );
-  } catch (saveErr) {
-    console.log(
-      chalk.red(
-        `${chalk.white.bgRed(" ERROR ")}: Could not save files ${chalk.bold(
-          FILENAMES.errorInfo
-        )} and ${chalk.bold(FILENAMES.heapSnap)} in ${chalk.bold(process.cwd())}.`
-      )
-    );
   }
 
-  console.log(`${chalk.underline("\nMemory Dump")}`);
+  console.log(`${chalk.underline("Memory Dump")}`);
   process.abort();
 };
 

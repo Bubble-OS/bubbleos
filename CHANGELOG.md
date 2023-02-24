@@ -15,10 +15,12 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Changed/Fixed Features
 
 - Changed the confirmation prompt to automatically enter when you press a key.
+- BubbleOS will now crash with a fatal error if the timebomb has expired, after displaying a message.
 
 ### Removed Features
 
 - Removed the `--kill` flag (use the `crash` command instead).
+- Removed the Discord server link in `about` as the server was deleted.
 
 ## Build 75-78 (v0.7.5-v0.7.8)
 

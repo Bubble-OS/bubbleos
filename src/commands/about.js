@@ -47,7 +47,6 @@ const about = (...params) => {
   }
 
   console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/Bubble-OS/bubbleos")}`);
-  console.log(`Discord: ${chalk.underline.blueBright("https://discord.gg/tPTuxcKZkY")}`);
   console.log(`YouTube: ${chalk.underline.blueBright("https://youtube.com/InfiniTech78")}\n`);
 };
 
