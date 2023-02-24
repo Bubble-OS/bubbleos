@@ -37,9 +37,9 @@ const _fatalError = (err, doFileDump = true) => {
         "'about'"
       )}) to inform the developer of the issue.`
     )}\n${chalk.red.bold(
-      `To attempt to resolve this issue yourself, try running the same command with the ${chalk.italic(
-        "'--verbose'"
-      )} flag to see in detail what and when the error occurs.`
+      `To attempt to resolve this issue yourself, use the ${chalk.italic(
+        "'help'"
+      )} command to see the correct way to use the command.`
     )}\n`
   );
 
