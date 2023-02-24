@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const { question } = require("readline-sync");
+const { keyInPause } = require("readline-sync");
 
 const {
   GLOBAL_NAME,
@@ -19,7 +19,7 @@ const _timebomb = () => {
           `This beta build of ${GLOBAL_NAME} has expired. Please upgrade to a newer version of ${GLOBAL_NAME}.\n${GLOBAL_NAME} will now crash.\n`
         )
       );
-      question(chalk.red("Press any key to continue . . . "));
+      keyInPause(chalk.red("Press any key to continue . . . "), { guide: false });
 
       console.log();
 

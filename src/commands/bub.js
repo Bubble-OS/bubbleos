@@ -32,14 +32,14 @@ const bub = (intCmds, file, ...params) => {
     return;
   }
 
+  let displayCmd = false;
+  if (params.includes("-d") || params.includes("/d")) displayCmd = true;
+
   file = _replaceSpaces(file);
   file = file.endsWith(".bub") ? file : `${file}.bub`;
   file = _convertAbsolute(file);
 
   fileChk = new Checks(file);
-
-  let displayCmd = false;
-  if (params.includes("-d") || params.includes("/d")) displayCmd = true;
 
   if (!fileChk.doesExist()) {
     Errors.doesNotExist("file", file);

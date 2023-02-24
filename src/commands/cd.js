@@ -1,65 +1,61 @@
-const fs = require("fs");
-
 const chalk = require("chalk");
 
 const _replaceSpaces = require("../functions/replaceSpaces");
-const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
-const Verbose = require("../classes/Verbose");
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
-const cd = (dir, ...params) => {
-  let dirChk = new Checks(dir);
-
-  const verbose = new Verbose(
-    params?.includes("--verbose") ||
-      params?.includes("/verbose") ||
-      dir?.includes("--verbose") ||
-      dir?.includes("/verbose")
-  );
-  verbose.startCmd("cd");
-
-  verbose.intParams();
-  const silent = params?.includes("-s") || params?.includes("/s");
-
-  verbose.chkUndefined(dir);
-  if (dirChk.paramUndefined()) {
-    verbose.enterParam();
-    Errors.enterParameter("a directory", "cd test");
-    verbose.wasError("cd");
-    return;
-  }
-  verbose.chkComplete();
-
-  verbose.replaceSpacesAndConvAbs(dir);
-  dir = _replaceSpaces(dir);
-
-  verbose.chkExistant(dir);
-  if (dirChk.doesExist()) {
-    verbose.nonExistant(dir);
-    Errors.doesNotExist("directory", dir);
-    verbose.wasError("cd");
-    return;
-  }
-  verbose.chkComplete();
-
+/**
+ * Change into a directory (command usage only).
+ *
+ * Usage:
+ *
+ * ```js
+ * const cd = require("./path/to/cd");
+ * cd("test", "-s"); // '-s' is an argument and is optional
+ * ```
+ *
+ * Note that changing a directory in BubbleOS does not reflect across the OS.
+ * For example, running BubbleOS in `C:\Users`, then changing into `Test` in BubbleOS, then exiting, would still have the directory as `C:\Users` instead of `C:\Users\Test`.
+ *
+ * @param {string} dir The directory to change into. Must be a valid directory.
+ * @param  {...string} args The arguments that can be passed to modify the behaviour of the command.
+ */
+const cd = (dir, ...args) => {
   try {
-    verbose.attemptTo("change into the directory", dir);
+    let dirChk = new Checks(dir);
+
+    const silent = args?.includes("-s") || args?.includes("/s");
+
+    if (dirChk.paramUndefined()) {
+      Errors.enterParameter("a directory", "cd test");
+      return;
+    }
+
+    dir = _replaceSpaces(dir);
+
+    dirChk = new Checks(dir);
+
+    if (!dirChk.doesExist()) {
+      Errors.doesNotExist("directory", dir);
+      return;
+    } else if (!dirChk.validateType()) {
+      Errors.expectedDir(dir);
+      return;
+    }
+
     process.chdir(dir);
 
     if (!silent) console.log(`Changed directory to ${chalk.green(process.cwd())}.\n`);
-    verbose.operationSuccess("cd");
+    else console.log();
   } catch (err) {
     if (err.code === "EPERM") {
-      verbose.permsErr(dir);
       Errors.noPermissions("change into", dir);
     } else {
       _fatalError(err);
     }
 
-    verbose.wasError("cd");
     return;
   }
 };

@@ -7,15 +7,14 @@ const _convertAbsolute = require("../functions/convAbs");
 const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
-const mkdir = (dirName) => {
-  dirName = _replaceSpaces(dirName);
-
-  if (!dirName) {
+const mkdir = (dir) => {
+  if (typeof dir === "undefined") {
     Errors.enterParameter("a directory", "mkdir test");
     return;
   }
 
-  const dir = _convertAbsolute(dirName);
+  dir = _replaceSpaces(dir);
+  dir = _convertAbsolute(dir);
 
   try {
     if (!existsSync(dir)) {
@@ -28,6 +27,8 @@ const mkdir = (dirName) => {
   } catch (err) {
     if (err.code === "EPERM") {
       Errors.noPermissions("make the directory", dir);
+    } else if (err.code === "ENAMETOOLONG") {
+      Errors.pathTooLong(dir);
     } else {
       _fatalError(err);
     }
