@@ -19,6 +19,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 - Fixed an issue where BubbleOS would crash when using `mkfile`/`mkdir` if the path exceeded `MAX_PATH`.
 - Fixed an issue where making a directory/file with invalid characters would crash BubbleOS.
 - BubbleOS will now crash with a fatal error if the timebomb has expired, after displaying a message.
+- Fixed an issue where running `bub` would crash BubbleOS (it was a simple typo).
 
 ### Removed Features
 

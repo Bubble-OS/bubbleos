@@ -24,7 +24,7 @@ const _intCmds = (command) => {
     if (command.startsWith(Object.keys(commands)[i])) {
       recognized = true;
       if (Object.keys(commands)[i] === "bub")
-        Object.values(commands)[i](intCmds, ..._multiParam(command));
+        Object.values(commands)[i](_intCmds, ..._multiParam(command));
       else Object.values(commands)[i](..._multiParam(command));
     }
   }
