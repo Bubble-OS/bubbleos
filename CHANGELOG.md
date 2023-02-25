@@ -11,6 +11,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 - Added more reuseable verbose messages to more command.
 - Added a new `-s` flag for the `cd` command, which silences all outputs to _stdout_ (except verbose and error messages).
 - Added new error codes (e.g. `NON_EXISTANT_PATH`).
+- Added another Easter egg!
 
 ### Changed/Fixed Features
 
