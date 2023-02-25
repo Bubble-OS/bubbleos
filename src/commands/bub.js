@@ -1,6 +1,6 @@
-const chalk = require("chalk");
-
 const fs = require("fs");
+
+const chalk = require("chalk");
 
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");

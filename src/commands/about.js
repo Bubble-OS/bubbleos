@@ -1,16 +1,33 @@
+// Import packages
 const chalk = require("chalk");
 
+// Import variables
 const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/aboutConsts");
 
-const about = (...params) => {
+/**
+ * The `about` command.
+ *
+ * This command does not return any information; it is only to be ran in the BubbleOS shell. This command only prints to _stdout_.
+ *
+ * Usage:
+ * ```js
+ * about("-l"); // Arguments are optional
+ * ```
+ *
+ * @param  {...string} args A list of arguments that can be used to modify the behaviour of `about`.
+ */
+const about = (...args) => {
+  // Intialize recognized arguments
   let license = false;
   let binary = false;
-  if (params.includes("-l") || params.includes("/l")) license = true;
-  if (params.includes("--ilovetech") || params.includes("/ilovetech")) binary = true;
+  if (args?.includes("-l") || args?.includes("/l")) license = true;
+  if (args?.includes("--ilovetech") || args?.includes("/ilovetech")) binary = true;
 
+  // For the Easter egg :)
   let aboutName = GLOBAL_NAME;
   if (binary) aboutName = "01000010 01110101 01100010 01100010 01101100 01100101 01001111 01010011";
 
+  // Print out information about BubbleOS
   console.log(chalk.underline.bold.red(`About ${aboutName}\n`));
 
   console.log(`${aboutName}, v${VERSION} (build ${BUILD})`);
