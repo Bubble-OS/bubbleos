@@ -45,6 +45,13 @@ const mkfile = (file) => {
       Errors.noPermissions("make the file", file);
     } else if (err.code === "ENAMETOOLONG") {
       Errors.pathTooLong(file);
+    } else if (err.code === "EINVAL") {
+      Errors.invalidCharacters(
+        "directory name",
+        "valid path characters",
+        "characters such as '?' or ':' (Windows only)",
+        dir
+      );
     } else {
       _fatalError(err);
     }

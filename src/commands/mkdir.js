@@ -29,6 +29,13 @@ const mkdir = (dir) => {
       Errors.noPermissions("make the directory", dir);
     } else if (err.code === "ENAMETOOLONG") {
       Errors.pathTooLong(dir);
+    } else if (err.code === "EINVAL") {
+      Errors.invalidCharacters(
+        "directory name",
+        "valid path characters",
+        "characters such as '?' or ':' (Windows only)",
+        dir
+      );
     } else {
       _fatalError(err);
     }
