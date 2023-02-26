@@ -28,7 +28,7 @@ const sysinfo = require("../commands/sysinfo");
 const taskkill = require("../commands/taskkill");
 const time = require("../commands/time");
 const tips = require("../commands/tips");
-const userinfocmd = require("../commands/userinfo");
+const userinfo = require("../commands/userinfo");
 const wcount = require("../commands/wcount");
 
 const cConCon = () => {
@@ -78,7 +78,7 @@ const COMMANDS = {
   taskkill,
   time,
   tips,
-  userinfo: userinfocmd,
+  userinfo,
   wcount,
 };
 

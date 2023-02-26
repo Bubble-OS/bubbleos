@@ -6,7 +6,8 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
-_No features have been added in this release._
+- Added a lot of information to the `sysinfo` command, including system resources, advanced information, and arguments.
+- Added the user temporary path to the `userinfo` command.
 
 ### Changed/Fixed Features
 

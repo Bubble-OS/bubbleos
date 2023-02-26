@@ -25,34 +25,34 @@ const _interpretBubbleFile = (intCmds, path, displayCommand = true) => {
 };
 
 const bub = (intCmds, file, ...params) => {
-  let fileChk = new Checks(file);
-
-  if (fileChk.paramUndefined()) {
-    Errors.enterParameter("a file", "bub test.bub");
-    return;
-  }
-
-  let displayCmd = false;
-  if (params.includes("-d") || params.includes("/d")) displayCmd = true;
-
-  file = _replaceSpaces(file);
-  file = file.endsWith(".bub") ? file : `${file}.bub`;
-  file = _convertAbsolute(file);
-
-  fileChk = new Checks(file);
-
-  if (!fileChk.doesExist()) {
-    Errors.doesNotExist("file", file);
-    return;
-  } else if (fileChk.validEncoding()) {
-    Errors.invalidEncoding("plain text");
-    return;
-  } else if (fileChk.validateType()) {
-    Errors.expectedFile(file);
-    return;
-  }
-
   try {
+    let fileChk = new Checks(file);
+
+    if (fileChk.paramUndefined()) {
+      Errors.enterParameter("a file", "bub test.bub");
+      return;
+    }
+
+    let displayCmd = false;
+    if (params.includes("-d") || params.includes("/d")) displayCmd = true;
+
+    file = _replaceSpaces(file);
+    file = file.endsWith(".bub") ? file : `${file}.bub`;
+    file = _convertAbsolute(file);
+
+    fileChk = new Checks(file);
+
+    if (!fileChk.doesExist()) {
+      Errors.doesNotExist("file", file);
+      return;
+    } else if (fileChk.validEncoding()) {
+      Errors.invalidEncoding("plain text");
+      return;
+    } else if (fileChk.validateType()) {
+      Errors.expectedFile(file);
+      return;
+    }
+
     _interpretBubbleFile(intCmds, file, displayCmd);
   } catch (err) {
     _fatalError(err);

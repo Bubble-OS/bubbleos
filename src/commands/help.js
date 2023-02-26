@@ -37,7 +37,7 @@ const help = (command) => {
 
     console.log(
       chalk.yellow.italic(
-        `\nTip: To get information about a specific command, run ${chalk.italic(
+        `Tip: To get information about a specific command, run ${chalk.italic(
           "'help <command>'"
         )}.\n`
       )
