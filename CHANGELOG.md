@@ -7,6 +7,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Added Features
 
 - Added a lot of information to the `sysinfo` command, including system resources, advanced information, and arguments.
+- Added 'lines' and 'characters excluding whitespace' properties in the `wcount` command. Also, you can filter it using arguments.
 - Added the user temporary path to the `userinfo` command.
 
 ### Changed/Fixed Features
