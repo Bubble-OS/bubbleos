@@ -99,9 +99,15 @@ const sysinfo = (...args) => {
           os.endianness() === "BE" ? "BE (big endian)" : "LE (little endian)"
         )}`
       );
-      console.log(
-        `Estimated default parallelism amount (program): ${chalk.italic(os.availableParallelism())}`
-      );
+      try {
+        console.log(
+          `Estimated default parallelism amount (program): ${chalk.italic(
+            os.availableParallelism()
+          )}`
+        );
+      } catch (err) {
+        console.log(`Estimated default parallelism amount (program): ${chalk.italic("N/A")}`);
+      }
 
       console.log();
     }

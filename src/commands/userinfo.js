@@ -15,7 +15,7 @@ const userinfo = () => {
     if (process.platform !== "win32") {
       console.log(`GID (group identifier): ${chalk.bold(gid)}`);
       console.log(`UID (user identifier): ${chalk.bold(uid)}`);
-      console.log(`Shell: ${chalk.bold(shell)}`);
+      console.log(`Shell: ${chalk.bold(shell)}\n`);
     }
 
     console.log(`Username: ${chalk.bold(username)}`);
