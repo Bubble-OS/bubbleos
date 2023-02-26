@@ -10,7 +10,8 @@ _No features have been added in this release._
 
 ### Changed/Fixed Features
 
-- Fixed an issue where the `bub` command would report plain text files as an 'invalid encoding'.
+- Fixed an issue where the confirmation prompt would have '_y/n_' uncolored.
+- Fixed an issue where the `bub` command would report plain text files as an '_invalid encoding_'.
 
 ### Removed Features
 
