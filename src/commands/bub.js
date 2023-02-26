@@ -44,7 +44,7 @@ const bub = (intCmds, file, ...params) => {
   if (!fileChk.doesExist()) {
     Errors.doesNotExist("file", file);
     return;
-  } else if (!fileChk.validEncoding()) {
+  } else if (fileChk.validEncoding()) {
     Errors.invalidEncoding("plain text");
     return;
   } else if (fileChk.validateType()) {

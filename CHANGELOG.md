@@ -2,6 +2,20 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 84-?? (v0.8.4-v0.?.?)
+
+### Added Features
+
+_No features have been added in this release._
+
+### Changed/Fixed Features
+
+- Fixed an issue where the `bub` command would report plain text files as an 'invalid encoding'.
+
+### Removed Features
+
+_No features have been removed in this release._
+
 ## Build 78-84 (v0.7.8-v0.8.4)
 
 ### Added Features
