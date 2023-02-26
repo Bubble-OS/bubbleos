@@ -1,21 +1,26 @@
 const chalk = require("chalk");
 const sortKeys = require("sort-keys");
-const HELP_DEFINITIONS = require("../variables/helpMessages");
+const HELP_MESSAGES = require("../variables/helpMessages");
 
 const Errors = require("../classes/Errors");
 
 const help = (command) => {
-  const sorted = sortKeys(HELP_DEFINITIONS);
+  const sorted = sortKeys(HELP_MESSAGES);
 
   const printHelp = (commandChosen, all) => {
     if (all) {
-      console.log(
-        `${chalk.red(commandChosen)}: ${chalk.italic(sorted[commandChosen].description)}`
-      );
+      console.log(`${chalk.bold(commandChosen)}: ${chalk.italic(sorted[commandChosen].usage)}`);
 
-      console.log(`\n${sorted[commandChosen].all}\n`);
+      console.log(`\n  ${sorted[commandChosen].desc}\n`);
 
-      console.log(`\t${chalk.grey(sorted[commandChosen].usage.join(", "))}\n`);
+      if (typeof sorted[commandChosen].args !== "undefined") {
+        console.log("  " + chalk.underline("Arguments:"));
+        for (const arg in sorted[commandChosen].args) {
+          console.log(`    ${arg.padEnd(15)} ${sorted[commandChosen].args[arg]}`);
+        }
+        console.log();
+      }
+
       return;
     } else {
       let finalStr = "";

@@ -2,6 +2,43 @@ const { GLOBAL_NAME } = require("./aboutConsts");
 
 const chalk = require("chalk");
 
+const HELP = {
+  about: {
+    usage: "about [-l]",
+    desc: `Get information about ${GLOBAL_NAME}, including the build, version, author, and links to various related websites. You can also view the license by running the command with ${chalk.italic(
+      "'-l'"
+    )}.`,
+    args: { "[-l]": `View the license of ${GLOBAL_NAME}.` },
+  },
+  bub: {
+    usage: "bub <file> [-d]",
+    desc: `Run a file which contains ${GLOBAL_NAME} commands. The file must end with ${chalk.italic(
+      "'.bub'"
+    )}, otherwise, ${GLOBAL_NAME} will attempt to add the extention automatically. To add comments in the file, start a line with ${chalk.italic(
+      "'#'"
+    )}.`,
+    args: {
+      "<file>": "The file of which to execute commands in.",
+      "[-d]":
+        "Whether to display the commands that the program is currently executing from the file or not. By default, commands do not display.",
+    },
+  },
+  cd: {
+    usage: "cd <dir> [-s]",
+    desc: `Change the CWD (current working directory) into the one specified. Absolute and relative paths are both accepted. Note that this does not change the CWD for the system; only for ${GLOBAL_NAME}.`,
+    args: {
+      "<dir>": "The directory to change into. Both absolute and relative paths will work.",
+      "[-s]":
+        "Silence output to the standard output. Only error messages will display. By default, this option is disabled.",
+    },
+  },
+  help: {
+    usage: "help [command]",
+    desc: `Get a list of all available ${GLOBAL_NAME} commands, or get information about a specific command such as usage, arguments, and a short description.`,
+    args: { "[command]": "Get more information about a specific command." },
+  },
+};
+
 const HELP_DEFINITIONS = {
   help: {
     description: `Displays a list of available commands.`,
@@ -142,4 +179,4 @@ const HELP_DEFINITIONS = {
   },
 };
 
-module.exports = HELP_DEFINITIONS;
+module.exports = HELP;

@@ -24,7 +24,7 @@ const _interpretBubbleFile = (intCmds, path, displayCommand = true) => {
   }
 };
 
-const bub = (intCmds, file, ...params) => {
+const bub = (intCmds, file, ...args) => {
   try {
     let fileChk = new Checks(file);
 
@@ -33,8 +33,7 @@ const bub = (intCmds, file, ...params) => {
       return;
     }
 
-    let displayCmd = false;
-    if (params.includes("-d") || params.includes("/d")) displayCmd = true;
+    const displayCmd = args.includes("-d") || args.includes("/d");
 
     file = _replaceSpaces(file);
     file = file.endsWith(".bub") ? file : `${file}.bub`;
