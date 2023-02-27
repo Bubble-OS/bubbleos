@@ -7,12 +7,14 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Added Features
 
 - Added a lot of information to the `sysinfo` command, including system resources, advanced information, and arguments.
+- Added the `--no-dump` flag to the main BubbleOS executable, which will disable file dumping in the case a fatal error occurs.
 - Added 'lines' and 'characters excluding whitespace' properties in the `wcount` command. Also, you can filter it using arguments.
 - Added the user temporary path to the `userinfo` command.
 
 ### Changed/Fixed Features
 
 - Fixed an issue where the confirmation prompt would have '_y/n_' uncolored.
+- Fixed an issue where the pre-boot interpreter would crash BubbleOS.
 - Fixed an issue where the `bub` command would report plain text files as an '_invalid encoding_'.
 
 ### Removed Features

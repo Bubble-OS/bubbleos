@@ -10,7 +10,7 @@ const { GLOBAL_NAME } = require("../variables/aboutConsts");
  *
  * @param {Error} err The error.
  */
-const _fatalError = (err, doFileDump = true) => {
+const _fatalError = (err, doFileDump = !global.noDump) => {
   const errProperties = {
     // For 'Error':
     Code: err?.code,

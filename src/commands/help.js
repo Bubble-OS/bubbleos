@@ -1,61 +1,70 @@
 const chalk = require("chalk");
 const sortKeys = require("sort-keys");
+
 const HELP_MESSAGES = require("../variables/helpMessages");
+
+const _fatalError = require("../functions/fatalError");
 
 const Errors = require("../classes/Errors");
 
 const help = (command) => {
-  const sorted = sortKeys(HELP_MESSAGES);
+  try {
+    const sorted = sortKeys(HELP_MESSAGES);
 
-  const printHelp = (commandChosen, all) => {
-    if (all) {
-      console.log(`${chalk.bold(commandChosen)}: ${chalk.italic(sorted[commandChosen].usage)}`);
+    const printHelp = (specific, cmd) => {
+      cmd = cmd.toLowerCase();
 
-      console.log(`\n  ${sorted[commandChosen].desc}\n`);
+      if (specific) {
+        console.log(`${chalk.bold(cmd)}: ${chalk.italic(sorted[cmd].usage)}`);
 
-      if (typeof sorted[commandChosen].args !== "undefined") {
-        console.log("  " + chalk.underline("Arguments:"));
-        for (const arg in sorted[commandChosen].args) {
-          console.log(`    ${arg.padEnd(15)} ${sorted[commandChosen].args[arg]}`);
+        console.log(`\n  ${sorted[cmd].desc}\n`);
+
+        if (typeof sorted[cmd].args !== "undefined") {
+          console.log("  " + chalk.underline("Arguments:"));
+          for (const arg in sorted[cmd].args) {
+            console.log(`    ${arg.padEnd(15)} ${sorted[cmd].args[arg]}`);
+          }
+          console.log();
         }
-        console.log();
-      }
 
-      return;
-    } else {
-      let finalStr = "";
+        return;
+      } else {
+        let finalStr = "";
 
-      for (let i = 1; i < Object.keys(sorted).length + 1; i++) {
-        finalStr += Object.keys(sorted)[i - 1].padEnd(15);
-        if (i % 3 === 0) {
-          finalStr += "\n";
+        for (let i = 1; i < Object.keys(sorted).length + 1; i++) {
+          finalStr += Object.keys(sorted)[i - 1].padEnd(15);
+          if (i % 3 === 0) {
+            finalStr += "\n";
+          }
         }
-      }
 
-      console.log(finalStr);
-      return;
-    }
-  };
-
-  if (typeof command === "undefined") {
-    printHelp(HELP_DEFINITIONS, false);
-
-    console.log(
-      chalk.yellow.italic(
-        `Tip: To get information about a specific command, run ${chalk.italic(
-          "'help <command>'"
-        )}.\n`
-      )
-    );
-  } else {
-    for (const commandName in sorted) {
-      if (commandName === command) {
-        printHelp(commandName, true);
+        console.log(finalStr);
         return;
       }
-    }
+    };
 
-    Errors.unrecognizedCommand(command);
+    if (typeof command === "undefined") {
+      printHelp(false);
+
+      console.log(
+        chalk.yellow.italic(
+          `\nTip: To get information about a specific command, run ${chalk.italic(
+            "'help <command>'"
+          )}.\n`
+        )
+      );
+    } else {
+      for (const commandName in sorted) {
+        if (commandName.toLowerCase() === command.toLowerCase()) {
+          printHelp(true, commandName);
+          return;
+        }
+      }
+
+      Errors.unrecognizedCommand(command);
+    }
+  } catch (err) {
+    _fatalError(err);
   }
 };
 

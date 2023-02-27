@@ -21,6 +21,7 @@ const args = _mainArgs();
 // Argument variables
 let showTimebomb = true;
 let showVersion = false;
+global.noDump = false;
 
 // Get all arguments and entered commands that were passed
 if (args.length !== 0) {
@@ -32,7 +33,10 @@ if (args.length !== 0) {
     args.includes("/version")
   )
     showVersion = true;
+  if (args.includes("--no-dump") || args.includes("/no-dump")) global.noDump = true;
 }
+
+console.log(global.noDump);
 
 // If '--no-timebomb' wasn't in the arguments list, show the timebomb
 if (showTimebomb) _timebomb();
@@ -47,8 +51,15 @@ if (showVersion) {
 
 // If there are arguments, run the commands passed
 if (args.length !== 0) {
-  _intCmds(args.join(" "));
-  process.exit(0);
+  let command = args.filter((val) => {
+    if (val.startsWith("/") || val.startsWith("-")) return false;
+    return true;
+  });
+
+  if (command.length !== 0) {
+    _intCmds(command.join(" "));
+    process.exit(0);
+  }
 }
 
 // Run the intro (only works if no commands have been entered in the pre-boot interpreter)
