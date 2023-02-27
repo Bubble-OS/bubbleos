@@ -20,11 +20,13 @@ const help = (command) => {
         console.log(`\n  ${sorted[cmd].desc}\n`);
 
         if (typeof sorted[cmd].args !== "undefined") {
-          console.log("  " + chalk.underline("Arguments:"));
-          for (const arg in sorted[cmd].args) {
-            console.log(`    ${arg.padEnd(15)} ${sorted[cmd].args[arg]}`);
+          if (Object.keys(sorted[cmd].args).length !== 0) {
+            console.log("  " + chalk.underline("Arguments:"));
+            for (const arg in sorted[cmd].args) {
+              console.log(`    ${arg.padEnd(15)} ${sorted[cmd].args[arg]}`);
+            }
+            console.log();
           }
-          console.log();
         }
 
         return;

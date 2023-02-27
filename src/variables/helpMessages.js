@@ -32,6 +32,25 @@ const HELP = {
         "Silence output to the standard output. Only error messages will display. By default, this option is disabled.",
     },
   },
+  cls: {
+    usage: "cls",
+    desc: `Clears the entire terminal screen. This does not delete the history of commands entered, nor does it restart/end ${GLOBAL_NAME}.`,
+    args: {},
+  },
+  copy: {
+    usage: "copy <src> <dest> [-t] [--rm-symlink]",
+    desc: "Copies a file/directory from the source to the destination (with its contents). Absolute and relative paths for both arguments are accepted. The destination must have the name of the copied file/directory (otherwise if the path already exists, it will be overwritten).",
+    args: {
+      "<src>":
+        "The source file/directory. The file/directory must exist, otherwise it will throw an error.",
+      "<dest>":
+        "The destination file/directory with its (new) name. If the name passed already exists, it will be overwritten.",
+      "[-t]":
+        "Only for copying directories. Keeps the original timestamps of the nested files/directories. By default, this is false.",
+      "[--rm-symlink]":
+        "Only for copying directories. If a file/folder contained in the directory is a symbolic link, it will be replaced by the contents of the path it was pointing to. By default, this is false.",
+    },
+  },
   help: {
     usage: "help [command]",
     desc: `Get a list of all available ${GLOBAL_NAME} commands, or get information about a specific command such as usage, arguments, and a short description.`,
