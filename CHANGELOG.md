@@ -8,6 +8,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 - Added a lot of information to the `sysinfo` command, including system resources, advanced information, and arguments.
 - Added the `--no-dump` flag to the main BubbleOS executable, which will disable file dumping in the case a fatal error occurs.
+- Added startup warnings for dangerous BubbleOS flags such as `--no-timebomb`. These can be disabled using the `--no-warnings` flag.
 - Added 'lines' and 'characters excluding whitespace' properties in the `wcount` command. Also, you can filter it using arguments.
 - Added the user temporary path to the `userinfo` command.
 

@@ -21,6 +21,7 @@ const args = _mainArgs();
 // Argument variables
 let showTimebomb = true;
 let showVersion = false;
+let noWarnings = false;
 global.noDump = false;
 
 // Get all arguments and entered commands that were passed
@@ -33,10 +34,9 @@ if (args.length !== 0) {
     args.includes("/version")
   )
     showVersion = true;
+  if (args.includes("--no-warnings") || args.includes("/no-warnings")) noWarnings = true;
   if (args.includes("--no-dump") || args.includes("/no-dump")) global.noDump = true;
 }
-
-console.log(global.noDump);
 
 // If '--no-timebomb' wasn't in the arguments list, show the timebomb
 if (showTimebomb) _timebomb();
@@ -64,6 +64,23 @@ if (args.length !== 0) {
 
 // Run the intro (only works if no commands have been entered in the pre-boot interpreter)
 require("./src/intro");
+
+if (!showTimebomb && !noWarnings) {
+  console.log(
+    chalk.yellow(
+      `${chalk.bgYellow.black(
+        " WARNING: "
+      )} The timebomb has been disabled. The timebomb is a security feature to prevent you from using outdated software. Please upgrade to a new version of ${GLOBAL_NAME} as soon as possible.\n`
+    )
+  );
+}
+if (global.noDump && !noWarnings) {
+  console.log(
+    chalk.yellow(
+      `${chalk.bgYellow.black(" WARNING: ")} The fatal error file dump feature has been disabled.\n`
+    )
+  );
+}
 
 // Repeat forever until the user exits
 while (true) {
