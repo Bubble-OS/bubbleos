@@ -19,7 +19,7 @@ const ifnet = require("../commands/ifnet");
 const ls = require("../commands/ls");
 const mkdir = require("../commands/mkdir");
 const mkfile = require("../commands/mkfile");
-const printText = require("../commands/print");
+const print = require("../commands/print");
 const readfile = require("../commands/readfile");
 const rename = require("../commands/rename");
 const size = require("../commands/size");
@@ -69,7 +69,7 @@ const COMMANDS = {
   ls,
   mkdir,
   mkfile,
-  print: printText,
+  print,
   readfile,
   rename,
   size,

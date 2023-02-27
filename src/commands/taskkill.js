@@ -4,14 +4,16 @@ const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 
 const Errors = require("../classes/Errors");
+const { GLOBAL_NAME } = require("../variables/aboutConsts");
 
-const taskkill = (pid, ...params) => {
+const taskkill = (pid, ...args) => {
   if (typeof pid === "undefined") {
     Errors.enterParameter("a PID", "taskkill 1234");
     return;
   }
 
-  const confirm = !(params.includes("-y") || params.includes("/y"));
+  const confirm = !(args.includes("-y") || args.includes("/y"));
+  const killSelf = args.includes("--kill-self") || args.includes("/kill-self");
 
   const isNumeric = (str) => {
     if (typeof str !== "string") return false;
@@ -20,6 +22,17 @@ const taskkill = (pid, ...params) => {
 
   if (!isNumeric(pid)) {
     Errors.invalidCharacters("PID", "numbers", "letters/symbols", pid);
+    return;
+  }
+
+  if (Number(pid) === process.pid && !killSelf) {
+    console.log(
+      chalk.yellow(
+        `You cannot kill the ${GLOBAL_NAME} process. To kill ${GLOBAL_NAME}, run the ${chalk.italic(
+          "'exit'"
+        )} command.\nOperation cancelled.\n`
+      )
+    );
     return;
   }
 

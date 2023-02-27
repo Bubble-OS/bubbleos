@@ -5,13 +5,13 @@ const chalk = require("chalk");
  *
  * @param {string} text The text to output.
  */
-const printText = (text) => {
-  if (!text) {
+const print = (...text) => {
+  if (text.length === 0) {
     console.log(chalk.yellow("No text was provided to output.\n"));
     return;
   }
 
-  console.log(`${text}\n`);
+  console.log(`${text.join(" ")}\n`);
 };
 
-module.exports = printText;
+module.exports = print;

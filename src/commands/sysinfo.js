@@ -4,6 +4,7 @@ const chalk = require("chalk");
 
 const _convertSize = require("../functions/convSize");
 const _fatalError = require("../functions/fatalError");
+const { GLOBAL_NAME } = require("../variables/aboutConsts");
 
 const _convertTime = (seconds, decimals = 2) => {
   const minutes = parseFloat((seconds / 60).toFixed(decimals));
@@ -108,6 +109,9 @@ const sysinfo = (...args) => {
       } catch (err) {
         console.log(`Estimated default parallelism amount (program): ${chalk.italic("N/A")}`);
       }
+      console.log(
+        `${GLOBAL_NAME} PID (process identification number): ${chalk.italic(process.pid)}`
+      );
 
       console.log();
     }
