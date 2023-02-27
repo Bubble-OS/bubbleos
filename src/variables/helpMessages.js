@@ -51,6 +51,16 @@ const HELP = {
         "Only for copying directories. If a file/folder contained in the directory is a symbolic link, it will be replaced by the contents of the path it was pointing to. By default, this is false.",
     },
   },
+  crash: {
+    usage: "crash",
+    desc: `${chalk.bold(
+      "USE WITH CAUTION!"
+    )} Crashes ${GLOBAL_NAME} in multiple ways, including causing a fatal error, hanging the terminal session, and also causing a memory leak. Note that with the memory leak, ${GLOBAL_NAME} will crash once it has it its maximum allocated memory space.`,
+    args: {},
+  },
+  date: {
+    usage: "date",
+  },
   help: {
     usage: "help [command]",
     desc: `Get a list of all available ${GLOBAL_NAME} commands, or get information about a specific command such as usage, arguments, and a short description.`,

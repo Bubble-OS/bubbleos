@@ -17,12 +17,24 @@ const date = () => {
     "December",
   ];
 
-  // TODO Add options for what type of date to show
   const date = new Date();
 
-  console.log(chalk.dim.underline("Current date:"));
-  console.log(chalk.bold(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`));
-  console.log(`${days[date.getDay()]}, ${months[date.getMonth()]}\n`);
+  const friendlyDate =
+    date.getDate() === 1 || date.getDate() === 21 || date.getDate() === 31
+      ? `${date.getDate()}st`
+      : date.getDate() === 2 || date.getDate() === 22
+      ? `${date.getDate()}nd`
+      : date.getDate() === 3 || date.getDate() === 23
+      ? `${date.getDate()}rd`
+      : `${date.getDate()}th`;
+  console.log(
+    `${days[date.getDay()]}, the ${friendlyDate} of ${
+      months[date.getMonth()]
+    }, ${date.getFullYear()}`
+  );
+  console.log(chalk.italic(`(${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()})`));
+
+  console.log();
 };
 
 module.exports = date;

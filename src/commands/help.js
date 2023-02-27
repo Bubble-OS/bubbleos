@@ -15,9 +15,9 @@ const help = (command) => {
       cmd = cmd?.toLowerCase();
 
       if (specific) {
-        console.log(`${chalk.bold(cmd)}: ${chalk.italic(sorted[cmd].usage)}`);
+        console.log(`${chalk.bold(cmd)}: ${chalk.italic(sorted[cmd].usage ?? "N/A")}`);
 
-        console.log(`\n  ${sorted[cmd].desc}\n`);
+        console.log(`\n  ${sorted[cmd].desc ?? "N/A"}\n`);
 
         if (typeof sorted[cmd].args !== "undefined") {
           if (Object.keys(sorted[cmd].args).length !== 0) {

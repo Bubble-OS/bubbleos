@@ -67,6 +67,7 @@ const sysinfo = (...args) => {
       console.log(`Release: ${chalk.italic(os.release())}`);
       console.log(`Architecture: ${chalk.italic(process.arch)}`);
       console.log(`Computer name: ${chalk.italic(os.hostname())}`);
+      console.log(`Locale: ${chalk.italic(Intl.DateTimeFormat().resolvedOptions().locale)}`);
 
       console.log();
     }
