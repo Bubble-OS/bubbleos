@@ -32,7 +32,7 @@ const date = () => {
       months[date.getMonth()]
     }, ${date.getFullYear()}`
   );
-  console.log(chalk.italic(`(${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()})`));
+  console.log(chalk.italic(`(${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()})`));
 
   console.log();
 };

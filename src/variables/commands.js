@@ -11,7 +11,7 @@ const copy = require("../commands/copy");
 const crash = require("../commands/crash");
 const date = require("../commands/date");
 const del = require("../commands/del");
-const execFile = require("../commands/exec");
+const exec = require("../commands/exec");
 const fif = require("../commands/fif");
 const help = require("../commands/help");
 const { historyCmd } = require("../commands/history");
@@ -61,7 +61,7 @@ const COMMANDS = {
   "C:\\con\\con": cConCon,
   date,
   del,
-  exec: execFile,
+  exec,
   fif,
   help,
   history: historyCmd,

@@ -60,6 +60,21 @@ const HELP = {
   },
   date: {
     usage: "date",
+    desc: `Gets the current date from your local system. The date will print out in a friendly format like so: ${chalk.italic(
+      "[day], the [date] of [month] [year]"
+    )}. The date will have the appropriate suffix (e.g. ${chalk.italic(
+      "'st'"
+    )}), and the day/month will have their names. Below the friendly name in brackets is a date styled in the slash-like format.`,
+    args: {},
+  },
+  del: {
+    usage: "del <path> [-y]",
+    desc: `Delete any file/directory, regardless of if it is empty or not. The command will automatically infer on whether the path entered is a file or directory, and appropriately delete it. In the case of an error, ${GLOBAL_NAME} will keep trying to delete it until the maximum tries have been surpassed.`,
+    args: {
+      "<path>":
+        "The file/directory to delete. The command will work even if the directory is empty or not.",
+      "[-y]": "Automatically skip the confirmation prompt. By default, this is disabled.",
+    },
   },
   help: {
     usage: "help [command]",

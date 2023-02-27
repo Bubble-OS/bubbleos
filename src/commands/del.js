@@ -9,13 +9,13 @@ const _fatalError = require("../functions/fatalError");
 
 const Errors = require("../classes/Errors");
 
-const del = (file, ...params) => {
-  if (!file) {
+const del = (file, ...args) => {
+  if (typeof file === "undefined") {
     Errors.enterParameter("a file/directory", "del test");
     return;
   }
 
-  const confirm = !(params.includes("-y") || params.includes("/y"));
+  const confirm = !(args.includes("-y") || args.includes("/y"));
 
   file = _replaceSpaces(file);
   file = _convertAbsolute(file);
