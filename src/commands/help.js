@@ -12,7 +12,7 @@ const help = (command) => {
     const sorted = sortKeys(HELP_MESSAGES);
 
     const printHelp = (specific, cmd) => {
-      cmd = cmd.toLowerCase();
+      cmd = cmd?.toLowerCase();
 
       if (specific) {
         console.log(`${chalk.bold(cmd)}: ${chalk.italic(sorted[cmd].usage)}`);
