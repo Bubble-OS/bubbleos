@@ -4,7 +4,7 @@
 const chalk = require("chalk");
 
 // Import variable constants
-const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/aboutConsts");
+const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/constants");
 
 // Import private helper functions
 const _mainArgs = require("./src/functions/mainArgs");

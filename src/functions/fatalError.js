@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const chalk = require("chalk");
 
-const { GLOBAL_NAME } = require("../variables/aboutConsts");
+const { GLOBAL_NAME } = require("../variables/constants");
 
 /**
  * End BubbleOS with a fatal exception with exit code `1`.

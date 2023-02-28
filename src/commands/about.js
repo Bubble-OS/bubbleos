@@ -2,7 +2,7 @@
 const chalk = require("chalk");
 
 // Import variables
-const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/aboutConsts");
+const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/constants");
 
 /**
  * The `about` command.

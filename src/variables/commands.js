@@ -1,7 +1,7 @@
 const chalk = require("chalk");
 const { keyInPause } = require("readline-sync");
 
-const { GLOBAL_NAME } = require("./aboutConsts");
+const { GLOBAL_NAME } = require("./constants");
 
 const about = require("../commands/about");
 const bub = require("../commands/bub");

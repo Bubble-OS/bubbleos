@@ -1,4 +1,4 @@
-const { GLOBAL_NAME } = require("./aboutConsts");
+const { GLOBAL_NAME } = require("./constants");
 
 const chalk = require("chalk");
 

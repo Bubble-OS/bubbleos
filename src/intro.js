@@ -9,7 +9,7 @@ const {
   TIMEBOMB_ACTIVATED,
   EXPIRY_DATE,
   TIMEBOMB_COUNT,
-} = require("./variables/aboutConsts");
+} = require("./variables/constants");
 
 console.log(`${chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`)}`);
 console.log(`Made by ${AUTHOR}!\n`);

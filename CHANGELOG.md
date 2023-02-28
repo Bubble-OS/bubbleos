@@ -21,6 +21,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 - Fixed an issue where the `print` command wouldn't output anything after a space.
 - Fixed an issue where the pre-boot interpreter would crash BubbleOS.
 - Fixed an issue where the `bub` command would report plain text files as an '_invalid encoding_'.
+- Internally renamed `aboutConsts.js` to `constants.js`.
 
 ### Removed Features
 

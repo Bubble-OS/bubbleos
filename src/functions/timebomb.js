@@ -1,12 +1,7 @@
 const chalk = require("chalk");
 const { keyInPause } = require("readline-sync");
 
-const {
-  GLOBAL_NAME,
-  IN_BETA,
-  TIMEBOMB_ACTIVATED,
-  EXPIRY_DATE,
-} = require("../variables/aboutConsts");
+const { GLOBAL_NAME, IN_BETA, TIMEBOMB_ACTIVATED, EXPIRY_DATE } = require("../variables/constants");
 const _fatalError = require("./fatalError");
 
 const _timebomb = () => {

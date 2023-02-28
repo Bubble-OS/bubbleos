@@ -3,7 +3,7 @@ const { keyInSelect } = require("readline-sync");
 const _fatalError = require("../functions/fatalError");
 
 const _promptForYN = require("../functions/promptForYN");
-const { GLOBAL_NAME } = require("../variables/aboutConsts");
+const { GLOBAL_NAME } = require("../variables/constants");
 
 const crash = (...args) => {
   const AVAILABLE_CRASHES = [`Fatal Error (${GLOBAL_NAME})`, "Hang", "Memory Leak"];

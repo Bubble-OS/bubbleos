@@ -1,4 +1,4 @@
-const { GLOBAL_NAME } = require("./variables/aboutConsts");
+const { GLOBAL_NAME } = require("./variables/constants");
 
 console.log(`Exiting the ${GLOBAL_NAME} shell...\n`);
 
