@@ -24,10 +24,13 @@ const Checks = require("../classes/Checks");
  */
 const cd = (dir, ...args) => {
   try {
+    // Create a new directory checker
     let dirChk = new Checks(dir);
 
+    // Intialize arguments
     const silent = args?.includes("-s") || args?.includes("/s");
 
+    // Check if the parameter is undefined
     if (dirChk.paramUndefined()) {
       Errors.enterParameter("a directory", "cd test");
       return;
@@ -35,8 +38,10 @@ const cd = (dir, ...args) => {
 
     dir = _replaceSpaces(dir);
 
+    // Reinitialize the checker in case
     dirChk = new Checks(dir);
 
+    // Run checks
     if (!dirChk.doesExist()) {
       Errors.doesNotExist("directory", dir);
       return;
@@ -45,6 +50,7 @@ const cd = (dir, ...args) => {
       return;
     }
 
+    // Change directory
     process.chdir(dir);
 
     if (!silent) console.log(`Changed directory to ${chalk.green(process.cwd())}.\n`);

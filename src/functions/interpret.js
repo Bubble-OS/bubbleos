@@ -1,8 +1,8 @@
-const commands = require("./variables/commands");
+const commands = require("../variables/commands");
 
-const { _addToHist } = require("./commands/history");
+const { _addToHist } = require("../commands/history");
 
-const Errors = require("./classes/Errors");
+const Errors = require("../classes/Errors");
 
 const _multiParam = (command) => {
   const params = command.split(" ");
@@ -22,7 +22,7 @@ const _intCmds = (command) => {
   if (isEmpty) Errors.enterCommand();
 
   if (command.startsWith("exit")) {
-    require("./exit");
+    require("../exit");
   }
 
   let recognized = false;

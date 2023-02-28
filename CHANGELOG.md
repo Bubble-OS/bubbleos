@@ -17,6 +17,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
+- Fixed an issue where the `cwd` was unrecognized.
 - Fixed an issue where the confirmation prompt would have '_y/n_' uncolored.
 - Fixed an issue where the `print` command wouldn't output anything after a space.
 - Fixed an issue where the pre-boot interpreter would crash BubbleOS.
@@ -25,7 +26,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Removed Features
 
-- Removed the `mainArgs.js` and `multiParam.js` files internally.
+- Removed the `prompt.js`, `mainArgs.js` and `multiParam.js` files internally.
 
 ## Build 78-84 (v0.7.8-v0.8.4)
 

@@ -54,11 +54,14 @@ const cConCon = () => {
 const COMMANDS = {
   about,
   bub,
+  "C:\\con\\con": cConCon,
   cd,
   cls,
   copy,
   crash,
-  "C:\\con\\con": cConCon,
+  cwd: () => {
+    console.log(`${process.cwd()}\n`);
+  },
   date,
   del,
   exec,

@@ -2,16 +2,14 @@
 
 // Import non-built-in modules
 const chalk = require("chalk");
+const { question } = require("readline-sync");
 
 // Import variable constants
-const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/constants");
+const { GLOBAL_NAME, SHORT_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/constants");
 
 // Import private helper functions
 const _timebomb = require("./src/functions/timebomb");
-
-// Import helper functions
-const prompt = require("./src/prompt");
-const _intCmds = require("./src/interpret");
+const _intCmds = require("./src/functions/interpret");
 
 // Get all of the arguments passed directly into BubbleOS
 // For the pre-boot interpreter
@@ -84,5 +82,11 @@ if (global.noDump && !noWarnings) {
 // Repeat forever until the user exits
 while (true) {
   // Ask the user for a command
-  _intCmds(prompt());
+  _intCmds(
+    question(
+      `${chalk.bold.green(SHORT_NAME.toLowerCase())} ${chalk.blueBright(process.cwd())} ${chalk.red(
+        "$"
+      )} `
+    )?.trim()
+  );
 }

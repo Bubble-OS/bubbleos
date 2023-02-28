@@ -4,6 +4,8 @@ const chalk = require("chalk");
 // Import variables
 const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/constants");
 
+const _fatalError = require("../functions/fatalError");
+
 /**
  * The `about` command.
  *
@@ -17,27 +19,29 @@ const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/constants"
  * @param  {...string} args A list of arguments that can be used to modify the behaviour of `about`.
  */
 const about = (...args) => {
-  // Intialize recognized arguments
-  const license = args?.includes("-l") || args?.includes("/l");
-  const binary = args?.includes("--ilovetech") || args?.includes("/ilovetech");
+  try {
+    // Intialize recognized arguments
+    const license = args?.includes("-l") || args?.includes("/l");
+    const binary = args?.includes("--ilovetech") || args?.includes("/ilovetech");
 
-  // For the Easter egg :)
-  let aboutName = GLOBAL_NAME;
-  if (binary) aboutName = "01000010 01110101 01100010 01100010 01101100 01100101 01001111 01010011";
+    // For the Easter egg :)
+    let aboutName = GLOBAL_NAME;
+    if (binary)
+      aboutName = "01000010 01110101 01100010 01100010 01101100 01100101 01001111 01010011";
 
-  // Print out information about BubbleOS
-  console.log(chalk.underline.bold.red(`About ${aboutName}\n`));
+    // Print out information about BubbleOS
+    console.log(chalk.underline.bold.red(`About ${aboutName}\n`));
 
-  console.log(`${aboutName}, v${VERSION} (build ${BUILD})`);
-  console.log(`Made by ${AUTHOR}!\n`);
+    console.log(`${aboutName}, v${VERSION} (build ${BUILD})`);
+    console.log(`Made by ${AUTHOR}!\n`);
 
-  console.log(
-    chalk.italic("Thanks to Erik (and B-Kernel) for helping out with a few command ideas!\n")
-  );
-
-  if (license) {
     console.log(
-      chalk.dim(`    MIT License
+      chalk.italic("Thanks to Erik (and B-Kernel) for helping out with a few command ideas!\n")
+    );
+
+    if (license) {
+      console.log(
+        chalk.dim(`    MIT License
 
     Copyright (c) ${new Date().getFullYear()} ${aboutName}
     
@@ -58,11 +62,14 @@ const about = (...args) => {
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.\n`)
-    );
-  }
+      );
+    }
 
-  console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/Bubble-OS/bubbleos")}`);
-  console.log(`YouTube: ${chalk.underline.blueBright("https://youtube.com/InfiniTech78")}\n`);
+    console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/Bubble-OS/bubbleos")}`);
+    console.log(`YouTube: ${chalk.underline.blueBright("https://youtube.com/InfiniTech78")}\n`);
+  } catch (err) {
+    _fatalError(err);
+  }
 };
 
 module.exports = about;
