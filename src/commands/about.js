@@ -18,10 +18,8 @@ const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/constants"
  */
 const about = (...args) => {
   // Intialize recognized arguments
-  let license = false;
-  let binary = false;
-  if (args?.includes("-l") || args?.includes("/l")) license = true;
-  if (args?.includes("--ilovetech") || args?.includes("/ilovetech")) binary = true;
+  const license = args?.includes("-l") || args?.includes("/l");
+  const binary = args?.includes("--ilovetech") || args?.includes("/ilovetech");
 
   // For the Easter egg :)
   let aboutName = GLOBAL_NAME;

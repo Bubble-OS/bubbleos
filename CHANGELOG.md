@@ -25,7 +25,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Removed Features
 
-_No features have been removed in this release._
+- Removed the `mainArgs.js` and `multiParam.js` files internally.
 
 ## Build 78-84 (v0.7.8-v0.8.4)
 

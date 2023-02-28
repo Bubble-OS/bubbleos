@@ -4,7 +4,7 @@ const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 
 const Errors = require("../classes/Errors");
-const { GLOBAL_NAME } = require("../variables/aboutConsts");
+const { GLOBAL_NAME } = require("../variables/constants");
 
 const taskkill = (pid, ...args) => {
   if (typeof pid === "undefined") {

@@ -7,7 +7,6 @@ const chalk = require("chalk");
 const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/constants");
 
 // Import private helper functions
-const _mainArgs = require("./src/functions/mainArgs");
 const _timebomb = require("./src/functions/timebomb");
 
 // Import helper functions
@@ -16,7 +15,7 @@ const _intCmds = require("./src/interpret");
 
 // Get all of the arguments passed directly into BubbleOS
 // For the pre-boot interpreter
-const args = _mainArgs();
+const args = process.argv.splice(2);
 
 // Argument variables
 let showTimebomb = true;

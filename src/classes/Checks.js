@@ -20,6 +20,7 @@ class Checks {
    * @returns Either `true` if the parameter is `undefined`, else, returns `false`.
    */
   paramUndefined() {
+    if (Array.isArray(this.param)) return this.param.length === 0;
     return typeof this.param === "undefined";
   }
 

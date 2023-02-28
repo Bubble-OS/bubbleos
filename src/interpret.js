@@ -1,9 +1,15 @@
 const commands = require("./variables/commands");
 
-const _multiParam = require("./functions/multiParam");
 const { _addToHist } = require("./commands/history");
 
 const Errors = require("./classes/Errors");
+
+const _multiParam = (command) => {
+  const params = command.split(" ");
+
+  params.shift();
+  return params;
+};
 
 /**
  * Interpret all available BubbleOS commands.
