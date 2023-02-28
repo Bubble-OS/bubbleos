@@ -58,6 +58,11 @@ const HELP = {
     )} Crashes ${GLOBAL_NAME} in multiple ways, including causing a fatal error, hanging the terminal session, and also causing a memory leak. Note that with the memory leak, ${GLOBAL_NAME} will crash once it has it its maximum allocated memory space.`,
     args: {},
   },
+  cwd: {
+    usage: "cwd",
+    desc: `Prints the current working directory that ${GLOBAL_NAME} is currently in.`,
+    args: {},
+  },
   date: {
     usage: "date",
     desc: `Gets the current date from your local system. The date will print out in a friendly format like so: ${chalk.italic(
@@ -75,6 +80,28 @@ const HELP = {
         "The file/directory to delete. The command will work even if the directory is empty or not.",
       "[-y]": "Automatically skip the confirmation prompt. By default, this is disabled.",
     },
+  },
+  exec: {
+    usage: "exec <file>",
+    desc: `Run any executable that ends with ${chalk.italic(
+      "'.exe'"
+    )}. This command only works on Windows. If the file passed in does not end with ${chalk.italic(
+      "'.exe'"
+    )}, ${GLOBAL_NAME} will automatically attempt to add ${chalk.italic(
+      "'.exe'"
+    )} to the end. Both relative and absolute paths are accepted. To run applications that can only be run as an administrator (e.g. ${chalk.italic(
+      "'regedit.exe'"
+    )}), you must run ${GLOBAL_NAME} as an administrator.`,
+    args: {
+      "<file>": `The executable file path. The filename must end with ${chalk.italic(
+        "'.exe'"
+      )}, otherwise, ${GLOBAL_NAME} will automatically add it.`,
+    },
+  },
+  exit: {
+    usage: "exit",
+    desc: `Exits the ${GLOBAL_NAME} shell gracefully with an exit code of 0 (success).`,
+    args: {},
   },
   help: {
     usage: "help [command]",

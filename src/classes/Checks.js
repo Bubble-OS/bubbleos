@@ -48,7 +48,7 @@ class Checks {
    */
   validEncoding() {
     try {
-      isText(this.param, fs.readFileSync(this.param, { flag: "r" }));
+      return isText(this.param, fs.readFileSync(this.param, { flag: "r" }));
     } catch (err) {
       _fatalError(err);
     }

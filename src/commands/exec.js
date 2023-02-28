@@ -10,7 +10,7 @@ const _convertAbsolute = require("../functions/convAbs");
 
 const Errors = require("../classes/Errors");
 
-const exec = (file) => {
+const exec = (file, ...args) => {
   if (typeof file === "undefined") {
     Errors.enterParameter("a file", "exec test");
     return;

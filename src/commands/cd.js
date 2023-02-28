@@ -53,12 +53,15 @@ const cd = (dir, ...args) => {
     // Change directory
     process.chdir(dir);
 
-    if (!silent) console.log(`Changed directory to ${chalk.green(process.cwd())}.\n`);
+    if (!silent)
+      console.log(chalk.green(`Successfully changed the directory to ${chalk.bold(dir)}.\n`));
     else console.log();
   } catch (err) {
     if (err.code === "EPERM") {
+      // Permission error
       Errors.noPermissions("change into", dir);
     } else {
+      // Unknown error
       _fatalError(err);
     }
 

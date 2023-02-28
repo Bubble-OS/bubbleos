@@ -6,6 +6,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
+- Added more information to the `fif` command, including a occurrence viewer.
 - Added a lot of information to the `sysinfo` command, including system resources, advanced information, and arguments.
 - Added the `--no-dump` flag to the main BubbleOS executable, which will disable file dumping in the case a fatal error occurs.
 - Added a twelve-hour clock to the `time` command (however, it can be switched by using the `-24` flag).

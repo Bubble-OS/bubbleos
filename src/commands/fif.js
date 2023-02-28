@@ -1,6 +1,5 @@
 // Color the terminal and check to make sure that the file is plain text
 const chalk = require("chalk");
-const { isText } = require("istextorbinary");
 
 // Node.js built-in file system module
 const fs = require("fs");
@@ -13,6 +12,7 @@ const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
 const Errors = require("../classes/Errors");
+const Checks = require("../classes/Checks");
 
 /**
  * Find a word or phrase in a file.
@@ -28,55 +28,63 @@ const Errors = require("../classes/Errors");
  * ```
  *
  * @param {string} file A path to the file to search in. Please note directories are not valid.
- * @param {string} toFind The word or phrase to find
+ * @param {string} toFind The word or phrase to find.
  */
-const fif = (file, toFind) => {
-  file = _replaceSpaces(file);
-
-  // Check to make sure the file/phrase to find is not empty
-  if (!file || !toFind) {
-    Errors.enterParameter("the file and the phrase to find", "fif test.txt hello");
-    return;
-  }
-
-  // Convert the path to absolute
-  const fileName = _convertAbsolute(file);
-
-  // Make sure the file exists
-  if (!fs.existsSync(fileName)) {
-    Errors.doesNotExist("file", fileName);
-    return;
-  }
-
+const fif = (file, toFind, ...args) => {
   try {
-    if (fs.lstatSync(fileName).isDirectory()) {
-      Errors.expectedFile(fileName);
+    const fileChk = new Checks(file);
+
+    // Check to make sure the file/phrase to find is not empty
+    if (fileChk.paramUndefined() || new Checks(toFind).paramUndefined()) {
+      Errors.enterParameter("the file and the phrase to find", "fif test.txt hello");
       return;
     }
 
-    // Make sure the file IS a text file
-    if (!isText(fileName, fs.readFileSync(fileName, { flag: "r" }))) {
+    // Convert the path to absolute
+    file = _replaceSpaces(file);
+    file = _convertAbsolute(file);
+
+    // Make sure the file exists
+    if (!fileChk.doesExist()) {
+      Errors.doesNotExist("file", file);
+      return;
+    } else if (fileChk.validateType()) {
+      Errors.expectedFile(file);
+      return;
+    } else if (!fileChk.validEncoding()) {
       Errors.invalidEncoding("plain text");
       return;
     }
 
     // Just to clean it up :)
-    const contents = fs.readFileSync(fileName, { encoding: "utf-8", flag: "r" });
+    const contents = fs.readFileSync(file, { encoding: "utf-8", flag: "r" });
 
     // You gotta be careful with this
     // The brackets seem to confuse a few
 
     // Log the number of occurances
+    console.log(chalk.bold.underline(`Occurrences:`));
+
     console.log(
-      `Number of occurances: ${chalk.bold.green(
-        (contents.match(new RegExp(toFind, "ig")) || []).length
-      )}\n`
+      `Number of occurrences: ${chalk.italic(
+        contents.match(new RegExp(toFind, "ig") || []).length
+      )}`
     );
 
-    // TODO Add highlighted appearance
-    // The issue is that String.replaceAll doesn't seem to be helping
-    // Even when paired with Chalk
-    // For loops will not help
+    console.log();
+
+    console.log("Occurrence location since start of file:");
+
+    const charNum = [...contents.matchAll(new RegExp(toFind, "ig"))];
+    charNum.forEach((val, idx) => {
+      console.log(`#${idx + 1}: ${chalk.bold.italic(val.index + 1 ?? "N/A")}`);
+    });
+
+    console.log();
+
+    console.log(chalk.bold.underline(`Visual occurrences:\n`));
+    console.log(contents.replaceAll(toFind, chalk.bgYellow.black(toFind)));
+    console.log();
   } catch (err) {
     _fatalError(err);
   }
