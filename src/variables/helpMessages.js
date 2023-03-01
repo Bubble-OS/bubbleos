@@ -99,9 +99,11 @@ const HELP = {
     },
   },
   exit: {
-    usage: "exit",
-    desc: `Exits the ${GLOBAL_NAME} shell gracefully with an exit code of 0 (success).`,
-    args: {},
+    usage: "exit [-c]",
+    desc: `Exits the ${GLOBAL_NAME} shell gracefully with an exit code of 0 (success). Also clears the screen if the user requested it once BubbleOS has exited.`,
+    args: {
+      "[-c]": `If this flag is present, ${GLOBAL_NAME} will clear the terminal once it has exited.`,
+    },
   },
   help: {
     usage: "help [command]",

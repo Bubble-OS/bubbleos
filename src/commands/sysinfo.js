@@ -57,8 +57,7 @@ const sysinfo = (...args) => {
     const envVars = args?.includes("-e") || args?.includes("/e");
     const all = args?.includes("--all") || args?.includes("/all");
 
-    const defaultDisplay =
-      !computerInfo && !sysResource && !advancedInfo && !envVars && !all ? true : false;
+    const defaultDisplay = !computerInfo && !sysResource && !advancedInfo && !envVars && !all;
 
     if (all || computerInfo || defaultDisplay) {
       console.log(`${chalk.bold.underline("Computer Information")}`);
