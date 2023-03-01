@@ -15,6 +15,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 - Added 'lines' and 'characters excluding whitespace' properties in the `wcount` command. Also, you can filter it using arguments.
 - Added a safeguard against killing the BubbleOS process in `taskkill`. However, this can be ignored by using the `--kill-self` flag.
 - Added the user temporary path to the `userinfo` command.
+- Added the `-c` flag to the `exit` command, which exits BubbleOS, and then clears the screen.
 
 ### Changed/Fixed Features
 

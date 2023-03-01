@@ -21,10 +21,6 @@ const _intCmds = (command) => {
 
   if (isEmpty) Errors.enterCommand();
 
-  if (command.startsWith("exit")) {
-    require("../exit");
-  }
-
   let recognized = false;
   for (let i = 0; i < Object.keys(commands).length; i++) {
     if (command.startsWith(Object.keys(commands)[i])) {

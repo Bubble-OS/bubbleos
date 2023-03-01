@@ -12,6 +12,7 @@ const crash = require("../commands/crash");
 const date = require("../commands/date");
 const del = require("../commands/del");
 const exec = require("../commands/exec");
+const exit = require("../commands/exit.js");
 const fif = require("../commands/fif");
 const help = require("../commands/help");
 const { historyCmd } = require("../commands/history");
@@ -65,6 +66,7 @@ const COMMANDS = {
   date,
   del,
   exec,
+  exit,
   fif,
   help,
   history: historyCmd,
