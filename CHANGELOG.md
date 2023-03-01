@@ -43,6 +43,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
+- The `crash` command will now leak more memory than before.
 - Changed the confirmation prompt to automatically enter when you press a key.
 - Fixed an issue where BubbleOS would crash when using `mkfile`/`mkdir` if the path exceeded `MAX_PATH`.
 - Fixed an issue where making a directory/file with invalid characters would crash BubbleOS.

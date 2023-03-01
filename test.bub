@@ -1,0 +1,14 @@
+# Print!
+print hello
+
+# Now cd back
+cd ..
+
+# Exexute explorer
+exec explorer.exe
+
+# Taskkill something
+taskkill 1234
+
+# Exit
+exit

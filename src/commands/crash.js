@@ -55,10 +55,8 @@ const crash = (...args) => {
     );
 
     const crashArr = [];
-    let i = 0;
-    while (true) {
-      crashArr.push(i);
-      i++;
+    for (let i = 0; i < Number.MAX_VALUE; i++) {
+      crashArr.push(new Array(100000000));
     }
   }
 };

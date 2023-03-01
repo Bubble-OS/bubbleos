@@ -41,17 +41,16 @@ const taskkill = (pid, ...args) => {
       console.log(chalk.yellow("Operation cancelled.\n"));
       return;
     }
-
-    console.log();
   }
 
   try {
-    console.log(`Killing process with PID ${chalk.yellow(pid)}...`);
     process.kill(Number(pid));
-    console.log(`Successfully killed process ${chalk.green(pid)}.\n`);
+    console.log(chalk.green(`Successfully killed the process ${chalk.bold(pid)}.\n`));
   } catch (err) {
     if (err.code === "EPERM") {
       Errors.noPermissions("kill the process with PID", pid);
+    } else if (err.code === "ESRCH") {
+      Errors.doesNotExist("PID", pid);
     } else {
       _fatalError(err);
     }

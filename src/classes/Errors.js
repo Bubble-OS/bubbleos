@@ -142,7 +142,7 @@ class Errors {
     const CODE = 3;
     const MESSAGE = `The ${type}, ${chalk.italic.bold(
       `'${variable}'`
-    )}, does not exist. ${chalk.dim("(NON_EXISTANT_PATH)")}`;
+    )}, does not exist. ${chalk.dim("(NON_EXISTANT)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }

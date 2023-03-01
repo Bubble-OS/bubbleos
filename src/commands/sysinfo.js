@@ -30,7 +30,7 @@ const _convertTime = (seconds, decimals = 2) => {
 };
 
 const _determineColor = (mem) => {
-  if (os.freemem() < os.totalmem() / 2) {
+  if (os.totalmem() - os.freemem() > os.totalmem() / 2) {
     return chalk.red(mem);
   } else {
     return chalk.green(mem);
@@ -77,7 +77,7 @@ const sysinfo = (...args) => {
       console.log(
         `Memory usage: ${chalk.italic(
           _determineColor(
-            `${_convertSize(os.freemem(), 2).gigabytes}GB/${
+            `${_convertSize(os.totalmem() - os.freemem(), 2).gigabytes}GB/${
               _convertSize(os.totalmem(), 2).gigabytes
             }GB`
           )
@@ -85,7 +85,7 @@ const sysinfo = (...args) => {
       );
       console.log(`CPU cores: ${chalk.italic(os.cpus().length)}`);
 
-      const uptime = _convertTime(os.uptime()).recommended;
+      const uptime = _convertTime(os.uptime(), 0).recommended;
       console.log(`System uptime: ${chalk.italic(`${uptime.value} ${uptime.type}`)}`);
 
       console.log();

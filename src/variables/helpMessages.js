@@ -11,7 +11,7 @@ const HELP = {
     args: { "[-l]": `View the license of ${GLOBAL_NAME}.` },
   },
   bub: {
-    usage: "bub <file> [-d]",
+    usage: "bub <file> [-d] [--allow-exit]",
     desc: `Run a file which contains ${GLOBAL_NAME} commands. The file must end with ${chalk.italic(
       "'.bub'"
     )}, otherwise, ${GLOBAL_NAME} will attempt to add the extention automatically. To add comments in the file, start a line with ${chalk.italic(
@@ -21,6 +21,11 @@ const HELP = {
       "<file>": "The file of which to execute commands in.",
       "[-d]":
         "Whether to display the commands that the program is currently executing from the file or not. By default, commands do not display.",
+      "[--allow-exit]": `By default, ${GLOBAL_NAME} will not allow the ${chalk.italic(
+        "'exit'"
+      )} command to be run if it is in a ${chalk.italic(
+        "'.bub'"
+      )} file. If this flag is passed, it will allow exiting ${GLOBAL_NAME} from the script.`,
     },
   },
   cd: {
