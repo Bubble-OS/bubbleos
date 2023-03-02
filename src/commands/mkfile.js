@@ -25,15 +25,16 @@ const mkfile = (file) => {
     return;
   }
 
-  const contents = _replaceSpaces(
-    question(
-      `Please enter the file contents (${chalk.italic("'Enter'")} to accept; ${chalk.italic(
-        "'/n'"
-      )} for a newline; leave blank to make an empty file): `
-    ),
-    "/n",
-    "\n"
-  );
+  const contents =
+    _replaceSpaces(
+      question(
+        `Please enter the file contents (${chalk.italic("'Enter'")} to accept; ${chalk.italic(
+          "'/n'"
+        )} for a newline; leave blank to make an empty file): `
+      ),
+      "/n",
+      "\n"
+    ) ?? "";
 
   try {
     console.log(`\nMaking file: ${chalk.bold.blueBright(file)}...`);

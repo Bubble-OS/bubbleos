@@ -96,8 +96,11 @@ const _interpretBubbleFile = (
  */
 const bub = (intCmds, file, ...args) => {
   try {
+    // Replace spaces and convert to an absolute path
+    file = _convertAbsolute(_replaceSpaces(file));
+
     // Initialize checker
-    let fileChk = new Checks(file);
+    const fileChk = new Checks(file);
 
     // Initialize arguments
     const displayCommand = !(args?.includes("-d") || args?.includes("/d"));
@@ -109,13 +112,8 @@ const bub = (intCmds, file, ...args) => {
       return;
     }
 
-    // Replace spaces, convert to absolute, and add '.bub' to the end of the file in case it is already not present
-    file = _replaceSpaces(file);
+    // Add '.bub' to the end of the file in case it is already not present
     file = file.endsWith(".bub") ? file : `${file}.bub`;
-    file = _convertAbsolute(file);
-
-    // Re-initalize the checker
-    fileChk = new Checks(file);
 
     if (!fileChk.doesExist()) {
       // If it does NOT exist

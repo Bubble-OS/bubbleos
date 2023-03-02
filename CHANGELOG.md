@@ -2,7 +2,9 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 84-?? (v0.8.4-v0.?.?)
+## Build 84-96 (v0.8.4-v0.9.6)
+
+_Note: This is a final beta compile build, and thus has lots of bug fixes, but no new commands have been introduced._
 
 ### Added Features
 
@@ -11,6 +13,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 - Added the `--no-dump` flag to the main BubbleOS executable, which will disable file dumping in the case a fatal error occurs.
 - Added a twelve-hour clock to the `time` command (however, it can be switched by using the `-24` flag).
 - Added a friendly-style date in `date`, like so: _{day}, the {date} of {month} {year}_.
+- The `copy` command will now warn you if the destination already exists (only if the destination exists).
 - Added startup warnings for dangerous BubbleOS flags such as `--no-timebomb`. These can be disabled using the `--no-warnings` flag.
 - Added 'lines' and 'characters excluding whitespace' properties in the `wcount` command. Also, you can filter it using arguments.
 - Added a safeguard against killing the BubbleOS process in `taskkill`. However, this can be ignored by using the `--kill-self` flag.
@@ -19,7 +22,8 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
-- Fixed an issue where the `cwd` was unrecognized.
+- Fixed an issue where the `cwd` command was unrecognized.
+- Fixed an issue where `taskkill` would crash BubbleOS if the PID didn't exist.
 - Fixed an issue where the confirmation prompt would have '_y/n_' uncolored.
 - Fixed an issue where the `print` command wouldn't output anything after a space.
 - Fixed an issue where the pre-boot interpreter would crash BubbleOS.

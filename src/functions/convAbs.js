@@ -11,6 +11,8 @@ const { isAbsolute } = require("path");
  * @returns A string of the new absolute path.
  */
 const _convertAbsolute = (path) => {
+  if (typeof path === "undefined" || path === "") return;
+
   let replace = { before: "\\", after: "/" };
   if (process.platform === "win32") {
     replace.before = "/";
@@ -28,7 +30,10 @@ const _convertAbsolute = (path) => {
     pathName = path;
   }
 
-  return pathName.replaceAll(replace.before, replace.after).replaceAll("//", "/");
+  return pathName
+    .replaceAll(replace.before, replace.after)
+    .replaceAll("\\\\", "\\")
+    .replaceAll("//", "/");
 };
 
 module.exports = _convertAbsolute;

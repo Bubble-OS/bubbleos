@@ -7,9 +7,8 @@
  * @returns
  */
 const _replaceSpaces = (text, spaceChar = "/s", space = " ") => {
-  if (typeof text !== "undefined") {
-    return text.replace(new RegExp(spaceChar, "ig"), space);
-  }
+  if (typeof text === "undefined" || text === "") return;
+  return text.replace(new RegExp(spaceChar, "ig"), space);
 };
 
 module.exports = _replaceSpaces;

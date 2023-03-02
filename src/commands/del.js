@@ -15,7 +15,7 @@ const del = (file, ...args) => {
     return;
   }
 
-  const confirm = !(args.includes("-y") || args.includes("/y"));
+  const confirmDel = !(args.includes("-y") || args.includes("/y"));
 
   file = _replaceSpaces(file);
   file = _convertAbsolute(file);
@@ -25,7 +25,7 @@ const del = (file, ...args) => {
     return;
   }
 
-  if (confirm) {
+  if (confirmDel) {
     if (!_promptForYN(`Are you sure you want to delete ${chalk.bold(file)}?`)) {
       console.log(chalk.yellow("Operation cancelled.\n"));
       return;

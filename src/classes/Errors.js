@@ -31,6 +31,7 @@ const chalk = require("chalk");
  * - `11` - `invalidExtension()`
  * - `12` - `invalidCharacters()`
  * - `13` - `pathTooLong()`
+ * - `14` - `dirToNonDir()`
  */
 class Errors {
   constructor() {}
@@ -367,6 +368,31 @@ class Errors {
     const MESSAGE = `The path (${chalk.bold.italic(
       `'${path}'`
     )}) is too long. Please choose a shorter path. ${chalk.dim("(PATH_TOO_LONG)")}`;
+
+    this.#interpretError(CODE, MESSAGE);
+  }
+
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Directory to non-directory_
+   *
+   * **Parameters:** `dir`, `nonDir`
+   *
+   * **Error code:** `14`
+   *
+   * **Message:** Cannot overwrite the directory (**_'`path`'_**) with a non-directory (**_'`path`'_**). (COPY_DIR_TO_NON_DIR)
+   *
+   * @param {string} dir The directory that the user entered.
+   * @param {string} nonDir The non-directory that the user entered.
+   */
+  static dirToNonDir(dir, nonDir) {
+    const CODE = 14;
+    const MESSAGE = `Cannot overwrite the directory (${chalk.bold.italic(
+      `'${dir}'`
+    )}) with a non-directory (${chalk.bold.italic(`'${nonDir}'`)}). ${chalk.dim(
+      "(COPY_DIR_TO_NON_DIR)"
+    )}`;
 
     this.#interpretError(CODE, MESSAGE);
   }

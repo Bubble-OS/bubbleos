@@ -12,20 +12,23 @@ const Checks = require("../classes/Checks");
  * Usage:
  *
  * ```js
- * const cd = require("./path/to/cd");
  * cd("test", "-s"); // '-s' is an argument and is optional
  * ```
  *
- * Note that changing a directory in BubbleOS does not reflect across the OS.
- * For example, running BubbleOS in `C:\Users`, then changing into `Test` in BubbleOS, then exiting, would still have the directory as `C:\Users` instead of `C:\Users\Test`.
+ * Note that changing a directory in BubbleOS does not reflect
+ * across the OS. For example, running BubbleOS in `C:\Users`,
+ * then changing into `Test` in BubbleOS, then exiting, would
+ * still have the directory as `C:\Users` instead of `C:\Users\Test`.
  *
  * @param {string} dir The directory to change into. Must be a valid directory.
  * @param  {...string} args The arguments that can be passed to modify the behaviour of the command.
  */
 const cd = (dir, ...args) => {
   try {
+    dir = _replaceSpaces(dir);
+
     // Create a new directory checker
-    let dirChk = new Checks(dir);
+    const dirChk = new Checks(dir);
 
     // Intialize arguments
     const silent = args?.includes("-s") || args?.includes("/s");
@@ -35,11 +38,6 @@ const cd = (dir, ...args) => {
       Errors.enterParameter("a directory", "cd test");
       return;
     }
-
-    dir = _replaceSpaces(dir);
-
-    // Reinitialize the checker in case
-    dirChk = new Checks(dir);
 
     // Run checks
     if (!dirChk.doesExist()) {
