@@ -11,6 +11,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 - Added more information to the `fif` command, including a occurrence viewer.
 - Added a lot of information to the `sysinfo` command, including system resources, advanced information, and arguments.
 - Added the `--no-dump` flag to the main BubbleOS executable, which will disable file dumping in the case a fatal error occurs.
+- Added an optional argument to `crash` where you can enter the index of the way you want to crash BubbleOS.
 - Added a twelve-hour clock to the `time` command (however, it can be switched by using the `-24` flag).
 - Added a friendly-style date in `date`, like so: _{day}, the {date} of {month} {year}_.
 - The `copy` command will now warn you if the destination already exists (only if the destination exists).

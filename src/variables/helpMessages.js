@@ -59,11 +59,13 @@ const HELP = {
     },
   },
   crash: {
-    usage: "crash",
+    usage: "crash [<index>]",
     desc: `${chalk.bold(
       "USE WITH CAUTION!"
     )} Crashes ${GLOBAL_NAME} in multiple ways, including causing a fatal error, hanging the terminal session, and also causing a memory leak. Note that with the memory leak, ${GLOBAL_NAME} will crash once it has it its maximum allocated memory space.`,
-    args: {},
+    args: {
+      "[<index>]": `An index which points to the crashing method. If the index does not exist, a warning will appear, and it will default to asking for a prompt.`,
+    },
   },
   cwd: {
     usage: "cwd",
