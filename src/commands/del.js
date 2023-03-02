@@ -1,49 +1,88 @@
+// Get packages
 const chalk = require("chalk");
 
-const { existsSync, rmSync } = require("fs");
+const fs = require("fs");
 
+// Get functions
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 
+// Get classes
 const Errors = require("../classes/Errors");
+const Checks = require("../classes/Checks");
 
-const del = (file, ...args) => {
-  if (typeof file === "undefined") {
-    Errors.enterParameter("a file/directory", "del test");
-    return;
-  }
+/**
+ * Delete a file/directory from BubbleOS. This is a CLI function.
+ * Synchronously deletes a file/directory using the `fs.rmSync()`
+ * function.
+ *
+ * Usage:
+ *
+ * ```js
+ * del("test.txt"); // Arguments are supported
+ * ```
+ *
+ * This command used to be in two seperate commands/functions -
+ * `rmdir` (removes a directory; empty or not) and `rmfile`
+ * (removes a file). This command combines the two and can
+ * delete all files, directories, and empty directories (so
+ * you do not need to use a seperate command to delete an empty
+ * directory).
+ *
+ * Available arguments:
+ * - `-y`: Automatically accepts the confirmation prompt before deleting a file.
+ *
+ * @param {fs.PathLike | string} path The relative or absolute path to the file/directory to delete.
+ * @param {...string} args The arguments to modify the behaviour of the `del` command. See all available arguments above.
+ */
+const del = (path, ...args) => {
+  try {
+    // Replace spaces and convert to an absolute path
+    path = _convertAbsolute(_replaceSpaces(path));
 
-  const confirmDel = !(args.includes("-y") || args.includes("/y"));
+    // Initialize a path checker
+    const pathChk = new Checks(path);
 
-  file = _replaceSpaces(file);
-  file = _convertAbsolute(file);
+    // Initialize arguments
+    const confirmDel = !(args?.includes("-y") || args?.includes("/y"));
 
-  if (!existsSync(file)) {
-    Errors.doesNotExist("file/directory", file);
-    return;
-  }
-
-  if (confirmDel) {
-    if (!_promptForYN(`Are you sure you want to delete ${chalk.bold(file)}?`)) {
-      console.log(chalk.yellow("Operation cancelled.\n"));
+    // Check if the path is not defined
+    if (pathChk.paramUndefined()) {
+      Errors.enterParameter("a file/directory", "del test");
       return;
     }
 
-    console.log();
-  }
+    // If the path does not exist
+    if (!pathChk.doesExist()) {
+      Errors.doesNotExist("file/directory", path);
+      return;
+    }
 
-  try {
-    console.log(`Deleting ${chalk.bold.blueBright(file)}...`);
-    rmSync(file, { recursive: true, force: true });
+    // If the user did not pass '-y', confirm that the path should be deleted
+    if (confirmDel) {
+      if (!_promptForYN(`Are you sure you want to delete ${chalk.bold(path)}?`)) {
+        // Anything BUT 'y' will cancel the deletion process
+        console.log(chalk.yellow("Operation cancelled.\n"));
+        return;
+      }
+
+      console.log();
+    }
+
+    // Delete the file/directory
+    fs.rmSync(path, { recursive: true, force: true });
     console.log(chalk.green("The operation completed successfully.\n"));
   } catch (err) {
-    if (err.code === "EBUSY") {
-      Errors.inUse("file/directory", file);
-    } else if (err.code === "EPERM") {
-      Errors.noPermissions("delete the file/directory", file);
+    if (err.code === "EPERM") {
+      // If the file/directory cannot be deleted by BubbleOS due to permission issues
+      Errors.noPermissions("delete the file/directory", path);
+    } else if (err.code === "EBUSY") {
+      // If the file/directory is in use
+      Errors.inUse("file/directory", path);
     } else {
+      // Unknown error
       _fatalError(err);
     }
   }

@@ -127,7 +127,7 @@ const copy = (src, dest, ...args) => {
     } else if (err.code === "ERR_FS_CP_DIR_TO_NON_DIR") {
       // If the user attempted to copy a directory to a non-directory
 
-      // There is also a bug in BubbleOS which can do the same thing
+      // There is also a bug in BubbleOS which can do the same thing.
       // IDK, it seems kind of random to me; it only happened once in
       // my testing, even without changing the code. It seems to happen
       // in fs.cpSync(). Fix it please!
