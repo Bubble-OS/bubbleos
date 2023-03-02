@@ -32,7 +32,11 @@ const Checks = require("../classes/Checks");
  * directory).
  *
  * Available arguments:
- * - `-y`: Automatically accepts the confirmation prompt before deleting a file.
+ * - `-s`: Silently delete the path that the user requested. This
+ * means that the success message will not be shown, but error
+ * messages will still be outputted.
+ * - `-y`: Automatically accepts the confirmation prompt
+ * before deleting a file.
  *
  * @param {fs.PathLike | string} path The relative or absolute path to the file/directory to delete.
  * @param {...string} args The arguments to modify the behaviour of the `del` command. See all available arguments above.
@@ -46,6 +50,7 @@ const del = (path, ...args) => {
     const pathChk = new Checks(path);
 
     // Initialize arguments
+    const silent = args?.includes("-s") || args?.includes("/s");
     const confirmDel = !(args?.includes("-y") || args?.includes("/y"));
 
     // Check if the path is not defined
@@ -73,7 +78,10 @@ const del = (path, ...args) => {
 
     // Delete the file/directory
     fs.rmSync(path, { recursive: true, force: true });
-    console.log(chalk.green("The operation completed successfully.\n"));
+
+    // If the user wanted output, show the success message, else, only show a newline
+    if (!silent) console.log(chalk.green(`Successfully deleted ${chalk.bold(path)}.\n`));
+    else console.log();
   } catch (err) {
     if (err.code === "EPERM") {
       // If the file/directory cannot be deleted by BubbleOS due to permission issues

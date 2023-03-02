@@ -43,13 +43,15 @@ const HELP = {
     args: {},
   },
   copy: {
-    usage: "copy <src> <dest> [-y] [-t] [--rm-symlink]",
+    usage: "copy <src> <dest> [-s] [-y] [-t] [--rm-symlink]",
     desc: "Copies a file/directory from the source to the destination (with its contents). Absolute and relative paths for both arguments are accepted. The destination must have the name of the copied file/directory (otherwise if the path already exists, it will be overwritten).",
     args: {
       "<src>":
         "The source file/directory. The file/directory must exist, otherwise it will throw an error.",
       "<dest>":
         "The destination file/directory with its (new) name. If the name passed already exists, it will be overwritten.",
+      "[-s]":
+        "Silently copy the source to the destination and silence all success messages. Only errors are outputted.",
       "[-y]":
         "If the destination exists, then automatically accept the prompt instead of confirming to overwrite the file/directory.",
       "[-t]":
@@ -82,29 +84,27 @@ const HELP = {
     args: {},
   },
   del: {
-    usage: "del <path> [-y]",
+    usage: "del <path> [-s] [-y]",
     desc: `Delete any file/directory, regardless of if it is empty or not. The command will automatically infer on whether the path entered is a file or directory, and appropriately delete it. In the case of an error, ${GLOBAL_NAME} will keep trying to delete it until the maximum tries have been surpassed.`,
     args: {
       "<path>":
         "The file/directory to delete. The command will work even if the directory is empty or not.",
+      "[-s]":
+        "Silently delete the path that the user requested. This means that the success message will not be shown, but error messages will still be outputted.",
       "[-y]": "Automatically skip the confirmation prompt. By default, this is disabled.",
     },
   },
   exec: {
-    usage: "exec <file>",
-    desc: `Run any executable that ends with ${chalk.italic(
-      "'.exe'"
-    )}. This command only works on Windows. If the file passed in does not end with ${chalk.italic(
-      "'.exe'"
-    )}, ${GLOBAL_NAME} will automatically attempt to add ${chalk.italic(
-      "'.exe'"
-    )} to the end. Both relative and absolute paths are accepted. To run applications that can only be run as an administrator (e.g. ${chalk.italic(
-      "'regedit.exe'"
-    )}), you must run ${GLOBAL_NAME} as an administrator.`,
+    usage: "exec <file> [-s] [-h] [--sh]",
+    desc: `Run an executable from ${GLOBAL_NAME}. This command works on all operating systems. ${GLOBAL_NAME} will attempt to execute all files, regardless if they are an executable or not.`,
     args: {
-      "<file>": `The executable file path. The filename must end with ${chalk.italic(
-        "'.exe'"
-      )}, otherwise, ${GLOBAL_NAME} will automatically add it.`,
+      "<file>": `The executable file path. The file can end with any extention, but note that a file may show a success message while not actually successfully executing.`,
+      "[-s]":
+        "Silently execute a file. This will silence the success message, but error messages will still be shown.",
+      "[-h]":
+        "Hide the subprocess console window that would normally be created on Windows systems. By default, this is disabled.",
+      "[--sh]":
+        "If this argument is passed, the executable will run inside of a shell. By default, this is disabled.",
     },
   },
   exit: {

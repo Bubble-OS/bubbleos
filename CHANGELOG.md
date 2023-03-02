@@ -9,10 +9,12 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 ### Added Features
 
 - Added more information to the `fif` command, including a occurrence viewer.
+- Added the `-s` flag to many commands, which silences all success messages to _stdout_, except for error messasges.
 - Added a lot of information to the `sysinfo` command, including system resources, advanced information, and arguments.
 - Added the `--no-dump` flag to the main BubbleOS executable, which will disable file dumping in the case a fatal error occurs.
 - Added an optional argument to `crash` where you can enter the index of the way you want to crash BubbleOS.
 - Added a twelve-hour clock to the `time` command (however, it can be switched by using the `-24` flag).
+- Added flags to the `exec` command such as `-h` and `--sh`.
 - Added a friendly-style date in `date`, like so: _{day}, the {date} of {month} {year}_.
 - The `copy` command will now warn you if the destination already exists (only if the destination exists).
 - Added startup warnings for dangerous BubbleOS flags such as `--no-timebomb`. These can be disabled using the `--no-warnings` flag.
@@ -26,6 +28,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 - Fixed an issue where the `cwd` command was unrecognized.
 - Fixed an issue where `taskkill` would crash BubbleOS if the PID didn't exist.
 - Fixed an issue where the confirmation prompt would have '_y/n_' uncolored.
+- Fixed an issue where `exec` would crash if a directory was passed.
 - Fixed an issue where the `print` command wouldn't output anything after a space.
 - Fixed an issue where the pre-boot interpreter would crash BubbleOS.
 - Fixed an issue where the `bub` command would report plain text files as an '_invalid encoding_'.

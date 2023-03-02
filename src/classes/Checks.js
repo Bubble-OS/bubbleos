@@ -8,6 +8,11 @@ const _fatalError = require("../functions/fatalError");
  * Validate multiple aspects of BubbleOS.
  */
 class Checks {
+  /**
+   * Validate multiple aspects of BubbleOS.
+   *
+   * @param {string | number | undefined} param The parameter to be used in the validations.
+   */
   constructor(param) {
     this.param = param;
   }

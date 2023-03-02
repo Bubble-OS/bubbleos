@@ -22,7 +22,7 @@ const Checks = require("../classes/Checks");
  * Usage:
  *
  * ```js
- * copy("D:\\src", "D:\\dest"); // Arguments are accepted, which are listed below
+ * copy("src", "dest"); // Arguments are accepted, which are listed below
  * ```
  *
  * There is a bug in this command where it can throw an error
@@ -39,6 +39,8 @@ const Checks = require("../classes/Checks");
  * that often.
  *
  * Available arguments:
+ * - `-s`: Silently copy the source to the destination and silence all success
+ * messages to the standard output. Only errors can be logged.
  * - `-y`: Copy the file/directory to the destination even if it already exists
  * and is in danger of being overwritten.
  * - `-t`: **Only for directory copying!** Keeps the timestamps of all files and
@@ -64,6 +66,7 @@ const copy = (src, dest, ...args) => {
     const destChk = new Checks(dest);
 
     // Initialize arguments
+    const silent = args?.includes("-s") || args?.includes("/s");
     const confirmCopy = !(args.includes("-y") || args.includes("/y"));
     const keepTimes = args?.includes("-t") || args?.includes("/t");
     const rmSymlinkReference = args?.includes("--rm-symlink") || args?.includes("/rm-symlink");
@@ -114,7 +117,12 @@ const copy = (src, dest, ...args) => {
       fs.copyFileSync(src, dest);
     }
 
-    console.log(chalk.green("The operation completed successfully.\n"));
+    // If the user did not want output, only show a newline, else, show the success message
+    if (!silent)
+      console.log(
+        chalk.green(`Successfully copied to ${chalk.bold(src)} to ${chalk.bold(dest)}.\n`)
+      );
+    else console.log();
   } catch (err) {
     if (err.code === "EPERM") {
       // Invalid permissions for either the source or destination
