@@ -1,13 +1,14 @@
 // Modules
+// Get modules
 const fs = require("fs");
 const chalk = require("chalk");
 
-// Custom-made functions
+// Get functions
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
-// Custom-made classes
+// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
@@ -25,6 +26,9 @@ const Checks = require("../classes/Checks");
  */
 const fif = (file, toFind, ...args) => {
   try {
+    // Replace spaces, and then convert the path to absolute
+    file = _convertAbsolute(_replaceSpaces(file));
+
     // Initialize a checker
     const fileChk = new Checks(file);
 
@@ -40,10 +44,6 @@ const fif = (file, toFind, ...args) => {
       Errors.enterParameter("the file and the phrase to find", "fif test.txt hello");
       return;
     }
-
-    // Convert the path to absolute
-    file = _replaceSpaces(file);
-    file = _convertAbsolute(file);
 
     if (!fileChk.doesExist()) {
       // If the file doesn't exist
@@ -116,4 +116,5 @@ const fif = (file, toFind, ...args) => {
   }
 };
 
+// Export the function
 module.exports = fif;

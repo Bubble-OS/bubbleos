@@ -1,11 +1,16 @@
+// Get modules
 const chalk = require("chalk");
 const sortKeys = require("sort-keys");
 
+// Get variables
 const HELP_MESSAGES = require("../variables/helpMessages");
 
+// Get functions
 const _fatalError = require("../functions/fatalError");
 
+// Get classes
 const Errors = require("../classes/Errors");
+const Checks = require("../classes/Checks");
 
 const help = (command) => {
   try {
@@ -45,7 +50,7 @@ const help = (command) => {
       }
     };
 
-    if (typeof command === "undefined") {
+    if (new Checks(command).paramUndefined()) {
       printHelp(false);
 
       console.log(
