@@ -8,29 +8,57 @@ const _fatalError = require("../functions/fatalError");
 
 const ls = (directory = process.cwd(), ...params) => {
   const _logDirContents = (contents, withHighlight = false) => {
-    let dirArr = [];
-    contents.forEach((item) => {
-      if (item.isSymlink) {
-        if (item.type === "file") {
-          dirArr.push(chalk.red(item.name));
-        } else if (item.type === "folder") {
-          if (withHighlight) dirArr.push(chalk.bgRed(` ${item.name} `));
-          else dirArr.push(chalk.bold.red(item.name));
+    if (withHighlight) {
+      let dirStr = "";
+      let maxStr =
+        Math.max(...contents.map((el) => el.name.length)) * 2 -
+        Math.max(...contents.map((el) => el.name.length)) / 3;
+
+      // Loop through all of the keys of the help object (sorted)
+      for (let i = 1; i < Object.keys(contents).length + 1; i++) {
+        let item = contents[i - 1];
+
+        if (item.type === "file" && item.isSymlink) dirStr += chalk.red(item.name).padEnd(maxStr);
+        else if (item.type === "folder" && item.isSymlink)
+          dirStr += chalk.bgRed(` ${item.name} `).padEnd(maxStr);
+        else if (item.type === "file") dirStr += chalk.green(item.name).padEnd(maxStr);
+        else if (
+          item.type === "folder" &&
+          (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
+        )
+          dirStr += chalk.bgGrey(` ${item.name} `).padEnd(maxStr);
+        else if (item.type === "folder") dirStr += chalk.bgBlue(` ${item.name} `).padEnd(maxStr);
+        else dirStr += chalk.italic(item.name).padEnd(maxStr);
+
+        if (i % 3 === 0) {
+          dirStr += "\n";
         }
-      } else if (item.type === "file") {
-        dirArr.push(chalk.green(item.name));
-      } else if (
-        item.type === "folder" &&
-        (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
-      ) {
-        if (withHighlight) dirArr.push(chalk.bgGrey(` ${item.name} `));
-        else dirArr.push(chalk.bold.grey(item.name));
-      } else {
-        if (withHighlight) dirArr.push(chalk.bgBlue(` ${item.name} `));
-        else dirArr.push(chalk.bold.blue(item.name));
       }
-    });
-    return dirArr;
+
+      // Show the final string
+      return dirStr + "\n";
+    } else {
+      let dirArr = [];
+      contents.forEach((item) => {
+        if (item.isSymlink) {
+          if (item.type === "file") {
+            dirArr.push(chalk.red(item.name));
+          } else if (item.type === "folder") {
+            dirArr.push(chalk.bold.red(item.name));
+          }
+        } else if (item.type === "file") {
+          dirArr.push(chalk.green(item.name));
+        } else if (
+          item.type === "folder" &&
+          (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
+        ) {
+          dirArr.push(chalk.bold.grey(item.name));
+        } else {
+          dirArr.push(chalk.bold.blue(item.name));
+        }
+      });
+      return dirArr;
+    }
   };
 
   try {
@@ -73,7 +101,7 @@ const ls = (directory = process.cwd(), ...params) => {
       return;
     }
 
-    if (isShort) console.log(_logDirContents(all, true).join("  ") + "\n");
+    if (isShort) console.log(_logDirContents(all, true));
     else console.log(_logDirContents(all, false).join("\n") + "\n");
   } catch (err) {
     if (err.code === "ENOTDIR") {

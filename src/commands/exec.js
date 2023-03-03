@@ -78,7 +78,10 @@ const exec = (file, ...args) => {
     if (!silent) console.log(chalk.green(`Successfully executed ${chalk.bold(file)}.\n`));
     else console.log();
   } catch (err) {
-    if (err.code === "EPERM") {
+    if (err.code === "UNKNOWN") {
+      // Unknown extention
+      Errors.unknown("execute the file", file);
+    } else if (err.code === "EPERM") {
       // Permission errors running the file
       Errors.noPermissions("run the file", file);
       return;

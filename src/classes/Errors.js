@@ -1,4 +1,8 @@
+// Get modules
 const chalk = require("chalk");
+
+// Get variables
+const { GLOBAL_NAME } = require("../variables/constants");
 
 /**
  * A class which does **not** require initialization (`new Errors`). Contains all errors used in BubbleOS.
@@ -32,6 +36,7 @@ const chalk = require("chalk");
  * - `12` - `invalidCharacters()`
  * - `13` - `pathTooLong()`
  * - `14` - `dirToNonDir()`
+ * - `15` - `unknown()`
  */
 class Errors {
   constructor() {}
@@ -393,6 +398,29 @@ class Errors {
     )}) with a non-directory (${chalk.bold.italic(`'${nonDir}'`)}). ${chalk.dim(
       "(COPY_DIR_TO_NON_DIR)"
     )}`;
+
+    this.#interpretError(CODE, MESSAGE);
+  }
+
+  /**
+   * Information about the error message:
+   *
+   * **Name:** _Unknown action_
+   *
+   * **Parameters:** `toDo`, `variable`
+   *
+   * **Error code:** `15`
+   *
+   * **Message:** _%GLOBAL_NAME%_ does not know how to `toDo` **_'`variable`'_**. (UNKNOWN)
+   *
+   * @param {string} toDo The action that was unknown.
+   * @param {string} variable The variable that the user entered.
+   */
+  static unknown(toDo, variable) {
+    const CODE = 15;
+    const MESSAGE = `${GLOBAL_NAME} does not know how to ${toDo} ${chalk.bold.italic(
+      `'${variable}'`
+    )}. ${chalk.dim("(UNKNOWN)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }

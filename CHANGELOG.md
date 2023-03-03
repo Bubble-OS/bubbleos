@@ -16,6 +16,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 - Added a twelve-hour clock to the `time` command (however, it can be switched by using the `-24` flag).
 - Added flags to the `exec` command such as `-h` and `--sh`.
 - Added a friendly-style date in `date`, like so: _{day}, the {date} of {month} {year}_.
+- The `ls` command now will print the short version (`-s`) in sorted rows, of which size will change depending on the length of the name of the largest file/folder.
 - The `copy` command will now warn you if the destination already exists (only if the destination exists).
 - Added startup warnings for dangerous BubbleOS flags such as `--no-timebomb`. These can be disabled using the `--no-warnings` flag.
 - Added 'lines' and 'characters excluding whitespace' properties in the `wcount` command. Also, you can filter it using arguments.
@@ -28,7 +29,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 - Fixed an issue where the `cwd` command was unrecognized.
 - Fixed an issue where `taskkill` would crash BubbleOS if the PID didn't exist.
 - Fixed an issue where the confirmation prompt would have '_y/n_' uncolored.
-- Fixed an issue where `exec` would crash if a directory was passed.
+- Fixed an issue where `exec` would crash if a directory was passed, and if the file extention was not an executable.
 - Fixed an issue where the `print` command wouldn't output anything after a space.
 - Fixed an issue where the pre-boot interpreter would crash BubbleOS.
 - Fixed an issue where the `bub` command would report plain text files as an '_invalid encoding_'.
