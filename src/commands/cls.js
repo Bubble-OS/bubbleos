@@ -20,4 +20,5 @@ const cls = () => {
   }
 };
 
+// Export the function
 module.exports = cls;

@@ -96,4 +96,5 @@ const del = (path, ...args) => {
   }
 };
 
+// Export the function
 module.exports = del;

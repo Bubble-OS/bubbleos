@@ -132,4 +132,5 @@ const crash = (index = NaN, ...args) => {
   }
 };
 
+// Export the function
 module.exports = crash;

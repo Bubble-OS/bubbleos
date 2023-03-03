@@ -147,4 +147,5 @@ const bub = (intCmds, file, ...args) => {
   }
 };
 
+// Export the function
 module.exports = bub;

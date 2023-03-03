@@ -66,4 +66,5 @@ const date = () => {
   console.log();
 };
 
+// Export the function
 module.exports = date;

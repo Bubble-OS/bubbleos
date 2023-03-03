@@ -93,4 +93,5 @@ const exec = (file, ...args) => {
   }
 };
 
+// Export the function
 module.exports = exec;

@@ -147,4 +147,5 @@ const copy = (src, dest, ...args) => {
   }
 };
 
+// Export the function
 module.exports = copy;

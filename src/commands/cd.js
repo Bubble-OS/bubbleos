@@ -58,13 +58,13 @@ const cd = (dir, ...args) => {
     if (err.code === "EPERM") {
       // Permission error
       Errors.noPermissions("change into", dir);
+      return;
     } else {
       // Unknown error
       _fatalError(err);
     }
-
-    return;
   }
 };
 
+// Export the function
 module.exports = cd;

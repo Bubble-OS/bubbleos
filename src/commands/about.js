@@ -4,6 +4,7 @@ const chalk = require("chalk");
 // Import variables
 const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/constants");
 
+// Import functions
 const _fatalError = require("../functions/fatalError");
 
 /**
@@ -68,8 +69,10 @@ const about = (...args) => {
     console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/Bubble-OS/bubbleos")}`);
     console.log(`YouTube: ${chalk.underline.blueBright("https://youtube.com/InfiniTech78")}\n`);
   } catch (err) {
+    // An unknown error occured
     _fatalError(err);
   }
 };
 
+// Export the function
 module.exports = about;
