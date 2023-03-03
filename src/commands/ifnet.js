@@ -5,8 +5,7 @@ const { networkInterfaces } = require("os");
 
 const ifnet = () => {
   const makeUserFriendly = (network) => {
-    network = network.toLowerCase();
-    switch (network) {
+    switch (network.toLowerCase()) {
       case "address":
         return "IP Address";
       case "netmask":
@@ -49,7 +48,7 @@ const ifnet = () => {
     for (let ele of netInts.func[value]) {
       for (let network in ele) {
         console.log(
-          `    ${makeUserFriendly(network)}: ${chalk.bold(makeValueFriendly(ele[network]))}`
+          `  ${makeUserFriendly(network)}: ${chalk.bold(makeValueFriendly(ele[network]))}`
         );
       }
 

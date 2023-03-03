@@ -12,16 +12,33 @@ const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
 /**
- * Find a word or phrase in a file.
+ * Find a word or phrase in a file. This is a CLI
+ * tool to be used in the BubbleOS shell only.
+ * The command to use it is `fif`.
  *
  * Usage:
+ *
  * ```js
- * fif("test.txt", "hello"); // Can also include an indefinite amount of arguments
+ * fif("test.txt", "hello"); // Also accepts arguments!
  * ```
+ *
+ * This function will find all occurrences in a file
+ * and show them in multiple ways to the standard
+ * output. For example, it will show the number of
+ * occurrences found, the character position since the
+ * start of the file for each occurrence, and a visual
+ * occurrences text will the occurrences highlighted.
+ *
+ * Available arguments:
+ * - `-n`: Show the number of occurrences.
+ * - `-p`: Show the character occurrences.
+ * - `-v`: Show the visual occurrences.
+ *
+ * _Note: If no arguments are passed that are either `-n`, `-p` or `-v`, it will show all of them._
  *
  * @param {string} file A path to the file to search in. Please note directories are not valid.
  * @param {string} toFind The word or phrase to find.
- * @param {args} All recognized arguments. `-n` for number occurrences, `-p` for places, and `-v` for visual.
+ * @param {...string} args All recognized arguments. All available arguments are listed above.
  */
 const fif = (file, toFind, ...args) => {
   try {

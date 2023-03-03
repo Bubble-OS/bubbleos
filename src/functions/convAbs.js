@@ -1,6 +1,6 @@
 // Get modules
 const fs = require("fs");
-const path = require("path");
+const { isAbsolute } = require("path");
 
 /**
  * Convert a path to an absolute path, unless the path is already an absolute path.
@@ -38,7 +38,7 @@ const _convertAbsolute = (path) => {
   let pathName = "";
 
   // If the path is not already an absolute path, convert it to one
-  if (!path.isAbsolute(path)) {
+  if (!isAbsolute(path)) {
     // Add the the current working to the start, and a slash, and then the path
     pathName = `${process.cwd()}${replace.after}${path}`;
   } else {
