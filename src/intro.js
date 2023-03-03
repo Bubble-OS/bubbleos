@@ -1,5 +1,7 @@
+// Get modules
 const chalk = require("chalk");
 
+// Get variables
 const {
   GLOBAL_NAME,
   AUTHOR,
@@ -11,11 +13,15 @@ const {
   TIMEBOMB_COUNT,
 } = require("./variables/constants");
 
+// Show the name of the OS, the version, and the author
 console.log(`${chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`)}`);
 console.log(`Made by ${AUTHOR}!\n`);
 
+// If BubbleOS is in beta...
 if (IN_BETA) {
+  // ...and the timebomb is activated...
   if (TIMEBOMB_ACTIVATED) {
+    // Show a timebomb warning message
     console.log(
       chalk.dim(
         `${chalk.bold(
@@ -26,6 +32,8 @@ if (IN_BETA) {
       )
     );
   } else {
+    // ...else
+    // Show a beta warning message
     console.log(
       chalk.dim(
         `${chalk.bold(
@@ -36,6 +44,7 @@ if (IN_BETA) {
   }
 }
 
+// Show information about commands
 console.log(`For a list on some available commands, type ${chalk.italic("'help'")}.`);
 console.log(`For more information about a command, type ${chalk.italic("'help <command>'")}.\n`);
 

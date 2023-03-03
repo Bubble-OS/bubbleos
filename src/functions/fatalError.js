@@ -1,16 +1,29 @@
+// Get modules
 const { writeHeapSnapshot } = require("v8");
 const fs = require("fs");
-
 const chalk = require("chalk");
 
+// Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
 
 /**
  * End BubbleOS with a fatal exception with exit code `1`.
  *
- * @param {Error} err The error.
+ * Usage:
+ *
+ * ```js
+ * try {
+ *   // Some code here...
+ * } catch (err) {
+ *   // An error occurred!
+ *   _fatalError(err);
+ * }
+ * ```
+ *
+ * @param {Error} err The error that caused the fatal error.
  */
 const _fatalError = (err, doFileDump = !global.noDump) => {
+  // A friendly version of the technical error information
   const errProperties = {
     // For 'Error':
     Code: err?.code,
@@ -26,6 +39,7 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
     "System call": err?.syscall,
   };
 
+  // Log information about the crash and what the user should do
   console.log(`${chalk.bgRed.bold.underline("!!! FATAL ERROR !!!")}\n`);
   console.log(
     `${chalk.red.bold(
@@ -43,30 +57,42 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
     )}\n`
   );
 
+  // Technical error information subheading
   console.log(`${chalk.red.dim.underline("Technical Error Information\n")}`);
+
+  // Loop through the error properties
   for (let error in errProperties) {
+    // If the error is defined, log the respective error
     if (typeof errProperties[error] !== "undefined")
       console.log(chalk.red.dim(`${chalk.italic(error)}: ${errProperties[error]}`));
   }
 
+  // Log a newline
   console.log();
 
+  // If the error was passed with a file dump request
   if (doFileDump) {
     try {
+      // Subheading
       console.log(chalk.underline("File Dump Status"));
 
+      // Filenames for each error; change them here
       const FILENAMES = {
         errorInfo: `${GLOBAL_NAME}_error_info.txt`.toUpperCase(),
         heapSnap: `${GLOBAL_NAME}_heap_snapshot.txt`.toUpperCase(),
       };
 
+      // All error properties stored in an array
       let errorArr = [];
 
+      // Loop through the errors
       for (let error in errProperties) {
+        // And if it is defined, add it to the error array
         if (typeof errProperties[error] !== "undefined")
           errorArr.push(`${error}: ${errProperties[error]}`);
       }
 
+      // Add some information to the beginning of the error information file
       const date = new Date();
       const errorInfoTxt = `BubbleOS encountered a fatal error at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} on ${date.getDate()}/${
         date.getMonth() + 1
@@ -74,9 +100,11 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
         "\n"
       )}`;
 
+      // Make the two files
       fs.writeFileSync(FILENAMES.errorInfo, errorInfoTxt);
       writeHeapSnapshot(FILENAMES.heapSnap);
 
+      // If the operation succeded, show a success message
       console.log(
         chalk.green(
           `${chalk.white.bgGreen(" SUCCESS ")}: Saved files ${chalk.bold(
@@ -85,6 +113,7 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
         )
       );
     } catch (saveErr) {
+      // If an error occurred, show an error message, but continue
       console.log(
         chalk.red(
           `${chalk.white.bgRed(" ERROR ")}: Could not save files ${chalk.bold(
@@ -95,8 +124,11 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
     }
   }
 
+  // Memory dump
   console.log(`${chalk.underline("Memory Dump")}`);
+  // Aborting the Node.js process will cause a memory dump
   process.abort();
 };
 
+// Export the function
 module.exports = _fatalError;
