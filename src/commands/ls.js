@@ -1,113 +1,125 @@
+// Get modules
 const chalk = require("chalk");
-const { existsSync, readdirSync } = require("fs");
+const fs = require("fs");
 
+// Get functions
 const _replaceSpaces = require("../functions/replaceSpaces");
-
-const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
-const ls = (directory = process.cwd(), ...params) => {
-  const _logDirContents = (contents, withHighlight = false) => {
-    if (withHighlight) {
-      let dirStr = "";
-      let maxStr =
-        Math.max(...contents.map((el) => el.name.length)) * 2 -
-        Math.max(...contents.map((el) => el.name.length)) / 3;
+// Get classes
+const Errors = require("../classes/Errors");
+const Checks = require("../classes/Checks");
 
-      // Loop through all of the keys of the help object (sorted)
+const ls = (dir = process.cwd(), ...args) => {
+  try {
+    /**
+     * Log the directory contents. This is a private
+     * and should not be used outside of the `ls()`
+     * function.
+     *
+     * Format the contents of the directory depending
+     * on options, such as if the user wanted to
+     * view the directory in a short view.
+     *
+     * Usage:
+     *
+     * ```js
+     * _logDirContents(dirContents, { short: false }); // More options are accepted
+     * ```
+     *
+     * Options:
+     * - `short`: If the directory should be in a short
+     * view or not. Default: `false`.
+     * - `max`: Only applies if `short` is `true`. The
+     * maxmimum padding to the end of each item.
+     *
+     * @param {[ { name: string, type: string, isSymlink: boolean } ]} contents An array of objects containing information about the files/directories.
+     * @param {*} options
+     * @returns
+     */
+    const _logDirContents = (contents, options = { short: false, max: undefined }) => {
+      let dirStr = "";
+
       for (let i = 1; i < Object.keys(contents).length + 1; i++) {
         let item = contents[i - 1];
 
-        if (item.type === "file" && item.isSymlink) dirStr += chalk.red(item.name).padEnd(maxStr);
-        else if (item.type === "folder" && item.isSymlink)
-          dirStr += chalk.bgRed(` ${item.name} `).padEnd(maxStr);
-        else if (item.type === "file") dirStr += chalk.green(item.name).padEnd(maxStr);
-        else if (
-          item.type === "folder" &&
-          (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
-        )
-          dirStr += chalk.bgGrey(` ${item.name} `).padEnd(maxStr);
-        else if (item.type === "folder") dirStr += chalk.bgBlue(` ${item.name} `).padEnd(maxStr);
-        else dirStr += chalk.italic(item.name).padEnd(maxStr);
-
-        if (i % 3 === 0) {
-          dirStr += "\n";
-        }
-      }
-
-      // Show the final string
-      return dirStr + "\n";
-    } else {
-      let dirArr = [];
-      contents.forEach((item) => {
-        if (item.isSymlink) {
-          if (item.type === "file") {
-            dirArr.push(chalk.red(item.name));
-          } else if (item.type === "folder") {
-            dirArr.push(chalk.bold.red(item.name));
-          }
+        if (item.type === "file" && item.isSymlink) {
+          if (options.short) dirStr += chalk.red(item.name).padEnd(options.max);
+          else dirStr += chalk.red(item.name);
+        } else if (item.type === "folder" && item.isSymlink) {
+          if (options.short) dirStr += chalk.bgRed(` ${item.name} `).padEnd(options.max);
+          else dirStr += chalk.bold.red(item.name);
         } else if (item.type === "file") {
-          dirArr.push(chalk.green(item.name));
+          if (options.short) dirStr += chalk.green(item.name).padEnd(options.max);
+          else dirStr += chalk.green(item.name);
         } else if (
           item.type === "folder" &&
           (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
         ) {
-          dirArr.push(chalk.bold.grey(item.name));
+          if (options.short) dirStr += chalk.bgGrey(` ${item.name} `).padEnd(options.max);
+          else dirStr += chalk.bold.grey(item.name);
+        } else if (item.type === "folder") {
+          if (options.short) dirStr += chalk.bgBlue(` ${item.name} `).padEnd(options.max);
+          else dirStr += chalk.bold.blue(item.name);
         } else {
-          dirArr.push(chalk.bold.blue(item.name));
+          if (options.short) dirStr += chalk.italic(item.name).padEnd(options.max);
+          else dirStr += chalk.italic(item.name);
         }
-      });
-      return dirArr;
-    }
-  };
 
-  try {
-    let isShort = false;
-    if (
-      params.includes("-s") ||
-      params.includes("/s") ||
-      directory.includes("-s") ||
-      directory.includes("/s")
-    )
-      isShort = true;
+        if (i % 3 === 0 && options.short) {
+          dirStr += "\n";
+        } else if (!options.short && i !== Object.keys(contents).length) {
+          dirStr += "\n";
+        }
+      }
 
-    if (directory.includes("-s") || directory.includes("/s")) directory = process.cwd();
+      return dirStr + "\n";
+    };
 
-    directory = _replaceSpaces(directory);
+    let isShort =
+      args.includes("-s") || args.includes("/s") || dir.includes("-s") || dir.includes("/s");
 
-    if (!existsSync(directory)) {
-      Errors.doesNotExist("folder", directory);
+    if (dir.includes("-s") || dir.includes("/s")) dir = process.cwd();
+
+    dir = _replaceSpaces(dir);
+
+    const dirChk = new Checks(dir);
+
+    if (!dirChk.doesExist()) {
+      Errors.doesNotExist("folder", dir);
+      return;
+    } else if (!dirChk.validateType()) {
+      Errors.expectedDir(dir);
       return;
     }
 
-    const files = readdirSync(directory, { withFileTypes: true })
-      .filter((item) => !item.isDirectory())
-      .map((item) => {
-        return { name: item.name, type: "file", isSymlink: item.isSymbolicLink() };
-      })
+    const items = fs
+      .readdirSync(dir, { withFileTypes: true })
+      .map((item) => ({
+        name: item.name,
+        type: item.isDirectory() ? "folder" : "file",
+        isSymlink: item.isSymbolicLink(),
+      }))
       .sort();
 
-    const folders = readdirSync(directory, { withFileTypes: true })
-      .filter((item) => item.isDirectory())
-      .map((item) => {
-        return { name: item.name, type: "folder", isSymlink: item.isSymbolicLink() };
-      })
-      .sort();
-
-    const all = [...folders, ...files];
+    const all = items
+      .filter((item) => item.type === "folder")
+      .concat(items.filter((item) => item.type === "file"));
 
     if (all.length === 0) {
       console.log(chalk.yellow("There are no files/directories in the directory.\n"));
       return;
     }
 
-    if (isShort) console.log(_logDirContents(all, true));
-    else console.log(_logDirContents(all, false).join("\n") + "\n");
-  } catch (err) {
-    if (err.code === "ENOTDIR") {
-      Errors.expectedDir(directory);
-      return;
+    const options = { short: isShort };
+    if (isShort) {
+      const maxLength = Math.max(...all.map((el) => el.name.length));
+      options.max = maxLength * 2;
+      console.log(_logDirContents(all, options));
+    } else {
+      console.log(_logDirContents(all, options));
     }
+  } catch (err) {
     _fatalError(err);
   }
 };
