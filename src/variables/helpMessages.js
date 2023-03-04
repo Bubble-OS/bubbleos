@@ -128,6 +128,13 @@ const HELP = {
         "Show the visual occurrences, which is the contents of the file with the phrase occurrences highlighted.",
     },
   },
+  history: {
+    usage: "history [<numPlace>]",
+    desc: "Show the last fifty commands entered in BubbleOS, regardless if they were recognized or not (empty commands are not saved). After fifty commands have been stored in the history, the oldest get deleted. You can get a specfic command by entering that history point in the command.",
+    args: {
+      "[<numPlace>]": "Optional; show the exact command at that history point.",
+    },
+  },
   help: {
     usage: "help [command]",
     desc: `Get a list of all available ${GLOBAL_NAME} commands, or get information about a specific command such as usage, arguments, and a short description.`,
@@ -135,6 +142,9 @@ const HELP = {
   },
 };
 
+/**
+ * @deprecated
+ */
 const HELP_DEFINITIONS = {
   help: {
     description: `Displays a list of available commands.`,
