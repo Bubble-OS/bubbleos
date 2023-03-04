@@ -153,6 +153,24 @@ const HELP = {
       "[-s]": "View directory contents in a shorter view in three rows.",
     },
   },
+  mkdir: {
+    usage: "mkdir <dir> [-s]",
+    desc: "Make a directory (or directories, if the parent does not exist). Both relative and absolute paths are accepted. Note that you cannot make a directory if it is longer than the size of a path that is allowed. Also, invalid characters aren't allowed to be used.",
+    args: {
+      "<dir>": `The directory to create. If the parent directories passed do not exist, ${GLOBAL_NAME} will create those too.`,
+      "[-s]":
+        "If this flag is passed, no success output will be shown, but error messages will still appear.",
+    },
+  },
+  mkfile: {
+    usage: "mkfile <file> [-s]",
+    desc: "Make a file. Both relative and absolute paths are accepted. Note that you cannot make a file if it is longer than the size of a path that is allowed. Also, invalid characters aren't allowed to be used.",
+    args: {
+      "<file>": `The file to create. If the parent directories passed do not exist, ${GLOBAL_NAME} will throw an error.`,
+      "[-s]":
+        "If this flag is passed, no success output will be shown, but error messages will still appear.",
+    },
+  },
 };
 
 module.exports = HELP;

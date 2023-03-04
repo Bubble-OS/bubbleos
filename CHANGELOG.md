@@ -13,6 +13,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 - Added a lot of information to the `sysinfo` command, including system resources, advanced information, and arguments.
 - Added the `--no-dump` flag to the main BubbleOS executable, which will disable file dumping in the case a fatal error occurs.
 - Added an optional argument to `crash` where you can enter the index of the way you want to crash BubbleOS.
+- Added the ability to create parent directories in `mkdir` if they do not exist.
 - Added a twelve-hour clock to the `time` command (however, it can be switched by using the `-24` flag).
 - Added flags to the `exec` command such as `-h` and `--sh`.
 - Added a friendly-style date in `date`, like so: _{day}, the {date} of {month} {year}_.
@@ -33,6 +34,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 - Changed the space character from `/s` to `*s` due to issues with Linux and macOS systems.
 - Fixed an issue where the `print` command wouldn't output anything after a space.
 - Fixed an issue where the pre-boot interpreter would crash BubbleOS.
+- Fixed an issue where `mkfile` would crash if a directory passed in didn't exist.
 - Fixed an issue where characters such as `*` or `+` would crash BubbleOS if entered.
 - Fixed an issue where the `bub` command would report plain text files as an '_invalid encoding_'.
 - Internally renamed `aboutConsts.js` to `constants.js`.

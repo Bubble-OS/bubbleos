@@ -16,13 +16,13 @@ const AUTHOR = "Arnav Thorat";
  *
  * Make sure this is a proper version number. Change this with the build (e.g. `78` will make the version `0.7.8`).
  */
-const VERSION = "0.9.4";
+const VERSION = "0.9.6";
 /**
  * The build of the shell.
  *
  * Make sure this is a proper build number. Change this with the version (e.g. `0.7.8` will make the build `78`).
  */
-const BUILD = 94;
+const BUILD = 96;
 
 /**
  * If the shell is in beta or not. `true` if it is in beta, else, `false`.
@@ -51,12 +51,13 @@ const TIMEBOMB_ACTIVATED = true;
  *
  * To see the date in **90** days, [click here](https://www.google.com/search?q=Date+90+days+from+today).
  */
-const EXPIRY_DATE = new Date(2023, 5, 3);
+const EXPIRY_DATE = new Date(2023, 5, 6);
 /**
  * The number of days until the shell will no longer be able to boot. This will not auto-update the `EXPIRY_DATE`.
  */
 const TIMEBOMB_COUNT = 90;
 
+// Export all of the variables
 module.exports = {
   GLOBAL_NAME,
   SHORT_NAME,
