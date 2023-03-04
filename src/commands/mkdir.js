@@ -1,34 +1,44 @@
 const chalk = require("chalk");
-const { existsSync, mkdirSync } = require("fs");
+const fs = require("fs");
 
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
-
-const Errors = require("../classes/Errors");
 const _fatalError = require("../functions/fatalError");
 
-const mkdir = (dir) => {
-  if (typeof dir === "undefined") {
-    Errors.enterParameter("a directory", "mkdir test");
-    return;
-  }
+const Errors = require("../classes/Errors");
+const Checks = require("../classes/Checks");
 
-  dir = _replaceSpaces(dir);
-  dir = _convertAbsolute(dir);
-
+const mkdir = (dir, ...args) => {
   try {
-    if (!existsSync(dir)) {
-      console.log(`Making directory: ${chalk.bold.blueBright(dir)}...`);
-      mkdirSync(dir);
-      console.log(chalk.green("The operation completed successfully.\n"));
-    } else {
+    dir = _convertAbsolute(_replaceSpaces(dir));
+
+    const dirChk = new Checks(dir);
+
+    const silent = args?.includes("-s") || args?.includes("/s");
+
+    if (dirChk.paramUndefined()) {
+      Errors.enterParameter("a directory", "mkdir test");
+      return;
+    }
+
+    if (dirChk.doesExist()) {
       Errors.alreadyExists("directory", dir);
     }
+
+    fs.mkdirSync(dir);
+
+    if (!silent) console.log(chalk.green(`Successfully made the directory ${chalk.bold(dir)}.\n`));
+    else console.log();
   } catch (err) {
-    if (err.code === "EPERM") {
+    if (err.code === "ENOENT") {
+      Errors.doesNotExist("directory", dir);
+      return;
+    } else if (err.code === "EPERM") {
       Errors.noPermissions("make the directory", dir);
+      return;
     } else if (err.code === "ENAMETOOLONG") {
       Errors.pathTooLong(dir);
+      return;
     } else if (err.code === "EINVAL") {
       Errors.invalidCharacters(
         "directory name",
@@ -36,6 +46,7 @@ const mkdir = (dir) => {
         "characters such as '?' or ':' (Windows only)",
         dir
       );
+      return;
     } else {
       _fatalError(err);
     }

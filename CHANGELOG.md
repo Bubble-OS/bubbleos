@@ -30,8 +30,10 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 - Fixed an issue where `taskkill` would crash BubbleOS if the PID didn't exist.
 - Fixed an issue where the confirmation prompt would have '_y/n_' uncolored.
 - Fixed an issue where `exec` would crash if a directory was passed, and if the file extention was not an executable.
+- Changed the space character from `/s` to `*s` due to issues with Linux and macOS systems.
 - Fixed an issue where the `print` command wouldn't output anything after a space.
 - Fixed an issue where the pre-boot interpreter would crash BubbleOS.
+- Fixed an issue where characters such as `*` or `+` would crash BubbleOS if entered.
 - Fixed an issue where the `bub` command would report plain text files as an '_invalid encoding_'.
 - Internally renamed `aboutConsts.js` to `constants.js`.
 

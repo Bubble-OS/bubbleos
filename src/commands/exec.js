@@ -69,10 +69,10 @@ const exec = (file, ...args) => {
     }
 
     // Execute the file
-    // Not using execFileSync() as that does not let BubbleOS continue
+    // Not using execSync() as that does not let BubbleOS continue
     // unless the window is closed. This should be used instead, with an
     // empty callback function.
-    childProcess.execFile(file, { cwd: process.cwd(), windowsHide: winHide, shell }, () => {});
+    childProcess.exec(file, { cwd: process.cwd(), windowsHide: winHide, shell }, () => {});
 
     // If the user didn't add the '-s' flag, show the success message, else, show a newline
     if (!silent) console.log(chalk.green(`Successfully executed ${chalk.bold(file)}.\n`));

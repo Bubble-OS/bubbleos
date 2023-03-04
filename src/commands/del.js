@@ -72,8 +72,6 @@ const del = (path, ...args) => {
         console.log(chalk.yellow("Operation cancelled.\n"));
         return;
       }
-
-      console.log();
     }
 
     // Delete the file/directory

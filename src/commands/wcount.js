@@ -42,17 +42,23 @@ const wcount = (file, ...args) => {
     }
 
     const fileContents = fs.readFileSync(file, { encoding: "utf-8", flag: "r" });
+    const data = {
+      lines: fileContents.split("\n").length,
+      words: fileContents.split(" ").length,
+      charsWhite: fileContents.length,
+      charsNoWhite: fileContents.replaceAll(" ", "").length,
+    };
 
-    if (lines || defaultDisplay)
-      console.log(`Lines: ${chalk.bold(fileContents.split("\n").length)}`);
-    if (words || defaultDisplay)
-      console.log(`Words: ${chalk.bold(fileContents.split(" ").length)}`);
+    if (lines || defaultDisplay) console.log(`Lines: ${chalk.bold(data.lines)}`);
+    if (words || defaultDisplay) console.log(`Words: ${chalk.bold(data.words)}`);
 
     if (chars || defaultDisplay) {
-      console.log(`Characters (including whitespace): ${chalk.bold(fileContents.length)}`);
-      console.log(
-        `Characters (excluding whitespace): ${chalk.bold(fileContents.replaceAll(" ", "").length)}`
-      );
+      if (data.charsWhite === data.charsNoWhite) {
+        console.log(`Characters: ${chalk.bold(data.charsWhite)}`);
+      } else {
+        console.log(`Characters (including whitespace): ${chalk.bold(data.charsWhite)}`);
+        console.log(`Characters (excluding whitespace): ${chalk.bold(data.charsNoWhite)}`);
+      }
     }
 
     console.log();
