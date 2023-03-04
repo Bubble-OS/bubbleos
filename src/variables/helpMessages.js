@@ -171,6 +171,13 @@ const HELP = {
         "If this flag is passed, no success output will be shown, but error messages will still appear.",
     },
   },
+  print: {
+    usage: "print <text>",
+    desc: `Print any text to the standard output. Note that if no text is provided, ${GLOBAL_NAME} will throw an error.`,
+    args: {
+      "<text>": "The text to output to the standard output.",
+    },
+  },
 };
 
 module.exports = HELP;
