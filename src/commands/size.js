@@ -1,92 +1,136 @@
+// Get modules
 const chalk = require("chalk");
-const { existsSync, lstatSync, statSync } = require("fs");
+const fs = require("fs");
 
+// Get functions
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
-
-const Errors = require("../classes/Errors");
+const _convertSize = require("../functions/convSize");
 const _fatalError = require("../functions/fatalError");
 
-const _convertSize = (bytes, decimals = 3) => {
-  const kilobytes = parseFloat((bytes / 1000).toFixed(decimals));
-  const megabytes = parseFloat((kilobytes / 1000).toFixed(decimals));
-  const gigabytes = parseFloat((megabytes / 1000).toFixed(decimals));
+// Get classes
+const Errors = require("../classes/Errors");
+const Checks = require("../classes/Checks");
 
-  return {
-    Bytes: bytes,
-    Kilobytes: kilobytes,
-    Megabytes: megabytes,
-    Gigabytes: gigabytes,
-  };
+/**
+ * A **private** function to log the sizes that
+ * were given, and also making the keys
+ * user-friendly by capitalizing the first letter.
+ *
+ * @param {string} key The key, which is the name of the type of size.
+ * @param {number | string} value The value of the type of size in `key`.
+ */
+const _logSizes = (key, value) => {
+  // Capitalize the first letter of the word
+  const showSize = key.charAt(0).toUpperCase() + key.slice(1);
+
+  if (value <= 0) {
+    // If the value passed was '0' or less than that
+    console.log(`${showSize}: ${chalk.bold.red.dim("N/A")}`);
+  } else {
+    // The value was not ≤0
+    console.log(`${showSize}: ${chalk.bold.redBright(value)}`);
+  }
 };
 
-const size = (file, sizesToDisplay) => {
-  file = _replaceSpaces(file);
-
-  let sizes = undefined;
-  const sizesTrans = {
-    b: "Bytes",
-    kb: "Kilobytes",
-    mb: "Megabytes",
-    gb: "Gigabytes",
-  };
-
-  if (typeof sizesToDisplay !== "undefined" && !sizesToDisplay.startsWith("--size=")) {
-    console.log("This check will be removed (ACTUAL ERR MSG: 'sizes' must start with '--size=')\n");
-    return;
-  } else if (typeof sizesToDisplay !== "undefined") {
-    sizes = sizesToDisplay.replace("--size=", "").split(",");
-
-    Object.keys(sizesTrans).forEach((value) => {
-      if (!sizes.includes(value)) {
-        delete sizesTrans[value];
-      }
-    });
-  }
-
-  if (typeof file === "undefined") {
-    Errors.enterParameter("a file", "size test.txt");
-    return;
-  }
-
-  const fileName = _convertAbsolute(file);
-  if (!existsSync(fileName)) {
-    Errors.doesNotExist("file", fileName);
-    return;
-  }
-
-  if (lstatSync(fileName).isDirectory()) {
-    Errors.expectedFile(fileName);
-    return;
-  }
-
+const size = (file, sizes, ...args) => {
   try {
-    const allSizes = _convertSize(statSync(fileName).size, 4);
+    // Replace spaces and convert it to an absolute path
+    file = _convertAbsolute(_replaceSpaces(file));
 
-    if (typeof sizes !== "undefined") {
-      Object.values(sizesTrans).forEach((value) => {
-        if (allSizes[value] === 0) {
-          console.log(`${value}: ${chalk.bold.red.dim("N/A")}`);
-        } else {
-          console.log(`${value}: ${chalk.bold.redBright(allSizes[value])}`);
+    // Initialize checker
+    const fileChk = new Checks(file);
+
+    // If the file is not defined
+    if (fileChk.paramUndefined()) {
+      Errors.enterParameter("a file", "size test.txt");
+      return;
+    }
+
+    // Sizes translations for the 'sizes' parameter
+    const sizesTrans = {
+      b: "Bytes",
+      kb: "Kilobytes",
+      mb: "Megabytes",
+      gb: "Gigabytes",
+      a: "All",
+    };
+
+    // If the 'sizes' is defined...
+    if (!new Checks(sizes).paramUndefined()) {
+      // Split it by commas
+      sizes = sizes.split(",");
+
+      // If the size the user requested is in the translation, leave it, else, delete it
+      for (const val in sizesTrans) {
+        if (!sizes.includes(val)) {
+          delete sizesTrans[val];
         }
-      });
-    } else {
-      for (let i = 0; i < Object.keys(allSizes).length; i++) {
-        if (Object.values(allSizes)[i] === 0) {
-          console.log(`${Object.keys(allSizes)[i]}: ${chalk.bold.red.dim("N/A")}`);
-        } else {
-          console.log(
-            `${Object.keys(allSizes)[i]}: ${chalk.bold.redBright(Object.values(allSizes)[i])}`
-          );
-        }
+      }
+
+      // If there are no more translations left
+      if (Object.keys(sizesTrans).length === 0) {
+        console.log(
+          chalk.yellow(
+            `No matches for the filter ${chalk.bold.italic(`'${sizes}'`)}.\nOperation cancelled.\n`
+          )
+        );
+        return;
       }
     }
 
+    if (!fileChk.doesExist()) {
+      // File doesn't exist
+      Errors.doesNotExist("file", file);
+      return;
+    } else if (fileChk.validateType()) {
+      // Path is a directory
+      Errors.expectedFile(file);
+      return;
+    }
+
+    // The size shortened to 4 decimal places
+    const allSizes = _convertSize(fs.statSync(file).size, 4);
+
+    // If the sizes were passed in
+    if (typeof sizes !== "undefined") {
+      // If the user requested to see all ('a')
+      if (typeof sizesTrans.a !== "undefined") {
+        // Show all values
+        for (const size in allSizes) {
+          _logSizes(size, allSizes[size]);
+        }
+      } else {
+        // Only show the values that the user requested
+        for (const val in sizesTrans) {
+          _logSizes(sizesTrans[val], allSizes[sizesTrans[val].toLowerCase()]);
+        }
+      }
+    } else {
+      // Show all of the values
+      for (const size in allSizes) {
+        _logSizes(size, allSizes[size]);
+      }
+    }
+
+    // Newline and return
     console.log();
+    return;
   } catch (err) {
-    _fatalError(err);
+    if (err.code === "EPERM") {
+      // Invalid permissions to read the file
+      Errors.noPermissions("calculate the size of the file", file);
+      return;
+    } else if (err.code === "EBUSY") {
+      // The file is in use
+      Errors.inUse("file", file);
+      return;
+    } else {
+      // Unknown error
+      _fatalError(err);
+    }
   }
 };
 
+// Export the functions
 module.exports = size;

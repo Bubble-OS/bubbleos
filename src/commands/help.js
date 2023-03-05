@@ -12,6 +12,59 @@ const _fatalError = require("../functions/fatalError");
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
+const _printHelp = (sorted, specific, cmd) => {
+  // Convert the command to lower case
+  cmd = cmd?.toLowerCase();
+
+  // If the user wanted a specific command
+  if (specific) {
+    // Log the command and its usage
+    // If the usage is not available, show 'N/A'
+    console.log(`${chalk.bold(cmd)}: ${chalk.italic(sorted[cmd].usage ?? "N/A")}`);
+
+    // Show the description (if it is unavailable, show 'N/A')
+    console.log(`\n  ${sorted[cmd].desc ?? "N/A"}\n`);
+
+    // If there are arguments
+    if (typeof sorted[cmd].args !== "undefined") {
+      // If the length of the arguments is not 0 (not empty)
+      if (Object.keys(sorted[cmd].args).length !== 0) {
+        // Show an arguments subheading
+        console.log("  " + chalk.underline("Arguments:"));
+
+        // Loop through all arguments
+        for (const arg in sorted[cmd].args) {
+          // Pad the argument at the end, and show each description for their respective argument
+          console.log(`    ${arg.padEnd(15)} ${sorted[cmd].args[arg]}`);
+        }
+
+        // Log a newline after all of the arguments have been shown
+        console.log();
+      }
+    }
+
+    return;
+  } else {
+    // Final string of all of the commands
+    let finalStr = "";
+
+    // Loop through all of the keys of the help object (sorted)
+    for (let i = 1; i < Object.keys(sorted).length + 1; i++) {
+      // Add to the final string all of the commands, and pad 15 characters to the end of them
+      finalStr += Object.keys(sorted)[i - 1].padEnd(15);
+
+      // If there have been three characters on the line, print a newline
+      if (i % 3 === 0) {
+        finalStr += "\n";
+      }
+    }
+
+    // Show the final string
+    console.log(finalStr);
+    return;
+  }
+};
+
 const help = (command, ...args) => {
   try {
     // Intialize arguments
@@ -21,63 +74,10 @@ const help = (command, ...args) => {
     // Making a new array as HELP_MESSAGES is immutable (cannot be changed)
     const sorted = sortKeys(HELP_MESSAGES);
 
-    const _printHelp = (specific, cmd) => {
-      // Convert the command to lower case
-      cmd = cmd?.toLowerCase();
-
-      // If the user wanted a specific command
-      if (specific) {
-        // Log the command and its usage
-        // If the usage is not available, show 'N/A'
-        console.log(`${chalk.bold(cmd)}: ${chalk.italic(sorted[cmd].usage ?? "N/A")}`);
-
-        // Show the description (if it is unavailable, show 'N/A')
-        console.log(`\n  ${sorted[cmd].desc ?? "N/A"}\n`);
-
-        // If there are arguments
-        if (typeof sorted[cmd].args !== "undefined") {
-          // If the length of the arguments is not 0 (not empty)
-          if (Object.keys(sorted[cmd].args).length !== 0) {
-            // Show an arguments subheading
-            console.log("  " + chalk.underline("Arguments:"));
-
-            // Loop through all arguments
-            for (const arg in sorted[cmd].args) {
-              // Pad the argument at the end, and show each description for their respective argument
-              console.log(`    ${arg.padEnd(15)} ${sorted[cmd].args[arg]}`);
-            }
-
-            // Log a newline after all of the arguments have been shown
-            console.log();
-          }
-        }
-
-        return;
-      } else {
-        // Final string of all of the commands
-        let finalStr = "";
-
-        // Loop through all of the keys of the help object (sorted)
-        for (let i = 1; i < Object.keys(sorted).length + 1; i++) {
-          // Add to the final string all of the commands, and pad 15 characters to the end of them
-          finalStr += Object.keys(sorted)[i - 1].padEnd(15);
-
-          // If there have been three characters on the line, print a newline
-          if (i % 3 === 0) {
-            finalStr += "\n";
-          }
-        }
-
-        // Show the final string
-        console.log(finalStr);
-        return;
-      }
-    };
-
     // If the user did not ask for help on a specific command
     if (new Checks(command).paramUndefined()) {
       // The user DID NOT want a specific command
-      _printHelp(false);
+      _printHelp(sorted, false);
 
       // If the user didn't request for a tip, don't show it and instead just print a newline, else, show it
       if (showTip)
@@ -95,7 +95,7 @@ const help = (command, ...args) => {
       for (const commandName in sorted) {
         // If the command in the help object is the same as the one the user entered, show the information
         if (commandName.toLowerCase() === command.toLowerCase()) {
-          _printHelp(true, commandName);
+          _printHelp(sorted, true, commandName);
           return;
         }
       }
