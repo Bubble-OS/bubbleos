@@ -14,6 +14,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 - Added the `--no-dump` flag to the main BubbleOS executable, which will disable file dumping in the case a fatal error occurs.
 - Added an optional argument to `crash` where you can enter the index of the way you want to crash BubbleOS.
 - Added the ability to create parent directories in `mkdir` if they do not exist.
+- Added a feature where the `readfile` command has certain character limits.
 - Added a twelve-hour clock to the `time` command (however, it can be switched by using the `-24` flag).
 - Added flags to the `exec` command such as `-h` and `--sh`.
 - Added a friendly-style date in `date`, like so: _{day}, the {date} of {month} {year}_.

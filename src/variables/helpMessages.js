@@ -178,6 +178,18 @@ const HELP = {
       "<text>": "The text to output to the standard output.",
     },
   },
+  readfile: {
+    usage: "readfile <file> [-y] [--ignore-max]",
+    desc: `Read any plain text file in the terminal. Both absolute and relative paths are accepted for the file path. Note that if the number of characters in the file exceed 5000, ${GLOBAL_NAME} will confirm that you want to read it, and if there are more than 100,000 characters, ${GLOBAL_NAME} will refuse to read the file (unless you pass a flag).`,
+    args: {
+      "<file>":
+        "The file to read. Note that only plain text files can be read to avoid terminal corruption. Absolute and relative paths are accepted.",
+      "[-y]":
+        "Automatically accept the warning prompt if there are more than 5000 characters in a file.",
+      "[--ignore-max]":
+        "Ignore the maxmimum limit of characters in a file that BubbleOS can read (100,000 characters). Use this flag at your own risk!",
+    },
+  },
 };
 
 module.exports = HELP;

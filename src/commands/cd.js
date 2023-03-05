@@ -25,6 +25,7 @@ const Checks = require("../classes/Checks");
  */
 const cd = (dir, ...args) => {
   try {
+    // Replace spaces
     dir = _replaceSpaces(dir);
 
     // Create a new directory checker
