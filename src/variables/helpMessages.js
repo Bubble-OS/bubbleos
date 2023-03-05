@@ -190,6 +190,19 @@ const HELP = {
         "Ignore the maxmimum limit of characters in a file that BubbleOS can read (100,000 characters). Use this flag at your own risk!",
     },
   },
+  rename: {
+    usage: "rename <old> <new> [-y] [-s]",
+    desc: `Rename a file from the old name to the new name. This can also be used to cut files. If the old and new file names are the same, ${GLOBAL_NAME} will not continue. Also, if the new file already exists, ${GLOBAL_NAME} will confirm that you want to overwrite the file.`,
+    args: {
+      "<old>":
+        "The old file/directory name that should be renamed. Absolute and relative paths are both accepted.",
+      "<new>":
+        "The new file/directory name that it should be renamed to. Absolute and relative paths are both accepted.",
+      "[-y]": "Automatically accept the confirmation prompt if the new name already exists.",
+      "[-s]":
+        "If this flag is passed, no success output will be shown, but error messages will still be shown.",
+    },
+  },
 };
 
 module.exports = HELP;

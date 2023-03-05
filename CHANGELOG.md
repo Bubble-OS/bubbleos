@@ -19,7 +19,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 - Added flags to the `exec` command such as `-h` and `--sh`.
 - Added a friendly-style date in `date`, like so: _{day}, the {date} of {month} {year}_.
 - The `ls` command now will print the short version (`-s`) in sorted rows, of which size will change depending on the length of the name of the largest file/folder.
-- The `copy` command will now warn you if the destination already exists (only if the destination exists).
+- The `copy` and `rename` commands will now warn you if the destination already exists (only if the destination exists).
 - Added startup warnings for dangerous BubbleOS flags such as `--no-timebomb`. These can be disabled using the `--no-warnings` flag.
 - Added 'lines' and 'characters excluding whitespace' properties in the `wcount` command. Also, you can filter it using arguments.
 - Added a safeguard against killing the BubbleOS process in `taskkill`. However, this can be ignored by using the `--kill-self` flag.
