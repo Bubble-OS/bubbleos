@@ -18,7 +18,7 @@ const wcount = (file, ...args) => {
     const words = args?.includes("-w") || args?.includes("/w");
     const chars = args?.includes("-c") || args?.includes("/c");
 
-    const defaultDisplay = !lines && !words && !chars ? true : false;
+    const defaultDisplay = !lines && !words && !chars;
 
     if (fileChk.paramUndefined()) {
       Errors.enterParameter("a file", "wcount text.txt");

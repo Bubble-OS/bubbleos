@@ -42,7 +42,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 
 ### Removed Features
 
-- Removed the need to add the `--sizes=` flag to the `size` command.
+- Removed the need to add the `--sizes=` flag to the `size` command. Instead, use seperate arguments.
 - Removed the `prompt.js`, `mainArgs.js` and `multiParam.js` files internally.
 
 ## Build 78-84 (v0.7.8-v0.8.4)

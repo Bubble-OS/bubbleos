@@ -204,13 +204,15 @@ const HELP = {
     },
   },
   size: {
-    usage: "size <file> [<filter>]",
-    desc: "Show the size of a file in bytes, kilobytes, megabytes, and gigabytes. All sizes have four decimal places. If a size has a value of zero, it will have a 'not available' value. Also, if the file system does not support getting sizes, all values will say 'not available' (unless the file is zero bytes in size). You can also filter the sizes.",
+    usage: "size <file> [-b] [-kb] [-mb] [-gb]",
+    desc: "Show the size of a file in bytes, kilobytes, megabytes, and gigabytes. All sizes have four decimal places. If a size has a value of zero, it will have a 'not available' value. Also, if the file system does not support getting sizes, all values will say 'not available' (unless the file is zero bytes in size). You can also filter the sizes using arguments (listed below).",
     args: {
       "<file>":
         "The file to measure the size of. Both absolute and relative paths are accepted. Getting the size of a directory is not yet supported.",
-      "[<filter>]":
-        "Optionally specify a filter of comma-seperated values (with no spaces) to only show those values. The accepted ones are: 'a' for all, 'b' for bytes, 'kb' for kilobytes, 'mb' for megabytes and 'gb' for gigabytes.",
+      "[-b]": "Get only the size of the file in bytes.",
+      "[-kb]": "Get only the size of the file in kilobytes.",
+      "[-mb]": "Get only the size of the file in megabytes.",
+      "[-gb]": "Get only the size of the file in gigabytes.",
     },
   },
 };
