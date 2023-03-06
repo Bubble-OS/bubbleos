@@ -228,6 +228,18 @@ const HELP = {
       "[-s]": "Silence all success messages, and only show error messages.",
     },
   },
+  sysinfo: {
+    usage: "sysinfo [-c] [-s] [-a] [-e] [--all] [--rm-tip]",
+    desc: `Get all system information about your local machine that ${GLOBAL_NAME} is currently running on. This includes, in summary, the operating system, release, computer name, memory usage, system uptime, environment variables and more. This can also be filtered by subheadings through arguments (listed below).`,
+    args: {
+      "[-c]": "Display basic computer information.",
+      "[-s]": "Display system resources that are being used.",
+      "[-a]": "Display advanced system information.",
+      "[-e]": "Display all local environment variables.",
+      "[--all]": "Display all information.",
+      "[--rm-tip]": "Remove the tip that would appear if no filter arguments were passed.",
+    },
+  },
 };
 
 module.exports = HELP;
