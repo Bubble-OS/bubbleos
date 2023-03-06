@@ -240,6 +240,16 @@ const HELP = {
       "[--rm-tip]": "Remove the tip that would appear if no filter arguments were passed.",
     },
   },
+  taskkill: {
+    usage: "taskkill <pid> [-y] [-s] [--kill-self]",
+    desc: "Kill any process on your device using their respective PID (process identification number). Note that this will force-close the process, and any data that was unsaved in that process would be lost.",
+    args: {
+      "<pid>": "The process identification number that is to be terminated.",
+      "[-y]": "Automatically accept the confirmation prompt when killing a process.",
+      "[-s]": "Silence all outputs excluding the confirmation prompt and error messages.",
+      "[--kill-self]": `By default, you cannot kill the ${GLOBAL_NAME} process. Using this flag, you can successfully kill it. However, this should be used at your own risk, as it is safer to use the 'exit' command instead.`,
+    },
+  },
 };
 
 module.exports = HELP;
