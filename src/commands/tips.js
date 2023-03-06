@@ -25,14 +25,6 @@ const tips = () => {
     )
   );
   return;
-
-  // ALL_TIPS.forEach((tip, idx) => {
-  //   if (!doneTips.includes(idx)) {
-  //     console.log(chalk.yellow(`${chalk.bold("TIP:")} ${tip}`));
-  //     doneTips.push(idx);
-  //     return;
-  //   }
-  // })
 };
 
 module.exports = tips;

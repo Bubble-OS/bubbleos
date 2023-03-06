@@ -215,6 +215,19 @@ const HELP = {
       "[-gb]": "Get only the size of the file in gigabytes.",
     },
   },
+  symlink: {
+    usage: "symlink <target> [<path>] [-c] [-s]",
+    desc: "Either create a symbolic link, or check if a path is a symbolic link. To make a symbolic link, you must pass both the target (the original path) and the path (the symbolic link). Otherwise, to check if a path is a symbolic link, only the target (path) is required to be passed, as well as the '-c' argument.",
+    args: {
+      "<target>":
+        "The original path to which the symbolic link will point to, in the case of creating a symbolic link, else, the path to check if it is a symbolic link or not.",
+      "[<path>]":
+        "This path is only needed if you are creating a symbolic link. This is the path to which the symbolic link will be created in. It will automatically infer the type (in the case of Windows, either 'file' or 'directory', but never 'junction').",
+      "[-c]":
+        "Whether to check if a path is a symbolic link or not. If this flag is passed, it is not required to pass in the to-create path.",
+      "[-s]": "Silence all success messages, and only show error messages.",
+    },
+  },
 };
 
 module.exports = HELP;

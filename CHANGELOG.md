@@ -30,8 +30,10 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 
 - Fixed an issue where the `cwd` command was unrecognized.
 - Fixed an issue where `taskkill` would crash BubbleOS if the PID didn't exist.
+- Fixed an issue where `symlink` would crash if the path didn't exist when the `-c` argument was passed.
 - Fixed an issue where the confirmation prompt would have '_y/n_' uncolored.
 - Fixed an issue where `exec` would crash if a directory was passed, and if the file extention was not an executable.
+- Updated many success messages in commands.
 - Changed the space character from `/s` to `*s` due to issues with Linux and macOS systems.
 - Fixed an issue where the `print` command wouldn't output anything after a space.
 - Fixed an issue where the pre-boot interpreter would crash BubbleOS.

@@ -1,10 +1,10 @@
-// Import packages
+// Get packages
 const chalk = require("chalk");
 
-// Import variables
+// Get variables
 const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/constants");
 
-// Import functions
+// Get functions
 const _fatalError = require("../functions/fatalError");
 
 /**
