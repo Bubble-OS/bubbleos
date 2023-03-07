@@ -6,17 +6,19 @@ Please note that this is not an operating system, but a shell.
 
 ## Table of Contents
 
-1. [Installation](#installation)
-    1. [Executable](#executable)
-    2. [`PATH` Installer](#path-installer)
-        1. [`EXE` File](#exe-file)
-            1. [Windows](#windows)
-            2. [macOS/Linux](#macoslinux)
-        2. [`ZIP` File](#zip-file)
-3. [Using Bubble](#using-bubble)
-    1. [Commands](#commands)
-        1. [`about`](#about)
-        2. [`cd`](#cd)
+- [BubbleOS](#bubbleos)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+    - [Executable](#executable)
+    - [`PATH` Installer](#path-installer)
+      - [`EXE` File](#exe-file)
+        - [Windows](#windows)
+        - [macOS/Linux](#macoslinux)
+      - [`ZIP` File](#zip-file)
+  - [Using Bubble](#using-bubble)
+  - [Commands](#commands)
+    - [`about`](#about)
+    - [`cd`](#cd)
 
 ## Installation
 

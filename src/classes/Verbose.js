@@ -1,3 +1,12 @@
+// IMPORTANT MESSAGE!!!
+// This class in unused in BubbleOS build 100, as the
+// verbose feature has not been implemented yet.
+//
+// It is still unknown if and when this feature will
+// be added. However, meanwhile, this class stays!
+//
+// Also, there are no comments needed for now.
+
 const chalk = require("chalk");
 
 class Verbose {

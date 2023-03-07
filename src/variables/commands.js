@@ -1,8 +1,11 @@
+// Get modules
 const chalk = require("chalk");
 const { keyInPause } = require("readline-sync");
 
+// Get variables
 const { GLOBAL_NAME } = require("./constants");
 
+// Get all commands
 const about = require("../commands/about");
 const bub = require("../commands/bub");
 const cd = require("../commands/cd");
@@ -32,6 +35,7 @@ const tips = require("../commands/tips");
 const userinfo = require("../commands/userinfo");
 const wcount = require("../commands/wcount");
 
+// Easter egg :D
 const cConCon = () => {
   console.log(`${chalk.bgGray.blue(` ${GLOBAL_NAME} `)}\n`);
   console.log(
@@ -87,4 +91,5 @@ const COMMANDS = {
   wcount,
 };
 
+// Export the constant (variable)
 module.exports = COMMANDS;

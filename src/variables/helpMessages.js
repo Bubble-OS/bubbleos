@@ -1,31 +1,23 @@
+// Get variables
 const { GLOBAL_NAME } = require("./constants");
 
-const chalk = require("chalk");
-
+/**
+ * All help messages for (almost) all BubbleOS commands.
+ */
 const HELP = {
   about: {
     usage: "about [-l]",
-    desc: `Get information about ${GLOBAL_NAME}, including the build, version, author, and links to various related websites. You can also view the license by running the command with ${chalk.italic(
-      "'-l'"
-    )}.`,
+    desc: `Get information about ${GLOBAL_NAME}, including the build, version, author, and links to various related websites. You can also view the license by running the command with '-l'.`,
     args: { "[-l]": `View the license of ${GLOBAL_NAME}.` },
   },
   bub: {
     usage: "bub <file> [-d] [--allow-exit]",
-    desc: `Run a file which contains ${GLOBAL_NAME} commands. The file must end with ${chalk.italic(
-      "'.bub'"
-    )}, otherwise, ${GLOBAL_NAME} will attempt to add the extention automatically. To add comments in the file, start a line with ${chalk.italic(
-      "'#'"
-    )}.`,
+    desc: `Run a file which contains ${GLOBAL_NAME} commands. The file must end with '.bub', otherwise, ${GLOBAL_NAME} will attempt to add the extention automatically. To add comments in the file, start a line with '#'.`,
     args: {
       "<file>": "The file of which to execute commands in.",
       "[-d]":
         "Whether to display the commands that the program is currently executing from the file or not. By default, commands do not display.",
-      "[--allow-exit]": `By default, ${GLOBAL_NAME} will not allow the ${chalk.italic(
-        "'exit'"
-      )} command to be run if it is in a ${chalk.italic(
-        "'.bub'"
-      )} file. If this flag is passed, it will allow exiting ${GLOBAL_NAME} from the script.`,
+      "[--allow-exit]": `By default, ${GLOBAL_NAME} will not allow the 'exit' command to be run if it is in a '.bub' file. If this flag is passed, it will allow exiting ${GLOBAL_NAME} from the script.`,
     },
   },
   cd: {
@@ -62,9 +54,7 @@ const HELP = {
   },
   crash: {
     usage: "crash [<index>]",
-    desc: `${chalk.bold(
-      "USE WITH CAUTION!"
-    )} Crashes ${GLOBAL_NAME} in multiple ways, including causing a fatal error, hanging the terminal session, and also causing a memory leak. Note that with the memory leak, ${GLOBAL_NAME} will crash once it has its maximum allocated memory space.`,
+    desc: `USE WITH CAUTION! Crashes ${GLOBAL_NAME} in multiple ways, including causing a fatal error, hanging the terminal session, and also causing a memory leak. Note that with the memory leak, ${GLOBAL_NAME} will crash once it has its maximum allocated memory space.`,
     args: {
       "[<index>]": `An index which points to the crashing method. If the index does not exist, a warning will appear, and it will default to asking for a prompt.`,
     },
@@ -76,11 +66,7 @@ const HELP = {
   },
   date: {
     usage: "date",
-    desc: `Gets the current date from your local system. The date will print out in a friendly format like so: ${chalk.italic(
-      "[day], the [date] of [month] [year]"
-    )}. The date will have the appropriate suffix (e.g. ${chalk.italic(
-      "'st'"
-    )}), and the day/month will have their names. Below the friendly name in brackets is a date styled in the slash-like format.`,
+    desc: `Gets the current date from your local system. The date will print out in a friendly format like so: "[day], the [date] of [month] [year]". The date will have the appropriate ordinal (e.g. 'st'), and the day/month will have their names. Below the friendly name in brackets is a date styled in the slash-like format.`,
     args: {},
   },
   del: {
@@ -283,4 +269,5 @@ const HELP = {
   },
 };
 
+// Export the constant (variable)
 module.exports = HELP;

@@ -426,4 +426,5 @@ class Errors {
   }
 }
 
+// Export the class
 module.exports = Errors;
