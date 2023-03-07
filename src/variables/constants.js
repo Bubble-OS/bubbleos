@@ -51,7 +51,7 @@ const TIMEBOMB_ACTIVATED = true;
  *
  * To see the date in **90** days, [click here](https://www.google.com/search?q=Date+90+days+from+today).
  */
-const EXPIRY_DATE = new Date(2023, 5, 6);
+const EXPIRY_DATE = new Date(2023, 5, 8);
 /**
  * The number of days until the shell will no longer be able to boot. This will not auto-update the `EXPIRY_DATE`.
  */

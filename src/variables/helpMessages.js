@@ -250,6 +250,13 @@ const HELP = {
       "[--kill-self]": `By default, you cannot kill the ${GLOBAL_NAME} process. Using this flag, you can successfully kill it. However, this should be used at your own risk, as it is safer to use the 'exit' command instead.`,
     },
   },
+  time: {
+    usage: "time [-24]",
+    desc: "Get the time from your local system in twelve-hour time (by default). However, you can change this using the '-24' flag, which will change the time to twenty-four-hour time.",
+    args: {
+      "[-24]": "Show the time in 24-hour time instead of 12-hour time.",
+    },
+  },
 };
 
 module.exports = HELP;
