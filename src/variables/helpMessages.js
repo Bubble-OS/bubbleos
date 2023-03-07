@@ -12,7 +12,7 @@ const HELP = {
   },
   bub: {
     usage: "bub <file> [-d] [--allow-exit]",
-    desc: `Run a file which contains ${GLOBAL_NAME} commands. The file must end with '.bub', otherwise, ${GLOBAL_NAME} will attempt to add the extention automatically. To add comments in the file, start a line with '#'.`,
+    desc: `Run a file which contains ${GLOBAL_NAME} commands. The file must end with '.bub'. To add comments in the file, start a line with '#'.`,
     args: {
       "<file>": "The file of which to execute commands in.",
       "[-d]":

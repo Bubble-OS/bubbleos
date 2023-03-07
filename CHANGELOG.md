@@ -41,7 +41,7 @@ _Note: This is the last beta build, and thus has lots of bug fixes and features,
 - Fixed an issue where `mkfile` would crash if a directory passed in didn't exist.
 - Fixed an issue where characters such as `*` or `+` would crash BubbleOS if entered.
 - Renamed the `-r` flag in `sysinfo` to `-s` (system resources filter flag).
-- Fixed an issue where the `bub` command would report plain text files as an '_invalid encoding_'.
+- Fixed an issue where the `bub` command would report plain text files as an '_invalid encoding_'. Also, if the file didn't end with `.bub`, BubbleOS would crash.
 - Internally renamed `aboutConsts.js` to `constants.js`.
 
 ### Removed Features

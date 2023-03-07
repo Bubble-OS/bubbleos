@@ -112,8 +112,17 @@ const bub = (intCmds, file, ...args) => {
       return;
     }
 
-    // Add '.bub' to the end of the file in case it is already not present
-    file = file.endsWith(".bub") ? file : `${file}.bub`;
+    // If the file doesn't end with '.bub', abort
+    if (!file.endsWith(".bub")) {
+      console.log(
+        chalk.yellow(
+          `The file must end with '.bub'. Received: ${chalk.bold(
+            `'${file}'`
+          )}\nOperation cancelled.`
+        )
+      );
+      return;
+    }
 
     if (!fileChk.doesExist()) {
       // If it does NOT exist
