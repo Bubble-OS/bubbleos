@@ -73,7 +73,8 @@ const _interpretBubbleFile = (
  * A command used to interpret a BubbleOS file which ends with `.bub`,
  * similar to a Batch file. To run it in the BubbleOS shell, run `bub`.
  *
- * To use this function in code:
+ * Usage:
+ *
  * ```js
  * // See why you need 'intCmds' below
  * bub(intCmds, "D:\\test.bub"); // 'args' is available too

@@ -23,6 +23,9 @@ const Checks = require("../classes/Checks");
  * then changing into `Test` in BubbleOS, then exiting, would
  * still have the directory as `C:\Users` instead of `C:\Users\Test`.
  *
+ * Available arguments:
+ * - `-s`: Silence all success messages to the standard output.
+ *
  * @param {string} dir The directory to change into. Must be a valid directory.
  * @param  {...string} args The arguments that can be passed to modify the behaviour of the command.
  */

@@ -14,7 +14,7 @@ const ALL_TIPS = [
   `The 'copy' command will overwrite any files/directories if they exist (which is why there is a confirmation prompt).`,
   `On almost all commands, there is a '-s' flag to hide the success message!`,
   `On Linux, there is a bug where the 'time' command won't show the AM/PM time.`,
-  `The 'symlink' command must have ${GLOBAL_NAME} run with elevated privilages on most operating systems.`,
+  `The 'symlink' command must have ${GLOBAL_NAME} run with elevated privileges on most operating systems.`,
   `${GLOBAL_NAME} was originally intended to be a GUI, but it was too difficult to code.`,
   `There is a similar OS to ${GLOBAL_NAME} called B-Kernel, and a similar GUI OS called Cobalt!`,
   `There is a non-documented flag in the 'tips' command - try it by running 'tips --debug' (it isn't very interesting).`,
@@ -26,14 +26,15 @@ const ALL_TIPS = [
   `The 'userinfo' command will show more information on macOS/Linux than on Windows.`,
   `There used to be a bug in 'sysinfo' where the memory usage would show in reverse!`,
   `${GLOBAL_NAME} used to be called 'BubbleOS Lite', and was going to be called 'BubbleShell'!`,
-  `The 'taskkill' comamnd will not allow you killing the ${GLOBAL_NAME} process (however, this can be bypassed).`,
+  `The 'taskkill' command will not allow you to kill the ${GLOBAL_NAME} process (however, this can be bypassed).`,
   `The 'wcount' command shows the number of characters, lines, and (you guessed it) words!`,
   `The 'rename' command can be used similarly to the 'copy' command, except that it will remove the source.`,
-  `The 'exec' command will not work executing command-based applications; therefore, it is best-suited for Windows.`,
+  `The 'exec' command will not work executing command-based applications; therefore, it is best suited for Windows.`,
   `The 'exec' command used to only work on Windows!`,
-  `The 'fif' command used to not highlight occurrances due to a bug in the code.`,
+  `The 'fif' command used to not highlight occurrences due to a bug in the code.`,
   `The 'crash' command is dangerous (obviously)...`,
 ];
+
 /**
  * The maximum amount of times that BubbleOS can try to find a tip randomly.
  */
@@ -42,6 +43,19 @@ const MAXIMUM_TRIES = 50;
 // Tips that have been chosen, so as to not be chosen again
 const doneTips = [];
 
+/**
+ * Show some tips and fun facts about BubbleOS.
+ *
+ * Usage:
+ *
+ * ```js
+ * tips(); // No user-intended arguments accepted yet!
+ * ```
+ *
+ * No user-intended arguments are accepted.
+ *
+ * @param  {...string} args Arguments to modify the behaviour of `tips`.
+ */
 const tips = (...args) => {
   // Initialize tips
   const debug = args.includes("--debug") || args.includes("/debug");

@@ -10,12 +10,17 @@ const _fatalError = require("../functions/fatalError");
 /**
  * The `about` command.
  *
- * This command does not return any information; it is only to be ran in the BubbleOS shell. This command only prints to _stdout_.
+ * This command does not return any information;
+ * it is only to be ran in the BubbleOS shell.
+ * This command only prints to _stdout_.
  *
  * Usage:
  * ```js
  * about("-l"); // Arguments are optional
  * ```
+ *
+ * Available arguments:
+ * - `-l`: Show the license.
  *
  * @param  {...string} args A list of arguments that can be used to modify the behaviour of `about`.
  */

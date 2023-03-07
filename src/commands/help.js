@@ -12,6 +12,15 @@ const _fatalError = require("../functions/fatalError");
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
+/**
+ * Print help depending on if the user requested
+ * a single command, or if they wanted all
+ * available commands.
+ *
+ * @param {Object} sorted The object containing the sorted version of the help messages.
+ * @param {boolean} specific If the user requested help on a specific command or not. If this is `true`, `cmd` must also be passed.
+ * @param {string} cmd The command that the user requested specific help on.
+ */
 const _printHelp = (sorted, specific, cmd) => {
   // Convert the command to lower case
   cmd = cmd?.toLowerCase();
@@ -65,10 +74,34 @@ const _printHelp = (sorted, specific, cmd) => {
   }
 };
 
+/**
+ * The 'help' command, which provides detailed help
+ * on how to use commands in the BubbleOS shell. This
+ * command is only to be used in the BubbleOS CLI!
+ *
+ * Usage:
+ *
+ * ```js
+ * // Arguments are also accepted!
+ * help(); // Help on all commands
+ * help("help"); // Help on a specific command
+ * ```
+ *
+ * Available arguments:
+ * - `--no-tip`: Don't show the tip.
+ *
+ * @param {string} command Optionally get help on a specific command.
+ * @param  {...string} args Arguments to modify the behaviour of `help`.
+ */
 const help = (command, ...args) => {
   try {
     // Intialize arguments
-    const showTip = !(args.includes("--no-tip") || args.includes("/no-tip"));
+    const showTip = !(
+      args.includes("--no-tip") ||
+      args.includes("/no-tip") ||
+      command === "--no-tip" ||
+      command === "/no-tip"
+    );
 
     // Make a new array with a list of help messages sorted in alphabetical order
     // Making a new array as HELP_MESSAGES is immutable (cannot be changed)

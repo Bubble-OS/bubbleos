@@ -26,6 +26,29 @@ const _convertTime = (time) => {
   return time.join("");
 };
 
+/**
+ * Show the current time from the local machine.
+ * For use in the BubbleOS CLI only.
+ *
+ * Usage:
+ *
+ * ```js
+ * time(); // Arguments are also accepted! (unintended alliteration)
+ * ```
+ *
+ * By default, this command shows the time in 12-hour
+ * time, however, this can be changed using an
+ * argument.
+ *
+ * There is a bug in Linux/macOS where the time
+ * will not show the AM/PM, even when viewing it
+ * as twelve-hour time.
+ *
+ * Available arguments:
+ * - `-24`: Show the time in 24-hour time.
+ *
+ * @param  {...string} args Arguments to modify the behaviour of `time`.
+ */
 const time = (...args) => {
   try {
     // If the user wants the time in 24-hour format instead of 12-hour
@@ -39,8 +62,9 @@ const time = (...args) => {
     if (isTwelveHours) console.log(chalk.bold(_convertTime(time)));
     else console.log(chalk.bold(time));
 
-    // Newline
+    // Newline and return
     console.log();
+    return;
   } catch (err) {
     _fatalError(err);
   }

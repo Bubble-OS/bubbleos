@@ -100,7 +100,8 @@ const copy = (src, dest, ...args) => {
       console.log();
     }
 
-    console.log(chalk.italic.blueBright("Please wait; this may take a while..."));
+    // Only show the waiting message if the silent flag was not provided
+    if (!silent) console.log(chalk.italic.blueBright("Please wait; this may take a while..."));
 
     if (srcChk.validateType()) {
       // If the path is a directory

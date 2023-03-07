@@ -36,7 +36,7 @@ const NUMBER_TO_STORE = 50;
  *
  * @param {number | string} numToDisplay Optional. The number point in history to display by itself. If it is not provided, it will show all commands in history.
  */
-const historyCmd = (numToDisplay) => {
+const historyCmd = (numToDisplay, ...args) => {
   /**
    * An extrmely private and simple command to format
    * the way history displays.

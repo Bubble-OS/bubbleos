@@ -129,9 +129,12 @@ const HELP = {
     },
   },
   help: {
-    usage: "help [<command>]",
+    usage: "help [<command>] [--rm-tip]",
     desc: `Get a list of all available ${GLOBAL_NAME} commands, or get information about a specific command such as usage, arguments, and a short description.`,
-    args: { "[<command>]": "Get more information about a specific command." },
+    args: {
+      "[<command>]": "Get more information about a specific command.",
+      "[--rm-tip]": "If you don't provide a specific command, hide the tip that comes.",
+    },
   },
   history: {
     usage: "history [<numPlace>]",

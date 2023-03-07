@@ -17,7 +17,7 @@ const _fatalError = require("../functions/fatalError");
  * This command will output to the _stdout_ the
  * 'friendly' date, as well as the 'slash' date.
  */
-const date = () => {
+const date = (...args) => {
   try {
     /**
      * All of the days of the week.

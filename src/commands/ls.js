@@ -86,6 +86,30 @@ const _logDirContents = (contents, options = { short: false, max: undefined }) =
   return dirStr + "\n";
 };
 
+/**
+ * List the contents of a directory. For use in the
+ * BubbleOS CLI shell only!
+ *
+ * Usage:
+ *
+ * ```js
+ * // Arguments are accepted
+ * ls(); // Contents in the CWD
+ * ls("/"); // Contents in '/'
+ * ```
+ *
+ * There is a known bug where the contents, if viewed
+ * in short view, will look a bit 'off' if a file or
+ * directory in the directory has a lot of characters.
+ * This will be fixed in the next released version.
+ *
+ * Available arguments:
+ * - `-s`: View the contents in a shorter view
+ * (rows/columns).
+ *
+ * @param {fs.PathLike | string} dir Optional: the directory to view the contents in. By default, it uses the current working directory.
+ * @param  {...string} args Arguments to change the behaviour of `ls`.
+ */
 const ls = (dir = process.cwd(), ...args) => {
   try {
     // Initialize arguments

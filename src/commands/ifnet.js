@@ -64,7 +64,21 @@ const _makeValueFriendly = (value) => {
   return value;
 };
 
-const ifnet = () => {
+/**
+ * Get network information from the local machine.
+ * For use in the BubbleOS CLI only.
+ *
+ * Usage:
+ *
+ * ```js
+ * ifnet(); // No arguments
+ * ```
+ *
+ * No arguments are available.
+ *
+ * @param  {...string} args Arguments to modify the behaviour of `ifnet`, however, none are yet available.
+ */
+const ifnet = (...args) => {
   // Get the network interfaces and sort them, get the keys,
   // and get the values of them in the object (respectively)
   const netInts = {
