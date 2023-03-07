@@ -32,7 +32,7 @@ const ALL_TIPS = [
   `The 'exec' command will not work executing command-based applications; therefore, it is best-suited for Windows.`,
   `The 'exec' command used to only work on Windows!`,
   `The 'fif' command used to not highlight occurrances due to a bug in the code.`,
-  `The 'crash' command is dangerous (obviously)!!!`,
+  `The 'crash' command is dangerous (obviously)...`,
 ];
 /**
  * The maximum amount of times that BubbleOS can try to find a tip randomly.

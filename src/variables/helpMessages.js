@@ -262,6 +262,11 @@ const HELP = {
     desc: `Show tips relating to the use of ${GLOBAL_NAME}. However, other text is shown, including fun facts about ${GLOBAL_NAME} too!`,
     args: {},
   },
+  userinfo: {
+    usage: "userinfo",
+    desc: "Show user-related system information from the local machine. This includes the UID, GID, shell, username, user directory, and temporary directory. Note that on Windows, the UID, GID, and shell are unavailable and are not shown. This command may be merged with 'sysinfo' in later versions.",
+    args: {},
+  },
 };
 
 module.exports = HELP;
