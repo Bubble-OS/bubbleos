@@ -382,20 +382,18 @@ class Errors {
    *
    * **Name:** _Directory to non-directory_
    *
-   * **Parameters:** `dir`, `nonDir`
+   * **Parameters:** _(none)_
    *
    * **Error code:** `14`
    *
-   * **Message:** Cannot overwrite the directory (**_'`path`'_**) with a non-directory (**_'`path`'_**). (COPY_DIR_TO_NON_DIR)
+   * **Message:** Cannot overwrite a directory with a non-directory. (COPY_DIR_TO_NON_DIR)
    *
    * @param {string} dir The directory that the user entered.
    * @param {string} nonDir The non-directory that the user entered.
    */
-  static dirToNonDir(dir, nonDir) {
+  static dirToNonDir() {
     const CODE = 14;
-    const MESSAGE = `Cannot overwrite the directory (${chalk.bold.italic(
-      `'${dir}'`
-    )}) with a non-directory (${chalk.bold.italic(`'${nonDir}'`)}). ${chalk.dim(
+    const MESSAGE = `Cannot overwrite a directory with a non-directory. ${chalk.dim(
       "(COPY_DIR_TO_NON_DIR)"
     )}`;
 

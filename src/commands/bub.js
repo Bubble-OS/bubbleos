@@ -80,6 +80,8 @@ const _interpretBubbleFile = (
  * bub(intCmds, "D:\\test.bub"); // 'args' is available too
  * ```
  *
+ * The file must end with `.bub`!
+ *
  * The `intCmds()` function **must** be passed at the start.
  * This is because BubbleOS cannot read the function correctly
  * if it imported instead of passed in (it will be an empty
@@ -112,18 +114,6 @@ const bub = (intCmds, file, ...args) => {
       return;
     }
 
-    // If the file doesn't end with '.bub', abort
-    if (!file.endsWith(".bub")) {
-      console.log(
-        chalk.yellow(
-          `The file must end with '.bub'. Received: ${chalk.bold(
-            `'${file}'`
-          )}\nOperation cancelled.`
-        )
-      );
-      return;
-    }
-
     if (!fileChk.doesExist()) {
       // If it does NOT exist
       Errors.doesNotExist("file", file);
@@ -135,6 +125,18 @@ const bub = (intCmds, file, ...args) => {
     } else if (!fileChk.validEncoding()) {
       // If the file is not plain text
       Errors.invalidEncoding("plain text");
+      return;
+    }
+
+    // If the file doesn't end with '.bub', abort
+    if (!file.endsWith(".bub")) {
+      console.log(
+        chalk.yellow(
+          `The file must end with '.bub'. Received: ${chalk.bold(
+            `'${file}'`
+          )}\nOperation cancelled.\n`
+        )
+      );
       return;
     }
 

@@ -46,6 +46,7 @@ _Note: This is the last beta build, and thus has lots of bug fixes and features,
 
 ### Removed Features
 
+- BubbleOS will not longer automatically add `.bub` to the end of a file when running `bub`.
 - Removed the need to add the `--sizes=` flag to the `size` command. Instead, use separate arguments.
 - Removed the `prompt.js`, `mainArgs.js` and `multiParam.js` files internally.
 

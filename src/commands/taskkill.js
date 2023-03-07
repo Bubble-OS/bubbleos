@@ -22,7 +22,7 @@ const Checks = require("../classes/Checks");
  */
 const _isNumeric = (val) => {
   // If the value is not a string...
-  if (typeof val !== "string") return false;
+  if (typeof val === "string") return false;
 
   // Return if is number is not NaN
   return !isNaN(val) && !isNaN(parseFloat(val));

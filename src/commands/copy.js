@@ -140,7 +140,7 @@ const copy = (src, dest, ...args) => {
       // IDK, it seems kind of random to me; it only happened once in
       // my testing, even without changing the code. It seems to happen
       // in fs.cpSync(). Fix it please!
-      Errors.dirToNonDir(dest, src);
+      Errors.dirToNonDir();
     } else {
       // An unknown error occurred
       _fatalError(err);
