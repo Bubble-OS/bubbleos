@@ -133,6 +133,14 @@ const copy = (src, dest, ...args) => {
       // Files/directories are in use for either the source or destination
       Errors.inUse("file/directory", `${src} and/or ${dest}`);
       return;
+    } else if (err.code === "EISDIR") {
+      // If the user attempted to copy a file to a directory
+      Errors.expectedFile(dest);
+      return;
+    } else if (err.code === "ENOTDIR") {
+      // If the user attempted to copy a directory to a file
+      Errors.expectedDir(dest);
+      return;
     } else if (err.code === "ERR_FS_CP_DIR_TO_NON_DIR") {
       // If the user attempted to copy a directory to a non-directory
 
