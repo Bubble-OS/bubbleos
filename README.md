@@ -14,6 +14,7 @@ Please note that this is not an operating system, but a shell.
       - [`EXE` File](#exe-file)
         - [Windows](#windows)
         - [macOS/Linux](#macoslinux)
+      - [Windows 8 and Below](#windows-8-and-below)
       - [`ZIP` File](#zip-file)
   - [Using Bubble](#using-bubble)
   - [Commands](#commands)
@@ -51,7 +52,22 @@ In Windows, follow the steps below.
 
 ##### macOS/Linux
 
-_Steps coming soon..._
+Unfortunately, there are no steps for this. Please search online for help. Sorry for the inconvenience.
+
+#### Windows 8 and Below
+
+BubbleOS will crash on startup if run on a computer that is running Windows 8 or lower. To fix this issue, follow the steps below.
+
+**DISCLAIMER:** Do this at your own risk. BubbleOS was not intended to run on Windows 8.1 or lower, therefore, you may experience bugs. **DO NOT** create any issues about issues faced on Windows 8.1 and below relating to the incompatible OS.
+
+Note that on Windows Vista and below, BubbleOS will not run at all.
+
+1.  Press <kbd>Windows</kbd> + <kbd>R</kbd>, and type `sysdm.cpl`. Press <kbd>Enter</kbd>.
+2.  Navigate to the _Advanced_ tab, and then click _Environment Variables_.
+3.  Click _New_ under user variables, and add the key `NODE_SKIP_PLATFORM_CHECK`, with a value of `1`. Press _OK_ when completed.
+4.  Repeat Step 3 for the system variables section.
+5.  Press _OK_ and _OK_ again.
+6.  Restart your system. After that, BubbleOS should run fine!
 
 #### `ZIP` File
 
@@ -89,22 +105,34 @@ If you have downloaded the executable, just run the file like usual. If you have
 
 ## Commands
 
-To get all of the commands in Bubble straight away, run `help`. Run `help <command>` to get more information about a specific command.
+There are many commands in BubbleOS to help make your journey smooth. These are the available commands (to get help on a specific one, install BubbleOS and run `help <yourcommand>`.
 
-A `FATAL ERROR` occurs when there is an unknown/unhandled exception in the code. In these circumstances, you can run the command that caused the error with the `--verbose` flag.
-
-### `about`
-
-Get information about BubbleOS, such as the version number, build number, author name, and links to various websites relating to the author.
-
-### `cd`
-
-Change into another directory on your local machine. You can do this by running `cd <directory>`. This will automatically change the path that Bubble is in and update the [current working directory](https://en.wikipedia.org/wiki/Working_directory) automatically.
-
-Should any issues arise using the `cd` command, you can run it with the `--verbose` flag after the directory (so, like `cd <directory> --verbose`) to see detailed information about what happens, if there is an error, for example.
-
-The possible error codes are:
-
-- `[2]` - The `directory` has not been passed (is `undefined`).
-- `[3]` - The `directory` does not exist (`ENOENT`).
-- `[4]` - The `directory` is not readable (`EPERM`).
+- `about`
+- `bub`
+- `cd`
+- `cls`
+- `copy`
+- `crash`
+- `cwd`
+- `date`
+- `del`
+- `exec`
+- `exit`
+- `fif`
+- `help`
+- `history`
+- `ifnet`
+- `ls`
+- `mkdir`
+- `mkfile`
+- `print`
+- `readfile`
+- `rename`
+- `size`
+- `symlink`
+- `sysinfo`
+- `taskkill`
+- `time`
+- `tips`
+- `userinfo`
+- `wcount`
