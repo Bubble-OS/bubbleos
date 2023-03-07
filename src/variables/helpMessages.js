@@ -257,6 +257,11 @@ const HELP = {
       "[-24]": "Show the time in 24-hour time instead of 12-hour time.",
     },
   },
+  tips: {
+    usage: "tips",
+    desc: `Show tips relating to the use of ${GLOBAL_NAME}. However, other text is shown, including fun facts about ${GLOBAL_NAME} too!`,
+    args: {},
+  },
 };
 
 module.exports = HELP;
