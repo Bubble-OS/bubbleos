@@ -47,7 +47,7 @@ const HELP = {
     desc: "Copies a file/directory from the source to the destination (with its contents). Absolute and relative paths for both arguments are accepted. The destination must have the name of the copied file/directory (otherwise if the path already exists, it will be overwritten).",
     args: {
       "<src>":
-        "The source file/directory. The file/directory must exist, otherwise it will throw an error.",
+        "The source file/directory. The file/directory must exist, otherwise, it will throw an error.",
       "<dest>":
         "The destination file/directory with its (new) name. If the name passed already exists, it will be overwritten.",
       "[-s]":
@@ -64,7 +64,7 @@ const HELP = {
     usage: "crash [<index>]",
     desc: `${chalk.bold(
       "USE WITH CAUTION!"
-    )} Crashes ${GLOBAL_NAME} in multiple ways, including causing a fatal error, hanging the terminal session, and also causing a memory leak. Note that with the memory leak, ${GLOBAL_NAME} will crash once it has it its maximum allocated memory space.`,
+    )} Crashes ${GLOBAL_NAME} in multiple ways, including causing a fatal error, hanging the terminal session, and also causing a memory leak. Note that with the memory leak, ${GLOBAL_NAME} will crash once it has its maximum allocated memory space.`,
     args: {
       "[<index>]": `An index which points to the crashing method. If the index does not exist, a warning will appear, and it will default to asking for a prompt.`,
     },
@@ -85,7 +85,7 @@ const HELP = {
   },
   del: {
     usage: "del <path> [-s] [-y]",
-    desc: `Delete any file/directory, regardless of if it is empty or not. The command will automatically infer on whether the path entered is a file or directory, and appropriately delete it. In the case of an error, ${GLOBAL_NAME} will keep trying to delete it until the maximum tries have been surpassed.`,
+    desc: `Delete any file/directory, regardless of if it is empty or not. The command will automatically infer whether the path entered is a file or directory, and appropriately delete it. In the case of an error, ${GLOBAL_NAME} will keep trying to delete it until the maximum tries have been surpassed.`,
     args: {
       "<path>":
         "The file/directory to delete. The command will work even if the directory is empty or not.",
@@ -98,7 +98,7 @@ const HELP = {
     usage: "exec <file> [-s] [-h] [--sh]",
     desc: `Run an executable from ${GLOBAL_NAME}. This command works on all operating systems. ${GLOBAL_NAME} will attempt to execute all files, regardless if they are an executable or not.`,
     args: {
-      "<file>": `The executable file path. The file can end with any extention, but note that a file may show a success message while not actually successfully executing.`,
+      "<file>": `The executable file path. The file can end with any extension, but note that a file may show a success message while not successfully executing.`,
       "[-s]":
         "Silently execute a file. This will silence the success message, but error messages will still be shown.",
       "[-h]":
@@ -125,7 +125,7 @@ const HELP = {
       "[-p]":
         "Show the character location/place of each starting character for each occurrence of the phrase. This is counted from the start of the file.",
       "[-v]":
-        "Show the visual occurrences, which is the contents of the file with the phrase occurrences highlighted.",
+        "Show the visual occurrences, which are the contents of the file with the phrase occurrences highlighted.",
     },
   },
   help: {
@@ -135,19 +135,19 @@ const HELP = {
   },
   history: {
     usage: "history [<numPlace>]",
-    desc: "Show the last fifty commands entered in BubbleOS, regardless if they were recognized or not (empty commands are not saved). After fifty commands have been stored in the history, the oldest get deleted. You can get a specfic command by entering that history point in the command.",
+    desc: "Show the last fifty commands entered in BubbleOS, regardless if they were recognized or not (empty commands are not saved). After fifty commands have been stored in the history, the oldest gets deleted. You can get a specific command by entering that history point in the command.",
     args: {
       "[<numPlace>]": "Optional; show the exact command at that history point.",
     },
   },
   ifnet: {
     usage: "ifnet",
-    desc: "Get a list of all running network interfaces running on your local machine, and information about them, such as their IP/MAC address, family, net mask, and more.",
+    desc: "Get a list of all running network interfaces running on your local machine, and information about them, such as their IP/MAC address, family, netmask, and more.",
     args: {},
   },
   ls: {
     usage: "ls [<dir>] [-s]",
-    desc: "Get all of the files and directories in a directory. By default, the current working directory is used, but you can manually specify a directory. You can also view the contents of the directory in a shorter, rows/colums view.",
+    desc: "Get all of the files and directories in a directory. By default, the current working directory is used, but you can manually specify a directory. You can also view the contents of the directory in a shorter, row/column view.",
     args: {
       "[<dir>]": `Optionally specify a directory to view the contents of. By default, if this is not specified, ${GLOBAL_NAME} will use the current working directory.`,
       "[-s]": "View directory contents in a shorter view in three rows.",
@@ -180,14 +180,14 @@ const HELP = {
   },
   readfile: {
     usage: "readfile <file> [-y] [--ignore-max]",
-    desc: `Read any plain text file in the terminal. Both absolute and relative paths are accepted for the file path. Note that if the number of characters in the file exceed 5000, ${GLOBAL_NAME} will confirm that you want to read it, and if there are more than 100,000 characters, ${GLOBAL_NAME} will refuse to read the file (unless you pass a flag).`,
+    desc: `Read any plain text file in the terminal. Both absolute and relative paths are accepted for the file path. Note that if the number of characters in the file exceeds 5000, ${GLOBAL_NAME} will confirm that you want to read it, and if there are more than 100,000 characters, ${GLOBAL_NAME} will refuse to read the file (unless you pass a flag).`,
     args: {
       "<file>":
         "The file to read. Note that only plain text files can be read to avoid terminal corruption. Absolute and relative paths are accepted.",
       "[-y]":
         "Automatically accept the warning prompt if there are more than 5000 characters in a file.",
       "[--ignore-max]":
-        "Ignore the maxmimum limit of characters in a file that BubbleOS can read (100,000 characters). Use this flag at your own risk!",
+        "Ignore the maximum limit of characters in a file that BubbleOS can read (100,000 characters). Use this flag at your own risk!",
     },
   },
   rename: {
@@ -259,13 +259,24 @@ const HELP = {
   },
   tips: {
     usage: "tips",
-    desc: `Show tips relating to the use of ${GLOBAL_NAME}. However, other text is shown, including fun facts about ${GLOBAL_NAME} too!`,
+    desc: `Show tips relating to the use of ${GLOBAL_NAME}. However, another text is shown, including fun facts about ${GLOBAL_NAME} too!`,
     args: {},
   },
   userinfo: {
     usage: "userinfo",
     desc: "Show user-related system information from the local machine. This includes the UID, GID, shell, username, user directory, and temporary directory. Note that on Windows, the UID, GID, and shell are unavailable and are not shown. This command may be merged with 'sysinfo' in later versions.",
     args: {},
+  },
+  wcount: {
+    usage: "wcount <file> [-l] [-w] [-c]",
+    desc: "Get the number of words, lines and characters in a file. You can also use filter arguments to narrow the amount of details that you get. This command reads the file that you provide, however, it does not edit it in any way.",
+    args: {
+      "<file>":
+        "The file to check the number of words, lines and characters in. Both absolute and relative paths are accepted.",
+      "[-l]": "Only diplay the number of lines in the file.",
+      "[-w]": "Only diplay the number of words in the file.",
+      "[-c]": "Only diplay the number of characters in the file.",
+    },
   },
 };
 

@@ -2,14 +2,14 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 84-96 (v0.8.4-v0.9.6)
+## Build 84-98 (v0.8.4-v0.9.8)
 
-_Note: This is a final beta compile build, and thus has lots of bug fixes, but no new commands have been introduced._
+_Note: This is the last beta build, and thus has lots of bug fixes and features, but no new commands have been introduced._
 
 ### Added Features
 
 - Added more information to the `fif` command, including a occurrence viewer.
-- Added the `-s` flag to many commands, which silences all success messages to _stdout_, except for error messasges.
+- Added the `-s` flag to many commands, which silences all success messages to _stdout_, except for error messages.
 - Added tips to the `tips` command.
 - Added a lot of information to the `sysinfo` command, including system resources, advanced information, and arguments.
 - Added the `--no-dump` flag to the main BubbleOS executable, which will disable file dumping in the case a fatal error occurs.
@@ -33,7 +33,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 - Fixed an issue where `taskkill` would crash BubbleOS if the PID didn't exist.
 - Fixed an issue where `symlink` would crash if the path didn't exist when the `-c` argument was passed.
 - Fixed an issue where the confirmation prompt would have '_y/n_' uncolored.
-- Fixed an issue where `exec` would crash if a directory was passed, and if the file extention was not an executable.
+- Fixed an issue where `exec` would crash if a directory was passed and if the file extension was not executable.
 - Updated many success messages in commands.
 - Changed the space character from `/s` to `*s` due to issues with Linux and macOS systems.
 - Fixed an issue where the `print` command wouldn't output anything after a space.
@@ -46,7 +46,7 @@ _Note: This is a final beta compile build, and thus has lots of bug fixes, but n
 
 ### Removed Features
 
-- Removed the need to add the `--sizes=` flag to the `size` command. Instead, use seperate arguments.
+- Removed the need to add the `--sizes=` flag to the `size` command. Instead, use separate arguments.
 - Removed the `prompt.js`, `mainArgs.js` and `multiParam.js` files internally.
 
 ## Build 78-84 (v0.7.8-v0.8.4)
