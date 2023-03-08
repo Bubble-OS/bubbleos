@@ -18,8 +18,6 @@ Please note that this is not an operating system, but a shell.
       - [`ZIP` File](#zip-file)
   - [Using Bubble](#using-bubble)
   - [Commands](#commands)
-    - [`about`](#about)
-    - [`cd`](#cd)
 
 ## Installation
 
