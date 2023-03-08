@@ -10,6 +10,7 @@ _Note: This is the last beta build, and thus has lots of bug fixes and features,
 
 - Added more information to the `fif` command, including a occurrence viewer.
 - Added the `-s` flag to many commands, which silences all success messages to _stdout_, except for error messages.
+- Added a feature to the `exec` command, where it can execute files as well as executables with their respective default viewer.
 - Added tips to the `tips` command.
 - Added a lot of information to the `sysinfo` command, including system resources, advanced information, and arguments.
 - Added the `--no-dump` flag to the main BubbleOS executable, which will disable file dumping in the case a fatal error occurs.
@@ -33,7 +34,6 @@ _Note: This is the last beta build, and thus has lots of bug fixes and features,
 - Fixed an issue where `taskkill` would crash BubbleOS if the PID didn't exist.
 - Fixed an issue where `symlink` would crash if the path didn't exist when the `-c` argument was passed.
 - Fixed an issue where the confirmation prompt would have '_y/n_' uncolored.
-- Fixed an issue where `exec` would crash if a directory was passed and if the file extension was not executable.
 - Updated many success messages in commands.
 - Changed the space character from `/s` to `*s` due to issues with Linux and macOS systems.
 - Fixed an issue where the `print` command wouldn't output anything after a space.
