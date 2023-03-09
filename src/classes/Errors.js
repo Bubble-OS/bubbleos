@@ -133,7 +133,7 @@ class Errors {
   /**
    * Information about the error message:
    *
-   * **Name:** _Does not exist / Non-existant_
+   * **Name:** _Does not exist / Non-existent_
    *
    * **Parameters:** `type`, `variable`
    *
@@ -148,7 +148,7 @@ class Errors {
     const CODE = 3;
     const MESSAGE = `The ${type}, ${chalk.italic.bold(
       `'${variable}'`
-    )}, does not exist. ${chalk.dim("(NON_EXISTANT)")}`;
+    )}, does not exist. ${chalk.dim("(NON_EXISTENT)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }
@@ -325,7 +325,7 @@ class Errors {
     const CODE = 11;
     const MESSAGE = `Only files ending with the ${chalk.italic.bold(
       `'${extension}'`
-    )} extension can be used. ${chalk.dim("(INVALID_EXTENTION)")}`;
+    )} extension can be used. ${chalk.dim("(INVALID_EXTENSION)")}`;
 
     this.#interpretError(CODE, MESSAGE);
   }

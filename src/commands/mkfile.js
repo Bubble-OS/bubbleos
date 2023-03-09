@@ -38,17 +38,17 @@ const Checks = require("../classes/Checks");
  * messages are shown.
  *
  * @param {fs.PathLike | string} file The file that should be created. Both absolute and relative paths are accepted.
- * @param  {...string} args Arguments to change the behaviour of `mkfile()`. Available arguments are listed above.
+ * @param  {...string} args Arguments to change the behavior of `mkfile()`. Available arguments are listed above.
  */
 const mkfile = (file, ...args) => {
   try {
     // Replace spaces and then convert the file to an absolute path
     file = _convertAbsolute(_replaceSpaces(file));
 
-    // Intialize checker
+    // Initialize checker
     const fileChk = new Checks(file);
 
-    // Intialize arguments
+    // Initialize arguments
     const silent = args?.includes("-s") || args?.includes("/s");
 
     // If the file was not defined

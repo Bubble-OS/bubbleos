@@ -52,7 +52,7 @@ const Checks = require("../classes/Checks");
  *
  * @param {fs.PathLike | string} src The source file/directory that should be copied.
  * @param {fs.PathLike | string} dest The destination that the source should be copied to.
- * @param  {...string} args Arguments to modify the behaviour of `copy()`. The available arguments are listed above.
+ * @param  {...string} args Arguments to modify the behavior of `copy()`. The available arguments are listed above.
  * @returns
  */
 const copy = (src, dest, ...args) => {

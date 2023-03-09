@@ -14,7 +14,7 @@ const { isAbsolute } = require("path");
  *
  * Example of a relative path: `./test.txt`
  *
- * Example of an abolute path: `D:\a\directory\with\a\file\test.txt`
+ * Example of an absolute path: `D:\a\directory\with\a\file\test.txt`
  *
  * @param {fs.PathLike | string} path The absolute/relative path to convert.
  * @returns A string of the new absolute path.

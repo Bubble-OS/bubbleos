@@ -31,7 +31,7 @@ const _fatalError = require("../functions/fatalError");
  *
  * No arguments are currently accepted, nor any filter ones.
  *
- * @param {...string} args The arguments to change the behaviour of `userinfo`, however, there are none currently.
+ * @param {...string} args The arguments to change the behavior of `userinfo`, however, there are none currently.
  */
 const userinfo = (...args) => {
   try {

@@ -27,7 +27,7 @@ const _fatalError = require("../functions/fatalError");
  * their computer:
  * - _Fatal error_: Crash BubbleOS with a fatal error. File dumping is
  * enabled.
- * - _Hang_: Hangs the terminal completely in some senarios, making it
+ * - _Hang_: Hangs the terminal completely in some scenarios, making it
  * almost impossible to press `^C` and forcing the user to force shut it
  * down using a command such as `taskkill` on Windows, or `kill`/`killall`
  * on Linux (supposing you can use the terminal).
@@ -36,7 +36,7 @@ const _fatalError = require("../functions/fatalError");
  * as it can leak about 4-8GB of memory.
  *
  * @param {number | string} index Optional. Uses this as the index for the crashing method. Defaults to `NaN`.
- * @param  {...string} args Arguments to change the behaviour of the `crash` command. Unused right now.
+ * @param  {...string} args Arguments to change the behavior of the `crash` command. Unused right now.
  */
 const crash = (index = NaN, ...args) => {
   try {
@@ -127,7 +127,7 @@ const crash = (index = NaN, ...args) => {
       return;
     }
   } catch (err) {
-    // If an unknown exception occurred, or the user selected to purposly crash BubbleOS with a fatal error
+    // If an unknown exception occurred, or the user selected to purposely crash BubbleOS with a fatal error
     _fatalError(err);
   }
 };

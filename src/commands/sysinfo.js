@@ -22,7 +22,7 @@ const _fatalError = require("../functions/fatalError");
  * @returns An object containing all of the conversions.
  */
 const _convertTime = (seconds, decimals = 2) => {
-  // Convert seconds to minutes, hours and days using their respective mathematical convertion method
+  // Convert seconds to minutes, hours and days using their respective mathematical conversion method
   const minutes = parseFloat((seconds / 60).toFixed(decimals));
   const hours = parseFloat((minutes / 60).toFixed(decimals));
   const days = parseFloat((hours / 24).toFixed(decimals));
@@ -108,7 +108,7 @@ const _friendlyOS = () => {
  * - `-e`: Display environment variables.
  * - `--all`: Display all system information that is available.
  *
- * @param  {...string} args Arguments to modify the behaviour of `sysinfo`.
+ * @param  {...string} args Arguments to modify the behavior of `sysinfo`.
  */
 const sysinfo = (...args) => {
   try {

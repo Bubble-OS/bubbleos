@@ -68,7 +68,7 @@ class Verbose {
       this.#formVerbMsg(
         `Replacing spaces in ${chalk.bold.italic(
           `'${variable}'`
-        )} and coverting it to an absolute path...`
+        )} and converting it to an absolute path...`
       );
   }
 
@@ -110,7 +110,7 @@ class Verbose {
   }
 
   intParams() {
-    if (this.isVerbose) this.#formVerbMsg("Interpretting parameters/arguments...");
+    if (this.isVerbose) this.#formVerbMsg("Interpreting parameters/arguments...");
   }
 }
 

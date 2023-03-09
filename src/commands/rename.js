@@ -35,7 +35,7 @@ const Checks = require("../classes/Checks");
  *
  * @param {fs.PathLike | string} oldName The old name of the file.
  * @param {fs.PathLike | string} newName The new name of the file.
- * @param  {...string} args Arguments to modify the behaviour of `rename`. Available arguments are above.
+ * @param  {...string} args Arguments to modify the behavior of `rename`. Available arguments are above.
  */
 const rename = (oldName, newName, ...args) => {
   try {
@@ -47,7 +47,7 @@ const rename = (oldName, newName, ...args) => {
     const oldChk = new Checks(oldName);
     const newChk = new Checks(newName);
 
-    // Initialize comamnds
+    // Initialize commands
     const confirm = !(args?.includes("-y") || args?.includes("/y"));
     const silent = args?.includes("-s") || args?.includes("/s");
 

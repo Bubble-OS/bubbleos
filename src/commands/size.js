@@ -55,7 +55,7 @@ const _logSize = (key, value) => {
  * - `-gb`: Get the gigabytes of a file only.
  *
  * @param {fs.PathLike | string} file The file to find the sizes of.
- * @param  {...string} args The arguments to change the behaviour of `size`.
+ * @param  {...string} args The arguments to change the behavior of `size`.
  */
 const size = (file, ...args) => {
   try {

@@ -24,11 +24,11 @@ const Checks = require("../classes/Checks");
  * del("test.txt"); // Arguments are supported
  * ```
  *
- * This command used to be in two seperate commands/functions -
+ * This command used to be in two separate commands/functions -
  * `rmdir` (removes a directory; empty or not) and `rmfile`
  * (removes a file). This command combines the two and can
  * delete all files, directories, and empty directories (so
- * you do not need to use a seperate command to delete an empty
+ * you do not need to use a separate command to delete an empty
  * directory).
  *
  * Available arguments:
@@ -39,7 +39,7 @@ const Checks = require("../classes/Checks");
  * before deleting a file.
  *
  * @param {fs.PathLike | string} path The relative or absolute path to the file/directory to delete.
- * @param {...string} args The arguments to modify the behaviour of the `del` command. See all available arguments above.
+ * @param {...string} args The arguments to modify the behavior of the `del` command. See all available arguments above.
  */
 const del = (path, ...args) => {
   try {

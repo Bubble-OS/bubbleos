@@ -22,11 +22,11 @@ const _fatalError = require("../functions/fatalError");
  * Available arguments:
  * - `-l`: Show the license.
  *
- * @param  {...string} args A list of arguments that can be used to modify the behaviour of `about`.
+ * @param  {...string} args A list of arguments that can be used to modify the behavior of `about`.
  */
 const about = (...args) => {
   try {
-    // Intialize recognized arguments
+    // Initialize recognized arguments
     const license = args?.includes("-l") || args?.includes("/l");
     const binary = args?.includes("--ilovetech") || args?.includes("/ilovetech");
 
@@ -74,7 +74,7 @@ const about = (...args) => {
     console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/Bubble-OS/bubbleos")}`);
     console.log(`YouTube: ${chalk.underline.blueBright("https://youtube.com/InfiniTech78")}\n`);
   } catch (err) {
-    // An unknown error occured
+    // An unknown error occurred
     _fatalError(err);
   }
 };

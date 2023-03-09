@@ -23,8 +23,8 @@ const Checks = require("../classes/Checks");
  * exec("file.exe"); // Arguments are also accepted!
  * ```
  *
- * Please note that even though any extention is accepted, and
- * that BubbleOS will not validate extentions, there are chances
+ * Please note that even though any extension is accepted, and
+ * that BubbleOS will not validate extensions, there are chances
  * when a file cannot run, even when the success message is shown.
  *
  * Available arguments:
@@ -36,7 +36,7 @@ const Checks = require("../classes/Checks");
  * inside of a shell.
  *
  * @param {fs.PathLike | string} file The filename to execute. Both absolute and relative paths are accepted.
- * @param  {...string} args The arguments to change the behaviour of `exec`. Available arguments are listed above.
+ * @param  {...string} args The arguments to change the behavior of `exec`. Available arguments are listed above.
  * @returns
  */
 const exec = (file, ...args) => {
@@ -44,7 +44,7 @@ const exec = (file, ...args) => {
     // Replace spaces in the path, then convert it to an absolute path
     file = _convertAbsolute(_replaceSpaces(file));
 
-    // Intialize the checker
+    // Initialize the checker
     const fileChk = new Checks(file);
 
     // Initialize arguments
@@ -79,7 +79,7 @@ const exec = (file, ...args) => {
     else console.log();
   } catch (err) {
     if (err.code === "UNKNOWN") {
-      // Unknown extention
+      // Unknown extension
       Errors.unknown("execute the file", file);
     } else if (err.code === "EPERM") {
       // Permission errors running the file

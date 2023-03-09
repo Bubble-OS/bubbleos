@@ -42,17 +42,17 @@ const Checks = require("../classes/Checks");
  * messages are shown.
  *
  * @param {fs.PathLike | string} dir The directory/directories that should be created. Both absolute and relative directories are accepted.
- * @param  {...string} args Arguments to change the behaviour of `mkdir()`. Available arguments are listed above.
+ * @param  {...string} args Arguments to change the behavior of `mkdir()`. Available arguments are listed above.
  */
 const mkdir = (dir, ...args) => {
   try {
     // Replace spaces in the directory, and then convert it to an absolute path
     dir = _convertAbsolute(_replaceSpaces(dir));
 
-    // Intialize checker
+    // Initialize checker
     const dirChk = new Checks(dir);
 
-    // Intialize arguments
+    // Initialize arguments
     const silent = args?.includes("-s") || args?.includes("/s");
 
     // If the directory is not defined

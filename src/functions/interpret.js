@@ -24,7 +24,7 @@ const _multiParam = (command) => {
 /**
  * Interpret all available BubbleOS commands.
  *
- * @param {string} command The command that was requested to be interpretted by the user.
+ * @param {string} command The command that was requested to be interpreted by the user.
  */
 const _intCmds = (command) => {
   // If the command is empty or not
@@ -43,7 +43,7 @@ const _intCmds = (command) => {
     if (command.startsWith(Object.keys(commands)[i])) {
       // Make the command recognized
       recognized = true;
-      // If the command is 'bub', it requires the '_intCmds' function, so call/pass it seperately
+      // If the command is 'bub', it requires the '_intCmds' function, so call/pass it separately
       if (Object.keys(commands)[i] === "bub")
         Object.values(commands)[i](_intCmds, ..._multiParam(command));
       // Call the respective function and pass in the arguments

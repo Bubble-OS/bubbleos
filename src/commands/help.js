@@ -91,11 +91,11 @@ const _printHelp = (sorted, specific, cmd) => {
  * - `--no-tip`: Don't show the tip.
  *
  * @param {string} command Optionally get help on a specific command.
- * @param  {...string} args Arguments to modify the behaviour of `help`.
+ * @param  {...string} args Arguments to modify the behavior of `help`.
  */
 const help = (command, ...args) => {
   try {
-    // Intialize arguments
+    // Initialize arguments
     const showTip = !(
       args.includes("--no-tip") ||
       args.includes("/no-tip") ||

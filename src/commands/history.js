@@ -38,7 +38,7 @@ const NUMBER_TO_STORE = 50;
  */
 const historyCmd = (numToDisplay, ...args) => {
   /**
-   * An extrmely private and simple command to format
+   * An extremely private and simple command to format
    * the way history displays.
    *
    * Usage:

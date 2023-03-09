@@ -29,10 +29,10 @@ const Checks = require("../classes/Checks");
  * - `short`: If the directory should be in a short
  * view or not. Default: `false`.
  * - `max`: Only applies if `short` is `true`. The
- * maxmimum padding to the end of each item.
+ * maximum padding to the end of each item.
  *
  * @param {[ { name: string, type: string, isSymlink: boolean } ]} contents An array of objects containing information about the files/directories.
- * @param {{ short: boolean, max: boolean }} options Options to modify the behaviour of `_logDirContents()`.
+ * @param {{ short: boolean, max: boolean }} options Options to modify the behavior of `_logDirContents()`.
  * @returns A string with the final value.
  */
 const _logDirContents = (contents, options = { short: false, max: undefined }) => {
@@ -108,7 +108,7 @@ const _logDirContents = (contents, options = { short: false, max: undefined }) =
  * (rows/columns).
  *
  * @param {fs.PathLike | string} dir Optional: the directory to view the contents in. By default, it uses the current working directory.
- * @param  {...string} args Arguments to change the behaviour of `ls`.
+ * @param  {...string} args Arguments to change the behavior of `ls`.
  */
 const ls = (dir = process.cwd(), ...args) => {
   try {
@@ -122,7 +122,7 @@ const ls = (dir = process.cwd(), ...args) => {
     // Replace spaces
     dir = _replaceSpaces(dir);
 
-    // Intialize checker
+    // Initialize checker
     const dirChk = new Checks(dir);
 
     if (!dirChk.doesExist()) {

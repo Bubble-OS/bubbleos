@@ -104,7 +104,7 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
       fs.writeFileSync(FILENAMES.errorInfo, errorInfoTxt);
       writeHeapSnapshot(FILENAMES.heapSnap);
 
-      // If the operation succeded, show a success message
+      // If the operation succeeded, show a success message
       console.log(
         chalk.green(
           `${chalk.white.bgGreen(" SUCCESS ")}: Saved files ${chalk.bold(

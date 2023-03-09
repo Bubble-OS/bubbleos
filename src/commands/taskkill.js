@@ -51,7 +51,7 @@ const _isNumeric = (val) => {
  * unsaved data in BubbleOS!
  *
  * @param {string | number} pid The PID to kill.
- * @param  {...string} args Arguments to change the behaviour of `taskkill` (listed above).
+ * @param  {...string} args Arguments to change the behavior of `taskkill` (listed above).
  */
 const taskkill = (pid, ...args) => {
   try {

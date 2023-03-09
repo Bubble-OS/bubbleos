@@ -27,7 +27,7 @@ const Checks = require("../classes/Checks");
  * - `-s`: Silence all success messages to the standard output.
  *
  * @param {string} dir The directory to change into. Must be a valid directory.
- * @param  {...string} args The arguments that can be passed to modify the behaviour of the command.
+ * @param  {...string} args The arguments that can be passed to modify the behavior of the command.
  */
 const cd = (dir, ...args) => {
   try {
@@ -37,7 +37,7 @@ const cd = (dir, ...args) => {
     // Create a new directory checker
     const dirChk = new Checks(dir);
 
-    // Intialize arguments
+    // Initialize arguments
     const silent = args?.includes("-s") || args?.includes("/s");
 
     // Check if the parameter is undefined

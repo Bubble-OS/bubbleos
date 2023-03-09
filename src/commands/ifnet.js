@@ -76,7 +76,7 @@ const _makeValueFriendly = (value) => {
  *
  * No arguments are available.
  *
- * @param  {...string} args Arguments to modify the behaviour of `ifnet`, however, none are yet available.
+ * @param  {...string} args Arguments to modify the behavior of `ifnet`, however, none are yet available.
  */
 const ifnet = (...args) => {
   // Get the network interfaces and sort them, get the keys,

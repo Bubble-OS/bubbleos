@@ -22,10 +22,10 @@ const { GLOBAL_NAME } = require("../variables/constants");
  *
  * Available arguments:
  * - `-c`: Clears the _stdout_ (standard output) after
- * BubbleOS has completed shtting down completely
+ * BubbleOS has completed shutting down completely
  * (similar to `cls()`).
  *
- * @param {...string} args Arguments to modify the behaviour of the `exit()` function. See available ones above.
+ * @param {...string} args Arguments to modify the behavior of the `exit()` function. See available ones above.
  */
 const exit = (...args) => {
   // Show the user that BubbleOS is shutting down/exiting

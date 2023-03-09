@@ -45,7 +45,7 @@ const Checks = require("../classes/Checks");
  *
  * @param {fs.PathLike | string} path The path that the symbolic link will point to (the target).
  * @param {fs.PathLike | string} newPath The symbolic link to create (the path). It can also be the `-c` argument.
- * @param  {...string} args Arguments to modify the behaviour of the `symlink` function.
+ * @param  {...string} args Arguments to modify the behavior of the `symlink` function.
  */
 const symlink = (path, newPath, ...args) => {
   try {

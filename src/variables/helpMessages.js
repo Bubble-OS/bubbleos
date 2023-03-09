@@ -262,9 +262,9 @@ const HELP = {
     args: {
       "<file>":
         "The file to check the number of words, lines and characters in. Both absolute and relative paths are accepted.",
-      "[-l]": "Only diplay the number of lines in the file.",
-      "[-w]": "Only diplay the number of words in the file.",
-      "[-c]": "Only diplay the number of characters in the file.",
+      "[-l]": "Only display the number of lines in the file.",
+      "[-w]": "Only display the number of words in the file.",
+      "[-c]": "Only display the number of characters in the file.",
     },
   },
 };

@@ -16,7 +16,7 @@ const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
 /**
- * The maxmimum amount of characters before BubbleOS
+ * The maximum amount of characters before BubbleOS
  * asks the user to make sure that they want to read
  * the number of characters.
  */
@@ -40,7 +40,7 @@ const MAX_CHARS_READ = 100_000;
  *
  * BubbleOS has a limit on the number of characters
  * it can read (defined in `MAX_CHARS_READ`) and a
- * maxmimum number of characters before it confirms
+ * maximum number of characters before it confirms
  * that the user would like to read that many
  * characters (defined in `MAX_CHARS_CONFIRM`).
  * However, both can be bypassed using the `-y`
@@ -53,7 +53,7 @@ const MAX_CHARS_READ = 100_000;
  * `MAX_CHARS_READ`.
  *
  * @param {fs.PathLike | string} file The file that should be read. Both absolute and relative paths are accepted.
- * @param  {...string} args The arguments to modify the behaviour of `readfile`. Available arguments are above.
+ * @param  {...string} args The arguments to modify the behavior of `readfile`. Available arguments are above.
  */
 const readfile = (file, ...args) => {
   try {
@@ -103,7 +103,7 @@ const readfile = (file, ...args) => {
       return;
     } else if (chars >= MAX_CHARS_CONFIRM && confirm) {
       // If the characters is greater than/equal to the number of characters before BubbleOS
-      // must confirm that the user wishes to read this many lines, unless they've alrady pre-accepted
+      // must confirm that the user wishes to read this many lines, unless they've already pre-accepted
       if (
         !_promptForYN(
           `The file, ${chalk.bold(

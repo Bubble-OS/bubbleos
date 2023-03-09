@@ -2,6 +2,22 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 98-100 (v0.9.8-v1.0.0)
+
+**This is a stable release of BubbleOS!**
+
+### Added Features
+
+_No features have been added in this release._
+
+### Changed/Fixed Features
+
+- Corrected some spelling mistakes in BubbleOS.
+
+### Removed Features
+
+_No features have been removed in this release._
+
 ## Build 84-98 (v0.8.4-v0.9.8)
 
 _Note: This is the last beta build, and thus has lots of bug fixes and features, but no new commands have been introduced._

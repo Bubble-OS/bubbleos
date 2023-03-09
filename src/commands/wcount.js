@@ -23,7 +23,7 @@ const Checks = require("../classes/Checks");
  * ```
  *
  * Count the number of lines, words, characters with
- * whitespace and the opposite. In the senario that
+ * whitespace and the opposite. In the scenario that
  * the characters with whitespace and the characters
  * without are the same, it will only show it as one
  * value.
@@ -34,7 +34,7 @@ const Checks = require("../classes/Checks");
  * - `-c`: Only shows the number of characters in a file.
  *
  * @param {fs.PathLike | string} file The file to count the words in.
- * @param  {...string} args Arguments to modify the behaviour of `wcount`.
+ * @param  {...string} args Arguments to modify the behavior of `wcount`.
  */
 const wcount = (file, ...args) => {
   try {

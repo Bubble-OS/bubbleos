@@ -47,7 +47,7 @@ const _convertTime = (time) => {
  * Available arguments:
  * - `-24`: Show the time in 24-hour time.
  *
- * @param  {...string} args Arguments to modify the behaviour of `time`.
+ * @param  {...string} args Arguments to modify the behavior of `time`.
  */
 const time = (...args) => {
   try {

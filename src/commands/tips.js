@@ -54,7 +54,7 @@ const doneTips = [];
  *
  * No user-intended arguments are accepted.
  *
- * @param  {...string} args Arguments to modify the behaviour of `tips`.
+ * @param  {...string} args Arguments to modify the behavior of `tips`.
  */
 const tips = (...args) => {
   // Initialize tips
