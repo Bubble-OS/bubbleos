@@ -12,6 +12,20 @@ const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
 /**
+ * Escape all special characters in RegExp.
+ *
+ * This will add the ignore character (`\`) before
+ * all special characters (ironically using RegExp)!
+ *
+ * See [this website](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
+ * for more information.
+ *
+ * @param {string} str The string to replace all special RegExp characters with.
+ * @returns The string will all special characters ignored.
+ */
+const escapeRegExp = (str) => str.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/**
  * Find a word or phrase in a file. This is a CLI
  * tool to be used in the BubbleOS shell only.
  * The command to use it is `fif`.
@@ -78,11 +92,12 @@ const fif = (file, toFind, ...args) => {
     // Get file contents
     const contents = fs.readFileSync(file, { encoding: "utf-8", flag: "r" });
 
-    // The RegEx code will match against the contents,
+    // The RegExp code will match against the contents,
     // and if 'null' is returned, it'll default to [].
     // Otherwise, it will return an array, of which only the length is required.
-    // However, if the length is undefined, it will be 'N/A'
-    const occurrences = contents.match(new RegExp(toFind, "ig") || [])?.length ?? "N/A";
+    // However, if the length is undefined, it will be 'N/A'.
+    const occurrences =
+      contents.match(new RegExp(escapeRegExp(toFind), "ig") || [])?.length ?? "N/A";
 
     // If there are no occurrences
     if (occurrences === "N/A") {
@@ -108,7 +123,7 @@ const fif = (file, toFind, ...args) => {
       console.log("Occurrence location since start of file:");
 
       // Matches each phrase in the content and spreads it into an array
-      const charNum = [...contents.matchAll(new RegExp(toFind, "ig"))];
+      const charNum = [...contents.matchAll(new RegExp(escapeRegExp(toFind), "ig"))];
 
       // Loop through all character occurrences and output them
       charNum.forEach((val, idx) => {
