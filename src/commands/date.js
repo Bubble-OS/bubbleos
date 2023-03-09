@@ -64,7 +64,7 @@ const date = (...args) => {
       }, ${date.getFullYear()}`
     );
     // Slash format
-    console.log(chalk.italic(`(${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()})`));
+    console.log(chalk.italic(`(${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()})`));
 
     // Log a newline
     console.log();

@@ -26,9 +26,9 @@ if (IN_BETA) {
       chalk.dim(
         `${chalk.bold(
           "WARNING!"
-        )} This beta software has a timebomb of +${TIMEBOMB_COUNT} days (since compile date).\nIt will expire on ${EXPIRY_DATE.getDate()}/${
+        )} This beta software has a timebomb of +${TIMEBOMB_COUNT} days (since compile date).\nIt will expire on ${
           EXPIRY_DATE.getMonth() + 1
-        }/${EXPIRY_DATE.getFullYear()}.\n`
+        }/${EXPIRY_DATE.getDate()}/${EXPIRY_DATE.getFullYear()}.\n`
       )
     );
   } else {

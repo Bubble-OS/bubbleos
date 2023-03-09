@@ -12,6 +12,7 @@ _No features have been added in this release._
 
 ### Changed/Fixed Features
 
+- Changed the structure of dates from _{day}/{month}_ to _{month}/{day}_.
 - Corrected some spelling mistakes in BubbleOS.
 
 ### Removed Features
