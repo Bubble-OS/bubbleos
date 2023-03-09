@@ -12,6 +12,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
+- Updated the tips in the `tips` command.
 - Changed the structure of dates from _{day}/{month}_ to _{month}/{day}_.
 - Corrected some spelling mistakes in BubbleOS.
 
