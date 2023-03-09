@@ -4,6 +4,8 @@ BubbleOS is a shell for your current operating system!
 
 Please note that this is not an operating system, but a shell.
 
+The latest stable version of BubbleOS is **[build 100](https://github.com/Bubble-OS/bubbleos/releases/tag/v1.0.0)**.
+
 ## Table of Contents
 
 - [BubbleOS](#bubbleos)

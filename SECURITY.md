@@ -4,10 +4,9 @@
 
 The versions below are currently supported. This file is actively updated.
 
-_No versions are actively supported yet as BubbleOS is still in beta._
-
 | Version  | Supported          |
 | -------- | ------------------ |
+| 1.0.0    | :white_check_mark: |
 | < 0.x.x  | :x:                |
 
 ## Reporting a Vulnerability

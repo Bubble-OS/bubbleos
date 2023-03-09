@@ -8,7 +8,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
-_No features have been added in this release._
+- Added the `--no-intro` flag to the BubbleOS executable, which disables the intro at startup.
 
 ### Changed/Fixed Features
 

@@ -19,6 +19,7 @@ const args = process.argv.splice(2);
 let showTimebomb = true;
 let showVersion = false;
 let noWarnings = false;
+let noIntro = false;
 global.noDump = false;
 
 // Get all arguments and entered commands that were passed
@@ -32,6 +33,7 @@ if (args.length !== 0) {
   )
     showVersion = true;
   if (args.includes("--no-warnings") || args.includes("/no-warnings")) noWarnings = true;
+  if (args.includes("--no-intro") || args.includes("/no-intro")) noIntro = true;
   if (args.includes("--no-dump") || args.includes("/no-dump")) global.noDump = true;
 }
 
@@ -59,8 +61,8 @@ if (args.length !== 0) {
   }
 }
 
-// Run the intro (only works if no commands have been entered in the pre-boot interpreter)
-require("./src/intro");
+// Run the intro if requested (only works if no commands have been entered in the pre-boot interpreter)
+if (!noIntro) require("./src/intro");
 
 if (!showTimebomb && !noWarnings) {
   console.log(
