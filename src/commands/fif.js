@@ -120,7 +120,7 @@ const fif = (file, ...args) => {
     // Otherwise, it will return an array, of which only the length is required.
     // However, if the length is undefined, it will be 'N/A'.
     const occurrences =
-      contents.match(new RegExp(escapeRegExp(toFind), "ig") || [])?.length ?? "N/A";
+      contents.match(new RegExp(escapeRegExp(toFind), "g") || [])?.length ?? "N/A";
 
     // If there are no occurrences
     if (occurrences === "N/A") {
@@ -146,7 +146,7 @@ const fif = (file, ...args) => {
       console.log("Occurrence location since start of file:");
 
       // Matches each phrase in the content and spreads it into an array
-      const charNum = [...contents.matchAll(new RegExp(escapeRegExp(toFind), "ig"))];
+      const charNum = [...contents.matchAll(new RegExp(escapeRegExp(toFind), "g"))];
 
       // Loop through all character occurrences and output them
       charNum.forEach((val, idx) => {
@@ -161,7 +161,9 @@ const fif = (file, ...args) => {
       console.log(chalk.bold.underline(`Visual occurrences\n`));
 
       // Replace all occurrences with a highlighted version
-      console.log(contents.replaceAll(toFind, chalk.bgYellow.black(toFind)));
+      console.log(
+        contents.replaceAll(new RegExp(escapeRegExp(toFind), "g"), chalk.bgYellow.black(toFind))
+      );
       console.log();
     }
   } catch (err) {

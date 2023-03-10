@@ -14,6 +14,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Changed/Fixed Features
 
 - Fixed an issue where characters such as `?` or `:` would crash BubbleOS when entered in `fif`.
+- Fixed an issue where the `fif` command did a case-insensitive search.
 - Updated the tips in the `tips` command.
 - Changed the structure of dates from _{day}/{month}_ to _{month}/{day}_.
 - Corrected some spelling mistakes in BubbleOS.
