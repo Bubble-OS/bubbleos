@@ -1,6 +1,7 @@
 // Get modules
 const fs = require("fs");
 const chalk = require("chalk");
+const { question } = require("readline-sync");
 
 // Get functions
 const _replaceSpaces = require("../functions/replaceSpaces");
@@ -14,12 +15,11 @@ const Checks = require("../classes/Checks");
 /**
  * Find a word or phrase in a file. This is a CLI
  * tool to be used in the BubbleOS shell only.
- * The command to use it is `fif`.
  *
  * Usage:
  *
  * ```js
- * fif("test.txt", "hello"); // Also accepts arguments!
+ * fif("test.txt"); // Also accepts arguments!
  * ```
  *
  * This function will find all occurrences in a file
@@ -37,10 +37,9 @@ const Checks = require("../classes/Checks");
  * _Note: If no arguments are passed that are either `-n`, `-p` or `-v`, it will show all of them._
  *
  * @param {string} file A path to the file to search in. Please note directories are not valid.
- * @param {string} toFind The word or phrase to find.
  * @param {...string} args All recognized arguments. All available arguments are listed above.
  */
-const fif = (file, toFind, ...args) => {
+const fif = (file, ...args) => {
   try {
     // Replace spaces, and then convert the path to absolute
     file = _convertAbsolute(_replaceSpaces(file));
@@ -56,8 +55,8 @@ const fif = (file, toFind, ...args) => {
 
     // Check to make sure the file/phrase to find is not empty
     // Make a temporary new checker
-    if (fileChk.paramUndefined() || new Checks(toFind).paramUndefined()) {
-      Errors.enterParameter("the file and the phrase to find", "fif test.txt hello");
+    if (fileChk.paramUndefined()) {
+      Errors.enterParameter("the file", "fif test.txt");
       return;
     }
 
@@ -78,6 +77,30 @@ const fif = (file, toFind, ...args) => {
     // Get file contents
     const contents = fs.readFileSync(file, { encoding: "utf-8", flag: "r" });
 
+    // Prompt the user for file contents
+    // Replace '*n' with newlines
+    const toFind =
+      _replaceSpaces(
+        question(
+          `Please enter the phrase to find (${chalk.italic("'Enter'")} to accept; ${chalk.italic(
+            "'*n'"
+          )} for a newline): `
+        ),
+        "*n",
+        "\n"
+      ) ?? "";
+
+    console.log();
+
+    if (
+      toFind === null ||
+      typeof toFind === "undefined" ||
+      (typeof toFind === "string" && !toFind)
+    ) {
+      console.log(chalk.yellow(`No phrase entered.\nOperation cancelled.\n`));
+      return;
+    }
+
     // The RegEx code will match against the contents,
     // and if 'null' is returned, it'll default to [].
     // Otherwise, it will return an array, of which only the length is required.
@@ -95,7 +118,7 @@ const fif = (file, toFind, ...args) => {
     }
 
     // If at least the number, place, or all was requested, show the subheading
-    if (numOccur || placeOccur || all) console.log(chalk.bold.underline(`Occurrences:`));
+    if (numOccur || placeOccur || all) console.log(chalk.bold.underline(`Occurrences`));
 
     // Number of occurrences
     if (numOccur || all) {
@@ -120,7 +143,7 @@ const fif = (file, toFind, ...args) => {
 
     // Visible occurrences (file contents will highlighted occurrences)
     if (visualOccur || all) {
-      console.log(chalk.bold.underline(`Visual occurrences:\n`));
+      console.log(chalk.bold.underline(`Visual occurrences\n`));
 
       // Replace all occurrences with a highlighted version
       console.log(contents.replaceAll(toFind, chalk.bgYellow.black(toFind)));

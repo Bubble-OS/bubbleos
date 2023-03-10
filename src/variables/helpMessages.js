@@ -101,12 +101,11 @@ const HELP = {
     },
   },
   fif: {
-    usage: "fif <file> <phrase> [-n] [-p] [-v]",
-    desc: "Show all occurrences in a file that matches the phrase passed. Both absolute and relative paths are accepted for the path. Note that the search is case-sensitive. It will output the number of occurrences, the character location of each occurrence, and the visual occurrences. If no arguments of these that were just listed were passed, it will by default show all of them.",
+    usage: "fif <file> [-n] [-p] [-v]",
+    desc: "Show all occurrences in a file that matches the phrase entered. Note that the search is case-sensitive. It will output the number of occurrences, the character location of each occurrence, and the visual occurrences. If no arguments of these that were just listed were passed, it will by default show all of them.",
     args: {
       "<file>":
         "The file path that should be searched. Both absolute and relative paths are accepted for the filename.",
-      "<phrase>": "The phrase to search for in the file. Note that the search is case-sensitive.",
       "[-n]": "Show the number of occurrences.",
       "[-p]":
         "Show the character location/place of each starting character for each occurrence of the phrase. This is counted from the start of the file.",

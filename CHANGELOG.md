@@ -8,6 +8,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
+- Added a prompt for the phrase to find in the `fif` command.
 - Added the `--no-intro` flag to the BubbleOS executable, which disables the intro at startup.
 
 ### Changed/Fixed Features
@@ -18,7 +19,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Removed Features
 
-_No features have been removed in this release._
+- Removed the 'phrase' argument in the `fif` comamnd.
 
 ## Build 84-98 (v0.8.4-v0.9.8)
 
