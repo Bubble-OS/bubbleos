@@ -31,6 +31,7 @@ const size = require("../commands/size");
 const symlink = require("../commands/symlink");
 const sysinfo = require("../commands/sysinfo");
 const taskkill = require("../commands/taskkill");
+const tasklist = require("../commands/tasklist");
 const time = require("../commands/time");
 const tips = require("../commands/tips");
 const userinfo = require("../commands/userinfo");
@@ -90,6 +91,7 @@ const COMMANDS = {
   symlink,
   sysinfo,
   taskkill,
+  tasklist,
   time,
   tips,
   userinfo,

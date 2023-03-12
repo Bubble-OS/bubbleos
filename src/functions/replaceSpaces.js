@@ -4,7 +4,7 @@
  * Usage:
  *
  * ```js
- * _replaceSpaces("Hello/sWorld!"); // Should return: "Hello World!"
+ * _replaceSpaces("Hello*sWorld!"); // Should return: "Hello World!"
  * ```
  *
  * @param {string | any} text A string (or any value, but it will be converted to a string) to replace the spaces in.
