@@ -1,18 +1,20 @@
 const chalk = require("chalk");
 const https = require("https");
 
-const _makeConnection = async (host, path = "", timeout = 2000, method = "HEAD") => {
+const { Errors } = require("../classes/Errors");
+const Checks = require("../classes/Checks");
+
+const _makeConnection = async (host, path = "", timeout = 5000, method = "HEAD") => {
   const options = {
     host,
     path,
     timeout,
     method,
     followRedirect: true,
+    rejectUnauthorized: false,
   };
 
   return new Promise((resolve, reject) => {
-    console.log(chalk.blue("Please wait..."));
-
     const req = https.request(options, (res) => {
       if (res.statusCode === 200) {
         resolve(
@@ -33,9 +35,7 @@ const _makeConnection = async (host, path = "", timeout = 2000, method = "HEAD")
       }
     });
 
-    req.on("error", (err) => {
-      reject(err);
-    });
+    req.on("error", reject);
 
     req.on("timeout", () => {
       reject(
@@ -47,9 +47,18 @@ const _makeConnection = async (host, path = "", timeout = 2000, method = "HEAD")
   });
 };
 
-const ping = async (host, path) => {
+const ping = async (host, ...args) => {
   try {
-    const result = await _makeConnection(host, path);
+    if (new Checks(host).paramUndefined()) {
+      Errors.enterParameter("a host", "ping www.google.com");
+      return;
+    }
+
+    const split = host.split("/");
+    const hostname = split.splice(0, 1);
+    const path = split.length !== 0 ? "/" + split.join("/") : "";
+
+    const result = await _makeConnection(hostname[0], path);
     console.log(result);
   } catch (err) {
     console.error(err);

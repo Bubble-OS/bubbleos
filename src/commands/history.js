@@ -2,7 +2,7 @@
 const chalk = require("chalk");
 
 // Get classes
-const Errors = require("../classes/Errors");
+const { Errors } = require("../classes/Errors");
 
 /**
  * A 'global' array of all of the commands in the

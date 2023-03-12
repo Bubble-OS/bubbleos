@@ -10,7 +10,7 @@ const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 
 // Get classes
-const Errors = require("../classes/Errors");
+const { Errors } = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
 /**

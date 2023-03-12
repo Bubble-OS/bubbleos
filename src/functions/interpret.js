@@ -30,9 +30,6 @@ const _intCmds = async (command) => {
   // If the command is empty or not
   const isEmpty = command.length === 0;
 
-  // If the command is empty, show an error
-  if (isEmpty) Errors.enterCommand();
-
   // The command is currently unrecognized
   let recognized = false;
 

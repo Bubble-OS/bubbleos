@@ -58,8 +58,8 @@ if (args.length !== 0) {
   if (command.length !== 0) {
     (async () => {
       await _intCmds(command.join(" "));
-      process.exit(0);
     })();
+    process.exit(0);
   }
 }
 

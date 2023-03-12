@@ -15,7 +15,7 @@ _No features have been changed/fixed in this release._
 
 ### Removed Features
 
-_No features have been removed in this release._
+- Removed the _no command_ error.
 
 ## Build 98-100 (v0.9.8-v1.0.0)
 

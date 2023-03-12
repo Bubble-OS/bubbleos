@@ -5,6 +5,33 @@ const chalk = require("chalk");
 const { GLOBAL_NAME } = require("../variables/constants");
 
 /**
+ * A function to interpret an error and format
+ * the error code and message.
+ *
+ * Editing the contents of this will reflect across
+ * all error messages throughout BubbleOS.
+ *
+ * Note that the message will be formatted with
+ * Chalk and does `console.log` it.
+ *
+ * Usage (inside):
+ *
+ * ```js
+ * _interpretError(CODE, MESSAGE);
+ * ```
+ *
+ * The `code` must be of type `number`, and the
+ * `message` must be of type `string`. However,
+ * there are no checks in place for this validation.
+ *
+ * @param {number | string} code The error code that should be in the error.
+ * @param {string} message The error message that should be in the error.
+ */
+const _interpretError = (code, message) => {
+  console.log(chalk.red(`${chalk.bold(`[${String(code)}]`)} ${message}\n`));
+};
+
+/**
  * A class which does **not** require initialization (`new Errors`). Contains all errors used in BubbleOS.
  *
  * Note that you can edit the error messages, but only in the class itself, and the changes will reflect across BubbleOS.
@@ -21,7 +48,6 @@ const { GLOBAL_NAME } = require("../variables/constants");
  *
  * Call by using `Errors.yourErrorFunc(params)`. More information on each function below with their respective error code.
  *
- * - `0` - `enterCommand()`
  * - `1` - `unrecognizedCommand()`
  * - `2` - `enterParameter()`
  * - `3` - `doesNotExist()`
@@ -52,7 +78,7 @@ class Errors {
    *
    * ```js
    * // For example, inside of a function in 'Errors'
-   * this.#interpretError(CODE, MESSAGE);
+   * _interpretError(CODE, MESSAGE);
    * ```
    *
    * The `code` must be of type `number`, and the `message` must be of type `string`. However, there are no checks in place for this validation.
@@ -63,26 +89,6 @@ class Errors {
   static #interpretError(code, message) {
     const FORMATTED_MESSAGE = chalk.red(`${chalk.bold(`[${String(code)}]`)} ${message}\n`);
     console.log(FORMATTED_MESSAGE);
-  }
-
-  /**
-   * Information about the error message:
-   *
-   * **Name:** _Enter command_
-   *
-   * **Parameters:** _(none)_
-   *
-   * **Error code:** `0`
-   *
-   * **Message:** Please enter a command. Type _'help'_ for a list of available commands.
-   */
-  static enterCommand() {
-    const CODE = 0;
-    const MESSAGE = `Please enter a command. Type ${chalk.italic(
-      "'help'"
-    )} for a list of available commands.`;
-
-    this.#interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -104,7 +110,7 @@ class Errors {
       `'${command}'`
     )}, is unrecognized. Type ${chalk.italic("'help'")} for a list of available commands.`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -127,7 +133,7 @@ class Errors {
       `'${example}'`
     )}. ${chalk.dim("(NO_PARAMS_ENTERED)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -150,7 +156,7 @@ class Errors {
       `'${variable}'`
     )}, does not exist. ${chalk.dim("(NON_EXISTENT)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -173,7 +179,7 @@ class Errors {
       `'${variable}'`
     )}. You need elevated privileges. ${chalk.dim("(INVALID_PERMS)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -196,7 +202,7 @@ class Errors {
       `'${variable}'`
     )}, is currently being used. ${chalk.dim("(PATH_BUSY)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -219,7 +225,7 @@ class Errors {
       `'${variable}'`
     )}, already exists. ${chalk.dim("(PATH_EXISTS)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -241,7 +247,7 @@ class Errors {
       `'${variable}'`
     )}) instead. ${chalk.dim("(PATH_IS_DIR)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -263,7 +269,7 @@ class Errors {
       `'${variable}'`
     )}) instead. ${chalk.dim("(PATH_IS_NOT_DIR)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -283,7 +289,7 @@ class Errors {
     const CODE = 9;
     const MESSAGE = `This command can only run on ${os}. ${chalk.dim("(INVALID_OS)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -305,7 +311,7 @@ class Errors {
       "(INVALID_ENCODING)"
     )}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -327,7 +333,7 @@ class Errors {
       `'${extension}'`
     )} extension can be used. ${chalk.dim("(INVALID_EXTENSION)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -352,7 +358,7 @@ class Errors {
       `'${variable}'`
     )}). ${chalk.dim("(INVALID_CHARS)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -374,7 +380,7 @@ class Errors {
       `'${path}'`
     )}) is too long. Please choose a shorter path. ${chalk.dim("(PATH_TOO_LONG)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -397,7 +403,7 @@ class Errors {
       "(COPY_DIR_TO_NON_DIR)"
     )}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 
   /**
@@ -420,9 +426,13 @@ class Errors {
       `'${variable}'`
     )}. ${chalk.dim("(UNKNOWN)")}`;
 
-    this.#interpretError(CODE, MESSAGE);
+    _interpretError(CODE, MESSAGE);
   }
 }
 
+class NetworkErrors {
+  constructor() {}
+}
+
 // Export the class
-module.exports = Errors;
+module.exports = { Errors, NetworkErrors };
