@@ -23,6 +23,7 @@ const ifnet = require("../commands/ifnet");
 const ls = require("../commands/ls");
 const mkdir = require("../commands/mkdir");
 const mkfile = require("../commands/mkfile");
+const ping = require("../commands/ping");
 const print = require("../commands/print");
 const readfile = require("../commands/readfile");
 const rename = require("../commands/rename");
@@ -78,6 +79,7 @@ const COMMANDS = {
   ls,
   mkdir,
   mkfile,
+  ping,
   print,
   readfile,
   rename,

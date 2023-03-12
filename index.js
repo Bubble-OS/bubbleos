@@ -56,8 +56,10 @@ if (args.length !== 0) {
   });
 
   if (command.length !== 0) {
-    _intCmds(command.join(" "));
-    process.exit(0);
+    (async () => {
+      await _intCmds(command.join(" "));
+      process.exit(0);
+    })();
   }
 }
 
@@ -82,13 +84,15 @@ if (global.noDump && !noWarnings) {
 }
 
 // Repeat forever until the user exits
-while (true) {
-  // Ask the user for a command
-  _intCmds(
-    question(
-      `${chalk.bold.green(SHORT_NAME.toLowerCase())} ${chalk.blueBright(process.cwd())} ${chalk.red(
-        "$"
-      )} `
-    )?.trim()
-  );
-}
+(async () => {
+  while (true) {
+    // Ask the user for a command
+    await _intCmds(
+      question(
+        `${chalk.bold.green(SHORT_NAME.toLowerCase())} ${chalk.blueBright(
+          process.cwd()
+        )} ${chalk.red("$")} `
+      )?.trim()
+    );
+  }
+})();

@@ -26,7 +26,7 @@ const _multiParam = (command) => {
  *
  * @param {string} command The command that was requested to be interpreted by the user.
  */
-const _intCmds = (command) => {
+const _intCmds = async (command) => {
   // If the command is empty or not
   const isEmpty = command.length === 0;
 
@@ -45,9 +45,9 @@ const _intCmds = (command) => {
       recognized = true;
       // If the command is 'bub', it requires the '_intCmds' function, so call/pass it separately
       if (Object.keys(commands)[i] === "bub")
-        Object.values(commands)[i](_intCmds, ..._multiParam(command));
+        await Object.values(commands)[i](_intCmds, ..._multiParam(command));
       // Call the respective function and pass in the arguments
-      else Object.values(commands)[i](..._multiParam(command));
+      else await Object.values(commands)[i](..._multiParam(command));
     }
   }
 
