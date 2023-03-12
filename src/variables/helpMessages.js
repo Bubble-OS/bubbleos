@@ -129,9 +129,11 @@ const HELP = {
     },
   },
   ifnet: {
-    usage: "ifnet",
+    usage: "ifnet [-y]",
     desc: "Get a list of all running network interfaces running on your local machine, and information about them, such as their IP/MAC address, family, netmask, and more.",
-    args: {},
+    args: {
+      "[-y]": "Automatically confirm the confirmation prompt.",
+    },
   },
   ls: {
     usage: "ls [<dir>] [-s]",

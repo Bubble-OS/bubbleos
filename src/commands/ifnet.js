@@ -3,6 +3,10 @@ const chalk = require("chalk");
 const sortKeys = require("sort-keys");
 const { networkInterfaces } = require("os");
 
+// Get functions
+const _promptForYN = require("../functions/promptForYN");
+const _randomCancel = require("../functions/randCancel");
+
 /**
  * Make the keys found from the object returned
  * from `os.networkInterfaces()` user-friendly
@@ -74,11 +78,13 @@ const _makeValueFriendly = (value) => {
  * ifnet(); // No arguments
  * ```
  *
- * No arguments are available.
+ * Available arguments:
+ * - `-y`: Automatically confirm the prompt.
  *
  * @param  {...string} args Arguments to modify the behavior of `ifnet`, however, none are yet available.
  */
 const ifnet = (...args) => {
+  const confirmShow = !(args?.includes("-y") || args?.includes("/y"));
   // Get the network interfaces and sort them, get the keys,
   // and get the values of them in the object (respectively)
   const netInts = {
@@ -91,6 +97,22 @@ const ifnet = (...args) => {
   if (!netInts.keys.length) {
     console.log(chalk.yellow("No active network interfaces found.\n"));
     return;
+  }
+
+  // If the user did not pass '-y', confirm that the network interfaces should be shown
+  if (confirmShow) {
+    if (
+      !_promptForYN(
+        `Displaying sensitive network information can be dangerous. Are you sure you want to view ALL ${netInts.keys.length} local network interfaces?`
+      )
+    ) {
+      // Anything BUT 'y' will cancel the deletion process
+      _randomCancel();
+      return;
+    }
+
+    // Newline
+    console.log();
   }
 
   // Loop through the network interfaces

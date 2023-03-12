@@ -2,6 +2,21 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 100-10? (v1.0.0-v1.0.?)
+
+### Added Features
+
+- Added a confirmation prompt for display network interfaces in `ifnet`. (Also a small Easter egg relating to it)
+- Internally added the `Utils.js` file.
+
+### Changed/Fixed Features
+
+_No features have been changed/fixed in this release._
+
+### Removed Features
+
+_No features have been removed in this release._
+
 ## Build 98-100 (v0.9.8-v1.0.0)
 
 **This is a stable release of BubbleOS!**

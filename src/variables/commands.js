@@ -66,10 +66,13 @@ const COMMANDS = {
   copy,
   crash,
   cwd: () => {
-    console.log(`${process.cwd()}\n`);
+    console.log(process.cwd() + "\n");
   },
   date,
   del,
+  erik: () => {
+    console.log("Never run 'ifnet' (unless you're by yourself)!\n");
+  },
   exec,
   exit,
   fif,
