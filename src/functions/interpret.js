@@ -5,7 +5,7 @@ const commands = require("../variables/commands");
 const { _addToHist } = require("../commands/history");
 
 // Get classes
-const { Errors } = require("../classes/Errors");
+const Errors = require("../classes/Errors");
 
 /**
  * Split the commands passed into BubbleOS, and then remove the actual command name (the first word)

@@ -6,12 +6,15 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
+- Added the `tasklist` command, which shows all running processes and their respective PID.
+- Added the `ping` command, which sends a request to a specified server.
 - Added a confirmation prompt for display network interfaces in `ifnet`. (Also a small Easter egg relating to it)
 - Internally added the `Utils.js` file.
 
 ### Changed/Fixed Features
 
 - Fixed an issue where pressing Ctrl/Cmd + C would force-close BubbleOS.
+- Fixed an issue where pressing up/down to view command history on Linux/macOS would not work.
 
 ### Removed Features
 

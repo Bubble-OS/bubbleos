@@ -29,7 +29,7 @@ const tasklist = async (filter, ...args) => {
 
     if (filterUndefined)
       console.log(
-        `${chalk.bold.underline("Name".padEnd(maxLength))}   ${chalk.bold.underline("PID")}`
+        `${chalk.bold.underline("Name") + "".padEnd(maxLength - 1)}${chalk.bold.underline("PID")}`
       );
 
     let foundFilter = false;
