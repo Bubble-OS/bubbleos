@@ -1,5 +1,6 @@
 // Get modules
 const chalk = require("chalk");
+const fkill = require("fkill");
 
 // Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
@@ -11,22 +12,6 @@ const _fatalError = require("../functions/fatalError");
 // Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
-
-/**
- * Check if a supposed number is really numerical
- * or not. Checks if it is a string first, then
- * checks if it has a value of `NaN` (not a number).
- *
- * @param {any} val The value to validate.
- * @returns If the value is a number, returns `true`, else, returns `false`.
- */
-const _isNumeric = (val) => {
-  // If the value is not a string...
-  if (typeof val === "string") return false;
-
-  // Return if is number is not NaN
-  return !isNaN(val) && !isNaN(parseFloat(val));
-};
 
 /**
  * Kill a process on the device from the BubbleOS
@@ -53,11 +38,8 @@ const _isNumeric = (val) => {
  * @param {string | number} pid The PID to kill.
  * @param  {...string} args Arguments to change the behavior of `taskkill` (listed above).
  */
-const taskkill = (pid, ...args) => {
+const taskkill = async (pid, ...args) => {
   try {
-    // Convert the PID to number form
-    pid = Number(pid);
-
     // Initialize checker
     const pidChk = new Checks(pid);
 
@@ -69,12 +51,6 @@ const taskkill = (pid, ...args) => {
     // If the PID is not defined
     if (pidChk.paramUndefined()) {
       Errors.enterParameter("a PID", "taskkill 1234");
-      return;
-    }
-
-    // If the PID consists of characters other than numeric ones
-    if (!_isNumeric(pid)) {
-      Errors.invalidCharacters("PID", "numbers", "letters/symbols", pid);
       return;
     }
 
@@ -99,7 +75,7 @@ const taskkill = (pid, ...args) => {
     }
 
     // Kill the process
-    process.kill(pid);
+    await fkill(pid);
 
     // If the user did not request output, show a newline, else, show the success message
     if (!silent) console.log(chalk.green(`Successfully killed the process ${chalk.bold(pid)}.\n`));
@@ -113,7 +89,7 @@ const taskkill = (pid, ...args) => {
       Errors.doesNotExist("PID", pid);
     } else {
       // Unknown error
-      _fatalError(err);
+      _fatalError(err, false);
     }
   }
 };
