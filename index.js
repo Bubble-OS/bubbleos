@@ -3,6 +3,7 @@
 // Import non-built-in modules
 const chalk = require("chalk");
 const readline = require("readline-promise").default;
+const isElevated = require("is-elevated");
 
 // Import variable constants
 const { GLOBAL_NAME, SHORT_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/constants");
@@ -83,6 +84,18 @@ if (global.noDump && !noWarnings) {
   );
 }
 
+const checkIfElevated = async () => {
+  if ((await isElevated()) && !noWarnings) {
+    console.log(
+      chalk.yellow(
+        `${chalk.bgYellow.black(
+          " WARNING: "
+        )} BubbleOS is running with elevated privileges. Use commands with caution.\n`
+      )
+    );
+  }
+};
+
 // Repeat forever until the user exits
 (async () => {
   // Create a readline interface using process.stdin and process.stdout
@@ -91,6 +104,8 @@ if (global.noDump && !noWarnings) {
     output: process.stdout,
     terminal: true,
   });
+
+  await checkIfElevated();
 
   // Listen for Ctrl+C
   process.on("SIGINT", () => {
