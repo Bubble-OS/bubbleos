@@ -2,7 +2,7 @@
 const chalk = require("chalk");
 
 // Get functions
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _fatalError = require("../functions/fatalError");
 
 // Get classes
@@ -31,8 +31,8 @@ const Checks = require("../classes/Checks");
  */
 const cd = (dir, ...args) => {
   try {
-    // Replace spaces
-    dir = _replaceSpaces(dir);
+    // Parse double quotes
+    dir = _parseDoubleQuotes([dir, ...args]);
 
     // Create a new directory checker
     const dirChk = new Checks(dir);
