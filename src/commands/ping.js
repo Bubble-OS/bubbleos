@@ -1,7 +1,7 @@
 const chalk = require("chalk");
 const https = require("https");
 
-const { Errors } = require("../classes/Errors");
+const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
 const _makeConnection = async (host, path = "", timeout = 5000, method = "HEAD") => {

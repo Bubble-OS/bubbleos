@@ -8,7 +8,7 @@ const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
 // Get checks
-const { Errors } = require("../classes/Errors");
+const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
 /**

@@ -430,9 +430,5 @@ class Errors {
   }
 }
 
-class NetworkErrors {
-  constructor() {}
-}
-
 // Export the class
-module.exports = { Errors, NetworkErrors };
+module.exports = Errors;
