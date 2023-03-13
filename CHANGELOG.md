@@ -11,7 +11,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
-_No features have been changed/fixed in this release._
+- Fixed an issue where pressing Ctrl/Cmd + C would force-close BubbleOS.
 
 ### Removed Features
 

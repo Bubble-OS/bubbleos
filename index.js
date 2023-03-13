@@ -2,7 +2,7 @@
 
 // Import non-built-in modules
 const chalk = require("chalk");
-const { question } = require("readline-sync");
+const readline = require("readline-promise").default;
 
 // Import variable constants
 const { GLOBAL_NAME, SHORT_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/constants");
@@ -85,14 +85,33 @@ if (global.noDump && !noWarnings) {
 
 // Repeat forever until the user exits
 (async () => {
+  // Create a readline interface using process.stdin and process.stdout
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: true,
+  });
+
+  // Listen for Ctrl+C
+  process.on("SIGINT", () => {
+    console.log();
+    require("./src/commands/exit")();
+  });
+
+  // Manually add the SIGINT signal handler to the readline interface
+  rl.on("SIGINT", function () {
+    rl.close();
+    process.emit("SIGINT");
+  });
+
   while (true) {
     // Ask the user for a command
-    await _intCmds(
-      question(
-        `${chalk.bold.green(SHORT_NAME.toLowerCase())} ${chalk.blueBright(
-          process.cwd()
-        )} ${chalk.red("$")} `
-      )?.trim()
+    const command = await rl.questionAsync(
+      `${chalk.bold.green(SHORT_NAME.toLowerCase())} ${chalk.blueBright(process.cwd())} ${chalk.red(
+        "$"
+      )} `
     );
+
+    await _intCmds(command?.trim());
   }
 })();
