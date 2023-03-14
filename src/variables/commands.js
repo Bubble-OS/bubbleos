@@ -99,7 +99,37 @@ const COMMANDS = {
 };
 
 const ALIASES = {
+  about: ["info", "information", "ver", "version"],
+  bub: ["bubble", "int", "interpret"],
+  cd: ["chdir"],
+  cls: ["clear"],
+  copy: ["cp", "copyfile", "copydir"],
+  crash: ["destroy"],
+  cwd: ["pwd"],
+  date: [],
+  del: ["rm", "delete", "rmfile", "rmdir"],
+  exec: ["run"],
+  exit: ["end"],
+  fif: ["find", "search"],
+  help: ["man"],
+  history: ["hist"],
+  ifnet: ["ipconfig", "ifconfig"],
+  ls: ["ld", "dir"],
+  mkdir: ["makedir"],
+  mkfile: ["touch", "makefile"],
+  ping: ["req", "request", "send"],
   print: ["echo"],
+  readfile: ["cat", "more", "type", "rdfile", "read", "tail"],
+  rename: ["mv", "ren"],
+  size: ["df"],
+  symlink: ["symblnk", "ln", "link"],
+  sysinfo: ["uname", "systeminfo"],
+  taskkill: ["kill"],
+  tasklist: ["ps", "top", "htop"],
+  time: [],
+  tips: ["tip"],
+  userinfo: ["whoami"],
+  wcount: ["wc"],
 };
 
 // Export the constant (variable)

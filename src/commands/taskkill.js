@@ -51,6 +51,9 @@ const taskkill = async (pid, ...args) => {
     if (pidChk.paramUndefined()) {
       Errors.enterParameter("a PID", "taskkill 1234");
       return;
+    } else if (isNaN(Number(pid))) {
+      Errors.invalidCharacters("PID", "numbers", "numbers/special characters", pid);
+      return;
     }
 
     // If the PID is equal to BubbleOS' PID and the user did not give permission to kill itself
@@ -74,7 +77,7 @@ const taskkill = async (pid, ...args) => {
     }
 
     // Kill the process
-    process.kill(pid);
+    process.kill(Number(pid));
 
     // If the user did not request output, show a newline, else, show the success message
     if (!silent) console.log(chalk.green(`Successfully killed the process ${chalk.bold(pid)}.\n`));

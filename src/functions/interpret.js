@@ -64,9 +64,9 @@ const _intCmds = async (command) => {
         if (cmd === enteredCmd) {
           console.log(
             chalk.yellow(
-              `No command found called '${chalk.italic(enteredCmd)}'.\nDid you mean '${chalk.bold(
+              `There is no command called ${chalk.italic(enteredCmd)}. Did you mean ${chalk.bold(
                 getKeyByValue(aliases, alias)
-              )}'?\n`
+              )}?\n`
             )
           );
 

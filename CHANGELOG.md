@@ -2,11 +2,11 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 100-10? (v1.0.0-v1.0.?)
+## Build 100 to 108 (v1.0.0 to v1.0.8-beta)
 
 ### Added Features
 
-- Added the ability to use double quotes to specify paths with spaces in commands, instead of the `*s` keyword.
+- Added the ability to use double quotes to specify paths with spaces in commands, instead of the `*s` keyword. Currently only available on `cd` and `copy`.
 - Added help aliases that will appear if you enter in a command that doesn't exist, but has an alias.
 - BubbleOS will not check if it is running with elevated privileges, and if so, it will display a warning at startup.
 - Added the `tasklist` command, which shows all running processes and their respective PID.
@@ -17,6 +17,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 - Fixed an issue where the entire command entered would show as 'not recognized'.
 - Updated the cancellation message from '_Operation cancelled._' to '_Process aborted._'.
+- Fixed an issue where if invalid characters were entered in `taskkill`, in the error, it will show the received text as `NaN`.
 
 ### Removed Features
 
