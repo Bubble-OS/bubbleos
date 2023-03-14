@@ -49,7 +49,7 @@ const _intCmds = async (command) => {
   }
 
   // If the command is not recognized and isn't empty
-  if (!recognized && !isEmpty) Errors.unrecognizedCommand(command);
+  if (!recognized && !isEmpty) Errors.unrecognizedCommand(command.split(" ")[0]);
   // If the command wasn't empty, add it to the history
   if (!isEmpty) _addToHist(command);
 };

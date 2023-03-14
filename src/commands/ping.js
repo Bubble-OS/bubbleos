@@ -98,9 +98,9 @@ const _makeConnection = async (host, path = "") => {
           chalk.red(
             `The server, ${chalk.bold.italic(
               options.host + options.path
-            )}, is responding with status code ${res.statusCode} (${
-              HTTP_CODES_AND_MESSAGES[res.statusCode]
-            })!\n`
+            )}, is responding with status code ${res.statusCode} (${HTTP_CODES_AND_MESSAGES[
+              res.statusCode
+            ].toLowerCase()}).\n`
           )
         );
       }
@@ -132,7 +132,9 @@ const ping = async (host, ...args) => {
     const result = await _makeConnection(hostname[0], path);
     console.log(result);
   } catch (err) {
-    console.error(err);
+    if (err.code === "ENOTFOUND") {
+      console.log(chalk.red("The address could not be located.\n"));
+    }
   }
 };
 

@@ -17,10 +17,12 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 - Fixed an issue where pressing Ctrl/Cmd + C would force-close BubbleOS.
 - Fixed an issue where pressing up/down to view command history on Linux/macOS would not work.
+- Fixed an issue where the entire command entered would show as 'not recognized'.
 
 ### Removed Features
 
 - Removed the _no command_ error.
+- Internally removed the `TIMEBOMB_COUNT` variable.
 
 ## Build 98-100 (v0.9.8-v1.0.0)
 

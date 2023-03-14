@@ -10,7 +10,6 @@ const {
   IN_BETA,
   TIMEBOMB_ACTIVATED,
   EXPIRY_DATE,
-  TIMEBOMB_COUNT,
 } = require("./variables/constants");
 
 // Show the name of the OS, the version, and the author
@@ -26,7 +25,7 @@ if (IN_BETA) {
       chalk.dim(
         `${chalk.bold(
           "WARNING!"
-        )} This beta software has a timebomb of +${TIMEBOMB_COUNT} days (since compile date).\nIt will expire on ${
+        )} This beta software has a timebomb of +90 days (since compile date).\nIt will expire on ${
           EXPIRY_DATE.getMonth() + 1
         }/${EXPIRY_DATE.getDate()}/${EXPIRY_DATE.getFullYear()}.\n`
       )

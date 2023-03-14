@@ -90,7 +90,7 @@ const checkIfElevated = async () => {
       chalk.yellow(
         `${chalk.bgYellow.black(
           " WARNING: "
-        )} BubbleOS is running with elevated privileges. Use commands with caution.\n`
+        )} ${GLOBAL_NAME} is running with elevated privileges. Use commands with caution.\n`
       )
     );
   }
