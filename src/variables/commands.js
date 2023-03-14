@@ -98,5 +98,9 @@ const COMMANDS = {
   wcount,
 };
 
+const ALIASES = {
+  print: ["echo"],
+};
+
 // Export the constant (variable)
-module.exports = COMMANDS;
+module.exports = { COMMANDS, ALIASES };

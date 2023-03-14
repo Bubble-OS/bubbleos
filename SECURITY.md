@@ -4,10 +4,11 @@
 
 The versions below are currently supported. This file is actively updated.
 
-| Version  | Supported          |
-| -------- | ------------------ |
-| 1.0.0    | :white_check_mark: |
-| < 0.x.x  | :x:                |
+| Version | Supported          |
+| ------- | ------------------ |
+| 1.x.x-beta   | :x:                |
+| 1.0.0   | :white_check_mark: |
+| < 0.x.x | :x:                |
 
 ## Reporting a Vulnerability
 

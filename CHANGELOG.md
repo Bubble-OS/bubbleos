@@ -7,6 +7,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Added Features
 
 - Added the ability to use double quotes to specify paths with spaces in commands, instead of the `*s` keyword.
+- Added help aliases that will appear if you enter in a command that doesn't exist, but has an alias.
 - BubbleOS will not check if it is running with elevated privileges, and if so, it will display a warning at startup.
 - Added the `tasklist` command, which shows all running processes and their respective PID.
 - Added the `ping` command, which sends a request to a specified server.

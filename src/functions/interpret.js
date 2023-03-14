@@ -1,5 +1,7 @@
+const chalk = require("chalk");
+
 // Get variables
-const commands = require("../variables/commands");
+const { COMMANDS: commands, ALIASES: aliases } = require("../variables/commands");
 
 // Get functions
 const { _addToHist } = require("../commands/history");
@@ -21,6 +23,10 @@ const _multiParam = (command) => {
   return params;
 };
 
+function getKeyByValue(object, value) {
+  return Object.keys(object).find((key) => object[key] === value);
+}
+
 /**
  * Interpret all available BubbleOS commands.
  *
@@ -34,22 +40,41 @@ const _intCmds = async (command) => {
   let recognized = false;
 
   // Loop through the commands
-  // TODO convert this to a for...in loop
-  for (let i = 0; i < Object.keys(commands).length; i++) {
+  for (let [key, value] of Object.entries(commands)) {
     // If the command starts with the current command
-    if (command.startsWith(Object.keys(commands)[i])) {
+    if (command.startsWith(key)) {
       // Make the command recognized
       recognized = true;
       // If the command is 'bub', it requires the '_intCmds' function, so call/pass it separately
-      if (Object.keys(commands)[i] === "bub")
-        await Object.values(commands)[i](_intCmds, ..._multiParam(command));
-      // Call the respective function and pass in the arguments
-      else await Object.values(commands)[i](..._multiParam(command));
+      if (key === "bub") {
+        await value(_intCmds, ..._multiParam(command));
+      } else {
+        await value(..._multiParam(command));
+      }
     }
   }
 
   // If the command is not recognized and isn't empty
-  if (!recognized && !isEmpty) Errors.unrecognizedCommand(command.split(" ")[0]);
+  if (!recognized && !isEmpty) {
+    const enteredCmd = command.split(" ")[0];
+    Errors.unrecognizedCommand(enteredCmd);
+
+    for (const alias of Object.values(aliases)) {
+      for (const cmd of alias) {
+        if (cmd === enteredCmd) {
+          console.log(
+            chalk.yellow(
+              `No command found called '${chalk.italic(enteredCmd)}'.\nDid you mean '${chalk.bold(
+                getKeyByValue(aliases, alias)
+              )}'?\n`
+            )
+          );
+
+          break;
+        }
+      }
+    }
+  }
   // If the command wasn't empty, add it to the history
   if (!isEmpty) _addToHist(command);
 };
