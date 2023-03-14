@@ -69,7 +69,7 @@ const del = (path, ...args) => {
     if (confirmDel) {
       if (!_promptForYN(`Are you sure you want to delete ${chalk.bold(path)}?`)) {
         // Anything BUT 'y' will cancel the deletion process
-        console.log(chalk.yellow("Operation cancelled.\n"));
+        console.log(chalk.yellow("Process aborted.\n"));
         return;
       }
     }

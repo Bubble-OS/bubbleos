@@ -59,7 +59,7 @@ const taskkill = async (pid, ...args) => {
         chalk.yellow(
           `You cannot kill the ${GLOBAL_NAME} process. To kill ${GLOBAL_NAME}, run the ${chalk.italic(
             "'exit'"
-          )} command.\nOperation cancelled.\n`
+          )} command.\nProcess aborted.\n`
         )
       );
       return;
@@ -68,13 +68,13 @@ const taskkill = async (pid, ...args) => {
     // If the user did not use the '-y' flag
     if (confirm) {
       if (!_promptForYN(`Are you sure you want to kill the process with PID ${chalk.bold(pid)}?`)) {
-        console.log(chalk.yellow("Operation cancelled.\n"));
+        console.log(chalk.yellow("Process aborted.\n"));
         return;
       }
     }
 
     // Kill the process
-    process.kill(pid)
+    process.kill(pid);
 
     // If the user did not request output, show a newline, else, show the success message
     if (!silent) console.log(chalk.green(`Successfully killed the process ${chalk.bold(pid)}.\n`));

@@ -93,7 +93,7 @@ const copy = (src, dest, ...args) => {
           )} exists and will be overwritten. Do you want to continue?`
         )
       ) {
-        console.log(chalk.yellow("Operation cancelled.\n"));
+        console.log(chalk.yellow("Process aborted.\n"));
         return;
       }
 

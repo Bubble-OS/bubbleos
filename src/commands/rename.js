@@ -59,9 +59,7 @@ const rename = (oldName, newName, ...args) => {
 
     // If the names are the same
     if (oldName === newName) {
-      console.log(
-        chalk.yellow("The old and new names cannot be the same.\nOperation cancelled.\n")
-      );
+      console.log(chalk.yellow("The old and new names cannot be the same.\nProcess aborted.\n"));
       return;
     }
 
@@ -81,7 +79,7 @@ const rename = (oldName, newName, ...args) => {
           )} exists and will be overwritten. Do you want to continue?`
         )
       ) {
-        console.log(chalk.yellow("Operation cancelled.\n"));
+        console.log(chalk.yellow("Process aborted.\n"));
         return;
       }
     }

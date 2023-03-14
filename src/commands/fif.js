@@ -111,7 +111,7 @@ const fif = (file, ...args) => {
       typeof toFind === "undefined" ||
       (typeof toFind === "string" && !toFind)
     ) {
-      console.log(chalk.yellow(`No phrase entered.\nOperation cancelled.\n`));
+      console.log(chalk.yellow(`No phrase entered.\nProcess aborted.\n`));
       return;
     }
 

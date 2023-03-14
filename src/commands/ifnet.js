@@ -106,7 +106,7 @@ const ifnet = (...args) => {
       )
     ) {
       // Anything BUT 'y' will cancel the deletion process
-      console.log(chalk.yellow("Process aborted."));
+      console.log(chalk.yellow("Process aborted.\n"));
       return;
     }
 

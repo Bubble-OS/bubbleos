@@ -132,9 +132,7 @@ const bub = (intCmds, file, ...args) => {
     if (!file.endsWith(".bub")) {
       console.log(
         chalk.yellow(
-          `The file must end with '.bub'. Received: ${chalk.bold(
-            `'${file}'`
-          )}\nOperation cancelled.\n`
+          `The file must end with '.bub'. Received: ${chalk.bold(`'${file}'`)}\nProcess aborted.\n`
         )
       );
       return;

@@ -97,7 +97,7 @@ const readfile = (file, ...args) => {
       // ...tell the user that it is not possible to read that many characters
       console.log(
         chalk.yellow(
-          `Too many characters to read (${chars} characters). ${GLOBAL_NAME} only supports reading less than ${MAX_CHARS_READ} characters.\nOperation cancelled.\n`
+          `Too many characters to read (${chars} characters). ${GLOBAL_NAME} only supports reading less than ${MAX_CHARS_READ} characters.\nProcess aborted.\n`
         )
       );
       return;
@@ -112,7 +112,7 @@ const readfile = (file, ...args) => {
         )
       ) {
         // Anything BUT 'y' will cancel
-        console.log(chalk.yellow("Operation cancelled.\n"));
+        console.log(chalk.yellow("Process aborted.\n"));
         return;
       }
 

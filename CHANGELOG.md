@@ -11,12 +11,12 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 - BubbleOS will not check if it is running with elevated privileges, and if so, it will display a warning at startup.
 - Added the `tasklist` command, which shows all running processes and their respective PID.
 - Added the `ping` command, which sends a request to a specified server.
-- Added a confirmation prompt for display network interfaces in `ifnet`. (Also a small Easter egg relating to it)
-- Internally added the `Utils.js` file.
+- Added a confirmation prompt for display network interfaces in `ifnet`. (Also a small Easter egg relating to it!)
 
 ### Changed/Fixed Features
 
 - Fixed an issue where the entire command entered would show as 'not recognized'.
+- Updated the cancellation message from '_Operation cancelled._' to '_Process aborted._'.
 
 ### Removed Features
 

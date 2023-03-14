@@ -134,6 +134,14 @@ const ping = async (host, ...args) => {
   } catch (err) {
     if (err.code === "ENOTFOUND") {
       console.log(chalk.red("The address could not be located.\n"));
+    } else {
+      console.log(
+        chalk.yellow(
+          "As this command is still a work-in-progress, not all errors have been handled. Please use this raw error information to submit an issue to the developer!\n"
+        )
+      );
+      console.log(err);
+      console.log();
     }
   }
 };

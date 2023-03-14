@@ -66,7 +66,7 @@ const crash = (index = NaN, ...args) => {
 
     if (index === -1 || index === NaN) {
       // If the user 'cancelled' on the prompt, or the index is for some reason not a number, exit
-      console.log(chalk.yellow("Operation cancelled.\n"));
+      console.log(chalk.yellow("Process aborted.\n"));
       return;
     } else if (index > AVAILABLE_CRASHES.length - 1 || index < 0) {
       // If the index is greater than the length of the crash array, or is less than 0
@@ -76,7 +76,7 @@ const crash = (index = NaN, ...args) => {
 
       index = keyInSelect(AVAILABLE_CRASHES, "Please select your crashing method");
       if (index === -1 || index === NaN) {
-        console.log(chalk.yellow("Operation cancelled.\n"));
+        console.log(chalk.yellow("Process aborted.\n"));
         return;
       }
     }
@@ -90,7 +90,7 @@ const crash = (index = NaN, ...args) => {
       )
     ) {
       // If they provided anything but 'y', exit
-      console.log(chalk.yellow("Operation cancelled.\n"));
+      console.log(chalk.yellow("Process aborted.\n"));
       return;
     }
 
