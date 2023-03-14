@@ -32,7 +32,7 @@ const Checks = require("../classes/Checks");
 const cd = (dir, ...args) => {
   try {
     // Parse double quotes
-    dir = _parseDoubleQuotes([dir, ...args]);
+    dir = _parseDoubleQuotes([dir, ...args])[0];
 
     // Create a new directory checker
     const dirChk = new Checks(dir);

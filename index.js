@@ -2,7 +2,7 @@
 
 // Import non-built-in modules
 const chalk = require("chalk");
-const readline = require("readline-promise").default;
+const { question } = require("readline-sync");
 const isElevated = require("is-elevated");
 
 // Import variable constants
@@ -98,30 +98,11 @@ const checkIfElevated = async () => {
 
 // Repeat forever until the user exits
 (async () => {
-  // Create a readline interface using process.stdin and process.stdout
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: true,
-  });
-
   await checkIfElevated();
-
-  // Listen for Ctrl+C
-  process.on("SIGINT", () => {
-    console.log();
-    require("./src/commands/exit")();
-  });
-
-  // Manually add the SIGINT signal handler to the readline interface
-  rl.on("SIGINT", function () {
-    rl.close();
-    process.emit("SIGINT");
-  });
 
   while (true) {
     // Ask the user for a command
-    const command = await rl.questionAsync(
+    const command = question(
       `${chalk.bold.green(SHORT_NAME.toLowerCase())} ${chalk.blueBright(process.cwd())} ${chalk.red(
         "$"
       )} `

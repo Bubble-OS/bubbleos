@@ -5,7 +5,6 @@ const { networkInterfaces } = require("os");
 
 // Get functions
 const _promptForYN = require("../functions/promptForYN");
-const _randomCancel = require("../functions/randCancel");
 
 /**
  * Make the keys found from the object returned
@@ -107,7 +106,7 @@ const ifnet = (...args) => {
       )
     ) {
       // Anything BUT 'y' will cancel the deletion process
-      _randomCancel();
+      console.log(chalk.yellow("Process aborted."));
       return;
     }
 

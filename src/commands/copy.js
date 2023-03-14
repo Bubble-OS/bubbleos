@@ -5,7 +5,7 @@ const fs = require("fs");
 
 // Get functions
 const _convertAbsolute = require("../functions/convAbs");
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 
@@ -58,8 +58,8 @@ const Checks = require("../classes/Checks");
 const copy = (src, dest, ...args) => {
   try {
     // Replace spaces and then convert the path to an absolute one to both the source and destination paths
-    src = _convertAbsolute(_replaceSpaces(src));
-    dest = _convertAbsolute(_replaceSpaces(dest));
+    [src, dest] = _parseDoubleQuotes([src, dest, ...args]);
+    [src, dest] = [_convertAbsolute(src), _convertAbsolute(dest)];
 
     // Initialize checkers
     const srcChk = new Checks(src);

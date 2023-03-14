@@ -6,6 +6,8 @@
  * ```js
  * _replaceSpaces("Hello*sWorld!"); // Should return: "Hello World!"
  * ```
+ * 
+ * @deprecated Use `parseQuotes()` for arguments, and `replaceChars()` for other characters.
  *
  * @param {string | any} text A string (or any value, but it will be converted to a string) to replace the spaces in.
  * @param {string} spaceChar _Optional:_ The character to find to replace. Defaults to `*s`.

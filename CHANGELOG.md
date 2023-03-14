@@ -15,8 +15,6 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
-- Fixed an issue where pressing Ctrl/Cmd + C would force-close BubbleOS.
-- Fixed an issue where pressing up/down to view command history on Linux/macOS would not work.
 - Fixed an issue where the entire command entered would show as 'not recognized'.
 
 ### Removed Features
