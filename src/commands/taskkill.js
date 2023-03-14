@@ -1,6 +1,5 @@
 // Get modules
 const chalk = require("chalk");
-const fkill = require("fkill");
 
 // Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
@@ -75,7 +74,7 @@ const taskkill = async (pid, ...args) => {
     }
 
     // Kill the process
-    await fkill(pid);
+    process.kill(pid)
 
     // If the user did not request output, show a newline, else, show the success message
     if (!silent) console.log(chalk.green(`Successfully killed the process ${chalk.bold(pid)}.\n`));
