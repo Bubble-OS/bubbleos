@@ -17,6 +17,7 @@ const del = require("../commands/del");
 const exec = require("../commands/exec");
 const exit = require("../commands/exit.js");
 const fif = require("../commands/fif");
+const hash = require("../commands/hash");
 const help = require("../commands/help");
 const { historyCmd } = require("../commands/history");
 const ifnet = require("../commands/ifnet");
@@ -77,6 +78,7 @@ const COMMANDS = {
   exec,
   exit,
   fif,
+  hash,
   help,
   history: historyCmd,
   ifnet,

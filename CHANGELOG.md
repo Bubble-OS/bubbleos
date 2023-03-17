@@ -6,6 +6,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
+- Added the `hash` command, which can check hashes for files.
 - Added the double-quote interpreter for paths in all commands.
 
 ### Changed/Fixed Features
