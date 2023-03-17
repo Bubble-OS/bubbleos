@@ -25,7 +25,7 @@ const _parseDoubleQuotes = (arr) => {
   const matches = str?.match(regex);
 
   // If the string is empty, return 'undefined'
-  if (str?.trim() === "" || typeof str === "undefined") return undefined;
+  if (str?.trim() === "" || typeof str === "undefined") return [];
 
   // If there are matches
   if (matches && matches.length === 3) {
