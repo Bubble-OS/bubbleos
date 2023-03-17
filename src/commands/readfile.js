@@ -6,7 +6,7 @@ const chalk = require("chalk");
 const { GLOBAL_NAME } = require("../variables/constants");
 
 // Get functions
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
@@ -58,7 +58,7 @@ const MAX_CHARS_READ = 100_000;
 const readfile = (file, ...args) => {
   try {
     // Replace spaces, then convert the file to an absolute path
-    file = _convertAbsolute(_replaceSpaces(file));
+    file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
 
     // Initialize checker
     const fileChk = new Checks(file);

@@ -2,6 +2,20 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 108 to 11? (v1.0.8-beta to v1.1.?-beta)
+
+### Added Features
+
+- Added the double-quote interpreter for paths in all commands.
+
+### Changed/Fixed Features
+
+_No changed/fixed features._
+
+### Removed Features
+
+_No removed features._
+
 ## Build 100 to 108 (v1.0.0 to v1.0.8-beta)
 
 ### Added Features

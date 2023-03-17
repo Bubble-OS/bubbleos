@@ -23,9 +23,7 @@ const _multiParam = (command) => {
   return params;
 };
 
-function getKeyByValue(object, value) {
-  return Object.keys(object).find((key) => object[key] === value);
-}
+const getKeyByValue = (object, value) => Object.keys(object).find((key) => object[key] === value);
 
 /**
  * Interpret all available BubbleOS commands.

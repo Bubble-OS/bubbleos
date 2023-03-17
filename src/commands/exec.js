@@ -5,7 +5,7 @@ const fs = require("fs");
 const childProcess = require("child_process");
 
 // Get functions
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
@@ -42,7 +42,7 @@ const Checks = require("../classes/Checks");
 const exec = (file, ...args) => {
   try {
     // Replace spaces in the path, then convert it to an absolute path
-    file = _convertAbsolute(_replaceSpaces(file));
+    file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
 
     // Initialize the checker
     const fileChk = new Checks(file);

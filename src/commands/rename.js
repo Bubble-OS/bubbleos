@@ -3,7 +3,7 @@ const chalk = require("chalk");
 const fs = require("fs");
 
 // Get functions
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
@@ -39,9 +39,9 @@ const Checks = require("../classes/Checks");
  */
 const rename = (oldName, newName, ...args) => {
   try {
-    // Replace spaces and convert paths to absolute
-    oldName = _convertAbsolute(_replaceSpaces(oldName));
-    newName = _convertAbsolute(_replaceSpaces(newName));
+    // Replace spaces and then convert the path to an absolute one to both the old and new names
+    [oldName, newName] = _parseDoubleQuotes([oldName, newName, ...args]);
+    [oldName, newName] = [_convertAbsolute(oldName), _convertAbsolute(newName)];
 
     // Initialize checks
     const oldChk = new Checks(oldName);

@@ -3,7 +3,7 @@ const chalk = require("chalk");
 const fs = require("fs");
 
 // Get functions
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
@@ -39,7 +39,7 @@ const Checks = require("../classes/Checks");
 const wcount = (file, ...args) => {
   try {
     // Replace spaces in the file, and then convert it to an absolute path
-    file = _convertAbsolute(_replaceSpaces(file));
+    file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
 
     // Initialize file checker
     const fileChk = new Checks(file);

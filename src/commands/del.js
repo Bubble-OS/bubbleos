@@ -4,7 +4,7 @@ const chalk = require("chalk");
 const fs = require("fs");
 
 // Get functions
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
@@ -44,7 +44,7 @@ const Checks = require("../classes/Checks");
 const del = (path, ...args) => {
   try {
     // Replace spaces and convert to an absolute path
-    path = _convertAbsolute(_replaceSpaces(path));
+    path = _convertAbsolute(_parseDoubleQuotes([path, ...args])[0]);
 
     // Initialize a path checker
     const pathChk = new Checks(path);

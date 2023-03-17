@@ -4,7 +4,7 @@ const chalk = require("chalk");
 const { question } = require("readline-sync");
 
 // Get functions
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
@@ -56,7 +56,7 @@ const escapeRegExp = (str) => str.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const fif = (file, ...args) => {
   try {
     // Replace spaces, and then convert the path to absolute
-    file = _convertAbsolute(_replaceSpaces(file));
+    file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
 
     // Initialize a checker
     const fileChk = new Checks(file);

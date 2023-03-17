@@ -6,7 +6,7 @@ const fs = require("fs");
 const { GLOBAL_NAME } = require("../variables/constants");
 
 // Get functions
-const _convertAbsolute = require("../functions/convAbs");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _replaceSpaces = require("../functions/replaceSpaces");
 const _fatalError = require("../functions/fatalError");
 
@@ -56,7 +56,12 @@ const symlink = (path, newPath, ...args) => {
     // Replace spaces and then convert to an absolute path
     // Only if 'check' is false, convert the new path
     path = _convertAbsolute(_replaceSpaces(path));
-    if (!check) newPath = _convertAbsolute(_replaceSpaces(newPath));
+    if (!check) {
+      [path, newPath] = _parseDoubleQuotes([path, newPath, ...args]);
+      [path, newPath] = [_convertAbsolute(path), _convertAbsolute(newPath)];
+    } else {
+      path = _convertAbsolute(_parseDoubleQuotes([path, newPath, ...args])[0]);
+    }
 
     // Initialize checks
     const pathChk = new Checks(path);

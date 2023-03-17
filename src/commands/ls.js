@@ -3,7 +3,7 @@ const chalk = require("chalk");
 const fs = require("fs");
 
 // Get functions
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _fatalError = require("../functions/fatalError");
 
 // Get classes
@@ -120,7 +120,7 @@ const ls = (dir = process.cwd(), ...args) => {
     if (dir === "-s" || dir === "/s") dir = process.cwd();
 
     // Replace spaces
-    dir = _replaceSpaces(dir);
+    dir = _parseDoubleQuotes([dir, ...args])[0];
 
     // Initialize checker
     const dirChk = new Checks(dir);

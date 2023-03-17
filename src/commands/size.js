@@ -3,7 +3,7 @@ const chalk = require("chalk");
 const fs = require("fs");
 
 // Get functions
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _convertSize = require("../functions/convSize");
 const _fatalError = require("../functions/fatalError");
@@ -60,7 +60,7 @@ const _logSize = (key, value) => {
 const size = (file, ...args) => {
   try {
     // Replace spaces and convert it to an absolute path
-    file = _convertAbsolute(_replaceSpaces(file));
+    file = _convertAbsolute(_parseDoubleQuotes([path, ...args])[0]);
 
     // Initialize checker
     const fileChk = new Checks(file);
