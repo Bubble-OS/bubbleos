@@ -11,7 +11,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
-_No changed/fixed features._
+- Fixed an issue where the command interpreter would classify commands such as `clsls` to be correct, for example (as it starts with a valid command, `cls`).
 
 ### Removed Features
 

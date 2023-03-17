@@ -33,6 +33,7 @@ const getKeyByValue = (object, value) => Object.keys(object).find((key) => objec
 const _intCmds = async (command) => {
   // If the command is empty or not
   const isEmpty = command.length === 0;
+  const enteredCmd = command.split(" ")[0];
 
   // The command is currently unrecognized
   let recognized = false;
@@ -40,7 +41,7 @@ const _intCmds = async (command) => {
   // Loop through the commands
   for (let [key, value] of Object.entries(commands)) {
     // If the command starts with the current command
-    if (command.startsWith(key)) {
+    if (enteredCmd === key) {
       // Make the command recognized
       recognized = true;
       // If the command is 'bub', it requires the '_intCmds' function, so call/pass it separately
@@ -54,7 +55,6 @@ const _intCmds = async (command) => {
 
   // If the command is not recognized and isn't empty
   if (!recognized && !isEmpty) {
-    const enteredCmd = command.split(" ")[0];
     Errors.unrecognizedCommand(enteredCmd);
 
     for (const alias of Object.values(aliases)) {
