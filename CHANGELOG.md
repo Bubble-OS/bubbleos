@@ -11,7 +11,6 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Changed/Fixed Features
 
 - Changed the text that displays when running `bubble -v`.
-- Fixed an issue where BubbleOS would throw a raw error at times instead of a fatal error.
 
 ### Removed Features
 
