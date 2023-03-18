@@ -8,9 +8,13 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 - Added the `hash` command, which can check hashes for files.
 - Added the double-quote interpreter for paths in all commands.
+- Added a check which will check if BubbleOS is not running on a x64 device and/or Windows 8.1 and below. If either are true, BubbleOS will crash on startup. This can be disabled by using the `--no-checks` flag (at your own risk).
+- Added a beep sound which will sound when a fatal error occurs.
+- Added the BubbleOS PID to the fatal error technical information (but not to the dump file).
 
 ### Changed/Fixed Features
 
+- Changed the text in the fatal error.
 - Fixed an issue where the command interpreter would classify commands such as `clsls` to be correct, for example (as it starts with a valid command, `cls`).
 - Fixed an issue where entering nothing in some commands would result in BubbleOS crashing.
 

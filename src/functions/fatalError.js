@@ -6,6 +6,9 @@ const chalk = require("chalk");
 // Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
 
+// Get functions
+const _friendlyOS = require("./friendlyOS");
+
 /**
  * End BubbleOS with a fatal exception with exit code `1`.
  *
@@ -39,26 +42,28 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
     "System call": err?.syscall,
   };
 
+  // Beep
+  process.stdout.write("\u0007");
+
   // Log information about the crash and what the user should do
   console.log(`${chalk.bgRed.bold.underline("!!! FATAL ERROR !!!")}\n`);
   console.log(
     `${chalk.red.bold(
-      `A fatal error has occurred which has caused ${GLOBAL_NAME} to crash. To make sure the OS does not get damaged, ${GLOBAL_NAME} has been exited (with exit code ${chalk.italic(
-        "'1'"
-      )}).`
+      `A fatal exception has occurred in ${GLOBAL_NAME}. To avoid damage to ${GLOBAL_NAME} and ${_friendlyOS()}, ${GLOBAL_NAME} has been aborted with a failure status.`
     )}\n\n${chalk.red.bold(
-      `Make sure that the arguments passed are correct. Also, you can make a new Github Issue on the project's repository (find by running ${chalk.italic(
-        "'about'"
-      )}) to inform the developer of the issue.`
+      `Make sure that your system supports ${GLOBAL_NAME}. Also, if running a command caused this screen to appear, run '${chalk.italic(
+        "help <command>"
+      )}' to get detailed information for how to use your respective command.`
     )}\n${chalk.red.bold(
-      `To attempt to resolve this issue yourself, use the ${chalk.italic(
-        "'help'"
-      )} command to see the correct way to use the command.`
+      `If none of these options help, there may be a bug in ${GLOBAL_NAME}. In that case, report the bug on the project's GitHub page (https://github.com/Bubble-OS/bubbleos/issues/new).`
     )}\n`
   );
 
   // Technical error information subheading
   console.log(`${chalk.red.dim.underline("Technical Error Information\n")}`);
+
+  // Log the PID
+  console.log(chalk.red.dim(`${chalk.italic(`${GLOBAL_NAME} PID`)}: ${process.pid}`));
 
   // Loop through the error properties
   for (let error in errProperties) {
@@ -94,9 +99,9 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
 
       // Add some information to the beginning of the error information file
       const date = new Date();
-      const errorInfoTxt = `BubbleOS encountered a fatal error at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} on ${date.getDate()}/${
+      const errorInfoTxt = `BubbleOS encountered a fatal error at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} on ${
         date.getMonth() + 1
-      }/${date.getFullYear()}.\nGive the developer this information by running 'about' in ${GLOBAL_NAME} and going to the Github page, then the Issues tab, and creating a new issue with the text below. Thanks for helping!\n\n${errorArr.join(
+      }/${date.getDate()}/${date.getFullYear()}.\nGive the developer this information by going to https://github.com/Bubble-OS/bubbleos/issues/new (GitHub account required). Thanks for helping!\n\n${errorArr.join(
         "\n"
       )}`;
 

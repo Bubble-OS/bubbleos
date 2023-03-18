@@ -10,6 +10,7 @@ const { GLOBAL_NAME, SHORT_NAME, AUTHOR, VERSION, BUILD } = require("./src/varia
 
 // Import private helper functions
 const _timebomb = require("./src/functions/timebomb");
+const _startupChecks = require("./src/functions/startupChecks");
 const _intCmds = require("./src/functions/interpret");
 
 // Get all of the arguments passed directly into BubbleOS
@@ -18,6 +19,7 @@ const args = process.argv.splice(2);
 
 // Argument variables
 let showTimebomb = true;
+let doChecks = true;
 let showVersion = false;
 let noWarnings = false;
 let noIntro = false;
@@ -26,6 +28,7 @@ global.noDump = false;
 // Get all arguments and entered commands that were passed
 if (args.length !== 0) {
   if (args.includes("--no-timebomb") || args.includes("--no-timebomb")) showTimebomb = false;
+  if (args.includes("--no-checks") || args.includes("--no-checks")) doChecks = false;
   if (
     args.includes("-v") ||
     args.includes("/v") ||
@@ -40,6 +43,8 @@ if (args.length !== 0) {
 
 // If '--no-timebomb' wasn't in the arguments list, show the timebomb
 if (showTimebomb) _timebomb();
+
+if (doChecks) _startupChecks();
 
 // If '-v' was in the arguments list
 if (showVersion) {
