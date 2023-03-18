@@ -12,6 +12,11 @@ const { GLOBAL_NAME, SHORT_NAME, AUTHOR, VERSION, BUILD } = require("./src/varia
 const _timebomb = require("./src/functions/timebomb");
 const _startupChecks = require("./src/functions/startupChecks");
 const _intCmds = require("./src/functions/interpret");
+const _fatalError = require("./src/functions/fatalError");
+
+process.on("uncaughtException", (err) => {
+  _fatalError(err, false);
+});
 
 // Get all of the arguments passed directly into BubbleOS
 // For the pre-boot interpreter
