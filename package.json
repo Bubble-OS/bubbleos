@@ -20,6 +20,7 @@
     "chalk": "^4.1.2",
     "is-elevated": "^3.0.0",
     "istextorbinary": "^6.0.0",
+    "os-name": "^4.0.1",
     "ps-list": "^7.2.0",
     "readline-sync": "^1.4.10",
     "sort-keys": "^4.2.0"

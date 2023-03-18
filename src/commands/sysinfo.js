@@ -1,6 +1,7 @@
 // Get modules
 const os = require("os");
 const chalk = require("chalk");
+const osName = require("os-name");
 
 // Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
@@ -113,6 +114,7 @@ const sysinfo = (...args) => {
     if (all || computerInfo || defaultDisplay) {
       console.log(`${chalk.bold.underline("Computer Information")}`);
 
+      console.log(`Full OS name: ${chalk.italic(osName())}`);
       console.log(`Operating system: ${chalk.italic(_friendlyOS())}`);
       console.log(`Release: ${chalk.italic(os.release())}`);
       console.log(`Architecture: ${chalk.italic(process.arch)}`);

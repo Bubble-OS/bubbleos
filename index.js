@@ -48,8 +48,7 @@ if (doChecks) _startupChecks();
 
 // If '-v' was in the arguments list
 if (showVersion) {
-  console.log(chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`));
-  console.log(`Made by ${AUTHOR}!\n`);
+  console.log(`v${VERSION} (build ${BUILD})\n`);
 
   process.exit(0);
 }

@@ -2,6 +2,20 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 112 to 11? (v1.1.2-beta to v1.1.?)
+
+### Added Features
+
+- Added the full operating name in the `sysinfo` command.
+
+### Changed/Fixed Features
+
+- Changed the text that displays when running `bubble -v`.
+
+### Removed Features
+
+_No removed features._
+
 ## Build 108 to 112 (v1.0.8-beta to v1.1.2-beta)
 
 ### Added Features
