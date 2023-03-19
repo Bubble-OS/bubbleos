@@ -2,7 +2,7 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 112 to 11? (v1.1.2-beta to v1.1.?)
+## Build 112 to 115 (v1.1.2-beta to v1.1.5)
 
 ### Added Features
 
@@ -10,6 +10,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
+- Fixed an issue where the `tasklist` command would crash BubbleOS when run in the executable version.
 - Changed the text that displays when running `bubble -v`.
 - Fixed an issue where `mkfile` would crash when attempting to ask the user for file contents.
 
