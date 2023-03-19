@@ -5,6 +5,7 @@ const { question } = require("readline-sync");
 
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 

@@ -11,6 +11,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Changed/Fixed Features
 
 - Changed the text that displays when running `bubble -v`.
+- Fixed an issue where `mkfile` would crash when attempting to ask the user for file contents.
 
 ### Removed Features
 

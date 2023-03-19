@@ -1,6 +1,6 @@
 // Get packages
 const chalk = require("chalk");
-
+const trash = require("trash");
 const fs = require("fs");
 
 // Get functions
@@ -21,7 +21,7 @@ const Checks = require("../classes/Checks");
  * Usage:
  *
  * ```js
- * del("test.txt"); // Arguments are supported
+ * await del("test.txt"); // Arguments are supported
  * ```
  *
  * This command used to be in two separate commands/functions -
@@ -41,7 +41,7 @@ const Checks = require("../classes/Checks");
  * @param {fs.PathLike | string} path The relative or absolute path to the file/directory to delete.
  * @param {...string} args The arguments to modify the behavior of the `del` command. See all available arguments above.
  */
-const del = (path, ...args) => {
+const del = async (path, ...args) => {
   try {
     // Replace spaces and convert to an absolute path
     path = _convertAbsolute(_parseDoubleQuotes([path, ...args])[0]);
@@ -52,6 +52,7 @@ const del = (path, ...args) => {
     // Initialize arguments
     const silent = args?.includes("-s") || args?.includes("/s");
     const confirmDel = !(args?.includes("-y") || args?.includes("/y"));
+    const permanent = args?.includes("-p") || args?.includes("/p");
 
     // Check if the path is not defined
     if (pathChk.paramUndefined()) {
@@ -66,19 +67,41 @@ const del = (path, ...args) => {
     }
 
     // If the user did not pass '-y', confirm that the path should be deleted
-    if (confirmDel) {
-      if (!_promptForYN(`Are you sure you want to delete ${chalk.bold(path)}?`)) {
+    if (confirmDel && permanent) {
+      if (!_promptForYN(`Are you sure you want to permanently delete ${chalk.bold(path)}?`)) {
         // Anything BUT 'y' will cancel the deletion process
         console.log(chalk.yellow("Process aborted.\n"));
         return;
       }
     }
 
-    // Delete the file/directory
-    fs.rmSync(path, { recursive: true, force: true });
+    if (permanent) {
+      // Delete the file/directory
+      fs.rmSync(path, { recursive: true, force: true });
+
+      // If the user wanted output, show the success message, else, only show a newline
+      if (!silent) console.log(chalk.green(`Permanently deleted ${chalk.bold(path)}.\n`));
+      else console.log();
+
+      return;
+    }
+
+    // Move the file/directory to the OS' respective trash location
+    // Note: On Linux it can be buggy
+    await trash(path);
 
     // If the user wanted output, show the success message, else, only show a newline
-    if (!silent) console.log(chalk.green(`Successfully deleted ${chalk.bold(path)}.\n`));
+    // Show the name of the trash for the respective operating system
+    // Windows: 'Recycle Bin'
+    // macOS/Linux/other: 'Trash'
+    if (!silent)
+      console.log(
+        chalk.green(
+          `Successfully moved ${chalk.bold(path)} to the ${
+            process.platform === "win32" ? "Recycle Bin" : "Trash"
+          }.\n`
+        )
+      );
     else console.log();
   } catch (err) {
     if (err.code === "EPERM") {
@@ -87,6 +110,27 @@ const del = (path, ...args) => {
     } else if (err.code === "EBUSY") {
       // If the file/directory is in use
       Errors.inUse("file/directory", path);
+    } else if (err.code === "2147549183") {
+      if (confirmDel) {
+        if (
+          !_promptForYN(
+            `Failed to move ${chalk.bold(path)} to the ${
+              process.platform === "win32" ? "Recycle Bin" : "Trash"
+            }. Do you want to permanently delete it?`
+          )
+        ) {
+          // Anything BUT 'y' will cancel the deletion process
+          console.log(chalk.yellow("Process aborted.\n"));
+          return;
+        }
+      }
+
+      fs.rmSync(path, { recursive: true, force: true });
+
+      if (!silent) console.log(chalk.green(`Permanently deleted ${chalk.bold(path)}.\n`));
+      else console.log();
+
+      return;
     } else {
       // Unknown error
       _fatalError(err);
