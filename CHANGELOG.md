@@ -10,6 +10,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
+- Updated error handing on the `ping` command.
 - Fixed an issue where the `tasklist` command would crash BubbleOS when run in the executable version.
 - Changed the text that displays when running `bubble -v`.
 - Fixed an issue where `mkfile` would crash when attempting to ask the user for file contents.
