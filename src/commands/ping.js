@@ -90,7 +90,7 @@ const _makeConnection = async (host, path = "") => {
           chalk.green(
             `The server, ${chalk.bold.italic(
               options.host + options.path
-            )}, is responding with status code 200 (success)!\n`
+            )}, is responding with status code 200 (OK)!\n`
           )
         );
       } else {

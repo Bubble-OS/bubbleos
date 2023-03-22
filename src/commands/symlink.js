@@ -84,10 +84,10 @@ const symlink = (path, newPath, ...args) => {
     // If the user wanted to check if the path is a symbolic link
     if (check) {
       // If the path IS a symbolic link
-      if (fs.lstatSync(path).isSymbolicLink())
-        console.log(chalk.greenBright(`The path, ${chalk.bold(path)}, is a symbolic link.\n`));
-      else
-        console.log(chalk.hex("#FFA500")`The path, ${chalk.bold(path)}, is not a symbolic link.\n`);
+      if (fs.lstatSync(path).isSymbolicLink()) {
+        console.log(chalk.green(`The path, ${chalk.bold(path)}, is a symbolic link.`));
+        console.log(chalk.green.italic.dim(`(points to ${chalk.bold(fs.readlinkSync(path))})\n`));
+      } else console.log(chalk.red(`The path, ${chalk.bold(path)}, is not a symbolic link.\n`));
 
       // Don't continue making a symbolic link; exit
       return;

@@ -22,9 +22,10 @@ const HELP = {
   },
   cd: {
     usage: "cd <dir> [-s]",
-    desc: `Change the CWD (current working directory) into the one specified. Absolute and relative paths are both accepted. Note that this does not change the CWD for the system; only for ${GLOBAL_NAME}.`,
+    desc: `Change the CWD (current working directory) into the one specified. If a symbolic link is passed, ${GLOBAL_NAME} will attempt to find where its target is, and change the CWD to that.. Note that this does not change the CWD for the system; only for ${GLOBAL_NAME}.`,
     args: {
-      "<dir>": "The directory to change into. Both absolute and relative paths will work.",
+      "<dir>":
+        "The directory to change into. Both absolute and relative paths will work, as well as directory symbolic links.",
       "[-s]":
         "Silence output to the standard output. Only error messages will display. By default, this option is disabled.",
     },
@@ -113,6 +114,14 @@ const HELP = {
         "Show the visual occurrences, which are the contents of the file with the phrase occurrences highlighted.",
     },
   },
+  hash: {
+    usage: "hash <file>",
+    desc: `Get hashes of a file that you specify in a prompt. ${GLOBAL_NAME} currently supports the following hashes: md5, sha1, sha224, sha256, sha384, sha512, sha3-224, sha3-256, sha3-384, sha3-512, shake128 and shake256. Alternatively, you can also enter 'all' to show all available hashes.`,
+    args: {
+      "<file>":
+        "The file to get the hashes of. Note that for large files, it may take a while to get hashes.",
+    },
+  },
   help: {
     usage: "help [<command>] [--rm-tip]",
     desc: `Get a list of all available ${GLOBAL_NAME} commands, or get information about a specific command such as usage, arguments, and a short description.`,
@@ -159,6 +168,13 @@ const HELP = {
       "<file>": `The file to create. If the parent directories passed do not exist, ${GLOBAL_NAME} will throw an error.`,
       "[-s]":
         "If this flag is passed, no success output will be shown, but error messages will still appear.",
+    },
+  },
+  ping: {
+    usage: "ping <hostname>",
+    desc: "Ping a website for a response, and output the response (e.g. 200 is OK, 404 is Not Found, 500 is Internal Server Error, etc.). Note that if an error appears for a website such as 'google.com', try prefixing it with 'www.google.com'. Also note that this command only does a HTTPS request (not a HTTP request).",
+    args: {
+      "<hostname>": "The host name to ping. Make sure that the URL/IP address is valid.",
     },
   },
   print: {
@@ -238,6 +254,13 @@ const HELP = {
       "[-y]": "Automatically accept the confirmation prompt when killing a process.",
       "[-s]": "Silence all outputs excluding the confirmation prompt and error messages.",
       "[--kill-self]": `By default, you cannot kill the ${GLOBAL_NAME} process. Using this flag, you can successfully kill it. However, this should be used at your own risk, as it is safer to use the 'exit' command instead.`,
+    },
+  },
+  tasklist: {
+    usage: "tasklist [<filter>]",
+    desc: "Show all local processes that are running on the device and their respective PID. This command can be helpful to find a PID to kill in 'taskkill'. You can also optionally filter for processes if you know the name of the process.",
+    args: {
+      "[<filter>]": "The process name to filter for and display only.",
     },
   },
   time: {

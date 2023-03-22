@@ -8,6 +8,8 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 - Added a feature where you can change into a symbolic link directory in BubbleOS using the `cd` command.
 - Added the full operating name in the `sysinfo` command.
+- Added a feature where the `symlink` command, if run with the `-c` flag and if the path was a symbolic link, will show the path it points to. Colors have also been updated for it.
+- Added help messages for commands such as `hash`, `ping`, and `tasklist`.
 
 ### Changed/Fixed Features
 
