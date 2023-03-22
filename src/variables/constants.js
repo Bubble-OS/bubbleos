@@ -16,13 +16,13 @@ const AUTHOR = "Arnav Thorat";
  *
  * Make sure this is a proper version number. Change this with the build (e.g. `78` will make the version `0.7.8`).
  */
-const VERSION = "1.1.5-beta";
+const VERSION = "1.1.6-beta";
 /**
  * The build of the shell.
  *
  * Make sure this is a proper build number. Change this with the version (e.g. `0.7.8` will make the build `78`).
  */
-const BUILD = 115;
+const BUILD = 116;
 
 /**
  * If the shell is in beta or not. `true` if it is in beta, else, `false`.

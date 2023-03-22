@@ -7,7 +7,7 @@ const { GLOBAL_NAME } = require("../variables/constants");
 
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
-const _replaceSpaces = require("../functions/replaceSpaces");
+const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
 // Get classes
@@ -55,7 +55,6 @@ const symlink = (path, newPath, ...args) => {
 
     // Replace spaces and then convert to an absolute path
     // Only if 'check' is false, convert the new path
-    path = _convertAbsolute(_replaceSpaces(path));
     if (!check) {
       [path, newPath] = _parseDoubleQuotes([path, newPath, ...args]);
       [path, newPath] = [_convertAbsolute(path), _convertAbsolute(newPath)];

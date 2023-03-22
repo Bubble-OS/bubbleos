@@ -7,7 +7,7 @@ const { GLOBAL_NAME } = require("../variables/constants");
 const _startupError = require("./startupError");
 
 const startupChecks = () => {
-  if (process.arch !== "x64")
+  if (!(process.arch === "x64" || process.arch === "arm64"))
     _startupError(
       `${GLOBAL_NAME} can only run on the x64 processor architecture. Please use a device with a processor that supports the x64 architecture.`,
       false

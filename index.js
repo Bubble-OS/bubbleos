@@ -6,7 +6,7 @@ const { question } = require("readline-sync");
 const isElevated = require("is-elevated");
 
 // Import variable constants
-const { GLOBAL_NAME, SHORT_NAME, AUTHOR, VERSION, BUILD } = require("./src/variables/constants");
+const { GLOBAL_NAME, SHORT_NAME, VERSION, BUILD } = require("./src/variables/constants");
 
 // Import private helper functions
 const _timebomb = require("./src/functions/timebomb");

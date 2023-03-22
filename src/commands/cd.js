@@ -1,5 +1,6 @@
 // Get modules
 const chalk = require("chalk");
+const fs = require("fs");
 
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
@@ -50,13 +51,31 @@ const cd = (dir, ...args) => {
     if (!dirChk.doesExist()) {
       Errors.doesNotExist("directory", dir);
       return;
-    } else if (!dirChk.validateType()) {
+    }
+
+    // If the path passed is a symbolic link or not
+    const isSymlink = fs.lstatSync(dir).isSymbolicLink();
+
+    if (isSymlink) {
+      // If the path is a symbolic link, first get where it is pointing
+      const symlinkPath = fs.readlinkSync(dir);
+
+      // If the path it is pointing to is a file, throw an error
+      if (!new Checks(symlinkPath).validateType()) {
+        Errors.expectedDir(dir);
+        return;
+      }
+
+      // Change the directory to the symbolic link pointing path
+      process.chdir(symlinkPath);
+    } else if (dirChk.validateType()) {
+      // Normally change the directory
+      process.chdir(dir);
+    } else {
+      // Path is a directory
       Errors.expectedDir(dir);
       return;
     }
-
-    // Change directory
-    process.chdir(dir);
 
     if (!silent)
       console.log(chalk.green(`Successfully changed the directory to ${chalk.bold(dir)}.\n`));
