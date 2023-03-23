@@ -2,6 +2,20 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 116 to 12? (v1.1.6-beta to v1.2.?-beta)
+
+### Added Features
+
+- Added the `lock` command, which locks the system. Works on Windows, macOS, and Linux.
+
+### Changed/Fixed Features
+
+- Fixed an issue where the pre-boot interpreter would not run some commands (e.g. `ping`).
+
+### Removed Features
+
+_No removed features._
+
 ## Build 112 to 116 (v1.1.2-beta to v1.1.6-beta)
 
 ### Added Features

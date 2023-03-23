@@ -21,6 +21,7 @@ const hash = require("../commands/hash");
 const help = require("../commands/help");
 const { historyCmd } = require("../commands/history");
 const ifnet = require("../commands/ifnet");
+const lock = require("../commands/lock");
 const ls = require("../commands/ls");
 const mkdir = require("../commands/mkdir");
 const mkfile = require("../commands/mkfile");
@@ -82,6 +83,7 @@ const COMMANDS = {
   help,
   history: historyCmd,
   ifnet,
+  lock,
   ls,
   mkdir,
   mkfile,

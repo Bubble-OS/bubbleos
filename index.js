@@ -64,8 +64,9 @@ if (args.length !== 0) {
     (async () => {
       await _intCmds(command.join(" "));
     })();
-    process.exit(0);
   }
+
+  return;
 }
 
 // Run the intro if requested (only works if no commands have been entered in the pre-boot interpreter)
