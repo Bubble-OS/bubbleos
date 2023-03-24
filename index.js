@@ -18,28 +18,16 @@ const _intCmds = require("./src/functions/interpret");
 const args = process.argv.splice(2);
 
 // Argument variables
-let showTimebomb = true;
-let doChecks = true;
-let showVersion = false;
-let noWarnings = false;
-let noIntro = false;
-global.noDump = false;
-
-// Get all arguments and entered commands that were passed
-if (args.length !== 0) {
-  if (args.includes("--no-timebomb") || args.includes("--no-timebomb")) showTimebomb = false;
-  if (args.includes("--no-checks") || args.includes("--no-checks")) doChecks = false;
-  if (
-    args.includes("-v") ||
-    args.includes("/v") ||
-    args.includes("--version") ||
-    args.includes("/version")
-  )
-    showVersion = true;
-  if (args.includes("--no-warnings") || args.includes("/no-warnings")) noWarnings = true;
-  if (args.includes("--no-intro") || args.includes("/no-intro")) noIntro = true;
-  if (args.includes("--no-dump") || args.includes("/no-dump")) global.noDump = true;
-}
+let showTimebomb = !(args?.includes("--no-timebomb") || args?.includes("--no-timebomb"));
+let doChecks = !(args?.includes("--no-checks") || args?.includes("--no-checks"));
+let showVersion =
+  args?.includes("-v") ||
+  args?.includes("/v") ||
+  args?.includes("--version") ||
+  args?.includes("/version");
+let noWarnings = args?.includes("--no-warnings") || args?.includes("/no-warnings");
+let noIntro = args?.includes("--no-intro") || args?.includes("/no-intro");
+global.noDump = args?.includes("--no-dump") || args?.includes("/no-dump");
 
 // If '--no-timebomb' wasn't in the arguments list, show the timebomb
 if (showTimebomb) _timebomb();
@@ -64,9 +52,9 @@ if (args.length !== 0) {
     (async () => {
       await _intCmds(command.join(" "));
     })();
-  }
 
-  return;
+    return;
+  }
 }
 
 // Run the intro if requested (only works if no commands have been entered in the pre-boot interpreter)
