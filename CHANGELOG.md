@@ -10,6 +10,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
+- Changed the yes/no prompt to accept more lenient answers such as typos.
 - Fixed an issue where the pre-boot interpreter would not run some commands (e.g. `ping`).
 
 ### Removed Features

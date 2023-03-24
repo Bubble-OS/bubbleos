@@ -1,6 +1,7 @@
 // Import modules
 const chalk = require("chalk");
-const { keyInYN } = require("readline-sync");
+const yn = require("yn");
+const { question } = require("readline-sync");
 
 /**
  * Prompt the user for a yes/no prompt message.
@@ -20,12 +21,10 @@ const { keyInYN } = require("readline-sync");
  *
  * @param {string} message The message to display to the user in the yes/no prompt.
  */
-const _promptForYN = (message) => {
-  // Prompt the user, and if they entered anything BUT 'y', return 'false', else, return 'true'
-  if (!keyInYN(`${message} [${chalk.green("y")}/${chalk.red.bold("N")}] `, { guide: false }))
-    return false;
-  else return true;
-};
+const _promptForYN = (message) =>
+  yn(question(`${message} [${chalk.green("y")}/${chalk.red.bold("N")}] `, { guide: false }), {
+    lenient: true,
+  });
 
 // Export the function
 module.exports = _promptForYN;
