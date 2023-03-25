@@ -110,7 +110,7 @@ const _logDirContents = (contents, options = { short: false, max: undefined }) =
  * @param {fs.PathLike | string} dir Optional: the directory to view the contents in. By default, it uses the current working directory.
  * @param  {...string} args Arguments to change the behavior of `ls`.
  */
-const ls = (dir = process.cwd(), ...args) => {
+const ls = (dir = `"${process.cwd()}"`, ...args) => {
   try {
     // Initialize arguments
     // Do this first as '-s' can change the actual directory value
