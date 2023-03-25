@@ -24,7 +24,7 @@ const lock = (...args) => {
     } else if (err.message.toLowerCase().includes("no applicable command found")) {
       console.log(
         chalk.red(
-          "Locking the OS failed. Please consider installing xdg-screensaver, gnome-screensaver, cinnamon-screensaver, or dm-tool, and try again."
+          "Locking the OS failed. Please consider installing xdg-screensaver, gnome-screensaver, cinnamon-screensaver, or dm-tool, and try again.\n"
         )
       );
       return;

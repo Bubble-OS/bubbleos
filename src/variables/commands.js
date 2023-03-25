@@ -21,6 +21,7 @@ const hash = require("../commands/hash");
 const help = require("../commands/help");
 const { historyCmd } = require("../commands/history");
 const ifnet = require("../commands/ifnet");
+const link = require("../commands/link");
 const lock = require("../commands/lock");
 const ls = require("../commands/ls");
 const mkdir = require("../commands/mkdir");
@@ -83,6 +84,7 @@ const COMMANDS = {
   help,
   history: historyCmd,
   ifnet,
+  link,
   lock,
   ls,
   mkdir,
@@ -118,6 +120,8 @@ const ALIASES = {
   help: ["man"],
   history: ["hist"],
   ifnet: ["ipconfig", "ifconfig"],
+  link: ["mklink", "ln"],
+  lock: ["screensaver", "scr", "protect"],
   ls: ["ld", "dir"],
   mkdir: ["makedir"],
   mkfile: ["touch", "makefile"],

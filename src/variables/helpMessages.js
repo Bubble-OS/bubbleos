@@ -144,6 +144,22 @@ const HELP = {
       "[-y]": "Automatically confirm the confirmation prompt.",
     },
   },
+  link: {
+    usage: "link <source> [<link>] [-u] [-s] [-y]",
+    desc: "Create a hard link (link) that points to the source (source). Hard links will replicate the data of the source, and will keep the data even when the source is deleted.",
+    args: {
+      "[-u]":
+        "Unlink a file. This will actually just ultimately a file, no matter if it is a link or not.",
+      "[-s]":
+        "Silently link/unlink a file. This will hide all success messages, however, all error messages will still be shown.",
+      "[-y]": "Automatically confirm the confirmation prompt when unlinking a file.",
+    },
+  },
+  lock: {
+    usage: "lock",
+    desc: "Lock the operating system by showing the lock screen. On Linux, this requires xdg-screensaver, gnome-screensaver, cinnamon-screensaver, or dm-tool to be installed.",
+    args: {},
+  },
   ls: {
     usage: "ls [<dir>] [-s]",
     desc: "Get all of the files and directories in a directory. By default, the current working directory is used, but you can manually specify a directory. You can also view the contents of the directory in a shorter, row/column view.",

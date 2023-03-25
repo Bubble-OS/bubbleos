@@ -6,6 +6,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Added Features
 
+- Added the `link` command, which creates [hard links](https://learn.microsoft.com/en-us/windows/win32/fileio/hard-links-and-junctions) on the system.
 - Added the `lock` command, which locks the system. Works on Windows, macOS, and Linux.
 
 ### Changed/Fixed Features

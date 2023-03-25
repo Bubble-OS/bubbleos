@@ -99,7 +99,11 @@ const symlink = (path, newPath, ...args) => {
     // If the user didn't want silence :)
     if (!silent)
       console.log(
-        chalk.green(`Successfully linked ${chalk.bold(newPath)} to ${chalk.bold(path)}.\n`)
+        chalk.green(
+          `Successfully created the symbolic link ${chalk.bold(
+            newPath
+          )} that points to ${chalk.bold(path)}.\n`
+        )
       );
     else console.log();
   } catch (err) {
