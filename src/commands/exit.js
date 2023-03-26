@@ -1,5 +1,8 @@
 // Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
+const { history } = require("./history");
+
+const _manageConfig = require("../functions/manageConfig");
 
 /**
  * Exit the BubbleOS shell with an exit code of
@@ -33,6 +36,10 @@ const exit = (...args) => {
 
   // If the user requested to clear the screen after exiting, do so
   if (args.includes("-c") || args.includes("/c")) process.stdout.write("\033c");
+
+  if (!_manageConfig("add", { history })) {
+    console.log(chalk.red(`${GLOBAL_NAME} failed to save the history.\n`));
+  }
 
   // Exit BubbleOS (Node.js) with an exit code of '0' (success)
   process.exit(0);

@@ -125,4 +125,4 @@ const _addToHist = (command) => {
 };
 
 // Export all the functions
-module.exports = { historyCmd, _addToHist };
+module.exports = { historyCmd, _addToHist, history };

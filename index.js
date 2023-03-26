@@ -12,6 +12,7 @@ const { GLOBAL_NAME, SHORT_NAME, VERSION, BUILD } = require("./src/variables/con
 const _timebomb = require("./src/functions/timebomb");
 const _startupChecks = require("./src/functions/startupChecks");
 const _intCmds = require("./src/functions/interpret");
+const _manageConfig = require("./src/functions/manageConfig");
 
 // Get all of the arguments passed directly into BubbleOS
 // For the pre-boot interpreter
@@ -88,6 +89,16 @@ const checkIfElevated = async () => {
     );
   }
 };
+
+if (!_manageConfig("create")) {
+  console.log(
+    chalk.red(
+      `${chalk.bgRed.white(
+        " DANGER: "
+      )} ${GLOBAL_NAME} failed to create the configuration file. Some features will not work.\n`
+    )
+  );
+}
 
 // Repeat forever until the user exits
 (async () => {
