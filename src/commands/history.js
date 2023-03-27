@@ -1,6 +1,9 @@
 // Get modules
 const chalk = require("chalk");
 
+// Get functions
+const _manageConfig = require("../functions/manageConfig");
+
 // Get classes
 const Errors = require("../classes/Errors");
 
@@ -10,7 +13,7 @@ const Errors = require("../classes/Errors");
  *
  * @type string[]
  */
-const history = [];
+const { history } = _manageConfig("get").parsed;
 /**
  * The number of history commands to store before deleting the oldest ones.
  */

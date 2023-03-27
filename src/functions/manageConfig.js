@@ -14,7 +14,7 @@ const Checks = require("../classes/Checks");
  * - `'create'` - Creates the configuration file.
  * - `'delete'` - Delete the entire configuration file.
  * - `'get'` - Get the contents of the configuration file in both raw and parsed format.
- * - `'add'` - Add a value to the configuration file. Overwrites it.
+ * - `'add'` - Add a value to the configuration file. Appends to an existing array if the parameter already exists.
  *
  * @param {string} whatShouldIDo One of the above values.
  * @param {object} data An object structure that will be converted to JSON. Only needed if `whatShouldIDo` is `'add'`.
@@ -57,24 +57,25 @@ const _manageConfig = (whatShouldIDo, data) => {
       return false;
     }
   } else if (whatShouldIDo === "add") {
-    const contents = JSON.parse(fs.readFileSync(configPath, { flag: "r", encoding: "utf8" }));
-
-    for (const param in data) {
-      if (Array.isArray(contents[param])) contents[param] = contents[param].concat(data[param]);
-      else contents[param] = data[param];
-    }
-
-    for (const parse in contents) {
-      if (typeof data[parse] === "undefined") data[parse] = contents[parse];
-    }
-
     try {
-      fs.writeFileSync(configPath, JSON.stringify(data));
+      const contents = JSON.parse(fs.readFileSync(configPath, { flag: "r", encoding: "utf8" }));
+
+      for (const param in data) {
+        if (Array.isArray(contents[param])) {
+          contents[param] = contents[param].concat(data[param]);
+        } else {
+          contents[param] = data[param];
+        }
+      }
+
+      fs.writeFileSync(configPath, JSON.stringify(contents));
       return true;
     } catch (_) {
       return false;
     }
-  } else return false;
+  } else {
+    return false;
+  }
 };
 
 module.exports = _manageConfig;
