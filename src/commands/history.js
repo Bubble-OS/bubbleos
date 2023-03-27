@@ -13,7 +13,7 @@ const Errors = require("../classes/Errors");
  *
  * @type string[]
  */
-const { history } = _manageConfig("get").parsed;
+const history = _manageConfig("get").parsed?.history ?? [];
 /**
  * The number of history commands to store before deleting the oldest ones.
  */
