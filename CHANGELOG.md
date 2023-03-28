@@ -7,6 +7,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Added Features
 
 - Added a feature where BubbleOS creates a configuration file in the user's home directory, which contains all the commands in the history when the user exited BubbleOS using the `exit` command. BubbleOS automatically creates the file when it has been run for the first time. Currently, only the history is stored.
+- Added the `-u` flag to `sysinfo`, which displays user information. It also displays it by default.
 - Added the `link` command, which creates [hard links](https://learn.microsoft.com/en-us/windows/win32/fileio/hard-links-and-junctions) on the system.
 - Added the `lock` command, which locks the system. Works on Windows, macOS, and Linux.
 
@@ -18,7 +19,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Removed Features
 
-_No removed features._
+- Removed the `userinfo` command.
 
 ## Build 112 to 116 (v1.1.2-beta to v1.1.6-beta)
 

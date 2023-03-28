@@ -251,10 +251,11 @@ const HELP = {
     },
   },
   sysinfo: {
-    usage: "sysinfo [-c] [-s] [-a] [-e] [--all] [--rm-tip]",
+    usage: "sysinfo [-c] [-u] [-s] [-a] [-e] [--all] [--rm-tip]",
     desc: `Get all system information about your local machine that ${GLOBAL_NAME} is currently running on. This includes, in summary, the operating system, release, computer name, memory usage, system uptime, environment variables and more. This can also be filtered by subheadings through arguments (listed below).`,
     args: {
       "[-c]": "Display basic computer information.",
+      "[-u]": "Display local user information.",
       "[-s]": "Display system resources that are being used.",
       "[-a]": "Display advanced system information.",
       "[-e]": "Display all local environment variables.",
@@ -289,11 +290,6 @@ const HELP = {
   tips: {
     usage: "tips",
     desc: `Show tips relating to the use of ${GLOBAL_NAME}. However, another text is shown, including fun facts about ${GLOBAL_NAME} too!`,
-    args: {},
-  },
-  userinfo: {
-    usage: "userinfo",
-    desc: "Show user-related system information from the local machine. This includes the UID, GID, shell, username, user directory, and temporary directory. Note that on Windows, the UID, GID, and shell are unavailable and are not shown. This command may be merged with 'sysinfo' in later versions.",
     args: {},
   },
   wcount: {

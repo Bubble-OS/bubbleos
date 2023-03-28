@@ -37,7 +37,6 @@ const taskkill = require("../commands/taskkill");
 const tasklist = require("../commands/tasklist");
 const time = require("../commands/time");
 const tips = require("../commands/tips");
-const userinfo = require("../commands/userinfo");
 const wcount = require("../commands/wcount");
 
 // Easter egg :D
@@ -100,7 +99,6 @@ const COMMANDS = {
   tasklist,
   time,
   tips,
-  userinfo,
   wcount,
 };
 
@@ -131,12 +129,11 @@ const ALIASES = {
   rename: ["mv", "ren"],
   size: ["df"],
   symlink: ["symblnk", "ln", "link"],
-  sysinfo: ["uname", "systeminfo"],
+  sysinfo: ["uname", "systeminfo", "userinfo", "whoami"],
   taskkill: ["kill"],
   tasklist: ["ps", "top", "htop"],
   time: [],
   tips: ["tip"],
-  userinfo: ["whoami"],
   wcount: ["wc"],
 };
 
