@@ -2,14 +2,14 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 116 to 121 (v1.1.6-beta to v1.2.1-beta)
+## Build 116 to 122 (v1.1.6-beta to v1.2.2-beta)
 
 ### Added Features
 
-- Added a feature where BubbleOS creates a configuration file in the user's home directory, which contains all the commands in the history when the user exited BubbleOS using the `exit` command. BubbleOS automatically creates the file when it has been run for the first time. Currently, only the history is stored.
 - Added the `-u` flag to `sysinfo`, which displays user information. It also displays it by default.
 - Added the `link` command, which creates [hard links](https://learn.microsoft.com/en-us/windows/win32/fileio/hard-links-and-junctions) on the system.
 - Added the `lock` command, which locks the system. Works on Windows, macOS, and Linux.
+- Added an internal feature that creates a configuration file for BubbleOS to use. However, it currently is not used, and there is a bug which will say that BubbleOS failed to create the file, even if it was successfully created.
 
 ### Changed/Fixed Features
 

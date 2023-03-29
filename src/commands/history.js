@@ -1,9 +1,6 @@
 // Get modules
 const chalk = require("chalk");
 
-// Get functions
-const _manageConfig = require("../functions/manageConfig");
-
 // Get classes
 const Errors = require("../classes/Errors");
 
@@ -13,7 +10,7 @@ const Errors = require("../classes/Errors");
  *
  * @type string[]
  */
-const history = _manageConfig("get").parsed?.history ?? [];
+const history = [];
 /**
  * The number of history commands to store before deleting the oldest ones.
  */
@@ -61,6 +58,16 @@ const historyCmd = (numToDisplay, ...args) => {
     // Add two spaces to the start as well
     console.log(`  ${index}: ${chalk.bold.yellow(histCmd)}`);
   };
+
+  const clear =
+    args.includes("-c") || args.includes("/c") || numToDisplay === "-c" || numToDisplay === "/c";
+
+  if (clear) {
+    history.length = 0;
+
+    console.log(chalk.green("Cleared the history.\n"));
+    return;
+  }
 
   // If the user did not request for a specific history point
   if (typeof numToDisplay === "undefined") {

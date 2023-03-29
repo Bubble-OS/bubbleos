@@ -24,8 +24,7 @@ const _manageConfig = (whatShouldIDo, data) => {
   whatShouldIDo = whatShouldIDo.toLowerCase();
 
   const configName = `${GLOBAL_NAME}-config.json`.toLowerCase();
-  const homedir = os.homedir();
-  const configPath = path.join(homedir, configName);
+  const configPath = path.join(os.homedir(), configName);
 
   const configChk = new Checks(configPath);
 
@@ -35,7 +34,7 @@ const _manageConfig = (whatShouldIDo, data) => {
         fs.writeFileSync(configPath, "{}");
       }
 
-      return true;
+      return false;
     } catch (_) {
       return false;
     }
