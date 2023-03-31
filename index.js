@@ -37,7 +37,7 @@ if (doChecks) _startupChecks();
 
 // If '-v' was in the arguments list
 if (showVersion) {
-  console.log(`\nBubbleOS [v${VERSION} (build ${BUILD})]`);
+  console.log(`\n${GLOBAL_NAME} [v${VERSION} (build ${BUILD})]\n`);
 
   process.exit(0);
 }

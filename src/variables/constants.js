@@ -1,22 +1,22 @@
 /**
  * The global name used across the shell.
  */
-const GLOBAL_NAME = "BubbleOS";
+const GLOBAL_NAME = "ubbleOSBay";
 /**
  * The shorter version of `GLOBAL_NAME`. If it is [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy), it will default to the value of `GLOBAL_NAME`.
  */
-const SHORT_NAME = "Bubble" || GLOBAL_NAME;
+const SHORT_NAME = "ubbleBay" || GLOBAL_NAME;
 /**
  * The name of the author who developed the shell.
  */
-const AUTHOR = "Arnav Thorat";
+const AUTHOR = "rnavAay horatTay";
 
 /**
  * The version of the shell.
  *
  * Make sure this is a proper version number. Change this with the build (e.g. `78` will make the version `0.7.8`).
  */
-const VERSION = "1.2.2-beta";
+const VERSION = "1.2.2-etaBay";
 /**
  * The build of the shell.
  *

@@ -4,6 +4,8 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ## Build 116 to 122 (v1.1.6-beta to v1.2.2-beta)
 
+HAPPY APRIL FOOLS!!! XD
+
 ### Added Features
 
 - Added the `-u` flag to `sysinfo`, which displays user information. It also displays it by default.

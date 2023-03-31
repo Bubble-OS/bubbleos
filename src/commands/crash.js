@@ -98,7 +98,7 @@ const crash = (index = NaN, ...args) => {
 
     if (index === 0) {
       // Fatal error
-      throw new Error("BubbleOS was purposefully crashed with the 'crash' command.");
+      throw new Error(`${GLOBAL_NAME} was purposefully crashed with the 'crash' command.`);
     } else if (index === 1) {
       // Crash BubbleOS by continuously writing 'clear screen' to the terminal.
       // This can make the terminal hang, and sometimes make it impossible to press ^C.
