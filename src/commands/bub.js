@@ -31,11 +31,7 @@ const Checks = require("../classes/Checks");
  * @param {fs.PathLike | string} path The path the points to the `.bub` file. It should be a `.bub` file, but others are accepted, as there is no such check for this in the function.
  * @param {{ displayCommand: boolean, allowExit: boolean }} options Optional. Defines options that can modify the behaviour of this function. The available keys are listed above.
  */
-const _interpretBubbleFile = (
-  intCmds,
-  path,
-  options = { displayCommand: true, allowExit: false }
-) => {
+const _interpretFile = (intCmds, path, options = { displayCommand: true, allowExit: false }) => {
   // Gets the contents from the path, and splits it into lines
   const lines = fs.readFileSync(path, { encoding: "utf-8", flag: "r" }).split("\n");
 
@@ -139,7 +135,7 @@ const bub = (intCmds, file, ...args) => {
     }
 
     // Interpret the Bubble file
-    _interpretBubbleFile(intCmds, file, { displayCommand, allowExit });
+    _interpretFile(intCmds, file, { displayCommand, allowExit });
   } catch (err) {
     if (err.code === "EPERM") {
       // If there are invalid permissions to read the file

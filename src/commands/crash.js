@@ -103,7 +103,7 @@ const crash = (index = NaN, ...args) => {
       // Crash BubbleOS by continuously writing 'clear screen' to the terminal.
       // This can make the terminal hang, and sometimes make it impossible to press ^C.
       while (true) {
-        process.stdout.write("\033c");
+        process.stdout.write("\x1bc");
       }
     } else if (index === 2) {
       // Node.js will crash once the heap has run out of memory

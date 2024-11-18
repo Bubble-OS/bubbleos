@@ -96,7 +96,7 @@ const HELP = {
   },
   exit: {
     usage: "exit [-c]",
-    desc: `Exits the ${GLOBAL_NAME} shell gracefully with an exit code of 0 (success). Also clears the screen if the user requested it once BubbleOS has exited.`,
+    desc: `Exits the ${GLOBAL_NAME} shell gracefully with an exit code of 0 (success). Also clears the screen if the user requested it once ${GLOBAL_NAME} has exited.`,
     args: {
       "[-c]": `If this flag is present, ${GLOBAL_NAME} will clear the terminal once it has exited.`,
     },
@@ -132,7 +132,7 @@ const HELP = {
   },
   history: {
     usage: "history [<numPlace>]",
-    desc: "Show the last fifty commands entered in BubbleOS, regardless if they were recognized or not (empty commands are not saved). After fifty commands have been stored in the history, the oldest gets deleted. You can get a specific command by entering that history point in the command.",
+    desc: `Show the last fifty commands entered in ${GLOBAL_NAME}, regardless if they were recognized or not (empty commands are not saved). After fifty commands have been stored in the history, the oldest gets deleted. You can get a specific command by entering that history point in the command.`,
     args: {
       "[<numPlace>]": "Optional; show the exact command at that history point.",
     },
@@ -208,8 +208,7 @@ const HELP = {
         "The file to read. Note that only plain text files can be read to avoid terminal corruption. Absolute and relative paths are accepted.",
       "[-y]":
         "Automatically accept the warning prompt if there are more than 5000 characters in a file.",
-      "[--ignore-max]":
-        "Ignore the maximum limit of characters in a file that BubbleOS can read (100,000 characters). Use this flag at your own risk!",
+      "[--ignore-max]": `Ignore the maximum limit of characters in a file that ${GLOBAL_NAME} can read (100,000 characters). Use this flag at your own risk!`,
     },
   },
   rename: {
