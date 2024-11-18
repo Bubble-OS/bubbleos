@@ -2,6 +2,21 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 122 to 125 (v1.2.2-beta to v1.2.5-beta)
+
+### Added Features
+
+_No added features._
+
+### Changed/Fixed Features
+
+- Fixed an issue in the configuration creation which caused the "Failed to create configuration file" error on boot.
+- Changed clear screen statements internally.
+
+### Removed Features
+
+- Removed the ability to use slashes (`/`) for arguments in commands and launching BubbleOS.
+
 ## Build 116 to 122 (v1.1.6-beta to v1.2.2-beta)
 
 HAPPY APRIL FOOLS!!! XD
