@@ -34,7 +34,7 @@ const _manageConfig = (whatShouldIDo, data) => {
         fs.writeFileSync(configPath, "{}");
       }
 
-      return false;
+      return true;
     } catch (_) {
       return false;
     }
