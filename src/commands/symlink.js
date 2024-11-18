@@ -66,7 +66,7 @@ const symlink = (path, newPath, ...args) => {
     const newPathChk = new Checks(newPath);
 
     // Initialize arguments
-    const silent = args.includes("-s") || args.includes("/s");
+    const silent = args.includes("-s");
 
     // Check if the path/new paths are not defined
     if (pathChk.paramUndefined() || newPathChk.paramUndefined()) {

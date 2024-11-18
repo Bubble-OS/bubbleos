@@ -23,14 +23,8 @@ const link = (path, newPath, ...args) => {
     const pathChk = new Checks(path);
     const newPathChk = new Checks(newPath);
 
-    const silent =
-      args.includes("-s") || args.includes("/s") || newPath === "-s" || newPath === "/s";
-    const confirm = !(
-      args?.includes("-y") ||
-      args?.includes("/y") ||
-      newPath === "-y" ||
-      newPath === "/y"
-    );
+    const silent = args.includes("-s") || newPath === "-s";
+    const confirm = !(args?.includes("-y") || newPath === "-y");
 
     if (pathChk.paramUndefined() || newPathChk.paramUndefined()) {
       Errors.enterParameter("a path/the paths", "link path newPath");

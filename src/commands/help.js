@@ -98,9 +98,7 @@ const help = (command, ...args) => {
     // Initialize arguments
     const showTip = !(
       args.includes("--no-tip") ||
-      args.includes("/no-tip") ||
       command === "--no-tip" ||
-      command === "/no-tip"
     );
 
     // Make a new array with a list of help messages sorted in alphabetical order

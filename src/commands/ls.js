@@ -114,10 +114,10 @@ const ls = (dir = `"${process.cwd()}"`, ...args) => {
   try {
     // Initialize arguments
     // Do this first as '-s' can change the actual directory value
-    let isShort = args.includes("-s") || args.includes("/s") || dir === "-s" || dir === "/s";
+    let isShort = args.includes("-s") || dir === "-s";
 
     // If the directory included '-s', change it to the current directory
-    if (dir === "-s" || dir === "/s") dir = process.cwd();
+    if (dir === "-s") dir = process.cwd();
 
     // Replace spaces
     dir = _parseDoubleQuotes([dir, ...args])[0];
