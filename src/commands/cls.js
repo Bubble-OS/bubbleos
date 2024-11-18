@@ -14,7 +14,7 @@
  */
 const cls = () => {
   try {
-    process.stdout.write("\033c");
+    process.stdout.write("\x1bc");
   } catch (err) {
     _fatalError(err);
   }

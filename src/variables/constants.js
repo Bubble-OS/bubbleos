@@ -51,7 +51,7 @@ const TIMEBOMB_ACTIVATED = true;
  *
  * To see the date in **90** days, [click here](https://www.google.com/search?q=Date+90+days+from+today).
  */
-const EXPIRY_DATE = new Date(2023, 5, 30);
+const EXPIRY_DATE = new Date(2025, 1, 16);
 
 // Export all of the variables
 module.exports = {

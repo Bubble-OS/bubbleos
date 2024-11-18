@@ -35,7 +35,7 @@ const exit = (...args) => {
   console.log(`Exiting the ${GLOBAL_NAME} shell...\n`);
 
   // If the user requested to clear the screen after exiting, do so
-  if (args.includes("-c")) process.stdout.write("\033c");
+  if (args.includes("-c")) process.stdout.write("\x1bc");
 
   if (!_manageConfig("add", { history })) {
     console.log(chalk.red(`${GLOBAL_NAME} failed to save the history.\n`));
