@@ -35,6 +35,7 @@ const _manageConfig = (whatShouldIDo, data) => {
       }
 
       return true;
+      return true;
     } catch (_) {
       return false;
     }
