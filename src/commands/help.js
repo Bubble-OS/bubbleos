@@ -96,10 +96,7 @@ const _printHelp = (sorted, specific, cmd) => {
 const help = (command, ...args) => {
   try {
     // Initialize arguments
-    const showTip = !(
-      args.includes("--no-tip") ||
-      command === "--no-tip" ||
-    );
+    const showTip = !(args.includes("--no-tip") || command === "--no-tip");
 
     // Make a new array with a list of help messages sorted in alphabetical order
     // Making a new array as HELP_MESSAGES is immutable (cannot be changed)
