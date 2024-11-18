@@ -48,8 +48,8 @@ const rename = (oldName, newName, ...args) => {
     const newChk = new Checks(newName);
 
     // Initialize commands
-    const confirm = !(args?.includes("-y") || args?.includes("/y"));
-    const silent = args?.includes("-s") || args?.includes("/s");
+    const confirm = !args?.includes("-y");
+    const silent = args?.includes("-s");
 
     // If either of the parameters aren't defined
     if (oldChk.paramUndefined() || newChk.paramUndefined()) {

@@ -50,7 +50,7 @@ const mkfile = (file, ...args) => {
     const fileChk = new Checks(file);
 
     // Initialize arguments
-    const silent = args?.includes("-s") || args?.includes("/s");
+    const silent = args?.includes("-s");
 
     // If the file was not defined
     if (fileChk.paramUndefined()) {

@@ -48,9 +48,9 @@ const exec = (file, ...args) => {
     const fileChk = new Checks(file);
 
     // Initialize arguments
-    const silent = args?.includes("-s") || args?.includes("/s");
-    const winHide = args?.includes("-h") || args?.includes("/h");
-    const shell = args?.includes("--sh") || args?.includes("/sh");
+    const silent = args?.includes("-s");
+    const winHide = args?.includes("-h");
+    const shell = args?.includes("--sh");
 
     // If the file is not defined
     if (fileChk.paramUndefined()) {

@@ -62,9 +62,9 @@ const fif = (file, ...args) => {
     const fileChk = new Checks(file);
 
     // Initialize arguments
-    const numOccur = args.includes("-n") || args.includes("/n");
-    const placeOccur = args.includes("-p") || args.includes("/p");
-    const visualOccur = args.includes("-v") || args.includes("/v");
+    const numOccur = args.includes("-n");
+    const placeOccur = args.includes("-p");
+    const visualOccur = args.includes("-v");
     const all = !numOccur && !placeOccur && !visualOccur;
 
     // Check to make sure the file/phrase to find is not empty

@@ -39,7 +39,7 @@ const cd = (dir, ...args) => {
     const dirChk = new Checks(dir);
 
     // Initialize arguments
-    const silent = args?.includes("-s") || args?.includes("/s");
+    const silent = args?.includes("-s");
 
     // Check if the parameter is undefined
     if (dirChk.paramUndefined()) {

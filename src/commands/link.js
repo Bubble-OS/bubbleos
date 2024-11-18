@@ -11,8 +11,7 @@ const Checks = require("../classes/Checks");
 
 const link = (path, newPath, ...args) => {
   try {
-    const unlink =
-      args.includes("-u") || args.includes("/u") || newPath === "-u" || newPath === "/u";
+    const unlink = args.includes("-u") || newPath === "-u";
 
     if (!unlink) {
       [path, newPath] = _parseDoubleQuotes([path, newPath, ...args]);

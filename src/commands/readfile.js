@@ -64,8 +64,8 @@ const readfile = (file, ...args) => {
     const fileChk = new Checks(file);
 
     // Initialize arguments
-    const confirm = !(args?.includes("-y") || args?.includes("/y"));
-    const ignoreMax = args?.includes("--ignore-max") || args?.includes("/ignore-max");
+    const confirm = !args?.includes("-y");
+    const ignoreMax = args?.includes("--ignore-max");
 
     // If the file is not defined
     if (fileChk.paramUndefined()) {

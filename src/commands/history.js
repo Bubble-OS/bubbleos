@@ -59,8 +59,7 @@ const historyCmd = (numToDisplay, ...args) => {
     console.log(`  ${index}: ${chalk.bold.yellow(histCmd)}`);
   };
 
-  const clear =
-    args.includes("-c") || args.includes("/c") || numToDisplay === "-c" || numToDisplay === "/c";
+  const clear = args.includes("-c") || numToDisplay === "-c";
 
   if (clear) {
     history.length = 0;

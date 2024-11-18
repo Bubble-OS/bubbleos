@@ -19,16 +19,12 @@ const _manageConfig = require("./src/functions/manageConfig");
 const args = process.argv.splice(2);
 
 // Argument variables
-let showTimebomb = !(args?.includes("--no-timebomb") || args?.includes("--no-timebomb"));
-let doChecks = !(args?.includes("--no-checks") || args?.includes("--no-checks"));
-let showVersion =
-  args?.includes("-v") ||
-  args?.includes("/v") ||
-  args?.includes("--version") ||
-  args?.includes("/version");
-let noWarnings = args?.includes("--no-warnings") || args?.includes("/no-warnings");
-let noIntro = args?.includes("--no-intro") || args?.includes("/no-intro");
-global.noDump = args?.includes("--no-dump") || args?.includes("/no-dump");
+let showTimebomb = !args?.includes("--no-timebomb");
+let doChecks = !args?.includes("--no-checks");
+let showVersion = args?.includes("-v") || args?.includes("--version");
+let noWarnings = args?.includes("--no-warnings");
+let noIntro = args?.includes("--no-intro");
+global.noDump = args?.includes("--no-dump");
 
 // If '--no-timebomb' wasn't in the arguments list, show the timebomb
 if (showTimebomb) _timebomb();
@@ -45,7 +41,7 @@ if (showVersion) {
 // If there are arguments, run the commands passed
 if (args.length !== 0) {
   let command = args.filter((val) => {
-    if (val.startsWith("/") || val.startsWith("-")) return false;
+    if (val.startsWith("-")) return false;
     return true;
   });
 

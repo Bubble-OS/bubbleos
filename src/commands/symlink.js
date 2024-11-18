@@ -50,8 +50,7 @@ const Checks = require("../classes/Checks");
 const symlink = (path, newPath, ...args) => {
   try {
     // Initialize the 'check' argument as it defines whether or not to convert the new path to absolute
-    const check =
-      args.includes("-c") || args.includes("/c") || newPath === "-c" || newPath === "/c";
+    const check = args.includes("-c") || newPath === "-c";
 
     // Replace spaces and then convert to an absolute path
     // Only if 'check' is false, convert the new path

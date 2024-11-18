@@ -49,8 +49,8 @@ const del = (path, ...args) => {
     const pathChk = new Checks(path);
 
     // Initialize arguments
-    const silent = args?.includes("-s") || args?.includes("/s");
-    const confirmDel = !(args?.includes("-y") || args?.includes("/y"));
+    const silent = args?.includes("-s");
+    const confirmDel = !args?.includes("-y");
 
     // Check if the path is not defined
     if (pathChk.paramUndefined()) {

@@ -53,7 +53,7 @@ const mkdir = (dir, ...args) => {
     const dirChk = new Checks(dir);
 
     // Initialize arguments
-    const silent = args?.includes("-s") || args?.includes("/s");
+    const silent = args?.includes("-s");
 
     // If the directory is not defined
     if (dirChk.paramUndefined()) {

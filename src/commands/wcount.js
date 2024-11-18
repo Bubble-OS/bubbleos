@@ -45,9 +45,9 @@ const wcount = (file, ...args) => {
     const fileChk = new Checks(file);
 
     // Initialize arguments
-    const lines = args?.includes("-l") || args?.includes("/l");
-    const words = args?.includes("-w") || args?.includes("/w");
-    const chars = args?.includes("-c") || args?.includes("/c");
+    const lines = args?.includes("-l");
+    const words = args?.includes("-w");
+    const chars = args?.includes("-c");
 
     // In case the user did not add any filter arguments, show them all!
     const all = !lines && !words && !chars;

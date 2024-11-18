@@ -34,7 +34,7 @@ const doneTips = [];
  */
 const tips = (...args) => {
   // Initialize tips
-  const debug = args.includes("--debug") || args.includes("/debug");
+  const debug = args.includes("--debug");
 
   // NON-DOCUMENTED FLAG - for use with the dev only!
   if (debug) {

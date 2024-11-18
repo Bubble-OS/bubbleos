@@ -83,7 +83,7 @@ const _makeValueFriendly = (value) => {
  * @param  {...string} args Arguments to modify the behavior of `ifnet`, however, none are yet available.
  */
 const ifnet = (...args) => {
-  const confirmShow = !(args?.includes("-y") || args?.includes("/y"));
+  const confirmShow = !args?.includes("-y");
   // Get the network interfaces and sort them, get the keys,
   // and get the values of them in the object (respectively)
   const netInts = {

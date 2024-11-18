@@ -99,16 +99,16 @@ const sysinfo = (...args) => {
   try {
     // Initialize arguments
     // Arguments to modify what is shown
-    const computerInfo = args?.includes("-c") || args?.includes("/c");
-    const userInfo = args?.includes("-u") || args?.includes("/u");
-    const sysResource = args?.includes("-s") || args?.includes("/s");
-    const advancedInfo = args?.includes("-a") || args?.includes("/a");
-    const envVars = args?.includes("-e") || args?.includes("/e");
+    const computerInfo = args?.includes("-c");
+    const userInfo = args?.includes("-u");
+    const sysResource = args?.includes("-s");
+    const advancedInfo = args?.includes("-a");
+    const envVars = args?.includes("-e");
 
     // Show all values
-    const all = args?.includes("--all") || args?.includes("/all");
+    const all = args?.includes("--all");
     // Remove the tip
-    const rmTip = args?.includes("--rm-tip") || args?.includes("/rm-tip");
+    const rmTip = args?.includes("--rm-tip");
 
     // In case no arguments were passed to modify what was shown, show that
     const defaultDisplay =

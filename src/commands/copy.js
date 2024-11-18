@@ -66,10 +66,10 @@ const copy = (src, dest, ...args) => {
     const destChk = new Checks(dest);
 
     // Initialize arguments
-    const silent = args?.includes("-s") || args?.includes("/s");
-    const confirmCopy = !(args.includes("-y") || args.includes("/y"));
-    const keepTimes = args?.includes("-t") || args?.includes("/t");
-    const rmSymlinkReference = args?.includes("--rm-symlink") || args?.includes("/rm-symlink");
+    const silent = args?.includes("-s");
+    const confirmCopy = !args.includes("-y");
+    const keepTimes = args?.includes("-t");
+    const rmSymlinkReference = args?.includes("--rm-symlink");
 
     // If EITHER the source or destinations are not defined
     if (srcChk.paramUndefined() || destChk.paramUndefined()) {

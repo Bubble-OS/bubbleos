@@ -52,7 +52,7 @@ const _convertTime = (time) => {
 const time = (...args) => {
   try {
     // If the user wants the time in 24-hour format instead of 12-hour
-    const isTwelveHours = !(args.includes("-24") || args.includes("/24"));
+    const isTwelveHours = !args.includes("-24");
 
     // Get the time
     const rawTime = new Date();

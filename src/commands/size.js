@@ -67,10 +67,10 @@ const size = (file, ...args) => {
 
     // Initialize arguments
     // Sizes
-    const bytes = args?.includes("-b") || args?.includes("/b");
-    const kilobytes = args?.includes("-kb") || args?.includes("/kb");
-    const megabytes = args?.includes("-mb") || args?.includes("/mb");
-    const gigabytes = args?.includes("-gb") || args?.includes("/gb");
+    const bytes = args?.includes("-b");
+    const kilobytes = args?.includes("-kb");
+    const megabytes = args?.includes("-mb");
+    const gigabytes = args?.includes("-gb");
 
     // If no arguments were passed, show all
     const all = !bytes && !kilobytes && !megabytes && !gigabytes;

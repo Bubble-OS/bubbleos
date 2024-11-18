@@ -43,9 +43,9 @@ const taskkill = async (pid, ...args) => {
     const pidChk = new Checks(pid);
 
     // Initialize arguments
-    const confirm = !(args?.includes("-y") || args?.includes("/y"));
-    const silent = args?.includes("-s") || args?.includes("/s");
-    const killSelf = args?.includes("--kill-self") || args?.includes("/kill-self");
+    const confirm = !args?.includes("-y");
+    const silent = args?.includes("-s");
+    const killSelf = args?.includes("--kill-self");
 
     // If the PID is not defined
     if (pidChk.paramUndefined()) {

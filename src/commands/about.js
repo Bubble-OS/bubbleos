@@ -27,8 +27,8 @@ const _fatalError = require("../functions/fatalError");
 const about = (...args) => {
   try {
     // Initialize recognized arguments
-    const license = args?.includes("-l") || args?.includes("/l");
-    const binary = args?.includes("--ilovetech") || args?.includes("/ilovetech");
+    const license = args?.includes("-l");
+    const binary = args?.includes("--ilovetech");
 
     // For the Easter egg :)
     let aboutName = GLOBAL_NAME;
