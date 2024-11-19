@@ -10,7 +10,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 
 ### Changed/Fixed Features
 
-_No changed/fixed features._
+- Updated the fatal error screen text and other processes relating to it (e.g. the heap snapshot is no longer saved upon crashing).
 
 ### Removed Features
 

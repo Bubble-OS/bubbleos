@@ -1,5 +1,4 @@
 // Get modules
-const { writeHeapSnapshot } = require("v8");
 const fs = require("fs");
 const chalk = require("chalk");
 
@@ -51,11 +50,7 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
     `${chalk.red.bold(
       `A fatal exception has occurred in ${GLOBAL_NAME}. To avoid damage to ${GLOBAL_NAME} and ${_friendlyOS()}, ${GLOBAL_NAME} has been aborted with a failure status.`
     )}\n\n${chalk.red.bold(
-      `Make sure that your system supports ${GLOBAL_NAME}. Also, if running a command caused this screen to appear, run '${chalk.italic(
-        "help <command>"
-      )}' to get detailed information for how to use your respective command.`
-    )}\n${chalk.red.bold(
-      `If none of these options help, there may be a bug in ${GLOBAL_NAME}. In that case, report the bug on the project's GitHub page (https://github.com/Bubble-OS/bubbleos/issues/new).`
+      `Make sure that your system supports ${GLOBAL_NAME}. If your system is supported, there may be a bug in ${GLOBAL_NAME}. In that case, report the bug on the project's GitHub page (https://github.com/Bubble-OS/bubbleos/issues/new).`
     )}\n`
   );
 
@@ -78,14 +73,8 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
   // If the error was passed with a file dump request
   if (doFileDump) {
     try {
-      // Subheading
-      console.log(chalk.underline("File Dump Status"));
-
       // Filenames for each error; change them here
-      const FILENAMES = {
-        errorInfo: `${GLOBAL_NAME}_error_info.txt`.toUpperCase(),
-        heapSnap: `${GLOBAL_NAME}_heap_snapshot.txt`.toUpperCase(),
-      };
+      const errorInfoFilename = `${GLOBAL_NAME}_error_info.txt`.toUpperCase();
 
       // All error properties stored in an array
       let errorArr = [];
@@ -101,38 +90,35 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
       const date = new Date();
       const errorInfoTxt = `BubbleOS encountered a fatal error at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} on ${
         date.getMonth() + 1
-      }/${date.getDate()}/${date.getFullYear()}.\nGive the developer this information by going to https://github.com/Bubble-OS/bubbleos/issues/new (GitHub account required). Thanks for helping!\n\n${errorArr.join(
+      }/${date.getDate()}/${date.getFullYear()}.\nGive the developer this information by going to https://github.com/Bubble-OS/bubbleos/issues/new (GitHub account required).\n\n${errorArr.join(
         "\n"
       )}`;
 
-      // Make the two files
-      fs.writeFileSync(FILENAMES.errorInfo, errorInfoTxt);
-      writeHeapSnapshot(FILENAMES.heapSnap);
+      // Make the file
+      fs.writeFileSync(errorInfoFilename, errorInfoTxt);
 
       // If the operation succeeded, show a success message
       console.log(
         chalk.green(
-          `${chalk.white.bgGreen(" SUCCESS ")}: Saved files ${chalk.bold(
-            FILENAMES.errorInfo
-          )} and ${chalk.bold(FILENAMES.heapSnap)} in ${chalk.bold(process.cwd())}.\n`
+          `${chalk.white.bgGreen(" SUCCESS ")}: Saved file ${chalk.bold(
+            errorInfoFilename
+          )} in ${chalk.bold(process.cwd())}.\n`
         )
       );
     } catch (saveErr) {
       // If an error occurred, show an error message, but continue
       console.log(
         chalk.red(
-          `${chalk.white.bgRed(" ERROR ")}: Could not save files ${chalk.bold(
-            FILENAMES.errorInfo
-          )} and ${chalk.bold(FILENAMES.heapSnap)} in ${chalk.bold(process.cwd())}.`
+          `${chalk.white.bgRed(" ERROR ")}: Could not save file ${chalk.bold(
+            errorInfoFilename
+          )} in ${chalk.bold(process.cwd())}.`
         )
       );
     }
   }
 
-  // Memory dump
-  console.log(`${chalk.underline("Memory Dump")}`);
-  // Aborting the Node.js process will cause a memory dump
-  process.abort();
+  console.log(`${chalk.bold(`Terminating ${GLOBAL_NAME} process...\n`)}`);
+  process.exit(1);
 };
 
 // Export the function
