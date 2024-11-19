@@ -2,6 +2,20 @@
 
 This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 125 to 1?? (v1.2.5-beta to v1.?.?-beta)
+
+### Added Features
+
+- Added the `dirtree` command, which shows a directory tree of the folder specified, as well as the files inside, visually.
+
+### Changed/Fixed Features
+
+_No changed/fixed features._
+
+### Removed Features
+
+_No removed features._
+
 ## Build 122 to 125 (v1.2.2-beta to v1.2.5-beta)
 
 ### Added Features

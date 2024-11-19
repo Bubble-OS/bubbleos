@@ -14,6 +14,7 @@ const copy = require("../commands/copy");
 const crash = require("../commands/crash");
 const date = require("../commands/date");
 const del = require("../commands/del");
+const dirtree = require("../commands/dirtree");
 const exec = require("../commands/exec");
 const exit = require("../commands/exit");
 const fif = require("../commands/fif");
@@ -73,6 +74,7 @@ const COMMANDS = {
   },
   date,
   del,
+  dirtree,
   erik: () => {
     console.log("Never run 'ifnet' (unless you're by yourself)!\n");
   },
@@ -112,6 +114,7 @@ const ALIASES = {
   cwd: ["pwd"],
   date: [],
   del: ["rm", "delete", "rmfile", "rmdir"],
+  dirtree: ["tree"],
   exec: ["run"],
   exit: ["end"],
   fif: ["find", "search"],
