@@ -1,6 +1,6 @@
 # BubbleOS Changelog
 
-This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
+This is the official BubbleOS changelog! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
 ## Build 125 to 1?? (v1.2.5-beta to v1.?.?-beta)
 
@@ -11,6 +11,7 @@ This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'gr
 ### Changed/Fixed Features
 
 - Updated the fatal error screen text and other processes relating to it (e.g. the heap snapshot is no longer saved upon crashing).
+- Fixed an issue where BubbleOS would report Windows 11 devices as Windows 10 in `sysinfo` ([#7](https://github.com/Bubble-OS/bubbleos/issues/7)).
 
 ### Removed Features
 
