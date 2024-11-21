@@ -19,9 +19,8 @@ const Checks = require("../classes/Checks");
  * @param {...string} text The text to output.
  */
 const print = (...text) => {
-  // If there is no text, show a warning and exit
   if (new Checks(text).paramUndefined()) {
-    console.log(chalk.yellow("No text was provided to output.\n"));
+    console.log();
     return;
   }
 

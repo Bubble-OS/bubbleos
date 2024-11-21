@@ -13,12 +13,13 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 - Updated the fatal error screen text and other processes relating to it (e.g. the heap snapshot is no longer saved upon crashing).
 - Fixed an issue where BubbleOS would report Windows 11 devices as Windows 10 in `sysinfo` ([#7](https://github.com/Bubble-OS/bubbleos/issues/7)).
+- The `print` command no longer outputs an error message when entering nothing, instead just showing nothing.
 - Fixed multiple issues in the `ping` command and made it work more consistently.
 - Moved HTTP codes and messages to a separate JSON file internally.
 
 ### Removed Features
 
-_No removed features._
+- Internally removed unused code in the `Errors` class.
 
 ## Build 122 to 125 (v1.2.2-beta to v1.2.5-beta)
 
