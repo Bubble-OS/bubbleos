@@ -7,11 +7,14 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 ### Added Features
 
 - Added the `dirtree` command, which shows a directory tree of the folder specified, as well as the files inside, visually.
+- The `ping` command will now follow redirects for up to five times (after which it will fail with an error due to too many redirects).
 
 ### Changed/Fixed Features
 
 - Updated the fatal error screen text and other processes relating to it (e.g. the heap snapshot is no longer saved upon crashing).
 - Fixed an issue where BubbleOS would report Windows 11 devices as Windows 10 in `sysinfo` ([#7](https://github.com/Bubble-OS/bubbleos/issues/7)).
+- Fixed multiple issues in the `ping` command and made it work more consistently.
+- Moved HTTP codes and messages to a separate JSON file internally.
 
 ### Removed Features
 
