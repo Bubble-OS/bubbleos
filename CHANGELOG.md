@@ -15,6 +15,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - Fixed an issue where BubbleOS would report Windows 11 devices as Windows 10 in `sysinfo` ([#7](https://github.com/Bubble-OS/bubbleos/issues/7)).
 - The `print` command no longer outputs an error message when entering nothing, instead just showing nothing.
 - Fixed multiple issues in the `ping` command and made it work more consistently.
+- Interally improved the code of `ifnet`.
 - Moved HTTP codes and messages to a separate JSON file internally.
 
 ### Removed Features
