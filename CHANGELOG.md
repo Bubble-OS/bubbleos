@@ -2,7 +2,7 @@
 
 This is the official BubbleOS changelog! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 125 to 1?? (v1.2.5-beta to v1.?.?-beta)
+## Build 125 to 131 (v1.2.5-beta to v1.3.1-beta)
 
 ### Added Features
 
