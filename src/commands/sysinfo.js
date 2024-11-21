@@ -71,6 +71,17 @@ const _determineColor = (mem) => {
 };
 
 /**
+ * Fixes issue where BubbleOS reports Windows 11 systems as Windows 10 ([#7](https://github.com/Bubble-OS/bubbleos/issues/7)).
+ *
+ * @param {string} currentOSName The current name of the OS.
+ * @returns The name of the OS.
+ */
+const _fixVersion = (currentOSName) =>
+  currentOSName === "Windows 10" && parseInt(os.release().split(".").pop(), 10) >= 21370
+    ? "Windows 11"
+    : currentOSName;
+
+/**
  * Get system information about the computer from
  * the BubbleOS CLI shell.
  *
@@ -118,7 +129,7 @@ const sysinfo = (...args) => {
     if (all || computerInfo || defaultDisplay) {
       console.log(`${chalk.bold.underline("Computer Information")}`);
 
-      console.log(`Full OS name: ${chalk.italic(osName())}`);
+      console.log(`Full OS name: ${chalk.italic(_fixVersion(osName()))}`);
       console.log(`Operating system: ${chalk.italic(_friendlyOS())}`);
       console.log(`Release: ${chalk.italic(os.release())}`);
       console.log(`Architecture: ${chalk.italic(process.arch)}`);

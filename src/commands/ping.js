@@ -1,95 +1,57 @@
 const chalk = require("chalk");
 const https = require("https");
 
+const HTTP_CODES_AND_MESSAGES = require("../data/httpCodes.json");
+
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
-const HTTP_CODES_AND_MESSAGES = {
-  200: "OK",
-  201: "Created",
-  202: "Accepted",
-  203: "Non-Authoritative Information",
-  204: "No Content",
-  205: "Reset Content",
-  206: "Partial Content",
-  207: "Multi-Status (WebDAV)",
-  208: "Already Reported (WebDAV)",
-  226: "IM Used",
-  300: "Multiple Choices",
-  301: "Moved Permanently",
-  302: "Found",
-  303: "See Other",
-  304: "Not Modified",
-  305: "Use Proxy",
-  306: "(Unused)",
-  307: "Temporary Redirect",
-  308: "Permanent Redirect (experimental)",
-  400: "Bad Request",
-  401: "Unauthorized",
-  402: "Payment Required",
-  403: "Forbidden",
-  404: "Not Found",
-  405: "Method Not Allowed",
-  406: "Not Acceptable",
-  407: "Proxy Authentication Required",
-  408: "Request Timeout",
-  409: "Conflict",
-  410: "Gone",
-  411: "Length Required",
-  412: "Precondition Failed",
-  413: "Request Entity Too Large",
-  414: "Request-URI Too Long",
-  415: "Unsupported Media Type",
-  416: "Requested Range Not Satisfiable",
-  417: "Expectation Failed",
-  418: "I'm a teapot (RFC 2324)",
-  420: "Enhance Your Calm (Twitter)",
-  422: "Unprocessable Entity (WebDAV)",
-  423: "Locked (WebDAV)",
-  424: "Failed Dependency (WebDAV)",
-  425: "Reserved for WebDAV",
-  426: "Upgrade Required",
-  428: "Precondition Required",
-  429: "Too Many Requests",
-  431: "Request Header Fields Too Large",
-  444: "No Response (Nginx)",
-  449: "Retry With (Microsoft)",
-  450: "Blocked by Windows Parental Controls (Microsoft)",
-  451: "Unavailable For Legal Reasons",
-  499: "Client Closed Request (Nginx)",
-  500: "Internal Server Error",
-  501: "Not Implemented",
-  502: "Bad Gateway",
-  503: "Service Unavailable",
-  504: "Gateway Timeout",
-  505: "HTTP Version Not Supported",
-  506: "Variant Also Negotiates (Experimental)",
-  507: "Insufficient Storage (WebDAV)",
-  508: "Loop Detected (WebDAV)",
-  509: "Bandwidth Limit Exceeded (Apache)",
-  510: "Not Extended",
-  511: "Network Authentication Required",
-  598: "Network read timeout error",
-  599: "Network connect timeout error",
-};
-
-const _makeConnection = async (host, path = "") => {
+const _makeConnection = async (host, path = "", maxRedirects = 5) => {
   const options = {
     host,
     path,
     timeout: 5000,
-    method: "HEAD",
-    followRedirect: true,
-    rejectUnauthorized: false,
+    method: "HEAD", // HEAD request to only fetch headers
+    rejectUnauthorized: false, // Disable SSL verification (not recommended for production)
   };
 
   return new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
-      if (res.statusCode === 200) {
+      if ([301, 302, 307, 308].includes(res.statusCode)) {
+        const location = res.headers.location;
+        if (location) {
+          if (maxRedirects > 0) {
+            // Debug statement, uncomment if needed to debug issues:
+            // console.log(
+            //   chalk.yellow(`Redirected to: ${chalk.bold(location)}. Following the redirect...\n`)
+            // );
+
+            // Parse the new URL and recursively call _makeConnection
+            const url = new URL(
+              location.startsWith("http") ? location : `https://${host}${location}`
+            );
+            _makeConnection(url.hostname, url.pathname + url.search, maxRedirects - 1)
+              .then(resolve)
+              .catch(reject);
+          } else {
+            reject(
+              chalk.red(
+                `Too many redirects. Stopped following after ${5 - maxRedirects} redirects.\n`
+              )
+            );
+          }
+        } else {
+          reject(
+            chalk.red(
+              `Redirect received, but no Location header found. Status code: ${res.statusCode}\n`
+            )
+          );
+        }
+      } else if (res.statusCode === 200) {
         resolve(
           chalk.green(
             `The server, ${chalk.bold.italic(
-              options.host + options.path
+              (options.host + options.path).replace(/^www\.|\/+$/g, "")
             )}, is responding with status code 200 (OK)!\n`
           )
         );
@@ -98,7 +60,7 @@ const _makeConnection = async (host, path = "") => {
           chalk.red(
             `The server, ${chalk.bold.italic(
               options.host + options.path
-            )}, is responding with status code ${res.statusCode ?? "N/A"} (${
+            )}, responded with status code ${res.statusCode} (${
               HTTP_CODES_AND_MESSAGES[res.statusCode] ?? "N/A"
             }).\n`
           )

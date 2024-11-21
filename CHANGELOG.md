@@ -1,6 +1,26 @@
 # BubbleOS Changelog
 
-This is the official BubbleOS `CHANGELOG`! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
+This is the official BubbleOS changelog! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
+
+## Build 125 to 131 (v1.2.5-beta to v1.3.1-beta)
+
+### Added Features
+
+- Added the `dirtree` command, which shows a directory tree of the folder specified, as well as the files inside, visually.
+- The `ping` command will now follow redirects for up to five times (after which it will fail with an error due to too many redirects).
+
+### Changed/Fixed Features
+
+- Updated the fatal error screen text and other processes relating to it (e.g. the heap snapshot is no longer saved upon crashing).
+- Fixed an issue where BubbleOS would report Windows 11 devices as Windows 10 in `sysinfo` ([#7](https://github.com/Bubble-OS/bubbleos/issues/7)).
+- The `print` command no longer outputs an error message when entering nothing, instead just showing nothing.
+- Fixed multiple issues in the `ping` command and made it work more consistently.
+- Interally improved the code of `ifnet`.
+- Moved HTTP codes and messages to a separate JSON file internally.
+
+### Removed Features
+
+- Internally removed unused code in the `Errors` class.
 
 ## Build 122 to 125 (v1.2.2-beta to v1.2.5-beta)
 

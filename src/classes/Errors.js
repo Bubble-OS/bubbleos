@@ -68,30 +68,6 @@ class Errors {
   constructor() {}
 
   /**
-   * A **private** method inside of the `Errors` class to interpret an error and format the error code and message.
-   *
-   * Editing the contents of this will reflect across all error messages throughout BubbleOS.
-   *
-   * Note that the message will be formatted with Chalk and does `console.log` it.
-   *
-   * Usage (inside):
-   *
-   * ```js
-   * // For example, inside of a function in 'Errors'
-   * _interpretError(CODE, MESSAGE);
-   * ```
-   *
-   * The `code` must be of type `number`, and the `message` must be of type `string`. However, there are no checks in place for this validation.
-   *
-   * @param {number | string} code The error code that should be in the error.
-   * @param {string} message The error message that should be in the error.
-   */
-  static #interpretError(code, message) {
-    const FORMATTED_MESSAGE = chalk.red(`${chalk.bold(`[${String(code)}]`)} ${message}\n`);
-    console.log(FORMATTED_MESSAGE);
-  }
-
-  /**
    * Information about the error message:
    *
    * **Name:** _Unrecognized command_

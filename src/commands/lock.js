@@ -12,10 +12,7 @@ const lock = (...args) => {
   try {
     lockSystem();
 
-    console.log(chalk.green(`${GLOBAL_NAME} has successfully locked ${_friendlyOS()}!`));
-    if (Math.random() < 0.1) console.log(chalk.dim("We'll make sure no thieves get in! :D"));
-
-    console.log();
+    console.log(chalk.green(`${GLOBAL_NAME} has successfully locked ${_friendlyOS()}!\n`));
     return;
   } catch (err) {
     if (err.message.toLowerCase().includes("unsupported os")) {

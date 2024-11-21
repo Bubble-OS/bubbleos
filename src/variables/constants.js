@@ -16,13 +16,13 @@ const AUTHOR = "Arnav Thorat";
  *
  * Make sure this is a proper version number. Change this with the build (e.g. `78` will make the version `0.7.8`).
  */
-const VERSION = "1.2.5-beta";
+const VERSION = "1.3.1-beta";
 /**
  * The build of the shell.
  *
  * Make sure this is a proper build number. Change this with the version (e.g. `0.7.8` will make the build `78`).
  */
-const BUILD = 125;
+const BUILD = 131;
 
 /**
  * If the shell is in beta or not. `true` if it is in beta, else, `false`.
@@ -51,7 +51,7 @@ const TIMEBOMB_ACTIVATED = true;
  *
  * To see the date in **90** days, [click here](https://www.google.com/search?q=Date+90+days+from+today).
  */
-const EXPIRY_DATE = new Date(2025, 1, 16);
+const EXPIRY_DATE = new Date(2025, 1, 19);
 
 // Export all of the variables
 module.exports = {
