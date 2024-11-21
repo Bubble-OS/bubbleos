@@ -81,6 +81,13 @@ const HELP = {
       "[-y]": "Automatically skip the confirmation prompt. By default, this is disabled.",
     },
   },
+  dirtree: {
+    usage: "dirtree [<path>]",
+    desc: `Shows a visual representation of files and folders inside of the directory specified, including nested files and folders.`,
+    args: {
+      "[<path>]": `Optionally specify a directory. By default, if this is not specified, ${GLOBAL_NAME} will use the current working directory.`,
+    },
+  },
   exec: {
     usage: "exec <file> [-s] [-h] [--sh]",
     desc: `Run an executable from ${GLOBAL_NAME}. This command works on all operating systems. ${GLOBAL_NAME} will attempt to execute all files, regardless if they are an executable or not.`,
