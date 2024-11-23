@@ -6,6 +6,7 @@ const { question } = require("readline-sync");
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
+const _replaceSpaces = require("../functions/replaceSpaces");
 const _fatalError = require("../functions/fatalError");
 
 // Get classes
@@ -93,6 +94,7 @@ const fif = (file, ...args) => {
 
     // Prompt the user for file contents
     // Replace '*n' with newlines
+    // TODO replace with another non-deprecated function and remove _replaceSpaces entirely
     const toFind =
       _replaceSpaces(
         question(
@@ -133,7 +135,7 @@ const fif = (file, ...args) => {
     }
 
     // If at least the number, place, or all was requested, show the subheading
-    if (numOccur || placeOccur || all) console.log(chalk.bold.underline(`Occurrences`));
+    if (numOccur || placeOccur || all) console.log(chalk.red.bold.underline(`Occurrences`));
 
     // Number of occurrences
     if (numOccur || all) {
@@ -158,7 +160,7 @@ const fif = (file, ...args) => {
 
     // Visible occurrences (file contents will highlighted occurrences)
     if (visualOccur || all) {
-      console.log(chalk.bold.underline(`Visual occurrences\n`));
+      console.log(chalk.red.bold.underline(`Visual occurrences\n`));
 
       // Replace all occurrences with a highlighted version
       console.log(

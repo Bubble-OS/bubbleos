@@ -1,6 +1,7 @@
 // Get modules
 const fs = require("fs");
 const chalk = require("chalk");
+const { question } = require("readline-sync");
 
 // Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
@@ -117,7 +118,9 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
     }
   }
 
-  console.log(`${chalk.bold(`Terminating ${GLOBAL_NAME} process...\n`)}`);
+  question(chalk.red("Press the Enter key to continue . . . "), { hideEchoBack: true, mask: "" });
+
+  console.log(`${chalk.bold(`\nTerminating ${GLOBAL_NAME} process...\n`)}`);
   process.exit(1);
 };
 

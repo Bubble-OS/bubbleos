@@ -1,3 +1,5 @@
+const _fatalError = require("./fatalError");
+
 /**
  * Replace all spaces in a string, depending on the value of `spaceChar`.
  *
@@ -6,7 +8,7 @@
  * ```js
  * _replaceSpaces("Hello*sWorld!"); // Should return: "Hello World!"
  * ```
- * 
+ *
  * @deprecated Use `parseQuotes()` for arguments, and `replaceChars()` for other characters.
  *
  * @param {string | any} text A string (or any value, but it will be converted to a string) to replace the spaces in.
@@ -15,10 +17,14 @@
  * @returns The text with all spaces replaced.
  */
 const _replaceSpaces = (text, spaceChar = "*s", space = " ") => {
-  // If the text is not defined or is an empty string, return 'undefined'
-  if (typeof text === "undefined" || text === "") return;
-  // Replace all space characters with an actual space
-  return text.replaceAll(spaceChar, space);
+  try {
+    // If the text is not defined or is an empty string, return 'undefined'
+    if (typeof text === "undefined" || text === "") return;
+    // Replace all space characters with an actual space
+    return text.replaceAll(spaceChar, space);
+  } catch (err) {
+    _fatalError(err);
+  }
 };
 
 // Export the function

@@ -60,13 +60,20 @@ const cConCon = () => {
 
 /**
  * All of the BubbleOS commands and their respective functions.
+ *
+ * Hard aliases are included in here, meaning commands such as
+ * `dir`, which are not defined anywhere other than here,
+ * will still invoke the `ls` command and run successfully instead
+ * of failing.
  */
 const COMMANDS = {
   about,
   bub,
   "C:\\con\\con": cConCon,
   cd,
+  // Aliases: cls, clear
   cls,
+  clear: cls,
   copy,
   crash,
   cwd: () => {
@@ -74,10 +81,9 @@ const COMMANDS = {
   },
   date,
   del,
+  // Aliases: dirtree, tree
   dirtree,
-  erik: () => {
-    console.log("Never run 'ifnet' (unless you're by yourself)!\n");
-  },
+  tree: dirtree,
   exec,
   exit,
   fif,
@@ -87,11 +93,15 @@ const COMMANDS = {
   ifnet,
   link,
   lock,
+  // Aliases: ls, dir
   ls,
+  dir: ls,
   mkdir,
   mkfile,
   ping,
+  // Aliases: print, echo
   print,
+  echo: print(),
   readfile,
   rename,
   size,
@@ -104,17 +114,23 @@ const COMMANDS = {
   wcount,
 };
 
+/**
+ * Soft aliases that will not work, but will attempt to help
+ * the user find the correct command.
+ *
+ * Hard aliases are defined in the `COMMANDS` variable.
+ */
 const ALIASES = {
   about: ["info", "information", "ver", "version"],
   bub: ["bubble", "int", "interpret"],
   cd: ["chdir"],
-  cls: ["clear"],
+  cls: [],
   copy: ["cp", "copyfile", "copydir"],
   crash: ["destroy"],
   cwd: ["pwd"],
   date: [],
   del: ["rm", "delete", "rmfile", "rmdir"],
-  dirtree: ["tree"],
+  dirtree: [],
   exec: ["run"],
   exit: ["end"],
   fif: ["find", "search"],
@@ -123,11 +139,11 @@ const ALIASES = {
   ifnet: ["ipconfig", "ifconfig"],
   link: ["mklink", "ln"],
   lock: ["screensaver", "scr", "protect"],
-  ls: ["ld", "dir"],
+  ls: ["ld"],
   mkdir: ["makedir"],
   mkfile: ["touch", "makefile"],
   ping: ["req", "request", "send"],
-  print: ["echo"],
+  print: [],
   readfile: ["cat", "more", "type", "rdfile", "read", "tail"],
   rename: ["mv", "ren"],
   size: ["df"],
