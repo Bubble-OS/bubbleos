@@ -2,7 +2,7 @@
 
 This is the official BubbleOS changelog! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 131 to 1?? (v1.3.1-beta to v1.?.?-beta)
+## Build 131 to 135 (v1.3.1-beta to v1.3.5-beta)
 
 ### Added Features
 
@@ -12,7 +12,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 - Fixed an issue where running the `fif` command would crash BubbleOS.
 - Updated heading color in the `fif` command to easily differentiate it.
-- Changed the version text when running `-v` on the Bubble executable.
+- Changed the version text when running `-v` on the Bubble executable to be more consistent.
 - When a fatal error completes, the user will be prompted to press the Enter key so that they can read the error.
 - Changed key required to be pressed in the startup error from any key to just the Enter key, due to a previous unfixable bug.
 - It is now less likely to get an unformatted error rather than a fatal error.
