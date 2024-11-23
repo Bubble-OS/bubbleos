@@ -6,7 +6,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 ### Added Features
 
-_No added features_
+- Commands now have "hard aliases", which means typing in an alias will automatically run it instead of failing (e.g. `dir` runs the `ls` command). More will be added in future versions.
 
 ### Changed/Fixed Features
 
@@ -15,10 +15,11 @@ _No added features_
 - Changed the version text when running `-v` on the Bubble executable.
 - When a fatal error completes, the user will be prompted to press the Enter key so that they can read the error.
 - Changed key required to be pressed in the startup error from any key to just the Enter key, due to a previous unfixable bug.
+- It is now less likely to get an unformatted error rather than a fatal error.
 
 ### Removed Features
 
-_No removed features._
+- Removed some Easter eggs and references to Erik and B-Kernel due to less involvement in the project (but they will always be remembered ❤️).
 
 ## Build 125 to 131 (v1.2.5-beta to v1.3.1-beta)
 

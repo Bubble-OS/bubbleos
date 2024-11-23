@@ -4,6 +4,7 @@ const chalk = require("chalk");
 const { COMMANDS: commands, ALIASES: aliases } = require("../variables/commands");
 
 // Get functions
+const _fatalError = require("./fatalError");
 const { _addToHist } = require("../commands/history");
 
 // Get classes
@@ -31,50 +32,54 @@ const getKeyByValue = (object, value) => Object.keys(object).find((key) => objec
  * @param {string} command The command that was requested to be interpreted by the user.
  */
 const _intCmds = async (command) => {
-  // If the command is empty or not
-  const isEmpty = command.length === 0;
-  const enteredCmd = command.split(" ")[0];
+  try {
+    // If the command is empty or not
+    const isEmpty = command.length === 0;
+    const enteredCmd = command.split(" ")[0];
 
-  // The command is currently unrecognized
-  let recognized = false;
+    // The command is currently unrecognized
+    let recognized = false;
 
-  // Loop through the commands
-  for (let [key, value] of Object.entries(commands)) {
-    // If the command starts with the current command
-    if (enteredCmd === key) {
-      // Make the command recognized
-      recognized = true;
-      // If the command is 'bub', it requires the '_intCmds' function, so call/pass it separately
-      if (key === "bub") {
-        await value(_intCmds, ..._multiParam(command));
-      } else {
-        await value(..._multiParam(command));
-      }
-    }
-  }
-
-  // If the command is not recognized and isn't empty
-  if (!recognized && !isEmpty) {
-    Errors.unrecognizedCommand(enteredCmd);
-
-    for (const alias of Object.values(aliases)) {
-      for (const cmd of alias) {
-        if (cmd === enteredCmd) {
-          console.log(
-            chalk.yellow(
-              `There is no command called ${chalk.italic(enteredCmd)}. Did you mean ${chalk.bold(
-                getKeyByValue(aliases, alias)
-              )}?\n`
-            )
-          );
-
-          break;
+    // Loop through the commands
+    for (let [key, value] of Object.entries(commands)) {
+      // If the command starts with the current command
+      if (enteredCmd === key) {
+        // Make the command recognized
+        recognized = true;
+        // If the command is 'bub', it requires the '_intCmds' function, so call/pass it separately
+        if (key === "bub") {
+          await value(_intCmds, ..._multiParam(command));
+        } else {
+          await value(..._multiParam(command));
         }
       }
     }
+
+    // If the command is not recognized and isn't empty
+    if (!recognized && !isEmpty) {
+      Errors.unrecognizedCommand(enteredCmd);
+
+      for (const alias of Object.values(aliases)) {
+        for (const cmd of alias) {
+          if (cmd === enteredCmd) {
+            console.log(
+              chalk.yellow(
+                `There is no command called ${chalk.italic(enteredCmd)}. Did you mean ${chalk.bold(
+                  getKeyByValue(aliases, alias)
+                )}?\n`
+              )
+            );
+
+            break;
+          }
+        }
+      }
+    }
+    // If the command wasn't empty, add it to the history
+    if (!isEmpty) _addToHist(command);
+  } catch (err) {
+    _fatalError(err);
   }
-  // If the command wasn't empty, add it to the history
-  if (!isEmpty) _addToHist(command);
 };
 
 // Export the function

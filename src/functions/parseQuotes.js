@@ -1,3 +1,5 @@
+const _fatalError = require("./fatalError");
+
 /**
  * Parse double-quote paths and arguments to allow
  * the user to specify spaces when needed.
@@ -17,26 +19,30 @@
  * @returns The array with the parsed elements, including removing the double-quotes.
  */
 const _parseDoubleQuotes = (arr) => {
-  // Join the array with spaces, which is what the array was originally seperated by
-  const str = arr?.join(" ");
-  // Initialize the RegExp
-  const regex = /"([^"]*)"(?:[^"]*"([^"]*)")?/;
-  // Get the matches
-  const matches = str?.match(regex);
+  try {
+    // Join the array with spaces, which is what the array was originally seperated by
+    const str = arr?.join(" ");
+    // Initialize the RegExp
+    const regex = /"([^"]*)"(?:[^"]*"([^"]*)")?/;
+    // Get the matches
+    const matches = str?.match(regex);
 
-  // If the string is empty, return 'undefined'
-  if (str?.trim() === "" || typeof str === "undefined") return [];
+    // If the string is empty, return 'undefined'
+    if (str?.trim() === "" || typeof str === "undefined") return [];
 
-  // If there are matches
-  if (matches && matches.length === 3) {
-    const quotesText = matches.filter(Boolean);
-    // Remove the first element; unneeded
-    quotesText.shift();
+    // If there are matches
+    if (matches && matches.length === 3) {
+      const quotesText = matches.filter(Boolean);
+      // Remove the first element; unneeded
+      quotesText.shift();
 
-    return quotesText;
-  } else {
-    // If there were no double-quotes, just return the original array
-    return str?.split(" ");
+      return quotesText;
+    } else {
+      // If there were no double-quotes, just return the original array
+      return str?.split(" ");
+    }
+  } catch (err) {
+    _fatalError(err);
   }
 };
 
