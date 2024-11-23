@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const { keyInPause } = require("readline-sync");
+const { question } = require("readline-sync");
 
 const { GLOBAL_NAME } = require("../variables/constants");
 
@@ -7,7 +7,7 @@ const _fatalError = require("./fatalError");
 
 const startupError = (message, doFatalError = false, fatalErrorMessage = "") => {
   console.log(chalk.red(`${message}${doFatalError ? `\n${GLOBAL_NAME} will now crash.\n` : ""}`));
-  keyInPause(chalk.red("Press any key to continue . . . "), { guide: false });
+  question(chalk.red("Press the Enter key to continue . . . "), { hideEchoBack: true, mask: "" });
 
   console.log();
 

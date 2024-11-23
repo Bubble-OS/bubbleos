@@ -13,6 +13,8 @@ _No added features_
 - Fixed an issue where running the `fif` command would crash BubbleOS.
 - Updated heading color in the `fif` command to easily differentiate it.
 - Changed the version text when running `-v` on the Bubble executable.
+- When a fatal error completes, the user will be prompted to press the Enter key so that they can read the error.
+- Changed key required to be pressed in the startup error from any key to just the Enter key, due to a previous unfixable bug.
 
 ### Removed Features
 
