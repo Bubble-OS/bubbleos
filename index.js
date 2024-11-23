@@ -33,8 +33,7 @@ if (doChecks) _startupChecks();
 
 // If '-v' was in the arguments list
 if (showVersion) {
-  console.log(`\n${GLOBAL_NAME} [v${VERSION} (build ${BUILD})]\n`);
-
+  console.log(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})\n`);
   process.exit(0);
 }
 

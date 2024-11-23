@@ -12,6 +12,7 @@ _No added features_
 
 - Fixed an issue where running the `fif` command would crash BubbleOS.
 - Updated heading color in the `fif` command to easily differentiate it.
+- Changed the version text when running `-v` on the Bubble executable.
 
 ### Removed Features
 
