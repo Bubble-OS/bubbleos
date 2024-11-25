@@ -28,9 +28,12 @@ const _fatalError = require("./fatalError");
  */
 const _promptForYN = (message) => {
   try {
-    yn(question(`${message} [${chalk.green("y")}/${chalk.red.bold("N")}] `, { guide: false }), {
-      lenient: true,
-    });
+    return yn(
+      question(`${message} [${chalk.green("y")}/${chalk.red.bold("N")}] `, { guide: false }),
+      {
+        lenient: true,
+      }
+    );
   } catch (err) {
     _fatalError(err);
   }

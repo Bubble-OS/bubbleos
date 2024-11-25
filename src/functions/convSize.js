@@ -16,9 +16,9 @@ const _fatalError = require("./fatalError");
 const _convertSize = (bytes, decimals = 3) => {
   try {
     // Convert bytes to kilobytes, megabytes, and gigabytes and change decimal places
-    const kilobytes = parseFloat((bytes / 1000).toFixed(decimals));
-    const megabytes = parseFloat((kilobytes / 1000).toFixed(decimals));
-    const gigabytes = parseFloat((megabytes / 1000).toFixed(decimals));
+    const kilobytes = parseFloat((bytes / 1024).toFixed(decimals));
+    const megabytes = parseFloat((kilobytes / 1024).toFixed(decimals));
+    const gigabytes = parseFloat((megabytes / 1024).toFixed(decimals));
 
     // Return all of them as an object
     return {

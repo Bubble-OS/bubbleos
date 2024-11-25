@@ -7,14 +7,20 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 ### Added Features
 
 - The BubbleOS configuration file is now used to store command history across sessions.
+- The `size` command can now get the size of a directory, and can now accept directory paths as a valid argument.
 
 ### Changed/Fixed Features
 
 - The history in the configuration file is no longer saved and overwritten only when the `exit` command is run. Instead, the command will be saved every time the user inputs one.
+- The `size` command will now automatically choose the best size to show (e.g. 6 GB over 6,000 MB).
+- Updated the size conversion of BubbleOS to use correct conversion factors to follow the binary convention.
+- Fixed an issue where running the `size` command would crash BubbleOS.
+- Fixed an issue where entering any value in a yes/no prompt would always abort the process after answering, even if "yes" was entered ([#10](https://github.com/Bubble-OS/bubbleos/issues/10)).
 
 ### Removed Features
 
-- Removed the `history` variable due to it now being stored in a seperate file so that it can be used between sessions.
+- Removed the arguments for the `size` command, as it now automatically chooses the best size to show. This may come back in a future version.
+- Removed the `history` variable due to it now being stored in a separate file so that it can be used between sessions.
 
 ## Build 131 to 135 (v1.3.1-beta to v1.3.5-beta)
 
