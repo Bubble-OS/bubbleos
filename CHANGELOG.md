@@ -2,6 +2,20 @@
 
 This is the official BubbleOS changelog! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 135 to 1?? (v1.3.5-beta to v1.?.?-beta)
+
+### Added Features
+
+- The BubbleOS configuration file is now used to store command history across sessions.
+
+### Changed/Fixed Features
+
+- The history in the configuration file is no longer saved and overwritten only when the `exit` command is run. Instead, the command will be saved every time the user inputs one.
+
+### Removed Features
+
+- Removed the `history` variable due to it now being stored in a seperate file so that it can be used between sessions.
+
 ## Build 131 to 135 (v1.3.1-beta to v1.3.5-beta)
 
 ### Added Features

@@ -1,8 +1,7 @@
 // Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
-const { history } = require("./history");
 
-const _manageConfig = require("../functions/manageConfig");
+const _fatalError = require("../functions/fatalError");
 
 /**
  * Exit the BubbleOS shell with an exit code of
@@ -31,18 +30,18 @@ const _manageConfig = require("../functions/manageConfig");
  * @param {...string} args Arguments to modify the behavior of the `exit()` function. See available ones above.
  */
 const exit = (...args) => {
-  // Show the user that BubbleOS is shutting down/exiting
-  console.log(`Exiting the ${GLOBAL_NAME} shell...\n`);
+  try {
+    // Show the user that BubbleOS is shutting down/exiting
+    console.log(`Exiting the ${GLOBAL_NAME} shell...\n`);
 
-  // If the user requested to clear the screen after exiting, do so
-  if (args.includes("-c")) process.stdout.write("\x1bc");
+    // If the user requested to clear the screen after exiting, do so
+    if (args.includes("-c")) process.stdout.write("\x1bc");
 
-  if (!_manageConfig("add", { history })) {
-    console.log(chalk.red(`${GLOBAL_NAME} failed to save the history.\n`));
+    // Exit BubbleOS (Node.js) with an exit code of '0' (success)
+    process.exit(0);
+  } catch (err) {
+    _fatalError(err);
   }
-
-  // Exit BubbleOS (Node.js) with an exit code of '0' (success)
-  process.exit(0);
 };
 
 // Export the function

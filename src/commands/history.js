@@ -1,16 +1,13 @@
 // Get modules
 const chalk = require("chalk");
 
+// Get functions
+const _manageConfig = require("../functions/manageConfig");
+const _fatalError = require("../functions/fatalError");
+
 // Get classes
 const Errors = require("../classes/Errors");
 
-/**
- * A 'global' array of all of the commands in the
- * history, which is stored in the JavaScript heap.
- *
- * @type string[]
- */
-const history = [];
 /**
  * The number of history commands to store before deleting the oldest ones.
  */
@@ -37,72 +34,54 @@ const NUMBER_TO_STORE = 50;
  * @param {number | string} numToDisplay Optional. The number point in history to display by itself. If it is not provided, it will show all commands in history.
  */
 const historyCmd = (numToDisplay, ...args) => {
-  /**
-   * An extremely private and simple command to format
-   * the way history displays.
-   *
-   * Usage:
-   *
-   * ```js
-   * _formatHist(1, "history");
-   * ```
-   *
-   * Note that this command does not return anything;
-   * it just preforms a `console.log()` instead. Uses
-   * Chalk.
-   *
-   * @param {string | number} index The index of the command entered. Must be either a `string` or a `number`.
-   * @param {string} histCmd The command in that point of history.
-   */
-  const _formatHist = (index, histCmd) => {
-    // Add two spaces to the start as well
-    console.log(`  ${index}: ${chalk.bold.yellow(histCmd)}`);
-  };
+  try {
+    // Private function to format history output
+    const _formatHist = (index, histCmd) => {
+      console.log(`  ${index}: ${chalk.bold.yellow(histCmd)}`);
+    };
 
-  const clear = args.includes("-c") || numToDisplay === "-c";
+    const clear = args.includes("-c") || numToDisplay === "-c";
 
-  if (clear) {
-    history.length = 0;
-
-    console.log(chalk.green("Cleared the history.\n"));
-    return;
-  }
-
-  // If the user did not request for a specific history point
-  if (typeof numToDisplay === "undefined") {
-    // If the length of the history array is '0' (no history yet)
-    if (history.length === 0) {
-      console.log(chalk.yellow("No commands in history yet.\n"));
+    // Clear history if "-c" is passed
+    if (clear) {
+      _manageConfig("remove", "history");
+      console.log(chalk.green("Cleared the history.\n"));
       return;
-    } else {
-      // Loop through the entries of history, and get the index and command
-      // Add one to the index to make it user-friendly
-      for (const [idx, value] of history.entries()) {
-        _formatHist(idx + 1, value);
-      }
     }
 
-    // Newline and return
+    // Fetch history from the config file
+    const historyConfig = _manageConfig("get").parsed.history ?? [];
+
+    if (typeof numToDisplay === "undefined") {
+      if (historyConfig.length === 0) {
+        console.log(chalk.yellow("No commands in history yet.\n"));
+        return;
+      }
+
+      // Display all history entries
+      for (const [idx, value] of historyConfig.entries()) {
+        _formatHist(idx + 1, value);
+      }
+
+      console.log();
+      return;
+    }
+
+    // Validate the input and display specific history point
+    if (numToDisplay % 1 !== 0) {
+      Errors.invalidCharacters("history point", "numbers", "letters/symbols", numToDisplay);
+      return;
+    } else if (typeof historyConfig[numToDisplay - 1] === "undefined") {
+      console.log(chalk.yellow(`Cannot find the command in history point ${numToDisplay}.\n`));
+      return;
+    }
+
+    _formatHist(numToDisplay, historyConfig[numToDisplay - 1]);
     console.log();
     return;
+  } catch (err) {
+    _fatalError(err);
   }
-
-  if (numToDisplay % 1 !== 0) {
-    // If the number contains a string (if this check is 'NaN')
-    Errors.invalidCharacters("history point", "numbers", "letters/symbols", numToDisplay);
-    return;
-  } else if (typeof history[numToDisplay - 1] === "undefined") {
-    // If the user-requested history point could not be found
-    console.log(chalk.yellow(`Cannot find the command in history point ${numToDisplay}.\n`));
-    return;
-  }
-
-  // Make sure to minus one out of the index finding due to JavaScript's weird array indexes ;)
-  _formatHist(numToDisplay, history[numToDisplay - 1]);
-
-  // Newline
-  console.log();
-  return;
 };
 
 /**
@@ -121,17 +100,23 @@ const historyCmd = (numToDisplay, ...args) => {
  * will be cleared.
  *
  * @param {string} command The command that the user entered that should be stored in the history.
+ * @param {boolean} addToConfig Whether or not to add the command to the BubbleOS configuration. Defaults to `true`.
  */
-const _addToHist = (command) => {
-  // Add the command to the end of the history array
-  history.push(command);
+const _addToHist = (command, addToConfig = true) => {
+  if (!addToConfig) return;
 
-  // If the length of history is greater than the number is is supposed to store...
-  if (history.length > NUMBER_TO_STORE) {
-    // ...remove the oldest (first) element in the history array
-    history.shift();
-  }
+  // Fetch the history from the config
+  const historyConfig = _manageConfig("get").parsed.history ?? [];
+
+  // If the number of stored commands exceeds the limit, remove the oldest entry
+  if (historyConfig.length + 1 > NUMBER_TO_STORE) historyConfig.shift();
+
+  // Add the latest command to the history
+  historyConfig.push(command);
+
+  // Replace the history array in the config
+  _manageConfig("add", { history: historyConfig });
 };
 
 // Export all the functions
-module.exports = { historyCmd, _addToHist, history };
+module.exports = { historyCmd, _addToHist };
