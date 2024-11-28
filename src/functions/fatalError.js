@@ -10,6 +10,11 @@ const { GLOBAL_NAME } = require("../variables/constants");
 const _friendlyOS = require("./friendlyOS");
 
 /**
+ * The name of the file to store the error message in.
+ */
+const ERROR_INFO_FILENAME = `${GLOBAL_NAME}_error_info.txt`.toUpperCase();
+
+/**
  * End BubbleOS with a fatal exception with exit code `1`.
  *
  * Usage:
@@ -74,9 +79,6 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
   // If the error was passed with a file dump request
   if (doFileDump) {
     try {
-      // Filenames for each error; change them here
-      const errorInfoFilename = `${GLOBAL_NAME}_error_info.txt`.toUpperCase();
-
       // All error properties stored in an array
       let errorArr = [];
 
@@ -96,13 +98,13 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
       )}`;
 
       // Make the file
-      fs.writeFileSync(errorInfoFilename, errorInfoTxt);
+      fs.writeFileSync(ERROR_INFO_FILENAME, errorInfoTxt);
 
       // If the operation succeeded, show a success message
       console.log(
         chalk.green(
           `${chalk.white.bgGreen(" SUCCESS ")}: Saved file ${chalk.bold(
-            errorInfoFilename
+            ERROR_INFO_FILENAME
           )} in ${chalk.bold(process.cwd())}.\n`
         )
       );
@@ -111,8 +113,8 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
       console.log(
         chalk.red(
           `${chalk.white.bgRed(" ERROR ")}: Could not save file ${chalk.bold(
-            errorInfoFilename
-          )} in ${chalk.bold(process.cwd())}.`
+            ERROR_INFO_FILENAME
+          )} in ${chalk.bold(process.cwd())}.\n`
         )
       );
     }
