@@ -16,7 +16,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - Updated the size conversion of BubbleOS to use correct conversion factors to follow the binary convention.
 - Fixed an issue where running the `size` command would crash BubbleOS.
 - Fixed an issue where entering any value in a yes/no prompt would always abort the process after answering, even if "yes" was entered ([#10](https://github.com/arnavt78/bubbleos/issues/10)).
-- Fixed an issue where entering the `echo` command would crash BubbleOS ([#11](https://github.com/arnavt78/bubbleos/issues/11)).
+- Fixed an issue where entering the `echo` command would crash BubbleOS ([#12](https://github.com/arnavt78/bubbleos/issues/12)).
 - Fixed an issue where if the error file was unable to be saved when a fatal error occurred, a fatal error would occur inside of the fatal error.
 - Updated GitHub links to the new transfered repository.
 
