@@ -67,7 +67,7 @@ const about = (...args) => {
       );
     }
 
-    console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/Bubble-OS/bubbleos")}`);
+    console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/arnavt78/bubbleos")}`);
     console.log(`YouTube: ${chalk.underline.blueBright("https://youtube.com/InfiniTech78")}\n`);
   } catch (err) {
     // An unknown error occurred

@@ -56,7 +56,7 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
     `${chalk.red.bold(
       `A fatal exception has occurred in ${GLOBAL_NAME}. To avoid damage to ${GLOBAL_NAME} and ${_friendlyOS()}, ${GLOBAL_NAME} has been aborted with a failure status.`
     )}\n\n${chalk.red.bold(
-      `Make sure that your system supports ${GLOBAL_NAME}. If your system is supported, there may be a bug in ${GLOBAL_NAME}.\nIn that case, report the bug on the project's GitHub page (https://github.com/Bubble-OS/bubbleos/issues/new).`
+      `Make sure that your system supports ${GLOBAL_NAME}. If your system is supported, there may be a bug in ${GLOBAL_NAME}.\nIn that case, report the bug on the project's GitHub page (https://github.com/arnavt78/bubbleos/issues/new).`
     )}\n`
   );
 
@@ -93,7 +93,7 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
       const date = new Date();
       const errorInfoTxt = `BubbleOS encountered a fatal error at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} on ${
         date.getMonth() + 1
-      }/${date.getDate()}/${date.getFullYear()}.\nGive the developer this information by going to https://github.com/Bubble-OS/bubbleos/issues/new (GitHub account required).\n\n${errorArr.join(
+      }/${date.getDate()}/${date.getFullYear()}.\nGive the developer this information by going to https://github.com/arnavt78/bubbleos/issues/new (GitHub account required).\n\n${errorArr.join(
         "\n"
       )}`;
 

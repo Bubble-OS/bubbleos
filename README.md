@@ -4,7 +4,7 @@ BubbleOS is a shell for your current operating system!
 
 Please note that this is not an operating system, but a shell.
 
-The latest stable version of BubbleOS is **[build 100](https://github.com/Bubble-OS/bubbleos/releases/tag/v1.0.0)**.
+The latest stable version of BubbleOS is **[build 100](https://github.com/arnavt78/bubbleos/releases/tag/v1.0.0)**.
 
 ## Table of Contents
 
@@ -27,7 +27,7 @@ There is no installer, but just a portable executable. You can also download the
 
 ### Executable
 
-For the portable executable, go the the [Releases](https://github.com/Bubble-OS/bubbleos/releases) page and download the file for your respective operating system (Windows, macOS, Linux).
+For the portable executable, go the the [Releases](https://github.com/arnavt78/bubbleos/releases) page and download the file for your respective operating system (Windows, macOS, Linux).
 
 Running the executable should open it in a terminal-like window. You can also run this through command prompt (Windows), or the terminal (Mac/Linux), or other command prompt-like apps (e.g. PowerShell).
 
@@ -37,7 +37,7 @@ Running the executable should open it in a terminal-like window. You can also ru
 
 #### `EXE` File
 
-If you want to add `bubble` to your path, first install the executable from the [Releases](https://github.com/Bubble-OS/bubbleos/releases).
+If you want to add `bubble` to your path, first install the executable from the [Releases](https://github.com/arnavt78/bubbleos/releases).
 
 ##### Windows
 

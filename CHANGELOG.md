@@ -15,8 +15,10 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - The `size` command will now automatically choose the best size to show (e.g. 6 GB over 6,000 MB).
 - Updated the size conversion of BubbleOS to use correct conversion factors to follow the binary convention.
 - Fixed an issue where running the `size` command would crash BubbleOS.
-- Fixed an issue where entering any value in a yes/no prompt would always abort the process after answering, even if "yes" was entered ([#10](https://github.com/Bubble-OS/bubbleos/issues/10)).
+- Fixed an issue where entering any value in a yes/no prompt would always abort the process after answering, even if "yes" was entered ([#10](https://github.com/arnavt78/bubbleos/issues/10)).
+- Fixed an issue where entering the `echo` command would crash BubbleOS ([#11](https://github.com/arnavt78/bubbleos/issues/11)).
 - Fixed an issue where if the error file was unable to be saved when a fatal error occurred, a fatal error would occur inside of the fatal error.
+- Updated GitHub links to the new transfered repository.
 
 ### Removed Features
 
@@ -52,7 +54,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 ### Changed/Fixed Features
 
 - Updated the fatal error screen text and other related processes (e.g. the heap snapshot is no longer saved upon crashing).
-- Fixed an issue where BubbleOS would report Windows 11 devices as Windows 10 in `sysinfo` ([#7](https://github.com/Bubble-OS/bubbleos/issues/7)).
+- Fixed an issue where BubbleOS would report Windows 11 devices as Windows 10 in `sysinfo` ([#7](https://github.com/arnavt78/bubbleos/issues/7)).
 - The `print` command no longer outputs an error message when entering nothing, it just shows nothing.
 - Fixed multiple issues in the `ping` command, making it work more consistently.
 - Internally improved the code of `ifnet`.
