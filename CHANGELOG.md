@@ -8,6 +8,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 - The BubbleOS configuration file is now used to store command history across sessions.
 - The `size` command can now get the size of a directory, and can now accept directory paths as a valid argument.
+- Added a new text editor for the `mkfile` command to make it more user-friendly, featuring a multi-line editor to easily make new files without using the `*n` keyword for newlines.
 
 ### Changed/Fixed Features
 
