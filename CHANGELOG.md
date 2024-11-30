@@ -24,6 +24,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 ### Removed Features
 
 - Removed the arguments for the `size` command, as it now automatically chooses the best size to show. This may come back in a future version.
+- Removed the ability to enter newlines in the `fif` search, due to it not functioning in the first place.
 - Removed the `history` variable due to it now being stored in a separate file so that it can be used between sessions.
 
 ## Build 131 to 135 (v1.3.1-beta to v1.3.5-beta)

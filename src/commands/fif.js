@@ -6,7 +6,6 @@ const { question } = require("readline-sync");
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
-const _replaceSpaces = require("../functions/replaceSpaces");
 const _fatalError = require("../functions/fatalError");
 
 // Get classes
@@ -96,15 +95,7 @@ const fif = (file, ...args) => {
     // Replace '*n' with newlines
     // TODO replace with another non-deprecated function and remove _replaceSpaces entirely
     const toFind =
-      _replaceSpaces(
-        question(
-          `Please enter the phrase to find (${chalk.italic("'Enter'")} to accept; ${chalk.italic(
-            "'*n'"
-          )} for a newline): `
-        ),
-        "*n",
-        "\n"
-      ) ?? "";
+      question(`Please enter the phrase to find (${chalk.italic("'Enter'")} to accept): `) ?? "";
 
     console.log();
 
