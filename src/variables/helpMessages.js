@@ -16,18 +16,18 @@ const HELP = {
     args: {
       "<file>": "The file of which to execute commands in.",
       "[-d]":
-        "Whether to display the commands that the program is currently executing from the file or not. By default, commands do not display.",
+        "Whether to display the commands that the program is executing from the file or not. By default, commands do not display.",
       "[--allow-exit]": `By default, ${GLOBAL_NAME} will not allow the 'exit' command to be run if it is in a '.bub' file. If this flag is passed, it will allow exiting ${GLOBAL_NAME} from the script.`,
     },
   },
   cd: {
     usage: "cd <dir> [-s]",
-    desc: `Change the CWD (current working directory) into the one specified. If a symbolic link is passed, ${GLOBAL_NAME} will attempt to find where its target is, and change the CWD to that.. Note that this does not change the CWD for the system; only for ${GLOBAL_NAME}.`,
+    desc: `Change the CWD (current working directory) into the one specified. If a symbolic link is passed, ${GLOBAL_NAME} will attempt to find where its target is, and change the CWD to that. Note that this does not change the CWD for the system; only for ${GLOBAL_NAME}.`,
     args: {
       "<dir>":
         "The directory to change into. Both absolute and relative paths will work, as well as directory symbolic links.",
       "[-s]":
-        "Silence output to the standard output. Only error messages will display. By default, this option is disabled.",
+        "Silence output to the standard output. Only error messages will be displayed. By default, this option is disabled.",
     },
   },
   cls: {
@@ -50,12 +50,12 @@ const HELP = {
       "[-t]":
         "Only for copying directories. Keeps the original timestamps of the nested files/directories. By default, this is false.",
       "[--rm-symlink]":
-        "Only for copying directories. If a file/folder contained in the directory is a symbolic link, it will be replaced by the contents of the path it was pointing to. By default, this is false.",
+        "Only for copying directories. If a file/folder in the directory is a symbolic link, it will be replaced by the contents of the path it was pointing to. By default, this is false.",
     },
   },
   crash: {
     usage: "crash [<index>]",
-    desc: `USE WITH CAUTION! Crashes ${GLOBAL_NAME} in multiple ways, including causing a fatal error, hanging the terminal session, and also causing a memory leak. Note that with the memory leak, ${GLOBAL_NAME} will crash once it has its maximum allocated memory space.`,
+    desc: `USE WITH CAUTION! Crashes ${GLOBAL_NAME} in multiple ways, including causing a fatal error, hanging the terminal session, and causing a memory leak. Note that with the memory leak, ${GLOBAL_NAME} will crash once it has its maximum allocated memory space.`,
     args: {
       "[<index>]": `An index which points to the crashing method. If the index does not exist, a warning will appear, and it will default to asking for a prompt.`,
     },
@@ -67,7 +67,7 @@ const HELP = {
   },
   date: {
     usage: "date",
-    desc: `Gets the current date from your local system. The date will print out in a friendly format like so: "[day], the [date] of [month] [year]". The date will have the appropriate ordinal (e.g. 'st'), and the day/month will have their names. Below the friendly name in brackets is a date styled in the slash-like format.`,
+    desc: `Gets the current date from your local system. The date will be printed out in a friendly format like so: "[day], the [date] of [month] [year]". The date will have the appropriate ordinal (e.g. 'st'), and the day/month will have their names. Below the friendly name in brackets is a date styled in the slash-like format.`,
     args: {},
   },
   del: {
@@ -96,9 +96,9 @@ const HELP = {
       "[-s]":
         "Silently execute a file. This will silence the success message, but error messages will still be shown.",
       "[-h]":
-        "Hide the subprocess console window that would normally be created on Windows systems. By default, this is disabled.",
+        "Hide the subprocess console window that would be created on Windows systems. By default, this is disabled.",
       "[--sh]":
-        "If this argument is passed, the executable will run inside of a shell. By default, this is disabled.",
+        "If this argument is passed, the executable will run inside a shell. By default, this is disabled.",
     },
   },
   exit: {
@@ -139,7 +139,7 @@ const HELP = {
   },
   history: {
     usage: "history [<numPlace>]",
-    desc: `Show the last fifty commands entered in ${GLOBAL_NAME}, regardless if they were recognized or not (empty commands are not saved). After fifty commands have been stored in the history, the oldest gets deleted. You can get a specific command by entering that history point in the command.`,
+    desc: `Show the last fifty commands entered in ${GLOBAL_NAME}, regardless of whether they were recognized (empty commands are not saved). After fifty commands have been stored in the history, the oldest gets deleted. You can get a specific command by entering that history point in the command.`,
     args: {
       "[<numPlace>]": "Optional; show the exact command at that history point.",
     },
@@ -155,8 +155,7 @@ const HELP = {
     usage: "link <source> [<link>] [-u] [-s] [-y]",
     desc: "Create a hard link (link) that points to the source (source). Hard links will replicate the data of the source, and will keep the data even when the source is deleted.",
     args: {
-      "[-u]":
-        "Unlink a file. This will actually just ultimately a file, no matter if it is a link or not.",
+      "[-u]": "Unlink a file. This will ultimately be a file, no matter if it is a link or not.",
       "[-s]":
         "Silently link/unlink a file. This will hide all success messages, however, all error messages will still be shown.",
       "[-y]": "Automatically confirm the confirmation prompt when unlinking a file.",
@@ -177,7 +176,7 @@ const HELP = {
   },
   mkdir: {
     usage: "mkdir <dir> [-s]",
-    desc: "Make a directory (or directories, if the parent does not exist). Both relative and absolute paths are accepted. Note that you cannot make a directory if it is longer than the size of a path that is allowed. Also, invalid characters aren't allowed to be used.",
+    desc: "Make a directory (or directories, if the parent does not exist). Both relative and absolute paths are accepted. You cannot make a directory if it is longer than the maximum number of characters allowed in a path. Also, invalid characters aren't allowed to be used.",
     args: {
       "<dir>": `The directory to create. If the parent directories passed do not exist, ${GLOBAL_NAME} will create those too.`,
       "[-s]":
@@ -186,7 +185,7 @@ const HELP = {
   },
   mkfile: {
     usage: "mkfile <file> [-s]",
-    desc: "Make a file. Both relative and absolute paths are accepted. Note that you cannot make a file if it is longer than the size of a path that is allowed. Also, invalid characters aren't allowed to be used.",
+    desc: "Make a file. Both relative and absolute paths are accepted. You cannot make a file if it is longer than the maximum number of characters allowed in a path. Also, invalid characters aren't allowed to be used.",
     args: {
       "<file>": `The file to create. If the parent directories passed do not exist, ${GLOBAL_NAME} will throw an error.`,
       "[-s]":
@@ -195,16 +194,16 @@ const HELP = {
   },
   ping: {
     usage: "ping <hostname>",
-    desc: "Ping a website for a response, and output the response (e.g. 200 is OK, 404 is Not Found, 500 is Internal Server Error, etc.). Note that if an error appears for a website such as 'google.com', try prefixing it with 'www.google.com'. Also note that this command only does a HTTPS request (not a HTTP request).",
+    desc: "Ping a website for a response, and output the response (e.g. 200 is OK, 404 is Not Found, 500 is Internal Server Error, etc.). This command only completes an HTTPS request (not an HTTP request).",
     args: {
-      "<hostname>": "The host name to ping. Make sure that the URL/IP address is valid.",
+      "<hostname>": "The hostname to ping. Make sure that the URL/IP address is valid.",
     },
   },
   print: {
     usage: "print <text>",
-    desc: `Print any text to the standard output. Note that if no text is provided, ${GLOBAL_NAME} will throw an error.`,
+    desc: `Print any text to the standard output.`,
     args: {
-      "<text>": "The text to output to the standard output.",
+      "<text>": "The text to output.",
     },
   },
   readfile: {
@@ -232,25 +231,21 @@ const HELP = {
     },
   },
   size: {
-    usage: "size <file> [-b] [-kb] [-mb] [-gb]",
-    desc: "Show the size of a file in bytes, kilobytes, megabytes, and gigabytes. All sizes have four decimal places. If a size has a value of zero, it will have a 'not available' value. Also, if the file system does not support getting sizes, all values will say 'not available' (unless the file is zero bytes in size). You can also filter the sizes using arguments (listed below).",
+    usage: "size <path>",
+    desc: "Show the size of a file or directory in either bytes, kilobytes, megabytes, or gigabytes (the measurement is automatically chosen).",
     args: {
-      "<file>":
-        "The file to measure the size of. Both absolute and relative paths are accepted. Getting the size of a directory is not yet supported.",
-      "[-b]": "Get only the size of the file in bytes.",
-      "[-kb]": "Get only the size of the file in kilobytes.",
-      "[-mb]": "Get only the size of the file in megabytes.",
-      "[-gb]": "Get only the size of the file in gigabytes.",
+      "<path>":
+        "The file or directory to measure the size of. Both absolute and relative paths are accepted.",
     },
   },
   symlink: {
     usage: "symlink <target> [<path>] [-c] [-s]",
-    desc: "Either create a symbolic link, or check if a path is a symbolic link. To make a symbolic link, you must pass both the target (the original path) and the path (the symbolic link). Otherwise, to check if a path is a symbolic link, only the target (path) is required to be passed, as well as the '-c' argument.",
+    desc: "Either create a symbolic link or check if a path is a symbolic link. To make a symbolic link, you must pass both the target (the original path) and the path (the symbolic link). Otherwise, to check if a path is a symbolic link, only the target (path) is required to be passed, as well as the '-c' argument.",
     args: {
       "<target>":
         "The original path to which the symbolic link will point to, in the case of creating a symbolic link, else, the path to check if it is a symbolic link or not.",
       "[<path>]":
-        "This path is only needed if you are creating a symbolic link. This is the path to which the symbolic link will be created in. It will automatically infer the type (in the case of Windows, either 'file' or 'directory', but never 'junction').",
+        "This path is only needed if you are creating a symbolic link. This is the path to which the symbolic link will be created. It will automatically infer the type (in the case of Windows, either 'file' or 'directory', but never 'junction').",
       "[-c]":
         "Whether to check if a path is a symbolic link or not. If this flag is passed, it is not required to pass in the to-create path.",
       "[-s]": "Silence all success messages, and only show error messages.",
@@ -258,7 +253,7 @@ const HELP = {
   },
   sysinfo: {
     usage: "sysinfo [-c] [-u] [-s] [-a] [-e] [--all] [--rm-tip]",
-    desc: `Get all system information about your local machine that ${GLOBAL_NAME} is currently running on. This includes, in summary, the operating system, release, computer name, memory usage, system uptime, environment variables and more. This can also be filtered by subheadings through arguments (listed below).`,
+    desc: `Get all system information about your local machine that ${GLOBAL_NAME} is running on. This includes, in summary, the operating system, release, computer name, memory usage, system uptime, environment variables, and more. This can also be filtered by subheadings through arguments (listed below).`,
     args: {
       "[-c]": "Display basic computer information.",
       "[-u]": "Display local user information.",
@@ -281,7 +276,7 @@ const HELP = {
   },
   tasklist: {
     usage: "tasklist [<filter>]",
-    desc: "Show all local processes that are running on the device and their respective PID. This command can be helpful to find a PID to kill in 'taskkill'. You can also optionally filter for processes if you know the name of the process.",
+    desc: "Show all local processes running on the device and their respective PID. This command can be helpful to find a PID to kill in 'taskkill'. You can also optionally filter for processes if you know the name of the process.",
     args: {
       "[<filter>]": "The process name to filter for and display only.",
     },
@@ -295,15 +290,15 @@ const HELP = {
   },
   tips: {
     usage: "tips",
-    desc: `Show tips relating to the use of ${GLOBAL_NAME}. However, another text is shown, including fun facts about ${GLOBAL_NAME} too!`,
+    desc: `Show tips relating to the use of ${GLOBAL_NAME}.`,
     args: {},
   },
   wcount: {
     usage: "wcount <file> [-l] [-w] [-c]",
-    desc: "Get the number of words, lines and characters in a file. You can also use filter arguments to narrow the amount of details that you get. This command reads the file that you provide, however, it does not edit it in any way.",
+    desc: "Get the number of words, lines, and characters in a file. You can also use filter arguments to narrow the details you get. This command reads the file that you provide, however, it does not edit it in any way.",
     args: {
       "<file>":
-        "The file to check the number of words, lines and characters in. Both absolute and relative paths are accepted.",
+        "The file to check the number of words, lines, and characters. Both absolute and relative paths are accepted.",
       "[-l]": "Only display the number of lines in the file.",
       "[-w]": "Only display the number of words in the file.",
       "[-c]": "Only display the number of characters in the file.",

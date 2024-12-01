@@ -15,10 +15,13 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - The history in the configuration file is no longer saved and overwritten only when the `exit` command is run. Instead, the command will be saved every time the user inputs one.
 - The `size` command will now automatically choose the best size to show (e.g. 6 GB over 6,000 MB).
 - Updated the size conversion of BubbleOS to use correct conversion factors to follow the binary convention.
+- Made commands by default not display in the `bub` command when executing a file.
+- Updated help messages for commands to fix various grammar issues and other information.
 - Fixed an issue where running the `size` command would crash BubbleOS.
 - Fixed an issue where entering any value in a yes/no prompt would always abort the process after answering, even if "yes" was entered ([#10](https://github.com/arnavt78/bubbleos/issues/10)).
 - Fixed an issue where entering the `echo` command would crash BubbleOS ([#12](https://github.com/arnavt78/bubbleos/issues/12)).
 - Fixed an issue where if the error file was unable to be saved when a fatal error occurred, a fatal error would occur inside of the fatal error.
+- Fixed an issue where BubbleOS would allow the `taskkill` command to kill itself, even when the `--kill-self` flag was not passed.
 - Updated GitHub links to the new transfered repository.
 
 ### Removed Features

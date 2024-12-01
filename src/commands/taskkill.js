@@ -57,7 +57,7 @@ const taskkill = async (pid, ...args) => {
     }
 
     // If the PID is equal to BubbleOS' PID and the user did not give permission to kill itself
-    if (pid === process.pid && !killSelf) {
+    if (Number(pid) === process.pid && !killSelf) {
       console.log(
         chalk.yellow(
           `You cannot kill the ${GLOBAL_NAME} process. To kill ${GLOBAL_NAME}, run the ${chalk.italic(
