@@ -92,7 +92,7 @@ const cd = (dir, ...args) => {
       process.chdir(dir);
     } else {
       // Path is a file
-      _verboseMsg("Path was found to be a file instead of a directory.");
+      // _verboseMsg("Path was found to be a file instead of a directory.");
       Errors.expectedDir(dir);
       return;
     }
@@ -103,7 +103,7 @@ const cd = (dir, ...args) => {
   } catch (err) {
     if (err.code === "EPERM") {
       // Permission error
-      _verboseMsg("Permission errors were encounted when attempting to change into the directory.");
+      // _verboseMsg("Permission errors were encounted when attempting to change into the directory.");
       Errors.noPermissions("change into", dir);
       return;
     } else {

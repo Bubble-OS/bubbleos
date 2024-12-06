@@ -17,7 +17,7 @@ const _fatalError = require("../functions/fatalError");
 const cls = () => {
   try {
     process.stdout.write("\x1bc");
-    _verboseMsg("Cleared screen.");
+    // _verboseMsg("Cleared screen.");
   } catch (err) {
     _fatalError(err);
   }

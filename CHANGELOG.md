@@ -4,6 +4,10 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 ## Build 135 to 148 (v1.3.5-beta to v1.4.8-beta)
 
+### HOTFIX!
+
+- Fixed an issue where running the `cls` and `exit` commands would crash BubbleOS, and in some cases in the `cd` command ([#14](https://github.com/arnavt78/bubbleos/issues/14)).
+
 ### Added Features
 
 - The BubbleOS configuration file is now used to store command history across sessions.
