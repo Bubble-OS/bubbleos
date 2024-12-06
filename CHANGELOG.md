@@ -2,6 +2,36 @@
 
 This is the official BubbleOS changelog! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 135 to 148 (v1.3.5-beta to v1.4.8-beta)
+
+### Added Features
+
+- The BubbleOS configuration file is now used to store command history across sessions.
+- The `size` command can now get the size of a directory, and can now accept directory paths as a valid argument.
+- Added a new text editor for the `mkfile` command to make it more user-friendly, featuring a multi-line editor to easily make new files without using the `*n` keyword for newlines.
+- Internally added new verbose messages. These are currently unused in the code and will be introduced fully in the next version.
+
+### Changed/Fixed Features
+
+- The history in the configuration file is no longer saved and overwritten only when the `exit` command is run. Instead, the command will be saved every time the user inputs one.
+- The `size` command will now automatically choose the best size to show (e.g. 6 GB over 6,000 MB).
+- Updated the size conversion of BubbleOS to use correct conversion factors to follow the binary convention.
+- Made commands by default not display in the `bub` command when executing a file.
+- Updated help messages for commands to fix various grammar issues and other information.
+- Fixed an issue where the time would display without a preceding 0 if the seconds/minutes was a single digit in the `time` command, fatal error file, and verbose messages.
+- Fixed an issue where running the `size` command would crash BubbleOS.
+- Fixed an issue where entering any value in a yes/no prompt would always abort the process after answering, even if "yes" was entered ([#10](https://github.com/arnavt78/bubbleos/issues/10)).
+- Fixed an issue where entering the `echo` command would crash BubbleOS ([#12](https://github.com/arnavt78/bubbleos/issues/12)).
+- Fixed an issue where if the error file was unable to be saved when a fatal error occurred, a fatal error would occur inside of the fatal error.
+- Fixed an issue where BubbleOS would allow the `taskkill` command to kill itself, even when the `--kill-self` flag was not passed.
+- Updated GitHub links to the new transfered repository.
+
+### Removed Features
+
+- Removed the arguments for the `size` command, as it now automatically chooses the best size to show. This may come back in a future version.
+- Removed the ability to enter newlines in the `fif` search, due to it not functioning in the first place.
+- Removed the `history` variable due to it now being stored in a separate file so that it can be used between sessions.
+
 ## Build 131 to 135 (v1.3.1-beta to v1.3.5-beta)
 
 ### Added Features
@@ -31,7 +61,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 ### Changed/Fixed Features
 
 - Updated the fatal error screen text and other related processes (e.g. the heap snapshot is no longer saved upon crashing).
-- Fixed an issue where BubbleOS would report Windows 11 devices as Windows 10 in `sysinfo` ([#7](https://github.com/Bubble-OS/bubbleos/issues/7)).
+- Fixed an issue where BubbleOS would report Windows 11 devices as Windows 10 in `sysinfo` ([#7](https://github.com/arnavt78/bubbleos/issues/7)).
 - The `print` command no longer outputs an error message when entering nothing, it just shows nothing.
 - Fixed multiple issues in the `ping` command, making it work more consistently.
 - Internally improved the code of `ifnet`.

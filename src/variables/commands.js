@@ -101,7 +101,7 @@ const COMMANDS = {
   ping,
   // Aliases: print, echo
   print,
-  echo: print(),
+  echo: print,
   readfile,
   rename,
   size,

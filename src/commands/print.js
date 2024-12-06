@@ -13,9 +13,6 @@ const Checks = require("../classes/Checks");
  * print("Hello, world!");
  * ```
  *
- * A warning will be shown if there is no text to
- * output.
- *
  * @param {...string} text The text to output.
  */
 const print = (...text) => {

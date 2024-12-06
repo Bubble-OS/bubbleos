@@ -1,11 +1,10 @@
 // Get modules
 const fs = require("fs");
 const chalk = require("chalk");
-const { question } = require("readline-sync");
+const { question, questionInt } = require("readline-sync");
 
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
-const _replaceSpaces = require("../functions/replaceSpaces");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
@@ -64,25 +63,51 @@ const mkfile = (file, ...args) => {
       return;
     }
 
-    // Prompt the user for file contents
-    // Replace '*n' with newlines
-    const contents =
-      _replaceSpaces(
-        question(
-          `Please enter the file contents (${chalk.italic("'Enter'")} to accept; ${chalk.italic(
-            "'*n'"
-          )} for a newline; leave blank to make an empty file): `
-        ),
-        "*n",
-        "\n"
-      ) ?? "";
+    console.log(
+      `Add the content of the new file. Type ${chalk.italic(
+        "'!SAVE'"
+      )} to save changes, ${chalk.italic("'!CANCEL'")} to discard, or ${chalk.italic(
+        "'!EDIT'"
+      )} to modify previous input:\n`
+    );
 
-    // Make the file
-    fs.writeFileSync(file, contents);
+    // Collect new content line by line
+    let contents = [];
+    while (true) {
+      const input = question("> ");
 
-    // If the user requested output, show a success message, else, show a newline
-    if (!silent) console.log(chalk.green(`Successfully made the file ${chalk.bold(file)}.\n`));
-    else console.log();
+      if (input.toUpperCase() === "!SAVE") {
+        // Save the new content to the file, ensuring no trailing newline
+        fs.writeFileSync(file, contents.join("\n"), "utf8");
+
+        // If the user requested output, show a success message, else, show a newline
+        if (!silent) console.log(chalk.green(`Successfully made the file ${chalk.bold(file)}.\n`));
+        else console.log();
+        return;
+      } else if (input.toUpperCase() === "!CANCEL") {
+        console.log(chalk.yellow("Edits discarded and process aborted."));
+        return;
+      } else if (input.toUpperCase() === "!EDIT") {
+        if (contents.length === 0) {
+          console.log(chalk.yellow("No previous input to edit.\n"));
+        } else {
+          const lineNumber = questionInt(
+            chalk.blue("Choose a line number to edit (1-" + contents.length + "): ")
+          );
+          if (lineNumber >= 1 && lineNumber <= contents.length) {
+            const newLine = question(`Edit line ${lineNumber}: `, { defaultInput: "\n" });
+
+            contents[lineNumber - 1] = newLine; // Replace the selected line
+            console.log(chalk.green(`Line ${lineNumber} has been updated.\n`));
+          } else {
+            console.log(chalk.red("Invalid line number.\n"));
+          }
+        }
+      } else {
+        // Add the input to the contents
+        contents.push(input);
+      }
+    }
   } catch (err) {
     if (err.code === "ENOENT") {
       // If the parent directory does not exist

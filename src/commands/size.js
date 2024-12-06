@@ -1,6 +1,7 @@
 // Get modules
 const chalk = require("chalk");
 const fs = require("fs");
+const path = require("path");
 
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
@@ -20,17 +21,37 @@ const Checks = require("../classes/Checks");
  * @param {string} key The key, which is the name of the type of size.
  * @param {number | string} value The value of the type of size in `key`.
  */
-const _logSize = (key, value) => {
-  // Capitalize the first letter of the word
-  const showSize = key.charAt(0).toUpperCase() + key.slice(1);
+const _logSize = (sizeType, sizeValue) => {
+  const formattedSize = new Intl.NumberFormat("en-US").format(Number(sizeValue) ?? 0);
 
-  if (value <= 0) {
-    // If the value passed was '0' or less than that
-    console.log(`${showSize}: ${chalk.bold.red.dim("N/A")}`);
-  } else {
-    // The value was not ≤0
-    console.log(`${showSize}: ${chalk.bold.redBright(value)}`);
+  if (sizeValue <= 0) return;
+
+  // The value was not ≤0
+  console.log(chalk.green(`${chalk.bold(formattedSize)} ${sizeType}`));
+};
+
+const _getDirectorySize = (dirPath) => {
+  let totalSize = 0;
+  const stack = [dirPath]; // Stack to track directories to process
+
+  while (stack.length > 0) {
+    const currentPath = stack.pop();
+    const files = fs.readdirSync(currentPath, { withFileTypes: true });
+
+    for (const file of files) {
+      const filePath = path.join(currentPath, file.name);
+
+      if (file.isDirectory()) {
+        // Push subdirectory onto the stack for later processing
+        stack.push(filePath);
+      } else if (file.isFile()) {
+        // Add the size of the file
+        totalSize += fs.statSync(filePath).size;
+      }
+    }
   }
+
+  return totalSize;
 };
 
 /**
@@ -44,73 +65,69 @@ const _logSize = (key, value) => {
  * size("test.txt"); // Arguments accepted!
  * ```
  *
- * Note that getting the size of a directory is not
- * yet supported, however, this is to be added in
- * BubbleOS build 200.
- *
- * Available arguments:
- * - `-b`: Get the bytes of a file only.
- * - `-kb`: Get the megabytes of a file only.
- * - `-mb`: Get the kilobytes of a file only.
- * - `-gb`: Get the gigabytes of a file only.
- *
- * @param {fs.PathLike | string} file The file to find the sizes of.
+ * @param {fs.PathLike | string} path The file/directory to find the sizes of.
  * @param  {...string} args The arguments to change the behavior of `size`.
  */
-const size = (file, ...args) => {
+const size = (path, ...args) => {
   try {
     // Replace spaces and convert it to an absolute path
-    file = _convertAbsolute(_parseDoubleQuotes([path, ...args])[0]);
+    path = _convertAbsolute(_parseDoubleQuotes([path, ...args])[0]);
 
     // Initialize checker
-    const fileChk = new Checks(file);
-
-    // Initialize arguments
-    // Sizes
-    const bytes = args?.includes("-b");
-    const kilobytes = args?.includes("-kb");
-    const megabytes = args?.includes("-mb");
-    const gigabytes = args?.includes("-gb");
-
-    // If no arguments were passed, show all
-    const all = !bytes && !kilobytes && !megabytes && !gigabytes;
+    const pathChk = new Checks(path);
 
     // If the file is not defined
-    if (fileChk.paramUndefined()) {
+    if (pathChk.paramUndefined()) {
       Errors.enterParameter("a file", "size test.txt");
       return;
-    }
-
-    if (!fileChk.doesExist()) {
+    } else if (!pathChk.doesExist()) {
       // File doesn't exist
-      Errors.doesNotExist("file", file);
-      return;
-    } else if (fileChk.validateType()) {
-      // Path is a directory
-      Errors.expectedFile(file);
+      Errors.doesNotExist("file/directory", file);
       return;
     }
 
-    // The size shortened to 4 decimal places
-    const allSizes = _convertSize(fs.statSync(file).size, 4);
+    let totalSize = 0;
+    if (pathChk.validateType()) {
+      // Path is a directory
+      totalSize = _getDirectorySize(path);
+    } else {
+      // Path is a file
+      totalSize = fs.statSync(path).size;
+    }
 
-    // Log all sizes depending on what sizes the user requested
-    if (bytes || all) _logSize("Bytes", allSizes.bytes);
-    if (kilobytes || all) _logSize("Kilobytes", allSizes.kilobytes);
-    if (megabytes || all) _logSize("Megabytes", allSizes.megabytes);
-    if (gigabytes || all) _logSize("Gigabytes", allSizes.gigabytes);
+    // The size shortened to 2 decimal places
+    const allSizes = _convertSize(totalSize, 2);
 
-    // Newline and return
+    // Priority order of size units
+    const sizeLabels = ["GB", "MB", "KB", "bytes"];
+    const sizeValues = [allSizes.gigabytes, allSizes.megabytes, allSizes.kilobytes, allSizes.bytes];
+
+    console.log(`Size of ${path}:`);
+
+    for (let i = 0; i < sizeValues.length; i++) {
+      if (sizeValues[i] > 0) {
+        // Adjust "bytes" to singular if the size is 1
+        const label = sizeLabels[i] === "bytes" && sizeValues[i] === 1 ? "byte" : sizeLabels[i];
+        _logSize(label, sizeValues[i]);
+
+        console.log();
+        return;
+      }
+    }
+
+    // If no meaningful size is found (totalSize is 0)
+    console.log(chalk.yellow(`${chalk.bold("0")} bytes`));
+
     console.log();
     return;
   } catch (err) {
     if (err.code === "EPERM") {
       // Invalid permissions to read the file
-      Errors.noPermissions("calculate the size of the file", file);
+      Errors.noPermissions("calculate the size of the file/directory", path);
       return;
     } else if (err.code === "EBUSY") {
       // The file is in use
-      Errors.inUse("file", file);
+      Errors.inUse("file/directory", path);
       return;
     } else {
       // Unknown error

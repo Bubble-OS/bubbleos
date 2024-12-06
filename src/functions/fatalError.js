@@ -10,6 +10,11 @@ const { GLOBAL_NAME } = require("../variables/constants");
 const _friendlyOS = require("./friendlyOS");
 
 /**
+ * The name of the file to store the error message in.
+ */
+const ERROR_INFO_FILENAME = `${GLOBAL_NAME}_error_info.txt`.toUpperCase();
+
+/**
  * End BubbleOS with a fatal exception with exit code `1`.
  *
  * Usage:
@@ -25,7 +30,7 @@ const _friendlyOS = require("./friendlyOS");
  *
  * @param {Error} err The error that caused the fatal error.
  */
-const _fatalError = (err, doFileDump = !global.noDump) => {
+const _fatalError = (err, doFileDump = !globalThis.noDump) => {
   // A friendly version of the technical error information
   const errProperties = {
     // For 'Error':
@@ -51,7 +56,7 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
     `${chalk.red.bold(
       `A fatal exception has occurred in ${GLOBAL_NAME}. To avoid damage to ${GLOBAL_NAME} and ${_friendlyOS()}, ${GLOBAL_NAME} has been aborted with a failure status.`
     )}\n\n${chalk.red.bold(
-      `Make sure that your system supports ${GLOBAL_NAME}. If your system is supported, there may be a bug in ${GLOBAL_NAME}.\nIn that case, report the bug on the project's GitHub page (https://github.com/Bubble-OS/bubbleos/issues/new).`
+      `Make sure that your system supports ${GLOBAL_NAME}. If your system is supported, there may be a bug in ${GLOBAL_NAME}.\nIn that case, report the bug on the project's GitHub page (https://github.com/arnavt78/bubbleos/issues/new).`
     )}\n`
   );
 
@@ -74,9 +79,6 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
   // If the error was passed with a file dump request
   if (doFileDump) {
     try {
-      // Filenames for each error; change them here
-      const errorInfoFilename = `${GLOBAL_NAME}_error_info.txt`.toUpperCase();
-
       // All error properties stored in an array
       let errorArr = [];
 
@@ -89,20 +91,25 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
 
       // Add some information to the beginning of the error information file
       const date = new Date();
-      const errorInfoTxt = `BubbleOS encountered a fatal error at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} on ${
+      const errorInfoTxt = `BubbleOS encountered a fatal error at ${String(
+        date.getHours()
+      )}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(
+        2,
+        "0"
+      )} on ${
         date.getMonth() + 1
-      }/${date.getDate()}/${date.getFullYear()}.\nGive the developer this information by going to https://github.com/Bubble-OS/bubbleos/issues/new (GitHub account required).\n\n${errorArr.join(
+      }/${date.getDate()}/${date.getFullYear()}.\nGive the developer this information by going to https://github.com/arnavt78/bubbleos/issues/new (GitHub account required).\n\n${errorArr.join(
         "\n"
       )}`;
 
       // Make the file
-      fs.writeFileSync(errorInfoFilename, errorInfoTxt);
+      fs.writeFileSync(ERROR_INFO_FILENAME, errorInfoTxt);
 
       // If the operation succeeded, show a success message
       console.log(
         chalk.green(
-          `${chalk.white.bgGreen(" SUCCESS ")}: Saved file ${chalk.bold(
-            errorInfoFilename
+          `${chalk.white.bgGreen(" SUCCESS ")} Saved file ${chalk.bold(
+            ERROR_INFO_FILENAME
           )} in ${chalk.bold(process.cwd())}.\n`
         )
       );
@@ -110,9 +117,9 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
       // If an error occurred, show an error message, but continue
       console.log(
         chalk.red(
-          `${chalk.white.bgRed(" ERROR ")}: Could not save file ${chalk.bold(
-            errorInfoFilename
-          )} in ${chalk.bold(process.cwd())}.`
+          `${chalk.white.bgRed(" ERROR: ")} Could not save file ${chalk.bold(
+            ERROR_INFO_FILENAME
+          )} in ${chalk.bold(process.cwd())}.\n`
         )
       );
     }

@@ -101,7 +101,7 @@ const bub = (intCmds, file, ...args) => {
     const fileChk = new Checks(file);
 
     // Initialize arguments
-    const displayCommand = !args?.includes("-d");
+    const displayCommand = args?.includes("-d");
     const allowExit = args?.includes("--allow-exit");
 
     // Check if file is not defined

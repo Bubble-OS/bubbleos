@@ -9,108 +9,121 @@
 
 const chalk = require("chalk");
 
+/**
+ * Class to print verbose messages.
+ *
+ * The existing verbose pre-made messages are below. To make a custom message, use `Verbose.custom()`.
+ */
 class Verbose {
-  constructor(isVerbose) {
-    this.isVerbose = isVerbose;
-  }
+  constructor() {}
 
-  #formVerbMsg(message) {
+  // Also used for other functions in this class. The name is misleading,
+  // as it is also used outside this class for custom messages, hence the name.
+  static custom(message) {
     const date = new Date();
     const formattedDate = chalk.dim(
-      `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}]`
+      `[${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(
+        2,
+        "0"
+      )}:${String(date.getSeconds()).padStart(2, "0")}:${String(date.getMilliseconds()).padStart(
+        3,
+        "0"
+      )}]`
     );
 
-    console.log(
-      chalk.yellow.bgBlack(`${chalk.dim(formattedDate)} ${chalk.bold("VERBOSE:")} ${message}`)
+    // THIS WILL BE INTRODUCED IN THE NEXT BUILD!
+    // if (globalThis.verboseMode)
+    //   console.log(chalk.yellow(`${formattedDate} ${chalk.bgBlack.bold(" VERBOSE: ")} ${message}`));
+  }
+
+  static initArgs() {
+    this.custom("Initializing arguments...");
+  }
+
+  static parseQuotes() {
+    this.custom("Parsing double quotes for paths with spaces...");
+  }
+
+  static initChecker() {
+    this.custom("Initializing checker...");
+  }
+
+  static chkEmpty(variable) {
+    this.custom(`Checking if variable '${chalk.italic(variable)}' is empty...`);
+  }
+
+  static chkExists(variable) {
+    this.custom(`Checking if the path '${chalk.italic(variable)}' exists...`);
+  }
+
+  static startCmd(command) {
+    this.custom(
+      `Starting up function ${chalk.italic(`'${command}'`)} and initializing verbose state...`
     );
   }
 
-  startCmd(command) {
-    if (this.isVerbose)
-      this.#formVerbMsg(
-        `Starting up function ${chalk.italic(`'${command}'`)} and initializing verbose state...`
-      );
+  static chkUndefined(variable) {
+    this.custom(
+      `Checking if variable ${chalk.bold.italic(`'${variable}'`)} is ${chalk.italic(
+        "'undefined'"
+      )} or ${chalk.italic("--verbose")}/${chalk.italic("/verbose")}...`
+    );
   }
 
-  chkUndefined(variable) {
-    if (this.isVerbose)
-      this.#formVerbMsg(
-        `Checking if variable ${chalk.bold.italic(`'${variable}'`)} is ${chalk.italic(
-          "'undefined'"
-        )} or ${chalk.italic("--verbose")}/${chalk.italic("/verbose")}...`
-      );
+  static enterParam() {
+    this.custom(
+      `${chalk.bold.underline("ERROR!")} The parameter is either ${chalk.italic(
+        `'undefined'`
+      )} or ${chalk.italic("--verbose")}/${chalk.italic("/verbose")}.`
+    );
   }
 
-  enterParam() {
-    if (this.isVerbose)
-      this.#formVerbMsg(
-        `${chalk.bold.underline("ERROR!")} The parameter is either ${chalk.italic(
-          `'undefined'`
-        )} or ${chalk.italic("--verbose")}/${chalk.italic("/verbose")}.`
-      );
+  static wasError(command, withNewline = true) {
+    this.custom(
+      `An error occurred, and the ${chalk.italic(`'${command}'`)} command has been terminated.${
+        withNewline ? "\n" : ""
+      }`
+    );
   }
 
-  wasError(command, withNewline = true) {
-    if (this.isVerbose)
-      this.#formVerbMsg(
-        `An error occurred, and the ${chalk.italic(`'${command}'`)} command has been terminated.${
-          withNewline ? "\n" : ""
-        }`
-      );
+  static chkComplete() {
+    this.custom(`The check has been completed, continuing...`);
   }
 
-  chkComplete() {
-    if (this.isVerbose) this.#formVerbMsg(`The check has been completed, continuing...`);
+  static replaceSpacesAndConvAbs(variable) {
+    this.custom(
+      `Replacing spaces in ${chalk.bold.italic(
+        `'${variable}'`
+      )} and converting it to an absolute path...`
+    );
   }
 
-  replaceSpacesAndConvAbs(variable) {
-    if (this.isVerbose)
-      this.#formVerbMsg(
-        `Replacing spaces in ${chalk.bold.italic(
-          `'${variable}'`
-        )} and converting it to an absolute path...`
-      );
+  static attemptTo(todo, variable) {
+    this.custom(`Attempting to ${todo} ${chalk.bold.italic(`'${variable}'`)}...`);
   }
 
-  attemptTo(todo, variable) {
-    if (this.isVerbose)
-      this.#formVerbMsg(`Attempting to ${todo} ${chalk.bold.italic(`'${variable}'`)}...`);
+  static chkExistant(variable) {
+    this.custom(`Checking if the path ${chalk.bold.italic(`'${variable}'`)} exists...`);
   }
 
-  chkExistant(variable) {
-    if (this.isVerbose)
-      this.#formVerbMsg(`Checking if the path ${chalk.bold.italic(`'${variable}'`)} exists...`);
+  static nonExistant(variable) {
+    this.custom(
+      `${chalk.bold.underline("ERROR!")} The path, ${chalk.bold.italic(
+        `'${variable}'`
+      )}, does not exist.`
+    );
   }
 
-  nonExistant(variable) {
-    if (this.isVerbose)
-      this.#formVerbMsg(
-        `${chalk.bold.underline("ERROR!")} The path, ${chalk.bold.italic(
-          `'${variable}'`
-        )}, does not exist.`
-      );
+  static operationSuccess(command, withNewline = true) {
+    this.custom(
+      `The command, ${chalk.italic(`'${command}'`)}, has executed successfully!${
+        withNewline ? "\n" : ""
+      }`
+    );
   }
 
-  permsErr(variable) {
-    if (this.isVerbose)
-      this.#formVerbMsg(
-        `${chalk.bold.underline(
-          "ERROR!"
-        )} A permission error occurred with the file ${chalk.bold.italic(`'${variable}'`)}.`
-      );
-  }
-
-  operationSuccess(command, withNewline = true) {
-    if (this.isVerbose)
-      this.#formVerbMsg(
-        `The command, ${chalk.italic(`'${command}'`)}, has executed successfully!${
-          withNewline ? "\n" : ""
-        }`
-      );
-  }
-
-  intParams() {
-    if (this.isVerbose) this.#formVerbMsg("Interpreting parameters/arguments...");
+  static intParams() {
+    this.custom("Interpreting parameters/arguments...");
   }
 }
 

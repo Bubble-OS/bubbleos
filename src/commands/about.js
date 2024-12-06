@@ -5,7 +5,7 @@ const chalk = require("chalk");
 const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/constants");
 
 // Get functions
-const _fatalError = require("../functions/fatalError");
+const Verbose = require("../classes/Verbose");
 
 /**
  * The `about` command.
@@ -27,6 +27,7 @@ const _fatalError = require("../functions/fatalError");
 const about = (...args) => {
   try {
     // Initialize recognized arguments
+    Verbose.initArgs();
     const license = args?.includes("-l");
     const binary = args?.includes("--ilovetech");
 
@@ -36,12 +37,14 @@ const about = (...args) => {
       aboutName = "01000010 01110101 01100010 01100010 01101100 01100101 01001111 01010011";
 
     // Print out information about BubbleOS
+    Verbose.custom("Displaying information...");
     console.log(chalk.underline.bold.red(`About ${aboutName}\n`));
 
     console.log(`${aboutName}, v${VERSION} (build ${BUILD})`);
     console.log(`Made by ${AUTHOR}!\n`);
 
     if (license) {
+      Verbose.custom("Displaying license...");
       console.log(
         chalk.dim(`    MIT License
 
@@ -67,7 +70,7 @@ const about = (...args) => {
       );
     }
 
-    console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/Bubble-OS/bubbleos")}`);
+    console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/arnavt78/bubbleos")}`);
     console.log(`YouTube: ${chalk.underline.blueBright("https://youtube.com/InfiniTech78")}\n`);
   } catch (err) {
     // An unknown error occurred

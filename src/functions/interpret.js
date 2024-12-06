@@ -75,8 +75,8 @@ const _intCmds = async (command) => {
         }
       }
     }
-    // If the command wasn't empty, add it to the history
-    if (!isEmpty) _addToHist(command);
+
+    if (!isEmpty && command !== "history -c") _addToHist(command);
   } catch (err) {
     _fatalError(err);
   }

@@ -1,21 +1,21 @@
 {
   "name": "bubbleos",
-  "version": "1.3.5-beta",
+  "version": "1.4.8-beta",
   "description": "BubbleOS is a shell for your current operating system!",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bubble-OS/bubbleos.git"
+    "url": "git+https://github.com/arnavt78/bubbleos.git"
   },
   "author": "Arnav Thorat",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Bubble-OS/bubbleos/issues"
+    "url": "https://github.com/arnavt78/bubbleos/issues"
   },
   "bin": {
     "bubble": "./index.js"
   },
-  "homepage": "https://github.com/Bubble-OS/bubbleos#readme",
+  "homepage": "https://github.com/arnavt78/bubbleos#readme",
   "dependencies": {
     "chalk": "^4.1.2",
     "is-elevated": "^3.0.0",

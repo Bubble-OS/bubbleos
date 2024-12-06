@@ -71,7 +71,7 @@ const _determineColor = (mem) => {
 };
 
 /**
- * Fixes issue where BubbleOS reports Windows 11 systems as Windows 10 ([#7](https://github.com/Bubble-OS/bubbleos/issues/7)).
+ * Fixes issue where BubbleOS reports Windows 11 systems as Windows 10 ([#7](https://github.com/arnavt78/bubbleos/issues/7)).
  *
  * @param {string} currentOSName The current name of the OS.
  * @returns The name of the OS.

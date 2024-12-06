@@ -56,7 +56,10 @@ const time = (...args) => {
 
     // Get the time
     const rawTime = new Date();
-    const time = `${rawTime.getHours()}:${rawTime.getMinutes()}:${rawTime.getSeconds()}`;
+    const time = `${String(rawTime.getHours())}:${String(rawTime.getMinutes()).padStart(
+      2,
+      "0"
+    )}:${String(rawTime.getSeconds()).padStart(2, "0")}`;
 
     // If the user wants the time in 24-hours, show it in raw format, else, convert it
     if (isTwelveHours) console.log(chalk.bold(_convertTime(time)));
