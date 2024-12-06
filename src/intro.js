@@ -12,15 +12,20 @@ const {
   EXPIRY_DATE,
 } = require("./variables/constants");
 
+const Verbose = require("./classes/Verbose");
+
 // Show the name of the OS, the version, and the author
 console.log(`${chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`)}`);
 console.log(`Made by ${AUTHOR}!\n`);
 
+Verbose.custom("Checking if BubbleOS is in beta...");
 // If BubbleOS is in beta...
 if (IN_BETA) {
   // ...and the timebomb is activated...
+  Verbose.custom("Checking if the timebomb is activated...");
   if (TIMEBOMB_ACTIVATED) {
     // Show a timebomb warning message
+    Verbose.custom("Timebomb is activated and is in beta, show relevant message...");
     console.log(
       chalk.dim(
         `${chalk.bold(
@@ -33,6 +38,7 @@ if (IN_BETA) {
   } else {
     // ...else
     // Show a beta warning message
+    Verbose.custom("Timebomb is not activated but software is in beta, show relevant message...");
     console.log(
       chalk.dim(
         `${chalk.bold(

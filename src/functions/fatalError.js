@@ -30,7 +30,7 @@ const ERROR_INFO_FILENAME = `${GLOBAL_NAME}_error_info.txt`.toUpperCase();
  *
  * @param {Error} err The error that caused the fatal error.
  */
-const _fatalError = (err, doFileDump = !global.noDump) => {
+const _fatalError = (err, doFileDump = !globalThis.noDump) => {
   // A friendly version of the technical error information
   const errProperties = {
     // For 'Error':
@@ -91,7 +91,12 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
 
       // Add some information to the beginning of the error information file
       const date = new Date();
-      const errorInfoTxt = `BubbleOS encountered a fatal error at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} on ${
+      const errorInfoTxt = `BubbleOS encountered a fatal error at ${String(
+        date.getHours()
+      )}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(
+        2,
+        "0"
+      )} on ${
         date.getMonth() + 1
       }/${date.getDate()}/${date.getFullYear()}.\nGive the developer this information by going to https://github.com/arnavt78/bubbleos/issues/new (GitHub account required).\n\n${errorArr.join(
         "\n"
@@ -103,7 +108,7 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
       // If the operation succeeded, show a success message
       console.log(
         chalk.green(
-          `${chalk.white.bgGreen(" SUCCESS ")}: Saved file ${chalk.bold(
+          `${chalk.white.bgGreen(" SUCCESS ")} Saved file ${chalk.bold(
             ERROR_INFO_FILENAME
           )} in ${chalk.bold(process.cwd())}.\n`
         )
@@ -112,7 +117,7 @@ const _fatalError = (err, doFileDump = !global.noDump) => {
       // If an error occurred, show an error message, but continue
       console.log(
         chalk.red(
-          `${chalk.white.bgRed(" ERROR ")}: Could not save file ${chalk.bold(
+          `${chalk.white.bgRed(" ERROR: ")} Could not save file ${chalk.bold(
             ERROR_INFO_FILENAME
           )} in ${chalk.bold(process.cwd())}.\n`
         )

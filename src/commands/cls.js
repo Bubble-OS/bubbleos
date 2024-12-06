@@ -1,3 +1,5 @@
+const _fatalError = require("../functions/fatalError");
+
 /**
  * Clears the entire standard output.
  *
@@ -15,6 +17,7 @@
 const cls = () => {
   try {
     process.stdout.write("\x1bc");
+    _verboseMsg("Cleared screen.");
   } catch (err) {
     _fatalError(err);
   }

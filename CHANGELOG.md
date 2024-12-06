@@ -9,6 +9,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - The BubbleOS configuration file is now used to store command history across sessions.
 - The `size` command can now get the size of a directory, and can now accept directory paths as a valid argument.
 - Added a new text editor for the `mkfile` command to make it more user-friendly, featuring a multi-line editor to easily make new files without using the `*n` keyword for newlines.
+- Internally added new verbose messages. These are currently unused in the code and will be introduced fully in the next version.
 
 ### Changed/Fixed Features
 
@@ -17,6 +18,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - Updated the size conversion of BubbleOS to use correct conversion factors to follow the binary convention.
 - Made commands by default not display in the `bub` command when executing a file.
 - Updated help messages for commands to fix various grammar issues and other information.
+- Fixed an issue where the time would display without a preceding 0 if the seconds/minutes was a single digit in the `time` command, fatal error file, and verbose messages.
 - Fixed an issue where running the `size` command would crash BubbleOS.
 - Fixed an issue where entering any value in a yes/no prompt would always abort the process after answering, even if "yes" was entered ([#10](https://github.com/arnavt78/bubbleos/issues/10)).
 - Fixed an issue where entering the `echo` command would crash BubbleOS ([#12](https://github.com/arnavt78/bubbleos/issues/12)).

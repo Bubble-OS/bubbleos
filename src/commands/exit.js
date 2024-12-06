@@ -35,9 +35,13 @@ const exit = (...args) => {
     console.log(`Exiting the ${GLOBAL_NAME} shell...\n`);
 
     // If the user requested to clear the screen after exiting, do so
-    if (args.includes("-c")) process.stdout.write("\x1bc");
+    if (args.includes("-c")) {
+      process.stdout.write("\x1bc");
+      _verboseMsg("Cleared screen due to '-c' argument passed.");
+    }
 
     // Exit BubbleOS (Node.js) with an exit code of '0' (success)
+    _verboseMsg(`Exiting ${GLOBAL_NAME}...`);
     process.exit(0);
   } catch (err) {
     _fatalError(err);
