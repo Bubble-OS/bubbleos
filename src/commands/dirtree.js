@@ -19,20 +19,36 @@ const Checks = require("../classes/Checks");
  * @param {string} prefix It is prefered to leave this to the default value.
  */
 const _generateTree = (currentDir, prefix = "") => {
-  const items = fs.readdirSync(currentDir);
+  let items;
+
+  try {
+    // Attempt to read the directory contents
+    items = fs.readdirSync(currentDir);
+  } catch (err) {
+    console.log(chalk.red(`${prefix}└── [ERROR] Unable to access: ${currentDir}`));
+    return; // Skip this directory and return
+  }
 
   items.forEach((item, index) => {
     const itemPath = path.join(currentDir, item);
     const isLastItem = index === items.length - 1;
-    const isDirectory = fs.statSync(itemPath).isDirectory();
 
-    // Print the item with the tree-like structure
-    console.log(`${prefix}${isLastItem ? "└── " : "├── "}${item}`);
+    try {
+      const isDirectory = fs.statSync(itemPath).isDirectory();
 
-    if (isDirectory) {
-      // Update the prefix for the next level
-      const newPrefix = prefix + (isLastItem ? "    " : "│   ");
-      _generateTree(itemPath, newPrefix);
+      // Print the item with the tree-like structure
+      console.log(`${prefix}${isLastItem ? "└── " : "├── "}${item}`);
+
+      if (isDirectory) {
+        // Update the prefix for the next level
+        const newPrefix = prefix + (isLastItem ? "    " : "│   ");
+        _generateTree(itemPath, newPrefix);
+      }
+    } catch (err) {
+      // Handle inaccessible files or directories
+      console.log(
+        chalk.red(`${prefix}${isLastItem ? "└──" : "├──"} [ERROR] Unable to access: ${item}`)
+      );
     }
   });
 };

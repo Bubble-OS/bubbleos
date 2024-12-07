@@ -14,6 +14,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 - Fixed an issue where BubbleOS would crash if it could not save a command to history in the configuration file, or read the history. If it encounters an error reading the file, it will now automatically reset the file and not crash BubbleOS.
 - The "timebomb disabled" warning will now only display if the system time exceeds the expiry date.
+- Fixed an issue where BubbleOS would crash when encountering an inaccessible directory in `dirtree`.
 
 ### Removed Features
 
