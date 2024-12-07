@@ -10,13 +10,11 @@ _No added features._
 
 ### Changed/Fixed Features
 
-- Fixed an issue where BubbleOS would crash if it could not save a command to history in the configuration file. If it encounters an error reading the file, it will now automatically reset the file and not crash BubbleOS.
+- Fixed an issue where BubbleOS would crash if it could not save a command to history in the configuration file, or read the history. If it encounters an error reading the file, it will now automatically reset the file and not crash BubbleOS.
 
 ### Removed Features
 
-- Removed the arguments for the `size` command, as it now automatically chooses the best size to show. This may come back in a future version.
-- Removed the ability to enter newlines in the `fif` search, due to it not functioning in the first place.
-- Removed the `history` variable due to it now being stored in a separate file so that it can be used between sessions.
+_No removed features._
 
 ## Build 135 to 148 (v1.3.5-beta to v1.4.8-beta)
 

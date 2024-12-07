@@ -44,12 +44,40 @@ const historyCmd = (numToDisplay, ...args) => {
 
     // Clear history if "-c" is passed
     if (clear) {
+      if (typeof _manageConfig("get").parsed === "undefined") {
+        console.log(
+          chalk.red(
+            `${chalk.white.bgRed(
+              " ERROR: "
+            )} Error when reading history from the configration file. Resetting file...\n`
+          )
+        );
+
+        _manageConfig("delete");
+        _manageConfig("create");
+        return;
+      }
+
       _manageConfig("remove", "history");
       console.log(chalk.green("Cleared the history.\n"));
       return;
     }
 
     // Fetch history from the config file
+    if (typeof _manageConfig("get").parsed === "undefined") {
+      console.log(
+        chalk.red(
+          `${chalk.white.bgRed(
+            " ERROR: "
+          )} Error when reading history from the configration file. Resetting file...\n`
+        )
+      );
+
+      _manageConfig("delete");
+      _manageConfig("create");
+      return;
+    }
+
     const historyConfig = _manageConfig("get").parsed.history ?? [];
 
     if (typeof numToDisplay === "undefined") {
@@ -117,7 +145,6 @@ const _addToHist = (command, addToConfig = true) => {
 
     _manageConfig("delete");
     _manageConfig("create");
-
     return;
   }
 
