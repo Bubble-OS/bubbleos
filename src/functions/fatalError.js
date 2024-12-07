@@ -8,6 +8,7 @@ const { GLOBAL_NAME } = require("../variables/constants");
 
 // Get functions
 const _friendlyOS = require("./friendlyOS");
+const _detectArgs = require("./detectArgs");
 
 // Get classes
 const InfoMessages = require("../classes/InfoMessages");
@@ -33,7 +34,7 @@ const ERROR_INFO_FILENAME = `${GLOBAL_NAME}_error_info.txt`.toUpperCase();
  *
  * @param {Error} err The error that caused the fatal error.
  */
-const _fatalError = (err, doFileDump = !globalThis.noDump) => {
+const _fatalError = (err, doFileDump = !_detectArgs("dump")) => {
   // A friendly version of the technical error information
   const errProperties = {
     // For 'Error':

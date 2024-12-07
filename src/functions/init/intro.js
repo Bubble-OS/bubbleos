@@ -10,10 +10,10 @@ const {
   IN_BETA,
   TIMEBOMB_ACTIVATED,
   EXPIRY_DATE,
-} = require("./variables/constants");
+} = require("../../variables/constants");
 
-const Verbose = require("./classes/Verbose");
-const ConfigManager = require("./classes/ConfigManager");
+const Verbose = require("../../classes/Verbose");
+const ConfigManager = require("../../classes/ConfigManager");
 
 const config = new ConfigManager();
 

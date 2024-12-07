@@ -1,13 +1,10 @@
 // IMPORTANT MESSAGE!!!
 // This class in unused in BubbleOS build 100, as the
 // verbose feature has not been implemented yet.
-//
-// It is still unknown if and when this feature will
-// be added. However, meanwhile, this class stays!
-//
-// Also, there are no comments needed for now.
 
 const chalk = require("chalk");
+
+const _detectArgs = require("../functions/detectArgs");
 
 /**
  * Class to print verbose messages.
@@ -32,7 +29,7 @@ class Verbose {
     );
 
     // THIS WILL BE INTRODUCED IN THE NEXT BUILD!
-    // if (globalThis.verboseMode)
+    // if (_detectArgs("verbose"))
     //   console.log(chalk.yellow(`${formattedDate} ${chalk.bgBlack.bold(" VERBOSE: ")} ${message}`));
   }
 

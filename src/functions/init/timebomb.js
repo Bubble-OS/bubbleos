@@ -1,9 +1,14 @@
 // Get variables
-const { GLOBAL_NAME, IN_BETA, TIMEBOMB_ACTIVATED, EXPIRY_DATE } = require("../variables/constants");
+const {
+  GLOBAL_NAME,
+  IN_BETA,
+  TIMEBOMB_ACTIVATED,
+  EXPIRY_DATE,
+} = require("../../variables/constants");
 
 // Get functions
 const _startupError = require("./startupError");
-const _fatalError = require("./fatalError");
+const _fatalError = require("../fatalError");
 
 const _timebomb = () => {
   try {

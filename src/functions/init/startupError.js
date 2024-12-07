@@ -1,9 +1,9 @@
 const chalk = require("chalk");
 const { question } = require("readline-sync");
 
-const { GLOBAL_NAME } = require("../variables/constants");
+const { GLOBAL_NAME } = require("../../variables/constants");
 
-const _fatalError = require("./fatalError");
+const _fatalError = require("../fatalError");
 
 const startupError = (message, doFatalError = false, fatalErrorMessage = "") => {
   try {
