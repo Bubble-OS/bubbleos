@@ -1,8 +1,6 @@
 // Get modules
 const chalk = require("chalk");
 
-const _manageConfig = require("./functions/manageConfig");
-
 // Get variables
 const {
   GLOBAL_NAME,
@@ -15,8 +13,11 @@ const {
 } = require("./variables/constants");
 
 const Verbose = require("./classes/Verbose");
+const ConfigManager = require("./classes/ConfigManager");
 
-if (typeof _manageConfig("get").parsed === "undefined") {
+const config = new ConfigManager();
+
+if (typeof config.getConfig() === "undefined") {
   console.log(
     chalk.red(
       `${chalk.white.bgRed(
@@ -25,14 +26,14 @@ if (typeof _manageConfig("get").parsed === "undefined") {
     )
   );
 
-  _manageConfig("delete");
-  _manageConfig("create");
+  config.deleteConfig();
+  config.createConfig();
 }
 
 // Show the name of the OS, the version, and the author
 console.log(`${chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`)}`);
 
-if (!_manageConfig("get").parsed.firstIntro) {
+if (!config.getConfig().firstIntro) {
   console.log(`Made by ${AUTHOR}!`);
 }
 
@@ -70,11 +71,11 @@ if (IN_BETA) {
 }
 
 // Show information about commands
-if (!_manageConfig("get").parsed.firstIntro) {
+if (!config.getConfig().firstIntro) {
   console.log(`For a list on some available commands, type ${chalk.italic("'help'")}.`);
   console.log(`For more information about a command, type ${chalk.italic("'help <command>'")}.\n`);
 
   console.log(`To exit the ${GLOBAL_NAME} shell, type ${chalk.italic("'exit'")}.\n`);
 }
 
-_manageConfig("add", { firstIntro: true });
+config.addData({ firstIntro: true });

@@ -17,6 +17,7 @@ const Checks = require("../classes/Checks");
  * - `'get'` - Get the contents of the configuration file in both raw and parsed format.
  * - `'add'` - Add a value to the configuration file. Appends to an existing array if the parameter already exists.
  *
+ * @deprecated Use `ConfigManager` class instead.
  * @param {string} whatShouldIDo One of the above values.
  * @param {object | string} data Either an object structure that will be converted to JSON, or the key to delete.
  * @returns Either data, `true` if the operation was successful, or `false` if it was unsuccessful.

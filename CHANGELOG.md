@@ -6,11 +6,14 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 ### Added Features
 
+- BubbleOS will no longer display the full intro after the first time it has been opened on the system, to reduce clutter.
 - Added the `--reset` flag to the BubbleOS executable, which resets the configuration file.
+- Internally added the `InfoMessages` and `ConfigManager` classes. The `manageConfig` function is now deprecated.
 
 ### Changed/Fixed Features
 
 - Fixed an issue where BubbleOS would crash if it could not save a command to history in the configuration file, or read the history. If it encounters an error reading the file, it will now automatically reset the file and not crash BubbleOS.
+- The "timebomb disabled" warning will now only display if the system time exceeds the expiry date.
 
 ### Removed Features
 

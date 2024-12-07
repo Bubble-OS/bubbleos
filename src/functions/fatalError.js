@@ -9,6 +9,9 @@ const { GLOBAL_NAME } = require("../variables/constants");
 // Get functions
 const _friendlyOS = require("./friendlyOS");
 
+// Get classes
+const InfoMessages = require("../classes/InfoMessages");
+
 /**
  * The name of the file to store the error message in.
  */
@@ -105,22 +108,12 @@ const _fatalError = (err, doFileDump = !globalThis.noDump) => {
       // Make the file
       fs.writeFileSync(ERROR_INFO_FILENAME, errorInfoTxt);
 
-      // If the operation succeeded, show a success message
-      console.log(
-        chalk.green(
-          `${chalk.white.bgGreen(" SUCCESS: ")} Saved file ${chalk.bold(
-            ERROR_INFO_FILENAME
-          )} in ${chalk.bold(process.cwd())}.\n`
-        )
+      InfoMessages.success(
+        `Saved file ${chalk.bold(ERROR_INFO_FILENAME)} in ${chalk.bold(process.cwd())}.`
       );
     } catch (saveErr) {
-      // If an error occurred, show an error message, but continue
-      console.log(
-        chalk.red(
-          `${chalk.white.bgRed(" ERROR: ")} Could not save file ${chalk.bold(
-            ERROR_INFO_FILENAME
-          )} in ${chalk.bold(process.cwd())}.\n`
-        )
+      InfoMessages.error(
+        `Could not save file ${chalk.bold(ERROR_INFO_FILENAME)} in ${chalk.bold(process.cwd())}.`
       );
     }
   }

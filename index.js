@@ -6,15 +6,22 @@ const { question } = require("readline-sync");
 const isElevated = require("is-elevated");
 
 // Import variable constants
-const { GLOBAL_NAME, SHORT_NAME, VERSION, BUILD } = require("./src/variables/constants");
+const {
+  GLOBAL_NAME,
+  SHORT_NAME,
+  VERSION,
+  BUILD,
+  EXPIRY_DATE,
+} = require("./src/variables/constants");
 
 // Import private helper functions
 const _timebomb = require("./src/functions/timebomb");
 const _startupChecks = require("./src/functions/startupChecks");
 const _intCmds = require("./src/functions/interpret");
-const _manageConfig = require("./src/functions/manageConfig");
 
 const Verbose = require("./src/classes/Verbose");
+const InfoMessages = require("./src/classes/InfoMessages");
+const ConfigManager = require("./src/classes/ConfigManager");
 
 // Get all of the arguments passed directly into BubbleOS
 // For the pre-boot interpreter
@@ -66,81 +73,49 @@ if (args.length !== 0) {
 }
 Verbose.custom("Completed pre-boot interpreter command check.");
 
+const config = new ConfigManager();
+
 // Run the intro if requested (only works if no commands have been entered in the pre-boot interpreter)
 Verbose.custom("Displaying intro...");
 if (!noIntro) require("./src/intro");
 
 Verbose.custom("Completing timebomb disabler check...");
-if (!showTimebomb && !noWarnings) {
-  console.log(
-    chalk.yellow(
-      `${chalk.bgYellow.black(
-        " WARNING: "
-      )} The timebomb has been disabled. The timebomb is a security feature to prevent you from using outdated software. Please upgrade to a new version of ${GLOBAL_NAME} as soon as possible.\n`
-    )
+if (!showTimebomb && !noWarnings && EXPIRY_DATE.getTime() < new Date().getTime())
+  InfoMessages.warning(
+    `The timebomb has been disabled. The timebomb is a security feature to prevent you from using outdated software. Please upgrade to a new version of ${GLOBAL_NAME} as soon as possible.`
   );
-}
 
 // TODO Remove this when verbose mode is fully implemented
-if (globalThis.verboseMode) {
-  console.log(
-    chalk.blue(
-      `${chalk.bgBlue.white(
-        " NOTE: "
-      )} The verbose setting for BubbleOS will be introduced in the next build. It is currently unused.\n`
-    )
+if (globalThis.verboseMode)
+  InfoMessages.info(
+    "The verbose setting for BubbleOS will be introduced in the next build. It is currently unused."
   );
-}
 
 Verbose.custom("Completing fatal error file dump check...");
-if (globalThis.noDump && !noWarnings) {
-  console.log(
-    chalk.yellow(
-      `${chalk.bgYellow.black(" WARNING: ")} The fatal error file dump feature has been disabled.\n`
-    )
-  );
-}
+if (globalThis.noDump && !noWarnings)
+  InfoMessages.warning("The fatal error file dump feature has been disabled.");
 
 if (resetConfig) {
-  if (_manageConfig("delete")) {
-    console.log(
-      chalk.green(
-        `${chalk.white.bgGreen(
-          " SUCCESS: "
-        )} Successfully deleted the ${GLOBAL_NAME} configuration file.\n`
-      )
-    );
+  if (config.deleteConfig()) {
+    InfoMessages.success(`Successfully deleted the ${GLOBAL_NAME} configuration file.`);
   } else {
-    console.log(
-      chalk.red(
-        `${chalk.white.bgRed(
-          " ERROR: "
-        )} An unexpected error occurred while trying to delete the ${GLOBAL_NAME} configuration file.\n`
-      )
+    InfoMessages.error(
+      `An unexpected error occurred while trying to delete the ${GLOBAL_NAME} configuration file.`
     );
   }
 }
 
 const checkIfElevated = async () => {
-  if ((await isElevated()) && !noWarnings) {
-    console.log(
-      chalk.yellow(
-        `${chalk.bgYellow.black(
-          " WARNING: "
-        )} ${GLOBAL_NAME} is running with elevated privileges. Use commands with caution.\n`
-      )
+  if ((await isElevated()) && !noWarnings)
+    InfoMessages.warning(
+      `${GLOBAL_NAME} is running with elevated privileges. Use commands with caution.`
     );
-  }
 };
 
 Verbose.custom("Creating configuration file...");
-if (!_manageConfig("create")) {
-  console.log(
-    chalk.red(
-      `${chalk.bgRed.white(
-        " DANGER: "
-      )} ${GLOBAL_NAME} failed to create the configuration file. Some features will not work.\n`
-    )
+if (!config.createConfig()) {
+  InfoMessages.error(
+    `${GLOBAL_NAME} failed to create the configuration file. Some features will not work.`
   );
 }
 

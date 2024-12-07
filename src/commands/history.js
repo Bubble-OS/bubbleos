@@ -2,11 +2,12 @@
 const chalk = require("chalk");
 
 // Get functions
-const _manageConfig = require("../functions/manageConfig");
 const _fatalError = require("../functions/fatalError");
 
 // Get classes
 const Errors = require("../classes/Errors");
+const InfoMessages = require("../classes/InfoMessages");
+const ConfigManager = require("../classes/ConfigManager");
 
 /**
  * The number of history commands to store before deleting the oldest ones.
@@ -42,43 +43,37 @@ const historyCmd = (numToDisplay, ...args) => {
 
     const clear = args.includes("-c") || numToDisplay === "-c";
 
+    const config = new ConfigManager();
+
     // Clear history if "-c" is passed
     if (clear) {
-      if (typeof _manageConfig("get").parsed === "undefined") {
-        console.log(
-          chalk.red(
-            `${chalk.white.bgRed(
-              " ERROR: "
-            )} Error when reading history from the configration file. Resetting file...\n`
-          )
+      if (typeof config.getConfig() === "undefined") {
+        InfoMessages.error(
+          "Error when reading history from the configration file. Resetting file..."
         );
 
-        _manageConfig("delete");
-        _manageConfig("create");
+        config.deleteConfig();
+        config.createConfig();
         return;
       }
 
-      _manageConfig("remove", "history");
+      config.removeData("history");
       console.log(chalk.green("Cleared the history.\n"));
       return;
     }
 
     // Fetch history from the config file
-    if (typeof _manageConfig("get").parsed === "undefined") {
-      console.log(
-        chalk.red(
-          `${chalk.white.bgRed(
-            " ERROR: "
-          )} Error when reading history from the configration file. Resetting file...\n`
-        )
+    if (typeof config.getConfig() === "undefined") {
+      InfoMessages.error(
+        "Error when reading history from the configration file. Resetting file..."
       );
 
-      _manageConfig("delete");
-      _manageConfig("create");
+      config.deleteConfig();
+      config.createConfig();
       return;
     }
 
-    const historyConfig = _manageConfig("get").parsed.history ?? [];
+    const historyConfig = config.getConfig().history ?? [];
 
     if (typeof numToDisplay === "undefined") {
       if (historyConfig.length === 0) {
@@ -133,22 +128,20 @@ const historyCmd = (numToDisplay, ...args) => {
 const _addToHist = (command, addToConfig = true) => {
   if (!addToConfig) return;
 
+  const config = new ConfigManager();
+
   // Fetch the history from the config
-  if (typeof _manageConfig("get").parsed === "undefined") {
-    console.log(
-      chalk.red(
-        `${chalk.white.bgRed(
-          " ERROR: "
-        )} Error when saving command to history in the configration file. Resetting file...\n`
-      )
+  if (typeof config.getConfig() === "undefined") {
+    InfoMessages.error(
+      "Error when saving command to history in the configration file. Resetting file..."
     );
 
-    _manageConfig("delete");
-    _manageConfig("create");
+    config.deleteConfig();
+    config.createConfig();
     return;
   }
 
-  const historyConfig = _manageConfig("get").parsed.history ?? [];
+  const historyConfig = config.getConfig().history ?? [];
 
   // If the number of stored commands exceeds the limit, remove the oldest entry
   if (historyConfig.length + 1 > NUMBER_TO_STORE) historyConfig.shift();
@@ -156,8 +149,7 @@ const _addToHist = (command, addToConfig = true) => {
   // Add the latest command to the history
   historyConfig.push(command);
 
-  // Replace the history array in the config
-  _manageConfig("add", { history: historyConfig });
+  config.addData({ history: historyConfig });
 };
 
 // Export all the functions
