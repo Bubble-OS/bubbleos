@@ -106,6 +106,21 @@ const _addToHist = (command, addToConfig = true) => {
   if (!addToConfig) return;
 
   // Fetch the history from the config
+  if (typeof _manageConfig("get").parsed === "undefined") {
+    console.log(
+      chalk.red(
+        `${chalk.white.bgRed(
+          " ERROR: "
+        )} Error when saving command to history in the configration file. Resetting file...\n`
+      )
+    );
+
+    _manageConfig("delete");
+    _manageConfig("create");
+
+    return;
+  }
+
   const historyConfig = _manageConfig("get").parsed.history ?? [];
 
   // If the number of stored commands exceeds the limit, remove the oldest entry
