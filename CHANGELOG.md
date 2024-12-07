@@ -6,7 +6,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 ### Added Features
 
-_No added features._
+- Added the `--reset` flag to the BubbleOS executable, which resets the configuration file.
 
 ### Changed/Fixed Features
 

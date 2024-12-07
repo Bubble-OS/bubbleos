@@ -1,6 +1,8 @@
 // Get modules
 const chalk = require("chalk");
 
+const _manageConfig = require("./functions/manageConfig");
+
 // Get variables
 const {
   GLOBAL_NAME,
@@ -14,9 +16,27 @@ const {
 
 const Verbose = require("./classes/Verbose");
 
+if (typeof _manageConfig("get").parsed === "undefined") {
+  console.log(
+    chalk.red(
+      `${chalk.white.bgRed(
+        " ERROR: "
+      )} Error when reading the configuration file. Resetting file...\n`
+    )
+  );
+
+  _manageConfig("delete");
+  _manageConfig("create");
+}
+
 // Show the name of the OS, the version, and the author
 console.log(`${chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`)}`);
-console.log(`Made by ${AUTHOR}!\n`);
+
+if (!_manageConfig("get").parsed.firstIntro) {
+  console.log(`Made by ${AUTHOR}!`);
+}
+
+console.log();
 
 Verbose.custom("Checking if BubbleOS is in beta...");
 // If BubbleOS is in beta...
@@ -50,7 +70,11 @@ if (IN_BETA) {
 }
 
 // Show information about commands
-console.log(`For a list on some available commands, type ${chalk.italic("'help'")}.`);
-console.log(`For more information about a command, type ${chalk.italic("'help <command>'")}.\n`);
+if (!_manageConfig("get").parsed.firstIntro) {
+  console.log(`For a list on some available commands, type ${chalk.italic("'help'")}.`);
+  console.log(`For more information about a command, type ${chalk.italic("'help <command>'")}.\n`);
 
-console.log(`To exit the ${GLOBAL_NAME} shell, type ${chalk.italic("'exit'")}.\n`);
+  console.log(`To exit the ${GLOBAL_NAME} shell, type ${chalk.italic("'exit'")}.\n`);
+}
+
+_manageConfig("add", { firstIntro: true });

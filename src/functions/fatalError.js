@@ -108,7 +108,7 @@ const _fatalError = (err, doFileDump = !globalThis.noDump) => {
       // If the operation succeeded, show a success message
       console.log(
         chalk.green(
-          `${chalk.white.bgGreen(" SUCCESS ")} Saved file ${chalk.bold(
+          `${chalk.white.bgGreen(" SUCCESS: ")} Saved file ${chalk.bold(
             ERROR_INFO_FILENAME
           )} in ${chalk.bold(process.cwd())}.\n`
         )

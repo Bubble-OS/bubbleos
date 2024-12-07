@@ -26,6 +26,7 @@ let doChecks = !args?.includes("--no-checks");
 let showVersion = args?.includes("-v") || args?.includes("--version");
 let noWarnings = args?.includes("--no-warnings");
 let noIntro = args?.includes("--no-intro");
+let resetConfig = args?.includes("--reset");
 
 globalThis.verboseMode = args?.includes("--verbose");
 globalThis.noDump = args?.includes("--no-dump");
@@ -98,6 +99,26 @@ if (globalThis.noDump && !noWarnings) {
       `${chalk.bgYellow.black(" WARNING: ")} The fatal error file dump feature has been disabled.\n`
     )
   );
+}
+
+if (resetConfig) {
+  if (_manageConfig("delete")) {
+    console.log(
+      chalk.green(
+        `${chalk.white.bgGreen(
+          " SUCCESS: "
+        )} Successfully deleted the ${GLOBAL_NAME} configuration file.\n`
+      )
+    );
+  } else {
+    console.log(
+      chalk.red(
+        `${chalk.white.bgRed(
+          " ERROR: "
+        )} An unexpected error occurred while trying to delete the ${GLOBAL_NAME} configuration file.\n`
+      )
+    );
+  }
 }
 
 const checkIfElevated = async () => {
