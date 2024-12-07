@@ -39,7 +39,7 @@ if (!config.getConfig().firstIntro) {
 
 console.log();
 
-Verbose.custom("Checking if BubbleOS is in beta...");
+Verbose.custom(`Checking if ${GLOBAL_NAME} is in beta...`);
 // If BubbleOS is in beta...
 if (IN_BETA) {
   // ...and the timebomb is activated...

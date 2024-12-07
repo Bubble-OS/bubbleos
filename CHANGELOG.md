@@ -7,6 +7,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 ### Added Features
 
 - BubbleOS will no longer display the full intro after the first time it has been opened on the system, to reduce clutter.
+- Added the `-h`/`--help` flag to the BubbleOS executable, which displays all of the BubbleOS startup arguments and what they do.
 - Added the `--reset` flag to the BubbleOS executable, which resets the configuration file.
 - Internally added the `InfoMessages` and `ConfigManager` classes. The `manageConfig` function is now deprecated.
 

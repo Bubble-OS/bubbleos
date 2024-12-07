@@ -28,6 +28,8 @@ const ConfigManager = require("./src/classes/ConfigManager");
 const args = process.argv.splice(2);
 
 // Argument variables
+const execHelp = args.includes("-h") || args.includes("--help");
+
 let showTimebomb = !args?.includes("--no-timebomb");
 let doChecks = !args?.includes("--no-checks");
 let showVersion = args?.includes("-v") || args?.includes("--version");
@@ -47,6 +49,35 @@ if (showTimebomb) _timebomb();
 Verbose.custom("Completing startup checks...");
 if (doChecks) _startupChecks();
 
+if (execHelp) {
+  console.log(chalk.bold.underline(`${GLOBAL_NAME} Startup Arguments List\n`));
+
+  const arguments = {
+    "-h": `Display this help menu for arguments used in launching ${GLOBAL_NAME}.`,
+    "-v": `Displays the version of ${GLOBAL_NAME}.`,
+    "--no-timebomb": `Disables checking the ${GLOBAL_NAME} timebomb.`,
+    "--no-checks": "Disables checking if the OS is 64-bit or if it is Windows 8.1 or below.",
+    "--no-warnings": "Disables showing startup warnings when using some arguments.",
+    "--no-intro": "Disables showing the intro on startup entirely.",
+    "--reset": `Resets the ${GLOBAL_NAME} configuration file.`,
+    "--verbose": "Enables verbose mode to give more information on processes.",
+    "--no-dump": "Disables the fatal error file dump feature.",
+  };
+
+  // Sorts keys alphabetically
+  const sorted = Object.entries(arguments).sort(([keyA], [keyB]) => keyA.localeCompare(keyB));
+  const maxKeyLength = Math.max(...sorted.map(([key]) => key.length));
+
+  // Format each key-value pair
+  const formattedLines = sorted.map(
+    ([key, value]) => `${key.padEnd(maxKeyLength, " ")}   ${value}`
+  );
+  console.log(formattedLines.join("\n"));
+
+  console.log();
+  return;
+}
+
 // If '-v' was in the arguments list
 if (showVersion) {
   Verbose.custom("Detected -v argument, showing version...");
@@ -64,7 +95,9 @@ if (args.length !== 0) {
   });
 
   if (command.length !== 0) {
-    Verbose.custom("Running the command given to the pre-boot interpreter...")(async () => {
+    Verbose.custom("Running the command given to the pre-boot interpreter...");
+
+    (async () => {
       await _intCmds(command.join(" "));
     })();
 
@@ -88,7 +121,7 @@ if (!showTimebomb && !noWarnings && EXPIRY_DATE.getTime() < new Date().getTime()
 // TODO Remove this when verbose mode is fully implemented
 if (globalThis.verboseMode)
   InfoMessages.info(
-    "The verbose setting for BubbleOS will be introduced in the next build. It is currently unused."
+    `The verbose setting for ${GLOBAL_NAME} will be introduced in the next build. It is currently unused.`
   );
 
 Verbose.custom("Completing fatal error file dump check...");
