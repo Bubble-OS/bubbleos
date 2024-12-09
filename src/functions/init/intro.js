@@ -1,6 +1,8 @@
 // Get modules
 const chalk = require("chalk");
 
+const InfoMessages = require("../../classes/InfoMessages");
+
 // Get variables
 const {
   GLOBAL_NAME,
@@ -18,13 +20,7 @@ const ConfigManager = require("../../classes/ConfigManager");
 const config = new ConfigManager();
 
 if (typeof config.getConfig() === "undefined") {
-  console.log(
-    chalk.red(
-      `${chalk.white.bgRed(
-        " ERROR: "
-      )} Error when reading the configuration file. Resetting file...\n`
-    )
-  );
+  InfoMessages.error("Error when reading the configuration file. Resetting file...");
 
   config.deleteConfig();
   config.createConfig();

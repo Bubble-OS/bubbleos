@@ -29,7 +29,6 @@ if (_detectArgs("version")) {
   process.exit(0);
 }
 
-// If there are arguments, run the commands passed
 require("./src/functions/init/preBootInt")();
 
 require("./src/functions/init/initArgs");
