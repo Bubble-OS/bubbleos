@@ -130,7 +130,7 @@ const HELP = {
     },
   },
   help: {
-    usage: "help [<command>] [--rm-tip]",
+    usage: "help [<command>]",
     desc: `Get a list of all available ${GLOBAL_NAME} commands, or get information about a specific command such as usage, arguments, and a short description.`,
     args: {
       "[<command>]": "Get more information about a specific command.",
@@ -144,7 +144,7 @@ const HELP = {
     },
   },
   ifnet: {
-    usage: "ifnet [-y]",
+    usage: "ifnet",
     desc: "Get a list of all running network interfaces running on your local machine, and information about them, such as their IP/MAC address, family, netmask, and more.",
     args: {},
   },
@@ -249,7 +249,7 @@ const HELP = {
     },
   },
   sysinfo: {
-    usage: "sysinfo [-c] [-u] [-s] [-a] [-e] [--all] [--rm-tip]",
+    usage: "sysinfo [-c] [-u] [-s] [-a] [-e] [--all]",
     desc: `Get all system information about your local machine that ${GLOBAL_NAME} is running on. This includes, in summary, the operating system, release, computer name, memory usage, system uptime, environment variables, and more. This can also be filtered by subheadings through arguments (listed below).`,
     args: {
       "[-c]": "Display basic computer information.",

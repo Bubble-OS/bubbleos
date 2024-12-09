@@ -1,3 +1,5 @@
+const chalk = require("chalk");
+
 const { GLOBAL_NAME } = require("../../variables/constants");
 
 const _startupArgs = () => {
