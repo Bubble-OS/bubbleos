@@ -134,7 +134,6 @@ const HELP = {
     desc: `Get a list of all available ${GLOBAL_NAME} commands, or get information about a specific command such as usage, arguments, and a short description.`,
     args: {
       "[<command>]": "Get more information about a specific command.",
-      "[--rm-tip]": "If you don't provide a specific command, hide the tip that comes.",
     },
   },
   history: {
@@ -147,9 +146,7 @@ const HELP = {
   ifnet: {
     usage: "ifnet [-y]",
     desc: "Get a list of all running network interfaces running on your local machine, and information about them, such as their IP/MAC address, family, netmask, and more.",
-    args: {
-      "[-y]": "Automatically confirm the confirmation prompt.",
-    },
+    args: {},
   },
   link: {
     usage: "link <source> [<link>] [-u] [-s] [-y]",
@@ -261,7 +258,6 @@ const HELP = {
       "[-a]": "Display advanced system information.",
       "[-e]": "Display all local environment variables.",
       "[--all]": "Display all information.",
-      "[--rm-tip]": "Remove the tip that would appear if no filter arguments were passed.",
     },
   },
   taskkill: {

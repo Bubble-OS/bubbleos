@@ -61,15 +61,10 @@ const _makeValueFriendly = (value) => (typeof value === "boolean" ? (value ? "Ye
  * ifnet(); // No arguments
  * ```
  *
- * Available arguments:
- * - `-y`: Automatically confirm the prompt.
- *
  * @param  {...string} args Arguments to modify the behavior of `ifnet`, however, none are yet available.
  */
 const ifnet = (...args) => {
   try {
-    const confirmShow = !args.includes("-y");
-
     // Get the network interfaces once
     const interfaces = sortKeys(networkInterfaces(), { deep: true });
     const keys = Object.keys(interfaces);
@@ -77,18 +72,6 @@ const ifnet = (...args) => {
     if (!keys.length) {
       console.log(chalk.yellow("No active network interfaces found.\n"));
       return;
-    }
-
-    if (confirmShow) {
-      const confirmed = _promptForYN(
-        `Displaying sensitive network information can be dangerous. Are you sure you want to view all ${keys.length} local network interfaces?`
-      );
-      if (!confirmed) {
-        // Anything BUT 'y' will cancel the process
-        console.log(chalk.yellow("Process aborted.\n"));
-        return;
-      }
-      console.log(); // Add a newline
     }
 
     // Display each network interface and its properties

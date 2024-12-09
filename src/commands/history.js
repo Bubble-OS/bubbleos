@@ -62,8 +62,10 @@ const historyCmd = (numToDisplay, ...args) => {
       return;
     }
 
+    const historyConfig = config.getConfig().history;
+
     // Fetch history from the config file
-    if (typeof config.getConfig() === "undefined") {
+    if (typeof historyConfig === "undefined") {
       InfoMessages.error(
         "Error when reading history from the configration file. Resetting file..."
       );
@@ -72,8 +74,6 @@ const historyCmd = (numToDisplay, ...args) => {
       config.createConfig();
       return;
     }
-
-    const historyConfig = config.getConfig().history ?? [];
 
     if (typeof numToDisplay === "undefined") {
       if (historyConfig.length === 0) {

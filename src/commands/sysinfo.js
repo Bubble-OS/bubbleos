@@ -11,6 +11,8 @@ const _convertSize = require("../functions/convSize");
 const _friendlyOS = require("../functions/friendlyOS");
 const _fatalError = require("../functions/fatalError");
 
+const ConfigManager = require("../classes/ConfigManager");
+
 /**
  * Convert seconds to minutes, hours and days.
  *
@@ -102,7 +104,6 @@ const _fixVersion = (currentOSName) =>
  * - `-a`: Display advanced information.
  * - `-e`: Display environment variables.
  * - `--all`: Display all system information that is available.
- * - `--rm-tip`: Don't display the tip.
  *
  * @param  {...string} args Arguments to modify the behavior of `sysinfo`.
  */
@@ -118,8 +119,6 @@ const sysinfo = (...args) => {
 
     // Show all values
     const all = args?.includes("--all");
-    // Remove the tip
-    const rmTip = args?.includes("--rm-tip");
 
     // In case no arguments were passed to modify what was shown, show that
     const defaultDisplay =
@@ -221,13 +220,16 @@ const sysinfo = (...args) => {
       console.log();
     }
 
-    // If the user didn't put any filters and they didn't not request a tip
-    if (defaultDisplay && !rmTip) {
+    const config = new ConfigManager();
+
+    if (defaultDisplay && !config.getConfig().sysinfoTip) {
       console.log(
         chalk.yellow.italic(
           `Tip: To get more system information, run ${chalk.italic("'sysinfo --all'")}.\n`
         )
       );
+
+      config.addData({ sysinfoTip: true });
     }
   } catch (err) {
     // Unknown error

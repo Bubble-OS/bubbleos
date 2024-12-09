@@ -13,14 +13,18 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 ### Changed/Fixed Features
 
-- The "timebomb disabled" warning will now only display if the system time exceeds the expiry date.
+- The `sysinfo` command will no longer display the tip after the first time of it showing.
+- Edited the display of the tip in the `help` command.
 - Fixed an issue where BubbleOS would crash if it could not save a command to history in the configuration file, or read the history. If it encounters an error reading the file, it will now automatically reset the file and not crash BubbleOS.
 - Fixed an issue where BubbleOS would crash when encountering an inaccessible directory in `dirtree`.
+- The "timebomb disabled" warning on startup will now only display if the system time exceeds the expiry date.
 - Improved maintainability of the `index.js` file and moved other startup processes to their own dedicated file internally.
 
 ### Removed Features
 
-_No removed features._
+- Removed the confirmation dialog for the `ifnet` command.
+- Removed the `--rm-tip` flag for the `sysinfo` command, as it is now managed automatically.
+- Removed the `--no-tip` flag for the `help` command.
 
 ## Build 135 to 148 (v1.3.5-beta to v1.4.8-beta)
 

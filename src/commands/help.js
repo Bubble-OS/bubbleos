@@ -87,17 +87,11 @@ const _printHelp = (sorted, specific, cmd) => {
  * help("help"); // Help on a specific command
  * ```
  *
- * Available arguments:
- * - `--no-tip`: Don't show the tip.
- *
  * @param {string} command Optionally get help on a specific command.
  * @param  {...string} args Arguments to modify the behavior of `help`.
  */
 const help = (command, ...args) => {
   try {
-    // Initialize arguments
-    const showTip = !(args.includes("--no-tip") || command === "--no-tip");
-
     // Make a new array with a list of help messages sorted in alphabetical order
     // Making a new array as HELP_MESSAGES is immutable (cannot be changed)
     const sorted = sortKeys(HELP_MESSAGES);
@@ -107,16 +101,13 @@ const help = (command, ...args) => {
       // The user DID NOT want a specific command
       _printHelp(sorted, false);
 
-      // If the user didn't request for a tip, don't show it and instead just print a newline, else, show it
-      if (showTip)
-        console.log(
-          chalk.yellow.italic(
-            `\nTip: To get information about a specific command, run ${chalk.italic(
-              "'help <command>'"
-            )}.\n`
-          )
-        );
-      else console.log();
+      console.log(
+        chalk.bold(
+          `\nTo get information about a specific command, run ${chalk.italic(
+            "'help <command>'"
+          )}.\n`
+        )
+      );
     } else {
       // If the user wanted information about a specific command
       // Loop through all of the keys in the help object
