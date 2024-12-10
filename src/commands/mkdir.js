@@ -10,6 +10,8 @@ const _fatalError = require("../functions/fatalError");
 // Get checks
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const _promptForYN = require("../functions/promptForYN");
+const path = require("path");
 
 /**
  * Make a directory synchronously. This is meant
@@ -63,8 +65,29 @@ const mkdir = (dir, ...args) => {
 
     // If the directory already exists
     if (dirChk.doesExist()) {
-      Errors.alreadyExists("directory", dir);
-      return;
+      if (
+        _promptForYN(
+          `The directory, '${chalk.italic(
+            path.basename(dir)
+          )}', already exists. Would you like to delete it?`
+        )
+      ) {
+        try {
+          fs.rmSync(dir, { recursive: true, force: true });
+          console.log(chalk.green(`Successfully deleted ${chalk.bold(dir)}.\n`));
+        } catch {
+          if (err.code === "EPERM") {
+            Errors.noPermissions("delete the directory", dir);
+          } else if (err.code === "EBUSY") {
+            Errors.inUse("directory", dir);
+          }
+
+          return;
+        }
+      } else {
+        console.log(chalk.yellow("Process aborted.\n"));
+        return;
+      }
     }
 
     // Make the directory

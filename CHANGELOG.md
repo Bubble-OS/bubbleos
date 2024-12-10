@@ -7,6 +7,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 ### Added Features
 
 - The verbose feature has been fully implemented. Unlike previous versions, the verbose flag can only be used on the BubbleOS executable itself, by running it with the `--verbose` flag.
+- If the specified file/directory exists when running `mkfile`/`mkdir`, BubbleOS will ask whether or not to delete the file/directory instead of failing.
 - BubbleOS will no longer display the full intro after the first time it has been opened on the system, to reduce clutter.
 - Added the `-h`/`--help` flag to the BubbleOS executable, which displays all of the BubbleOS startup arguments and what they do.
 - Added the `--reset` flag to the BubbleOS executable, which resets the configuration file.

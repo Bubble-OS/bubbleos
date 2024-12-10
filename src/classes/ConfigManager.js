@@ -35,7 +35,7 @@ class ConfigManager {
         fs.writeFileSync(this.configPath, "{}");
       }
       return true;
-    } catch (_) {
+    } catch {
       return false;
     }
   }
@@ -49,7 +49,7 @@ class ConfigManager {
     try {
       fs.rmSync(this.configPath, { recursive: true, force: true });
       return true;
-    } catch (_) {
+    } catch {
       return false;
     }
   }
@@ -71,7 +71,7 @@ class ConfigManager {
       delete contents[key];
       fs.writeFileSync(this.configPath, JSON.stringify(contents));
       return true;
-    } catch (_) {
+    } catch {
       return false;
     }
   }
@@ -85,7 +85,7 @@ class ConfigManager {
     try {
       const contents = fs.readFileSync(this.configPath, { flag: "r", encoding: "utf8" });
       return JSON.parse(contents);
-    } catch (_) {
+    } catch {
       return undefined;
     }
   }
@@ -114,7 +114,7 @@ class ConfigManager {
 
       fs.writeFileSync(this.configPath, JSON.stringify(contents));
       return true;
-    } catch (_) {
+    } catch {
       return false;
     }
   }

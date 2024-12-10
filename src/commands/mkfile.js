@@ -11,6 +11,8 @@ const _fatalError = require("../functions/fatalError");
 // Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const _promptForYN = require("../functions/promptForYN");
+const path = require("path");
 
 /**
  * Make a file synchronously using `fs.mkfileSync()`.
@@ -59,8 +61,29 @@ const mkfile = (file, ...args) => {
 
     // If the file already exists
     if (fileChk.doesExist()) {
-      Errors.alreadyExists("file", file);
-      return;
+      if (
+        _promptForYN(
+          `The file, '${chalk.italic(
+            path.basename(file)
+          )}', already exists. Would you like to delete it?`
+        )
+      ) {
+        try {
+          fs.rmSync(file, { recursive: true, force: true });
+          console.log(chalk.green(`Successfully deleted ${chalk.bold(file)}.\n`));
+        } catch {
+          if (err.code === "EPERM") {
+            Errors.noPermissions("delete the file", file);
+          } else if (err.code === "EBUSY") {
+            Errors.inUse("file", file);
+          }
+
+          return;
+        }
+      } else {
+        console.log(chalk.yellow("Process aborted.\n"));
+        return;
+      }
     }
 
     console.log(
