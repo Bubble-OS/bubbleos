@@ -9,11 +9,16 @@ const { GLOBAL_NAME } = require("../variables/constants");
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 
+const InfoMessages = require("../classes/InfoMessages");
+const Verbose = require("../classes/Verbose");
+
 /**
- * **USE WITH CAUTION!**
- *
- * Crash BubbleOS and the terminal in many ways. This is a CLI tool,
- * meaning it has a selection prompt.
+ * A list of all the crashes that are possible.
+ */
+const AVAILABLE_CRASHES = [`Fatal Error (${GLOBAL_NAME})`, "Hang", "Memory Leak"];
+
+/**
+ * Crash BubbleOS and the terminal in many ways.
  *
  * Usage:
  *
@@ -40,48 +45,36 @@ const _fatalError = require("../functions/fatalError");
  */
 const crash = (index = NaN, ...args) => {
   try {
-    /**
-     * A list of all the crashes that are possible.
-     */
-    const AVAILABLE_CRASHES = [`Fatal Error (${GLOBAL_NAME})`, "Hang", "Memory Leak"];
-
-    // Show a warning
-    console.log(
-      chalk.red.bold(
-        `${chalk.bgRed.white(
-          " WARNING! "
-        )} Using this command can cause issues such as loss of data, high CPU/RAM usage, and more. Save all data before continuing.`
-      )
+    InfoMessages.warning(
+      "Using this command can cause issues such as loss of data, high CPU/RAM usage, and more. Save all data before continuing."
     );
 
     // If the index isn't 'not a number'
+    Verbose.custom("Checking if index was provided by user...");
     if (!isNaN(index)) {
       // If the index was provided, minus one out of it due to JS' array structure :)
       index = index - 1;
-      console.log();
     } else {
       // If no index was provided, prompt the user for one
+      Verbose.custom("Index was not provided, prompting user for index...");
       index = keyInSelect(AVAILABLE_CRASHES, "Please select your crashing method");
     }
 
     if (index === -1 || index === NaN) {
       // If the user 'cancelled' on the prompt, or the index is for some reason not a number, exit
+      Verbose.custom(`Index is either -1 or NaN (${index}), exiting...`);
       console.log(chalk.yellow("Process aborted.\n"));
       return;
     } else if (index > AVAILABLE_CRASHES.length - 1 || index < 0) {
       // If the index is greater than the length of the crash array, or is less than 0
-      console.log(
-        chalk.yellow(`Unknown crash method at index ${index + 1}.\nPrompting for a new index...`)
-      );
-
-      index = keyInSelect(AVAILABLE_CRASHES, "Please select your crashing method");
-      if (index === -1 || index === NaN) {
-        console.log(chalk.yellow("Process aborted.\n"));
-        return;
-      }
+      // This should never happen :)
+      Verbose.custom("Index is unknown, exiting...");
+      console.log(chalk.yellow(`Unknown crash method at index ${index + 1}.\n`));
+      return;
     }
 
     // Confirm that the user wants to crash BubbleOS
+    Verbose.promptUser();
     if (
       !_promptForYN(
         `You have chosen ${chalk.italic(
@@ -90,6 +83,7 @@ const crash = (index = NaN, ...args) => {
       )
     ) {
       // If they provided anything but 'y', exit
+      Verbose.declinePrompt();
       console.log(chalk.yellow("Process aborted.\n"));
       return;
     }
@@ -98,21 +92,20 @@ const crash = (index = NaN, ...args) => {
 
     if (index === 0) {
       // Fatal error
+      Verbose.custom("Crashing method: fatal error.");
       throw new Error(`${GLOBAL_NAME} was purposefully crashed with the 'crash' command.`);
     } else if (index === 1) {
       // Crash BubbleOS by continuously writing 'clear screen' to the terminal.
       // This can make the terminal hang, and sometimes make it impossible to press ^C.
+      Verbose.custom("Crashing method: hang.");
       while (true) {
         process.stdout.write("\x1bc");
       }
     } else if (index === 2) {
       // Node.js will crash once the heap has run out of memory
-      console.log(
-        chalk.yellow(
-          `${chalk.bold(
-            "NOTE:"
-          )} BubbleOS will crash once memory usage has hit its maximum allocated memory space.\n`
-        )
+      Verbose.custom("Crashing method: memory leak.");
+      InfoMessages.info(
+        `${GLOBAL_NAME} will crash once memory usage has hit its maximum allocated memory space.`
       );
 
       // While 'i' is less than the maximum number that JS can handle,
@@ -122,12 +115,16 @@ const crash = (index = NaN, ...args) => {
         crashArr.push(new Array(100000000));
       }
     } else {
-      // If, for some reason, the index didn't match any of the above.
-      console.log(chalk.yellow(`Unknown.\n`));
-      return;
+      // If, for some reason, the index didn't match any of the above
+      // This should DEFINITELY never happen...
+      Verbose.custom("Index did not match any options, throwing exception...");
+      throw new Error(
+        `Index ${index} (user-friendly value ${index + 1}) did not match any options`
+      );
     }
   } catch (err) {
     // If an unknown exception occurred, or the user selected to purposely crash BubbleOS with a fatal error
+    Verbose.fatalError();
     _fatalError(err);
   }
 };

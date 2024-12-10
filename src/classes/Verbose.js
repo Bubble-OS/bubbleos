@@ -12,6 +12,8 @@ const { GLOBAL_NAME } = require("../variables/constants");
  * Class to print verbose messages.
  *
  * The existing verbose pre-made messages are below. To make a custom message, use `Verbose.custom()`.
+ *
+ * - _I'll do it soon_
  */
 class Verbose {
   constructor() {}
@@ -50,8 +52,8 @@ class Verbose {
     this.custom("Initializing checker...");
   }
 
-  static chkEmpty(variable) {
-    this.custom(`Path '${chalk.italic(variable)}' was detected to be empty...`);
+  static chkEmpty() {
+    this.custom(`One or more arguments were detected to be empty...`);
   }
 
   static chkExists(variable) {
@@ -61,13 +63,13 @@ class Verbose {
   /**
    *
    * @param {string} variable The path.
-   * @param {"file" | "directory"} type The type that was detected (e.g. detected file).
+   * @param {"file" | "directory"} type The type that was expected (e.g. expected file).
    */
   static chkType(variable, type) {
     this.custom(
-      `Path '${chalk.italic(variable)}' was detected to be a ${type}; expected ${
+      `Path '${chalk.italic(variable)}' was detected to be a ${
         type.toLowerCase() === "file" ? "directory" : "file"
-      }.`
+      }; expected ${type}.`
     );
   }
 
@@ -87,78 +89,16 @@ class Verbose {
     this.custom("Encountered a permission error while trying to access path.");
   }
 
-  static usedError() {
+  static inUseError() {
     this.custom("Encountered an error, due to the path being used by another program.");
   }
 
-  static startCmd(command) {
-    this.custom(
-      `Starting up function ${chalk.italic(`'${command}'`)} and initializing verbose state...`
-    );
+  static promptUser() {
+    this.custom("Prompting for user confirmation...");
   }
 
-  static chkUndefined(variable) {
-    this.custom(
-      `Checking if variable ${chalk.bold.italic(`'${variable}'`)} is ${chalk.italic(
-        "'undefined'"
-      )} or ${chalk.italic("--verbose")}/${chalk.italic("/verbose")}...`
-    );
-  }
-
-  static enterParam() {
-    this.custom(
-      `${chalk.bold.underline("ERROR!")} The parameter is either ${chalk.italic(
-        `'undefined'`
-      )} or ${chalk.italic("--verbose")}/${chalk.italic("/verbose")}.`
-    );
-  }
-
-  static wasError(command, withNewline = true) {
-    this.custom(
-      `An error occurred, and the ${chalk.italic(`'${command}'`)} command has been terminated.${
-        withNewline ? "\n" : ""
-      }`
-    );
-  }
-
-  static chkComplete() {
-    this.custom(`The check has been completed, continuing...`);
-  }
-
-  static replaceSpacesAndConvAbs(variable) {
-    this.custom(
-      `Replacing spaces in ${chalk.bold.italic(
-        `'${variable}'`
-      )} and converting it to an absolute path...`
-    );
-  }
-
-  static attemptTo(todo, variable) {
-    this.custom(`Attempting to ${todo} ${chalk.bold.italic(`'${variable}'`)}...`);
-  }
-
-  static chkExistant(variable) {
-    this.custom(`Checking if the path ${chalk.bold.italic(`'${variable}'`)} exists...`);
-  }
-
-  static nonExistant(variable) {
-    this.custom(
-      `${chalk.bold.underline("ERROR!")} The path, ${chalk.bold.italic(
-        `'${variable}'`
-      )}, does not exist.`
-    );
-  }
-
-  static operationSuccess(command, withNewline = true) {
-    this.custom(
-      `The command, ${chalk.italic(`'${command}'`)}, has executed successfully!${
-        withNewline ? "\n" : ""
-      }`
-    );
-  }
-
-  static intParams() {
-    this.custom("Interpreting parameters/arguments...");
+  static declinePrompt() {
+    this.custom("User did not accept, aborting process...");
   }
 }
 

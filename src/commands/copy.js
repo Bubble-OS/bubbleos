@@ -1,6 +1,5 @@
 // Get packages
 const chalk = require("chalk");
-
 const fs = require("fs");
 
 // Get functions
@@ -8,10 +7,18 @@ const _convertAbsolute = require("../functions/convAbs");
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
+const _getSize = require("../functions/getSize");
 
 // Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const Verbose = require("../classes/Verbose");
+const InfoMessages = require("../classes/InfoMessages");
+
+/**
+ * The size of the file/directory in bytes before showing a "this may take a while" message.
+ */
+const SIZE_TO_SHOW_DIALOG = 262_144_000;
 
 /**
  * Synchronously copy a directory from the source (`src`)
@@ -58,14 +65,19 @@ const Checks = require("../classes/Checks");
 const copy = (src, dest, ...args) => {
   try {
     // Replace spaces and then convert the path to an absolute one to both the source and destination paths
+    Verbose.parseQuotes();
     [src, dest] = _parseDoubleQuotes([src, dest, ...args]);
+    Verbose.pathAbsolute(src);
+    Verbose.pathAbsolute(dest);
     [src, dest] = [_convertAbsolute(src), _convertAbsolute(dest)];
 
     // Initialize checkers
+    Verbose.initChecker();
     const srcChk = new Checks(src);
     const destChk = new Checks(dest);
 
     // Initialize arguments
+    Verbose.initArgs();
     const silent = args?.includes("-s");
     const confirmCopy = !args.includes("-y");
     const keepTimes = args?.includes("-t");
@@ -73,12 +85,14 @@ const copy = (src, dest, ...args) => {
 
     // If EITHER the source or destinations are not defined
     if (srcChk.paramUndefined() || destChk.paramUndefined()) {
+      Verbose.chkEmpty();
       Errors.enterParameter("the source/destination", "copy src dest");
       return;
     }
 
     // If the source path does not exist
     if (!srcChk.doesExist()) {
+      Verbose.chkExists(src);
       Errors.doesNotExist("source", src);
       return;
     }
@@ -86,6 +100,9 @@ const copy = (src, dest, ...args) => {
     // If there was no '-y' argument and the destination exists
     if (confirmCopy && destChk.doesExist()) {
       // If the user doesn't enter 'y'
+      Verbose.custom(
+        `Destination path '${dest}' exists, confirming if user wants to overwrite it...`
+      );
       if (
         !_promptForYN(
           `The file/directory, ${chalk.bold(
@@ -93,6 +110,7 @@ const copy = (src, dest, ...args) => {
           )} exists and will be overwritten. Do you want to continue?`
         )
       ) {
+        Verbose.declinePrompt();
         console.log(chalk.yellow("Process aborted.\n"));
         return;
       }
@@ -100,45 +118,50 @@ const copy = (src, dest, ...args) => {
       console.log();
     }
 
-    // Only show the waiting message if the silent flag was not provided
-    if (!silent) console.log(chalk.italic.blueBright("Please wait; this may take a while..."));
-
     if (srcChk.validateType()) {
       // If the path is a directory
-
       // TODO there is an error where ERR_FS_CP_DIR_TO_NON_DIR
       // will appear even if the paths are files. Fix it pls!
+      Verbose.custom("Getting size of directory...");
+      if (!silent && _getSize(src, "directory") >= SIZE_TO_SHOW_DIALOG)
+        console.log(chalk.italic.blueBright("Please wait; this may take a while..."));
+
+      Verbose.custom("Copying directory...");
       fs.cpSync(src, dest, {
         recursive: true,
         dereference: rmSymlinkReference,
         preserveTimestamps: keepTimes,
       });
     } else {
-      // If the path is a file
+      Verbose.custom("Getting size of file...");
+      if (!silent && _getSize(src, "file") >= SIZE_TO_SHOW_DIALOG)
+        console.log(chalk.italic.blueBright("Please wait; this may take a while..."));
+
+      Verbose.custom("Copying file...");
       fs.copyFileSync(src, dest);
     }
 
     // If the user did not want output, only show a newline, else, show the success message
     if (!silent)
-      console.log(
-        chalk.green(`Successfully copied to ${chalk.bold(src)} to ${chalk.bold(dest)}.\n`)
-      );
+      InfoMessages.success(`Successfully copied to ${chalk.bold(src)} to ${chalk.bold(dest)}.`);
     else console.log();
   } catch (err) {
     if (err.code === "EPERM") {
-      // Invalid permissions for either the source or destination
+      Verbose.permError();
       Errors.noPermissions("copy", src);
       return;
     } else if (err.code === "EBUSY") {
-      // Files/directories are in use for either the source or destination
+      Verbose.inUseError();
       Errors.inUse("file/directory", `${src} and/or ${dest}`);
       return;
     } else if (err.code === "EISDIR") {
       // If the user attempted to copy a file to a directory
+      Verbose.chkType(dest, "file");
       Errors.expectedFile(dest);
       return;
     } else if (err.code === "ENOTDIR") {
       // If the user attempted to copy a directory to a file
+      Verbose.chkType(dest, "directory");
       Errors.expectedDir(dest);
       return;
     } else if (err.code === "ERR_FS_CP_DIR_TO_NON_DIR") {
@@ -148,9 +171,17 @@ const copy = (src, dest, ...args) => {
       // IDK, it seems kind of random to me; it only happened once in
       // my testing, even without changing the code. It seems to happen
       // in fs.cpSync(). Fix it please!
+      Verbose.custom("Error copying a directory to a non-directory...");
+
+      // REMOVE IN BUILD 200?
+      InfoMessages.warning(
+        "IF YOU ENCOUNTERED THIS ISSUE: Make a new issue on Github (https://github.com/arnavt78/bubbleos/issues/new) detailing exactly what you did to get this issue."
+      );
+
       Errors.dirToNonDir();
+      return;
     } else {
-      // An unknown error occurred
+      Verbose.fatalError();
       _fatalError(err);
     }
   }

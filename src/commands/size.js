@@ -1,13 +1,13 @@
 // Get modules
 const chalk = require("chalk");
 const fs = require("fs");
-const path = require("path");
 
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _convertSize = require("../functions/convSize");
 const _fatalError = require("../functions/fatalError");
+const _getSize = require("../functions/getSize");
 
 // Get classes
 const Errors = require("../classes/Errors");
@@ -28,30 +28,6 @@ const _logSize = (sizeType, sizeValue) => {
 
   // The value was not ≤0
   console.log(chalk.green(`${chalk.bold(formattedSize)} ${sizeType}`));
-};
-
-const _getDirectorySize = (dirPath) => {
-  let totalSize = 0;
-  const stack = [dirPath]; // Stack to track directories to process
-
-  while (stack.length > 0) {
-    const currentPath = stack.pop();
-    const files = fs.readdirSync(currentPath, { withFileTypes: true });
-
-    for (const file of files) {
-      const filePath = path.join(currentPath, file.name);
-
-      if (file.isDirectory()) {
-        // Push subdirectory onto the stack for later processing
-        stack.push(filePath);
-      } else if (file.isFile()) {
-        // Add the size of the file
-        totalSize += fs.statSync(filePath).size;
-      }
-    }
-  }
-
-  return totalSize;
 };
 
 /**
@@ -87,13 +63,8 @@ const size = (path, ...args) => {
     }
 
     let totalSize = 0;
-    if (pathChk.validateType()) {
-      // Path is a directory
-      totalSize = _getDirectorySize(path);
-    } else {
-      // Path is a file
-      totalSize = fs.statSync(path).size;
-    }
+    if (pathChk.validateType()) totalSize = _getSize(path, "directory");
+    else totalSize = _getSize(path, "file");
 
     // The size shortened to 2 decimal places
     const allSizes = _convertSize(totalSize, 2);

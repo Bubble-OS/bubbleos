@@ -6,6 +6,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 ### Added Features
 
+- The verbose feature has been fully implemented. Unlike previous versions, the verbose flag can only be used on the BubbleOS executable itself, by running it with the `--verbose` flag.
 - BubbleOS will no longer display the full intro after the first time it has been opened on the system, to reduce clutter.
 - Added the `-h`/`--help` flag to the BubbleOS executable, which displays all of the BubbleOS startup arguments and what they do.
 - Added the `--reset` flag to the BubbleOS executable, which resets the configuration file.
@@ -13,9 +14,12 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 ### Changed/Fixed Features
 
+- The _"this may take a while"_ message in `copy` will no longer display unless the file/directory is above 250MB.
+- Many success, information, warning, and error messages are now updated to the new style.
 - The `sysinfo` command will no longer display the tip after the first time of it showing.
 - Edited the display of the tip in the `help` command.
 - Fixed an issue where the `bub` command would be caught in an infinite loop if the `.bub` file was executing the same file as it was running.
+- Fixed an issue where commands executing in a `.bub` file would be added to the command history.
 - Fixed an issue where the `ping` and `tasklist` commands would fail to execute in a `.bub` file.
 - Fixed an issue where BubbleOS would crash if it could not save a command to history in the configuration file, or read the history. If it encounters an error reading the file, it will now automatically reset the file and not crash BubbleOS.
 - Fixed an issue where BubbleOS would crash when encountering an inaccessible directory in `dirtree`.

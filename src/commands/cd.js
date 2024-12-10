@@ -10,6 +10,7 @@ const _fatalError = require("../functions/fatalError");
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 const Verbose = require("../classes/Verbose");
+const InfoMessages = require("../classes/InfoMessages");
 
 /**
  * Change into a directory (command usage only).
@@ -47,7 +48,7 @@ const cd = (dir, ...args) => {
 
     // Check if the parameter is undefined
     if (dirChk.paramUndefined()) {
-      Verbose.chkEmpty(dir);
+      Verbose.chkEmpty();
       Errors.enterParameter("a directory", "cd test");
       return;
     }
@@ -97,17 +98,16 @@ const cd = (dir, ...args) => {
       return;
     }
 
-    if (!silent)
-      console.log(chalk.green(`Successfully changed the directory to ${chalk.bold(dir)}.\n`));
+    if (!silent) InfoMessages.success(`Successfully changed the directory to ${chalk.bold(dir)}.`);
     else console.log();
   } catch (err) {
     if (err.code === "EPERM") {
       // Permission error
-      // _verboseMsg("Permission errors were encounted when attempting to change into the directory.");
+      Verbose.permError();
       Errors.noPermissions("change into", dir);
       return;
     } else {
-      // Unknown error
+      Verbose.fatalError();
       _fatalError(err);
     }
   }

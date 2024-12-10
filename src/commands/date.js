@@ -4,6 +4,30 @@ const chalk = require("chalk");
 // Import functions
 const _fatalError = require("../functions/fatalError");
 
+const Verbose = require("../classes/Verbose");
+
+/**
+ * All of the days of the week.
+ */
+const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+/**
+ * All of the months of the year.
+ */
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 /**
  * Show the current date from the local system to
  * display in BubbleOS using the `date` command.
@@ -19,34 +43,14 @@ const _fatalError = require("../functions/fatalError");
  */
 const date = (...args) => {
   try {
-    /**
-     * All of the days of the week.
-     */
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    /**
-     * All of the months of the year.
-     */
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
     // Make a new date
+    Verbose.custom("Getting current date...");
     const date = new Date();
 
     /**
      * The friendly date, that will have either a _-st_, _-nd_, _-rd_, or _-th_ suffix.
      */
+    Verbose.custom("Creating user-friendly date...");
     const friendlyDate =
       date.getDate() === 1 || date.getDate() === 21 || date.getDate() === 31
         ? `${date.getDate()}st`
@@ -58,17 +62,20 @@ const date = (...args) => {
 
     // Log both of the dates
     // Friendly format
+    Verbose.custom("Printing user-friendly date...");
     console.log(
-      `${days[date.getDay()]}, the ${friendlyDate} of ${
-        months[date.getMonth()]
+      `${DAYS[date.getDay()]}, the ${friendlyDate} of ${
+        MONTHS[date.getMonth()]
       }, ${date.getFullYear()}`
     );
     // Slash format
+    Verbose.custom("Printing slash-format date...");
     console.log(chalk.italic(`(${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()})`));
 
     // Log a newline
     console.log();
   } catch (err) {
+    Verbose.fatalError();
     _fatalError(err);
   }
 };

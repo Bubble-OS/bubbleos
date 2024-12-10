@@ -12,6 +12,7 @@ const _fatalError = require("../functions/fatalError");
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 const InfoMessages = require("../classes/InfoMessages");
+const Verbose = require("../classes/Verbose");
 
 /**
  * Interpret a BubbleOS file. This function should only be
@@ -39,33 +40,41 @@ const _interpretFile = async (
   options = { displayCommand: true, allowExit: false }
 ) => {
   // Gets the contents from the path, and splits it into lines
+  Verbose.custom("Reading file and separating into lines...");
   const lines = fs.readFileSync(file, { encoding: "utf-8", flag: "r" }).split("\n");
 
+  Verbose.custom("Creating invalid 'bub' command to avoid an infinite loop...");
   const invalidBubCommand = `bub ${path.basename(file)}`;
 
   // Loop through the amount of lines
   for (let i = 0; i < lines.length; i++) {
-    // Get the current line and trim it, unless it is 'null' or 'undefined'
+    Verbose.custom("Trimming current line...");
     const line = lines[i]?.trim();
 
     if (line.startsWith("#") || line === "") {
-      // If the line is a comment (#) or is blank, skip it
+      Verbose.custom(`Line '${line}' was detected to either be empty or a comment, skipping...`);
       continue;
     } else if (line === invalidBubCommand) {
+      Verbose.custom(`Line '${line}' was detected to be an invalid 'bub' command, skipping...`);
       InfoMessages.warning(
         "Infinite loop detected due to executing the same '.bub' file, skipping..."
       );
       continue;
     } else if (line === "exit" && !options.allowExit) {
+      Verbose.custom(`Line '${line}' was detected to be the 'exit' command, skipping...`);
       InfoMessages.info("Running the 'exit' command from a '.bub' file is currently disabled.");
       continue;
     }
 
     // If the 'displayCommand' option is 'true', show the current executing command
-    if (options.displayCommand) console.log(chalk.italic.underline.bold.red(line));
+    if (options.displayCommand) {
+      Verbose.custom("Displaying currently executing command...");
+      console.log(chalk.underline.bold.red(line));
+    }
 
     // Interpret the command
-    await intCmds(line);
+    Verbose.custom("Executing command...");
+    await intCmds(line, false);
   }
 };
 
@@ -99,58 +108,65 @@ const _interpretFile = async (
 const bub = async (intCmds, file, ...args) => {
   try {
     // Replace spaces and convert to an absolute path
+    Verbose.pathAbsolute(file);
+    Verbose.parseQuotes();
     file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
 
     // Initialize checker
+    Verbose.initChecker();
     const fileChk = new Checks(file);
 
     // Initialize arguments
+    Verbose.initArgs();
     const displayCommand = args?.includes("-d");
     const allowExit = args?.includes("--allow-exit");
 
     // Check if file is not defined
     if (fileChk.paramUndefined()) {
+      Verbose.chkEmpty();
       Errors.enterParameter("a file", "bub test.bub");
       return;
     }
 
     if (!fileChk.doesExist()) {
-      // If it does NOT exist
+      Verbose.chkExists(file);
       Errors.doesNotExist("file", file);
       return;
     } else if (fileChk.validateType()) {
-      // If the path passed was a directory
+      Verbose.chkType(file, "file");
       Errors.expectedFile(file);
       return;
     } else if (!fileChk.validEncoding()) {
-      // If the file is not plain text
+      Verbose.chkEncoding();
       Errors.invalidEncoding("plain text");
       return;
     }
 
     // If the file doesn't end with '.bub', abort
     if (!file.endsWith(".bub")) {
-      console.log(
-        chalk.yellow(
-          `The file must end with '.bub'. Received: ${chalk.bold(`'${file}'`)}\nProcess aborted.\n`
-        )
+      Verbose.custom(`File '${file}' was detected to not end in '.bub'.`);
+      InfoMessages.error(
+        `The file must end with '.bub'. Received: '${chalk.bold(
+          path.basename(file)
+        )}'. Process aborted.`
       );
       return;
     }
 
     // Interpret the Bubble file
+    Verbose.custom("Interpreting file...");
     await _interpretFile(intCmds, file, { displayCommand, allowExit });
   } catch (err) {
     if (err.code === "EPERM") {
-      // If there are invalid permissions to read the file
+      Verbose.permError();
       Errors.noPermissions("read the file", file);
       return;
     } else if (err.code === "EBUSY") {
-      // If the file is being used
+      Verbose.inUseError();
       Errors.inUse("file", file);
       return;
     } else {
-      // Unknown error
+      Verbose.fatalError();
       _fatalError(err);
     }
   }

@@ -1,5 +1,7 @@
 const _fatalError = require("../functions/fatalError");
 
+const Verbose = require("../classes/Verbose");
+
 /**
  * Clears the entire standard output.
  *
@@ -17,8 +19,9 @@ const _fatalError = require("../functions/fatalError");
 const cls = () => {
   try {
     process.stdout.write("\x1bc");
-    // _verboseMsg("Cleared screen.");
+    Verbose.custom("Cleared screen.");
   } catch (err) {
+    Verbose.fatalError();
     _fatalError(err);
   }
 };
