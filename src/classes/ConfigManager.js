@@ -79,14 +79,14 @@ class ConfigManager {
   /**
    * Gives the entire BubbleOS configuration file.
    *
-   * @returns The data in the configuration file as an object, or an empty object if an error was encountered.
+   * @returns The data in the configuration file as an object, or `undefined` if an error was encountered.
    */
   getConfig() {
     try {
       const contents = fs.readFileSync(this.configPath, { flag: "r", encoding: "utf8" });
       return JSON.parse(contents);
     } catch (_) {
-      return {};
+      return undefined;
     }
   }
 
