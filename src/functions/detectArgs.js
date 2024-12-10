@@ -1,4 +1,4 @@
-const args = process.argv.splice(2);
+const args = process.argv.slice(2);
 const arguments = {
   help: ["-h", "--help"],
   version: ["-v", "--version"],

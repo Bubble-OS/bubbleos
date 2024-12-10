@@ -4,7 +4,7 @@ const Verbose = require("../../classes/Verbose");
 
 const _preBootInterpreter = () => {
   Verbose.custom("Getting arguments passed into executable...");
-  const args = process.argv.splice(2);
+  const args = process.argv.slice(2);
 
   Verbose.custom("Detecting if arguments were passed...");
   if (args.length !== 0) {
@@ -21,7 +21,7 @@ const _preBootInterpreter = () => {
         await _intCmds(command.join(" "));
       })();
 
-      return;
+      process.exit(0);
     }
   }
 };
