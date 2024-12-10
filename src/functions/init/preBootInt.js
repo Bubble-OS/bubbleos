@@ -3,8 +3,10 @@ const _intCmds = require("../interpret");
 const Verbose = require("../../classes/Verbose");
 
 const _preBootInterpreter = () => {
+  Verbose.custom("Getting arguments passed into executable...");
   const args = process.argv.splice(2);
 
+  Verbose.custom("Detecting if arguments were passed...");
   if (args.length !== 0) {
     Verbose.custom("Detecting if the pre-boot interpreter was invoked...");
     let command = args.filter((val) => {

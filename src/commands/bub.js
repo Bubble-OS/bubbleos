@@ -1,6 +1,7 @@
 // Get modules
 const fs = require("fs");
 const chalk = require("chalk");
+const path = require("path");
 
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
@@ -10,6 +11,7 @@ const _fatalError = require("../functions/fatalError");
 // Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const InfoMessages = require("../classes/InfoMessages");
 
 /**
  * Interpret a BubbleOS file. This function should only be
@@ -28,12 +30,18 @@ const Checks = require("../classes/Checks");
  * if the file contains the `exit` command. Defaults to `false`.
  *
  * @param {Function} intCmds The `intCmds` function that needs to be passed as BubbleOS cannot read it properly (as explained above).
- * @param {fs.PathLike | string} path The path the points to the `.bub` file. It should be a `.bub` file, but others are accepted, as there is no such check for this in the function.
+ * @param {fs.PathLike | string} file The path the points to the `.bub` file. It should be a `.bub` file, but others are accepted, as there is no such check for this in the function.
  * @param {{ displayCommand: boolean, allowExit: boolean }} options Optional. Defines options that can modify the behaviour of this function. The available keys are listed above.
  */
-const _interpretFile = (intCmds, path, options = { displayCommand: true, allowExit: false }) => {
+const _interpretFile = async (
+  intCmds,
+  file,
+  options = { displayCommand: true, allowExit: false }
+) => {
   // Gets the contents from the path, and splits it into lines
-  const lines = fs.readFileSync(path, { encoding: "utf-8", flag: "r" }).split("\n");
+  const lines = fs.readFileSync(file, { encoding: "utf-8", flag: "r" }).split("\n");
+
+  const invalidBubCommand = `bub ${path.basename(file)}`;
 
   // Loop through the amount of lines
   for (let i = 0; i < lines.length; i++) {
@@ -43,17 +51,13 @@ const _interpretFile = (intCmds, path, options = { displayCommand: true, allowEx
     if (line.startsWith("#") || line === "") {
       // If the line is a comment (#) or is blank, skip it
       continue;
-    } else if (line.startsWith("exit") && !options.allowExit) {
-      // If the command found is 'exit' and BubbleOS isn't allowed to exit:
-      console.log(
-        chalk.yellow(
-          `${chalk.bold(
-            `Message from ${chalk.italic("'bub'")}:`
-          )} You cannot run the ${chalk.italic("'exit'")} command from a ${chalk.italic(
-            "'.bub'"
-          )} file.\n`
-        )
+    } else if (line === invalidBubCommand) {
+      InfoMessages.warning(
+        "Infinite loop detected due to executing the same '.bub' file, skipping..."
       );
+      continue;
+    } else if (line === "exit" && !options.allowExit) {
+      InfoMessages.info("Running the 'exit' command from a '.bub' file is currently disabled.");
       continue;
     }
 
@@ -61,7 +65,7 @@ const _interpretFile = (intCmds, path, options = { displayCommand: true, allowEx
     if (options.displayCommand) console.log(chalk.italic.underline.bold.red(line));
 
     // Interpret the command
-    intCmds(line);
+    await intCmds(line);
   }
 };
 
@@ -92,7 +96,7 @@ const _interpretFile = (intCmds, path, options = { displayCommand: true, allowEx
  * @param {fs.PathLike | string} file The path to the BubbleOS file that is going to be executed.
  * @param  {...string} args The arguments, of which the available ones are listed above.
  */
-const bub = (intCmds, file, ...args) => {
+const bub = async (intCmds, file, ...args) => {
   try {
     // Replace spaces and convert to an absolute path
     file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
@@ -135,7 +139,7 @@ const bub = (intCmds, file, ...args) => {
     }
 
     // Interpret the Bubble file
-    _interpretFile(intCmds, file, { displayCommand, allowExit });
+    await _interpretFile(intCmds, file, { displayCommand, allowExit });
   } catch (err) {
     if (err.code === "EPERM") {
       // If there are invalid permissions to read the file

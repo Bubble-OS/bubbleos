@@ -6,6 +6,8 @@ const chalk = require("chalk");
 
 const _detectArgs = require("../functions/detectArgs");
 
+const { GLOBAL_NAME } = require("../variables/constants");
+
 /**
  * Class to print verbose messages.
  *
@@ -28,9 +30,8 @@ class Verbose {
       )}]`
     );
 
-    // THIS WILL BE INTRODUCED IN THE NEXT BUILD!
-    // if (_detectArgs("verbose"))
-    //   console.log(chalk.yellow(`${formattedDate} ${chalk.bgBlack.bold(" VERBOSE: ")} ${message}`));
+    if (_detectArgs("verbose"))
+      console.log(chalk.yellow(`${formattedDate} ${chalk.bgBlack.bold(" VERBOSE: ")} ${message}`));
   }
 
   static initArgs() {
@@ -41,16 +42,53 @@ class Verbose {
     this.custom("Parsing double quotes for paths with spaces...");
   }
 
+  static pathAbsolute(path) {
+    this.custom(`Convering path '${chalk.italic(path)}' to an absolute path...`);
+  }
+
   static initChecker() {
     this.custom("Initializing checker...");
   }
 
   static chkEmpty(variable) {
-    this.custom(`Checking if variable '${chalk.italic(variable)}' is empty...`);
+    this.custom(`Path '${chalk.italic(variable)}' was detected to be empty...`);
   }
 
   static chkExists(variable) {
-    this.custom(`Checking if the path '${chalk.italic(variable)}' exists...`);
+    this.custom(`Path '${chalk.italic(variable)}' was detected to not exist...`);
+  }
+
+  /**
+   *
+   * @param {string} variable The path.
+   * @param {"file" | "directory"} type The type that was detected (e.g. detected file).
+   */
+  static chkType(variable, type) {
+    this.custom(
+      `Path '${chalk.italic(variable)}' was detected to be a ${type}; expected ${
+        type.toLowerCase() === "file" ? "directory" : "file"
+      }.`
+    );
+  }
+
+  static chkEncoding() {
+    this.custom("Path was detected to have invalid encoding.");
+  }
+
+  static fatalError() {
+    this.custom("Unhandled exception, throwing fatal error...");
+  }
+
+  static exitProcess(code = 0) {
+    this.custom(`Exiting ${GLOBAL_NAME} process with status code ${code}...`);
+  }
+
+  static permError() {
+    this.custom("Encountered a permission error while trying to access path.");
+  }
+
+  static usedError() {
+    this.custom("Encountered an error, due to the path being used by another program.");
   }
 
   static startCmd(command) {

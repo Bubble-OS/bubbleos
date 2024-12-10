@@ -2,6 +2,8 @@ const chalk = require("chalk");
 
 const { GLOBAL_NAME } = require("../../variables/constants");
 
+const Verbose = require("../../classes/Verbose");
+
 const _startupArgs = () => {
   console.log(chalk.bold.underline(`${GLOBAL_NAME} Startup Arguments List\n`));
 
@@ -18,13 +20,17 @@ const _startupArgs = () => {
   };
 
   // Sorts keys alphabetically
+  Verbose.custom("Sorting arguments alphabetically...");
   const sorted = Object.entries(argInfo).sort(([keyA], [keyB]) => keyA.localeCompare(keyB));
+  Verbose.custom("Finding maximum character length of arguments...");
   const maxKeyLength = Math.max(...sorted.map(([key]) => key.length));
 
   // Format each key-value pair
+  Verbose.custom("Formatting argument and definition pair...");
   const formattedLines = sorted.map(
     ([key, value]) => `${key.padEnd(maxKeyLength, " ")}   ${value}`
   );
+  Verbose.custom("Printing lines...");
   console.log(formattedLines.join("\n"));
 
   console.log();

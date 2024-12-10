@@ -37,7 +37,7 @@ const Checks = require("../classes/Checks");
  * @param {string | number} pid The PID to kill.
  * @param  {...string} args Arguments to change the behavior of `taskkill` (listed above).
  */
-const taskkill = async (pid, ...args) => {
+const taskkill = (pid, ...args) => {
   try {
     // Initialize checker
     const pidChk = new Checks(pid);

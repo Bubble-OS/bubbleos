@@ -15,9 +15,12 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 - The `sysinfo` command will no longer display the tip after the first time of it showing.
 - Edited the display of the tip in the `help` command.
+- Fixed an issue where the `bub` command would be caught in an infinite loop if the `.bub` file was executing the same file as it was running.
+- Fixed an issue where the `ping` and `tasklist` commands would fail to execute in a `.bub` file.
 - Fixed an issue where BubbleOS would crash if it could not save a command to history in the configuration file, or read the history. If it encounters an error reading the file, it will now automatically reset the file and not crash BubbleOS.
 - Fixed an issue where BubbleOS would crash when encountering an inaccessible directory in `dirtree`.
 - The "timebomb disabled" warning on startup will now only display if the system time exceeds the expiry date.
+- The display of commands running in `bub` are no longer italicized.
 - Improved maintainability of the `index.js` file and moved other startup processes to their own dedicated file internally.
 
 ### Removed Features

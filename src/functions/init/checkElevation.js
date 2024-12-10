@@ -3,6 +3,7 @@ const isElevated = require("is-elevated");
 const _detectArgs = require("../detectArgs");
 
 const InfoMessages = require("../../classes/InfoMessages");
+const Verbose = require("../../classes/Verbose");
 
 const checkElevation = async () => {
   if ((await isElevated()) && !_detectArgs("warnings"))
