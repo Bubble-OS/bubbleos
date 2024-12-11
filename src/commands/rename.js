@@ -11,6 +11,7 @@ const _fatalError = require("../functions/fatalError");
 // Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const InfoMessages = require("../classes/InfoMessages");
 
 /**
  * Renames a file synchronously for use in the BubbleOS
@@ -89,8 +90,8 @@ const rename = (oldName, newName, ...args) => {
 
     // If the user did not want output, only show a newline, else, show the success message
     if (!silent)
-      console.log(
-        chalk.green(`Successfully renamed ${chalk.bold(oldName)} to ${chalk.bold(newName)}.\n`)
+      InfoMessages.success(
+        `Successfully renamed ${chalk.bold(oldName)} to ${chalk.bold(newName)}.`
       );
     else console.log();
   } catch (err) {

@@ -5,6 +5,7 @@ const HTTP_CODES_AND_MESSAGES = require("../data/httpCodes.json");
 
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const InfoMessages = require("../classes/InfoMessages");
 
 const _makeConnection = async (host, path = "", maxRedirects = 5) => {
   const options = {
@@ -12,8 +13,10 @@ const _makeConnection = async (host, path = "", maxRedirects = 5) => {
     path,
     timeout: 5000,
     method: "HEAD", // HEAD request to only fetch headers
-    rejectUnauthorized: false, // Disable SSL verification (not recommended for production)
+    rejectUnauthorized: true, // Disable SSL verification (not recommended for production)
   };
+
+  const formattedURL = (options.host + options.path).replace(/^www\.|\/+$/g, "");
 
   return new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
@@ -35,15 +38,15 @@ const _makeConnection = async (host, path = "", maxRedirects = 5) => {
               .catch(reject);
           } else {
             reject(
-              chalk.red(
-                `Too many redirects. Stopped following after ${5 - maxRedirects} redirects.\n`
+              InfoMessages.error(
+                `Too many redirects. Stopped following after ${5 - maxRedirects} redirects.`
               )
             );
           }
         } else {
           reject(
-            chalk.red(
-              `Redirect received, but no Location header found. Status code: ${res.statusCode}\n`
+            InfoMessages.error(
+              `Redirect received, but no Location header found. Status code: ${res.statusCode}.`
             )
           );
         }
@@ -51,18 +54,16 @@ const _makeConnection = async (host, path = "", maxRedirects = 5) => {
         resolve(
           chalk.green(
             `The server, ${chalk.bold.italic(
-              (options.host + options.path).replace(/^www\.|\/+$/g, "")
+              formattedURL
             )}, is responding with status code 200 (OK)!\n`
           )
         );
       } else {
         reject(
           chalk.red(
-            `The server, ${chalk.bold.italic(
-              options.host + options.path
-            )}, responded with status code ${res.statusCode} (${
-              HTTP_CODES_AND_MESSAGES[res.statusCode] ?? "N/A"
-            }).\n`
+            `The server, ${chalk.bold.italic(formattedURL)}, responded with status code ${
+              res.statusCode
+            } (${HTTP_CODES_AND_MESSAGES[res.statusCode] ?? "N/A"}).\n`
           )
         );
       }
@@ -71,9 +72,7 @@ const _makeConnection = async (host, path = "", maxRedirects = 5) => {
     req.on("error", reject);
 
     req.on("timeout", () => {
-      reject(
-        chalk.red(`The server, ${chalk.bold.italic(options.host + options.path)}, has timed out.\n`)
-      );
+      reject(chalk.red(`The server, ${chalk.bold.italic(formattedURL)}, has timed out.\n`));
     });
 
     req.end();
@@ -95,7 +94,7 @@ const ping = async (host, ...args) => {
     console.log(result);
   } catch (err) {
     if (err.code === "ENOTFOUND") {
-      console.log(chalk.red("The address could not be located.\n"));
+      InfoMessages.error("The address could not be located.");
       return;
     } else {
       console.log(err);

@@ -12,6 +12,7 @@ const _fatalError = require("../functions/fatalError");
 // Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const InfoMessages = require("../classes/InfoMessages");
 
 /**
  * Execute a file from BubbleOS. This is meant to be used as a
@@ -75,7 +76,7 @@ const exec = (file, ...args) => {
     childProcess.exec(file, { cwd: process.cwd(), windowsHide: winHide, shell }, () => {});
 
     // If the user didn't add the '-s' flag, show the success message, else, show a newline
-    if (!silent) console.log(chalk.green(`Successfully executed ${chalk.bold(file)}.\n`));
+    if (!silent) InfoMessages.success(`Successfully executed ${chalk.bold(file)}.`);
     else console.log();
   } catch (err) {
     if (err.code === "UNKNOWN") {

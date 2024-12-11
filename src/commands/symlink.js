@@ -13,6 +13,7 @@ const _fatalError = require("../functions/fatalError");
 // Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const InfoMessages = require("../classes/InfoMessages");
 
 /**
  * Either make a symbolic link or check if a path
@@ -97,22 +98,18 @@ const symlink = (path, newPath, ...args) => {
 
     // If the user didn't want silence :)
     if (!silent)
-      console.log(
-        chalk.green(
-          `Successfully created the symbolic link ${chalk.bold(
-            newPath
-          )} that points to ${chalk.bold(path)}.\n`
-        )
+      InfoMessages.success(
+        `Successfully created the symbolic link ${chalk.bold(newPath)} that points to ${chalk.bold(
+          path
+        )}.`
       );
     else console.log();
   } catch (err) {
     if (err.code === "EPERM") {
       // If there are no permissions to make the symbolic link
       // Note that on Windows (and maybe Linux/macOS), you need
-      // to run it with elevated privileges to make the command
-      // work, hence the tip.
-      console.log(chalk.yellow(`Tip: Try running ${GLOBAL_NAME} with elevated privileges.`));
-
+      // to run it with elevated privileges to make the command work.
+      InfoMessages.info(`Try running ${GLOBAL_NAME} with elevated privileges.`);
       Errors.noPermissions("make the symbolic link", newPath);
       return;
     } else {

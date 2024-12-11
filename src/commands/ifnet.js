@@ -6,6 +6,7 @@ const { networkInterfaces } = require("os");
 // Get functions
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
+const InfoMessages = require("../classes/InfoMessages");
 
 const userFriendlyMap = new Map([
   ["address", "IP Address"],
@@ -70,7 +71,7 @@ const ifnet = (...args) => {
     const keys = Object.keys(interfaces);
 
     if (!keys.length) {
-      console.log(chalk.yellow("No active network interfaces found.\n"));
+      InfoMessages.error("No active network interfaces found.");
       return;
     }
 

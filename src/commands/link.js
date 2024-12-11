@@ -8,6 +8,7 @@ const _fatalError = require("../functions/fatalError");
 
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const InfoMessages = require("../classes/InfoMessages");
 
 const link = (path, newPath, ...args) => {
   try {
@@ -46,7 +47,7 @@ const link = (path, newPath, ...args) => {
 
       fs.unlinkSync(path);
 
-      if (!silent) console.log(chalk.green(`Successfully unlinked ${chalk.bold(path)}.\n`));
+      if (!silent) InfoMessages.success(`Successfully unlinked ${chalk.bold(path)}.`);
       else console.log();
 
       return;
@@ -55,9 +56,7 @@ const link = (path, newPath, ...args) => {
     fs.linkSync(path, newPath);
 
     if (!silent)
-      console.log(
-        chalk.green(`Successfully linked ${chalk.bold(newPath)} to ${chalk.bold(path)}.\n`)
-      );
+      InfoMessages.success(`Successfully linked ${chalk.bold(newPath)} to ${chalk.bold(path)}.`);
     else console.log();
   } catch (err) {
     if (err.code === "EPERM") {

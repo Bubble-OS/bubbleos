@@ -1,17 +1,18 @@
 // Get modules
 const chalk = require("chalk");
 const fs = require("fs");
+const path = require("path");
 
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
+const _promptForYN = require("../functions/promptForYN");
 
 // Get checks
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
-const _promptForYN = require("../functions/promptForYN");
-const path = require("path");
+const InfoMessages = require("../classes/InfoMessages");
 
 /**
  * Make a directory synchronously. This is meant
@@ -74,7 +75,7 @@ const mkdir = (dir, ...args) => {
       ) {
         try {
           fs.rmSync(dir, { recursive: true, force: true });
-          console.log(chalk.green(`Successfully deleted ${chalk.bold(dir)}.\n`));
+          InfoMessages.success(`Successfully deleted ${chalk.bold(dir)}.`);
         } catch {
           if (err.code === "EPERM") {
             Errors.noPermissions("delete the directory", dir);
@@ -96,7 +97,7 @@ const mkdir = (dir, ...args) => {
     fs.mkdirSync(dir, { recursive: true });
 
     // If the user didn't request for silence, show the success message, else, show a newline
-    if (!silent) console.log(chalk.green(`Successfully made the directory ${chalk.bold(dir)}.\n`));
+    if (!silent) InfoMessages.success(`Successfully made the directory ${chalk.bold(dir)}.`);
     else console.log();
   } catch (err) {
     if (err.code === "ENOENT") {

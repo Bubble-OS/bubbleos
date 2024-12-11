@@ -11,6 +11,7 @@ const _fatalError = require("../functions/fatalError");
 // Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const InfoMessages = require("../classes/InfoMessages");
 
 /**
  * Delete a file/directory from BubbleOS. This is a CLI function.
@@ -77,7 +78,7 @@ const del = (path, ...args) => {
     fs.rmSync(path, { recursive: true, force: true });
 
     // If the user wanted output, show the success message, else, only show a newline
-    if (!silent) console.log(chalk.green(`Successfully deleted ${chalk.bold(path)}.\n`));
+    if (!silent) InfoMessages.success(`Successfully deleted ${chalk.bold(path)}.`);
     else console.log();
 
     return;

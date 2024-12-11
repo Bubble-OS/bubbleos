@@ -1,18 +1,19 @@
 // Get modules
 const fs = require("fs");
 const chalk = require("chalk");
+const path = require("path");
 const { question, questionInt } = require("readline-sync");
 
 // Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
+const _promptForYN = require("../functions/promptForYN");
 
 // Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
-const _promptForYN = require("../functions/promptForYN");
-const path = require("path");
+const InfoMessages = require("../classes/InfoMessages");
 
 /**
  * Make a file synchronously using `fs.mkfileSync()`.
@@ -70,7 +71,7 @@ const mkfile = (file, ...args) => {
       ) {
         try {
           fs.rmSync(file, { recursive: true, force: true });
-          console.log(chalk.green(`Successfully deleted ${chalk.bold(file)}.\n`));
+          InfoMessages.success(`Successfully deleted ${chalk.bold(file)}.`);
         } catch {
           if (err.code === "EPERM") {
             Errors.noPermissions("delete the file", file);
@@ -104,7 +105,7 @@ const mkfile = (file, ...args) => {
         fs.writeFileSync(file, contents.join("\n"), "utf8");
 
         // If the user requested output, show a success message, else, show a newline
-        if (!silent) console.log(chalk.green(`Successfully made the file ${chalk.bold(file)}.\n`));
+        if (!silent) InfoMessages.success(`Successfully made the file ${chalk.bold(file)}.`);
         else console.log();
         return;
       } else if (input.toUpperCase() === "!CANCEL") {

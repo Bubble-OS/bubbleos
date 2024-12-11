@@ -11,6 +11,7 @@ const _fatalError = require("../functions/fatalError");
 // Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const InfoMessages = require("../classes/InfoMessages");
 
 /**
  * Kill a process on the device from the BubbleOS
@@ -80,7 +81,7 @@ const taskkill = (pid, ...args) => {
     process.kill(Number(pid));
 
     // If the user did not request output, show a newline, else, show the success message
-    if (!silent) console.log(chalk.green(`Successfully killed the process ${chalk.bold(pid)}.\n`));
+    if (!silent) InfoMessages.success(`Successfully killed the process ${chalk.bold(pid)}.`);
     else console.log();
   } catch (err) {
     if (err.code === "EPERM") {

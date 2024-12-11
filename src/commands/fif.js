@@ -92,8 +92,6 @@ const fif = (file, ...args) => {
     const contents = fs.readFileSync(file, { encoding: "utf-8", flag: "r" });
 
     // Prompt the user for file contents
-    // Replace '*n' with newlines
-    // TODO replace with another non-deprecated function and remove _replaceSpaces entirely
     const toFind =
       question(`Please enter the phrase to find (${chalk.italic("'Enter'")} to accept): `) ?? "";
 
@@ -111,12 +109,11 @@ const fif = (file, ...args) => {
     // The RegExp code will match against the contents,
     // and if 'null' is returned, it'll default to [].
     // Otherwise, it will return an array, of which only the length is required.
-    // However, if the length is undefined, it will be 'N/A'.
-    const occurrences =
-      contents.match(new RegExp(escapeRegExp(toFind), "g") || [])?.length ?? "N/A";
+    // However, if the length is undefined, it will be -1.
+    const occurrences = contents.match(new RegExp(escapeRegExp(toFind), "g") || [])?.length ?? -1;
 
     // If there are no occurrences
-    if (occurrences === "N/A") {
+    if (occurrences === -1) {
       console.log(
         chalk.yellow(
           `No occurrences were found for the phrase ${chalk.bold.italic(`'${toFind}'`)}.\n`

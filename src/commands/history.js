@@ -54,6 +54,8 @@ const historyCmd = (numToDisplay, ...args) => {
 
         config.deleteConfig();
         config.createConfig();
+        config.addData({ history: [] });
+
         return;
       }
 
@@ -62,7 +64,7 @@ const historyCmd = (numToDisplay, ...args) => {
       return;
     }
 
-    const historyConfig = config.getConfig().history;
+    const historyConfig = config.getConfig()?.history;
 
     // Fetch history from the config file
     if (typeof historyConfig === "undefined") {

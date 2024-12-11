@@ -11,6 +11,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - BubbleOS will no longer display the full intro after the first time it has been opened on the system, to reduce clutter.
 - Added the `-h`/`--help` flag to the BubbleOS executable, which displays all of the BubbleOS startup arguments and what they do.
 - Added the `--reset` flag to the BubbleOS executable, which resets the configuration file.
+- Added the ability to use double quotes in the `tasklist` command.
 - Internally added the `InfoMessages` and `ConfigManager` classes.
 
 ### Changed/Fixed Features
@@ -33,6 +34,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - Removed the confirmation dialog for the `ifnet` command.
 - Removed the `--rm-tip` flag for the `sysinfo` command, as it is now managed automatically.
 - Removed the `--no-tip` flag for the `help` command.
+- Internally removed the `_replaceSpaces` function, as it is now unused.
 
 ## Build 135 to 148 (v1.3.5-beta to v1.4.8-beta)
 

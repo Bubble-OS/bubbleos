@@ -1,15 +1,14 @@
 const chalk = require("chalk");
 const psList = require("ps-list");
 
-const _replaceSpaces = require("../functions/replaceSpaces");
 const _fatalError = require("../functions/fatalError");
+const _parseDoubleQuotes = require("../functions/parseQuotes");
 
-const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 
 const tasklist = async (filter, ...args) => {
   try {
-    filter = _replaceSpaces(filter);
+    filter = _parseDoubleQuotes([filter, ...args])[0];
 
     const filterUndefined = new Checks(filter).paramUndefined();
 
