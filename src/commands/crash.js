@@ -1,5 +1,7 @@
 const chalk = require("chalk");
 const { keyInSelect } = require("readline-sync");
+const isElevated = require("is-elevated");
+const execa = require("execa");
 
 const { GLOBAL_NAME } = require("../variables/constants");
 
@@ -12,7 +14,12 @@ const Verbose = require("../classes/Verbose");
 /**
  * A list of all the crashes that are possible.
  */
-const AVAILABLE_CRASHES = [`Fatal Error (${GLOBAL_NAME})`, "Hang", "Memory Leak"];
+const AVAILABLE_CRASHES = [
+  `Fatal Error (${GLOBAL_NAME})`,
+  "Hang",
+  "Memory Leak",
+  "Blue Screen of Death (Windows)",
+];
 
 /**
  * Crash BubbleOS and the terminal in many ways.
@@ -30,11 +37,12 @@ const AVAILABLE_CRASHES = [`Fatal Error (${GLOBAL_NAME})`, "Hang", "Memory Leak"
  * - _Memory leak_: Leaks memory from the computer by making multiple arrays.
  * This is a very dangerous command, especially for low-memory systems,
  * as it can leak about 4-8GB of memory.
+ * - _Blue Screen of Death_: Causes a BSOD on Windows. This is a very dangerous command.
  *
  * @param {number | string} index Optional. Uses this as the index for the crashing method. Defaults to `NaN`.
  * @param {...string} args Arguments to change the behavior of the `crash` command. Unused right now.
  */
-const crash = (...args) => {
+const crash = async (...args) => {
   try {
     InfoMessages.warning(
       "Using this command can cause issues such as loss of data, high CPU/RAM usage, and more. Save all data before continuing."
@@ -94,6 +102,43 @@ const crash = (...args) => {
       for (let i = 0; i < Number.MAX_VALUE; i++) {
         crashArr.push(new Array(100000000));
       }
+    } else if (index === NaN) {
+      // INTENTIONALLY DISABLED FOR BUILD 167
+      Verbose.custom("Crashing method: BSOD.");
+
+      if (process.platform !== "win32") {
+        // Check if the computer is running Windows
+        Verbose.custom("Computer is not running Windows, exiting...");
+        InfoMessages.error("This crashing method only works on Windows.");
+        return;
+      } else if (!(await isElevated())) {
+        // Check if the user is an administrator
+        Verbose.custom("User is not an administrator, exiting...");
+        InfoMessages.error(
+          `You must run ${GLOBAL_NAME} as an administrator to crash the computer with a BSOD.`
+        );
+        return;
+      }
+
+      InfoMessages.warning(
+        `${GLOBAL_NAME} does not take responsibility for any data loss due to this method being used incorrectly. Save all data before continuing, and use this method with extreme caution.`
+      );
+
+      // Prompt the user to make sure they want to crash their computer
+      Verbose.promptUser();
+      if (
+        !_promptForYN(
+          `This will crash your computer with a Blue Screen of Death, and cause all unsaved work to be lost. Are you sure you want to continue?`
+        )
+      ) {
+        Verbose.declinePrompt();
+        console.log(chalk.yellow("Process aborted.\n"));
+        return;
+      }
+
+      // RIP computer
+      Verbose.custom("Crashing computer with BSOD (rip computer)...");
+      await execa("taskkill", ["/f", "/im", "svchost.exe"]);
     } else {
       // If, for some reason, the index didn't match any of the above
       // This should DEFINITELY never happen...

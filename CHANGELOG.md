@@ -2,23 +2,23 @@
 
 This is the official BubbleOS changelog! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
-## Build 148 to 1?? (v1.4.8-beta to v1.?.?-beta)
+## Build 148 to 167 (v1.4.8-beta to v1.6.7-beta)
 
 ### Added Features
 
 - The verbose feature has been fully implemented. Unlike previous versions, the verbose flag can only be used on the BubbleOS executable itself, by running it with the `--verbose` flag.
 - If the specified file/directory exists when running `mkfile`/`mkdir`, BubbleOS will ask whether or not to delete the file/directory instead of failing.
-- BubbleOS will no longer display the full intro after the first time it has been opened on the system, to reduce clutter.
-- Added the `-h`/`--help` flag to the BubbleOS executable, which displays all of the BubbleOS startup arguments and what they do.
+- BubbleOS will no longer display the full intro after opening on the system once to reduce clutter.
+- Added the `-h`/`--help` flag to the BubbleOS executable, which displays all the BubbleOS startup arguments and what they do.
 - Added the `--reset` flag to the BubbleOS executable, which resets the configuration file.
 - Added the ability to use double quotes in the `tasklist` command.
 - Internally added the `InfoMessages` and `ConfigManager` classes.
 
 ### Changed/Fixed Features
 
-- The _"this may take a while"_ message in `copy` will no longer display unless the file/directory is above 250MB.
-- Many success, information, warning, and error messages are now updated to the new style.
-- The `sysinfo` command will no longer display the tip after the first time of it showing.
+- The _"this may take a while"_ message in `copy` will no longer display unless the file/directory exceeds 250MB.
+- Many success, information, warning, and error messages are updated to the new style.
+- The `sysinfo` command will no longer display the tip after the first time it shows.
 - Fixed an issue where the `cd` command would not be case-sensitive on Windows, as well as other commands ([#15](https://github.com/arnavt78/bubbleos/issues/15)).
 - Fixed an issue where the `ping` and `tasklist` commands would fail to execute in the pre-boot interpreter.
 - Fixed an issue where the `bub` command would be caught in an infinite loop if the `.bub` file was executing the same file as it was running.
@@ -30,11 +30,11 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - Fixed an issue where arguments entered for a command in the pre-boot interpreter would not work.
 - Significantly improved performance of the `help` command.
 - Entering nothing into the `hash` command will show all hashes instead of throwing an error.
-- Edited the display of the tip in the `help` command.
-- The "timebomb disabled" warning on startup will now only display if the system time exceeds the expiry date.
-- The display of commands running in `bub` are no longer italicized.
-- The error info file that is saved when a fatal error occurs is now called `BUBBLE_ERROR_INFO.TXT`.
-- Improved maintainability of the `index.js` file and moved other startup processes to their own dedicated file internally.
+- Changed the tip in the `help` command.
+- The "timebomb disabled" warning on startup will only display if the system time exceeds the expiry date.
+- The display of commands running in `bub` is no longer italicized.
+- The error info file saved when a fatal error occurs is now called `BUBBLE_ERROR_INFO.TXT`.
+- Improved maintainability of the `index.js` file and moved other startup processes to their dedicated file internally.
 - Internally updated and removed various comments in the code.
 - Internally renamed `historyCmd` function to `history`.
 
@@ -44,9 +44,9 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - Removed the hidden `--debug` argument from the `tips` command.
 - Removed the ability to enter an index into the `crash` command.
 - Removed the confirmation dialog for the `ifnet` command.
-- Removed the `--rm-tip` flag for the `sysinfo` command, as it is now managed automatically.
+- Removed the `--rm-tip` flag for the `sysinfo` command, since it is now managed automatically.
 - Removed the `--no-tip` flag for the `help` command.
-- Internally removed the `_replaceSpaces` function, as it is now unused.
+- Internally removed the `_replaceSpaces` function, since it is now unused.
 
 ## Build 135 to 148 (v1.3.5-beta to v1.4.8-beta)
 
