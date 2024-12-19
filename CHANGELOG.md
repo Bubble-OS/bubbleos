@@ -10,7 +10,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 ### Changed/Fixed Features
 
-_No changed/fixed features._
+- Improved the selection algorithm of the `tips` command, so that it is impossible to fail finding a tip, and when there are no more tips to show, it will reset automatically.
 
 ### Removed Features
 
