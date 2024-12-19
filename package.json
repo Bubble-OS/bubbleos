@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/arnavt78/bubbleos#readme",
   "dependencies": {
+    "battery-level": "^3.0.0",
     "chalk": "^4.1.2",
     "execa": "^5.1.1",
+    "is-charging": "^2.0.0",
     "is-elevated": "^3.0.0",
     "istextorbinary": "^6.0.0",
     "lock-system": "^2.0.0",

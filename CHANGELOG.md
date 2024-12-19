@@ -6,11 +6,13 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 ### Added Features
 
+- The `sysinfo` command now displays the battery percentage and if the battery is on charge, if the device has a battery.
 - Added a startup check to make sure the terminal supports color. If not, BubbleOS will end prematurely.
 
 ### Changed/Fixed Features
 
 - Improved the selection algorithm of the `tips` command, so that it is impossible to fail finding a tip, and when there are no more tips to show, it will reset automatically.
+- Fixed a consistency issue where the user information had its values bolded instead of italicized in the `sysinfo` command.
 
 ### Removed Features
 

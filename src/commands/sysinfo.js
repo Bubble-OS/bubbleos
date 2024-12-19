@@ -1,6 +1,8 @@
 const os = require("os");
 const chalk = require("chalk");
 const osName = require("os-name");
+const batteryLevel = require("battery-level");
+const isCharging = require("is-charging");
 
 const { GLOBAL_NAME } = require("../variables/constants");
 
@@ -53,16 +55,23 @@ const _convertTime = (seconds, decimals = 2) => {
  * Determine the color depending on the percentage
  * of memory being used.
  *
- * Formula used: `(t - f) > (t / 2)`
+ * Formula used for memory: `(total - free) > (total / 2)`
+ * Formula used for battery: `battery > 20`
  *
- * @param {string | number} mem The memory to display in the color.
- * @returns A string with the colored string.
+ * @param {"memory" | "battery"} type The type of color to determine.
+ * @param {string | number} value The value to determine the color for.
+ * @returns The colored string.
  */
-const _determineColor = (mem) => {
+const _determineColor = async (type, value) => {
   // If the total memory minus the free memory is greater than the total memory divided by two,
   // it is using more than half of the total memory, hence, use a red color, else, use green.
-  if (os.totalmem() - os.freemem() > os.totalmem() / 2) return chalk.red(mem);
-  else return chalk.green(mem);
+  if (type === "memory") {
+    if (os.totalmem() - os.freemem() > os.totalmem() / 2) return chalk.red(value);
+    else return chalk.green(value);
+  } else if (type === "battery") {
+    if ((await batteryLevel()) > 0.5) return chalk.green(value);
+    else return chalk.red(value);
+  } else throw new TypeError(`Invalid type '${type}' provided.`);
 };
 
 /**
@@ -94,7 +103,7 @@ const _fixVersion = (currentOSName) =>
  *
  * @param {...string} args Arguments to modify the behavior of `sysinfo`.
  */
-const sysinfo = (...args) => {
+const sysinfo = async (...args) => {
   try {
     Verbose.initArgs();
     const computerInfo = args?.includes("-c");
@@ -131,15 +140,15 @@ const sysinfo = (...args) => {
 
       const { gid, homedir, shell, uid, username } = os.userInfo();
 
-      console.log(`Username: ${chalk.bold(username)}`);
-      console.log(`Home directory: ${chalk.bold(homedir)}`);
-      console.log(`Temporary directory: ${chalk.bold(os.tmpdir())}`);
+      console.log(`Username: ${chalk.italic(username)}`);
+      console.log(`Home directory: ${chalk.italic(homedir)}`);
+      console.log(`Temporary directory: ${chalk.italic(os.tmpdir())}`);
 
       // If the OS is Windows, GID, shell and UID are -1/null; so this is only shown to operating systems other than Windows
       if (process.platform !== "win32") {
-        console.log(`GID (group identifier): ${chalk.bold(gid)}`);
-        console.log(`UID (user identifier): ${chalk.bold(uid)}`);
-        console.log(`Shell: ${chalk.bold(shell)}`);
+        console.log(`GID (group identifier): ${chalk.italic(gid)}`);
+        console.log(`UID (user identifier): ${chaitalic(uid)}`);
+        console.log(`Shell: ${chalk.italic(shell)}`);
       }
 
       console.log();
@@ -153,7 +162,8 @@ const sysinfo = (...args) => {
       // Show the memory out of the total memory in the color designated
       console.log(
         `Memory usage: ${chalk.italic(
-          _determineColor(
+          await _determineColor(
+            "memory",
             `${_convertSize(os.totalmem() - os.freemem(), 2).gigabytes}GB/${
               _convertSize(os.totalmem(), 2).gigabytes
             }GB`
@@ -164,6 +174,26 @@ const sysinfo = (...args) => {
 
       const uptime = _convertTime(os.uptime(), 0).recommended;
       console.log(`System uptime: ${chalk.italic(`${uptime.value} ${uptime.type}`)}`);
+
+      // If the system has a battery, show the battery information
+      try {
+        await batteryLevel();
+
+        console.log();
+
+        Verbose.custom("Showing battery information...");
+        console.log(`${chalk.bold.underline("Battery Information")}`);
+
+        console.log(
+          `Battery level: ${chalk.italic(
+            `${await _determineColor("battery", (await batteryLevel()) * 100 + "%")}`
+          )}`
+        );
+
+        console.log(
+          `Charging: ${chalk.italic((await isCharging()) ? chalk.green("Yes") : chalk.red("No"))}`
+        );
+      } catch {}
 
       console.log();
     }
