@@ -2,6 +2,20 @@
 
 This is the official BubbleOS changelog! All features will be recorded in _'groups'_, and the latest version of that _'group'_ will have an executable and a release paired with them.
 
+## Build 167 to 1?? (v1.6.7-beta to v1.?.?-beta)
+
+### Added Features
+
+- Added a startup check to make sure the terminal supports color. If not, BubbleOS will end prematurely.
+
+### Changed/Fixed Features
+
+_No changed/fixed features._
+
+### Removed Features
+
+_No removed features._
+
 ## Build 148 to 167 (v1.4.8-beta to v1.6.7-beta)
 
 ### Added Features

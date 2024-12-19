@@ -11,6 +11,10 @@ const _detectArgs = require("./src/functions/detectArgs");
 const Verbose = require("./src/classes/Verbose");
 
 (async () => {
+  // Check if terminal supports color
+  // Verbose.custom("Checking terminal color support..."); // <- It would look weird if the terminal doesn't support color
+  require("./src/functions/init/colorSupport")();
+
   // Initialize timebomb
   Verbose.custom("Detecting no timebomb argument...");
   if (!_detectArgs("timebomb")) require("./src/functions/init/timebomb")();
