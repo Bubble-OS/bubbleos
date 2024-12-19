@@ -8,6 +8,7 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 
 - Added the ability to kill processes by specifying the process name instead of the PID in `taskkill` (PIDs are still supported).
 - The `sysinfo` command now displays the battery percentage and if the battery is on charge, if the device has a battery.
+- Added an option to crash the device with a Blue Screen of Death on Windows using the `crash` command. **This is a very dangerous option!**
 - Added a startup check to make sure the terminal supports color. If not, BubbleOS will end prematurely.
 
 ### Changed/Fixed Features

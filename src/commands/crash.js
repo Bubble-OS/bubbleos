@@ -102,8 +102,7 @@ const crash = async (...args) => {
       for (let i = 0; i < Number.MAX_VALUE; i++) {
         crashArr.push(new Array(100000000));
       }
-    } else if (index === NaN) {
-      // INTENTIONALLY DISABLED FOR BUILD 167
+    } else if (index === 4) {
       Verbose.custom("Crashing method: BSOD.");
 
       if (process.platform !== "win32") {
