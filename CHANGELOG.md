@@ -19,18 +19,30 @@ This is the official BubbleOS changelog! All features will be recorded in _'grou
 - The _"this may take a while"_ message in `copy` will no longer display unless the file/directory is above 250MB.
 - Many success, information, warning, and error messages are now updated to the new style.
 - The `sysinfo` command will no longer display the tip after the first time of it showing.
-- Edited the display of the tip in the `help` command.
+- Fixed an issue where the `cd` command would not be case-sensitive on Windows, as well as other commands ([#15](https://github.com/arnavt78/bubbleos/issues/15)).
+- Fixed an issue where the `ping` and `tasklist` commands would fail to execute in the pre-boot interpreter.
 - Fixed an issue where the `bub` command would be caught in an infinite loop if the `.bub` file was executing the same file as it was running.
 - Fixed an issue where commands executing in a `.bub` file would be added to the command history.
 - Fixed an issue where the `ping` and `tasklist` commands would fail to execute in a `.bub` file.
 - Fixed an issue where BubbleOS would crash if it could not save a command to history in the configuration file, or read the history. If it encounters an error reading the file, it will now automatically reset the file and not crash BubbleOS.
 - Fixed an issue where BubbleOS would crash when encountering an inaccessible directory in `dirtree`.
+- Fixed an issue where changing the directory using the `cd` command into a symbolic link would not show where it pointed to in the success message.
+- Fixed an issue where arguments entered for a command in the pre-boot interpreter would not work.
+- Significantly improved performance of the `help` command.
+- Entering nothing into the `hash` command will show all hashes instead of throwing an error.
+- Edited the display of the tip in the `help` command.
 - The "timebomb disabled" warning on startup will now only display if the system time exceeds the expiry date.
 - The display of commands running in `bub` are no longer italicized.
+- The error info file that is saved when a fatal error occurs is now called `BUBBLE_ERROR_INFO.TXT`.
 - Improved maintainability of the `index.js` file and moved other startup processes to their own dedicated file internally.
+- Internally updated and removed various comments in the code.
+- Internally renamed `historyCmd` function to `history`.
 
 ### Removed Features
 
+- BubbleOS no longer supports UNC paths and will give an error if an operation is attempted with them.
+- Removed the hidden `--debug` argument from the `tips` command.
+- Removed the ability to enter an index into the `crash` command.
 - Removed the confirmation dialog for the `ifnet` command.
 - Removed the `--rm-tip` flag for the `sysinfo` command, as it is now managed automatically.
 - Removed the `--no-tip` flag for the `help` command.

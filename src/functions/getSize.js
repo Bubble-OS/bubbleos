@@ -4,7 +4,8 @@ const path = require("path");
 const _getSize = (sizePath, type) => {
   if (type === "directory") {
     let totalSize = 0;
-    const stack = [sizePath]; // Stack to track directories to process
+    // Stack to track directories to process
+    const stack = [sizePath];
 
     while (stack.length > 0) {
       const currentPath = stack.pop();

@@ -1,16 +1,14 @@
-// Get modules
 const fs = require("fs");
 const path = require("path");
 const chalk = require("chalk");
 
-// Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const Verbose = require("../classes/Verbose");
 
 /**
  * Internal helper function to generate the tree for `dirtree`.
@@ -23,10 +21,13 @@ const _generateTree = (currentDir, prefix = "") => {
 
   try {
     // Attempt to read the directory contents
+    Verbose.custom(`Reading directory contents of '${currentDir}'...`);
     items = fs.readdirSync(currentDir);
   } catch (err) {
+    // On error, skip this directory
+    Verbose.custom("Encountered an error while reading directory; skipping...");
     console.log(chalk.red(`${prefix}└── [ERROR] Unable to access: ${currentDir}`));
-    return; // Skip this directory and return
+    return;
   }
 
   items.forEach((item, index) => {
@@ -34,18 +35,22 @@ const _generateTree = (currentDir, prefix = "") => {
     const isLastItem = index === items.length - 1;
 
     try {
+      Verbose.custom(`Checking if '${itemPath}' is a directory...`);
       const isDirectory = fs.statSync(itemPath).isDirectory();
 
       // Print the item with the tree-like structure
+      Verbose.custom("Printing item...");
       console.log(`${prefix}${isLastItem ? "└── " : "├── "}${item}`);
 
       if (isDirectory) {
         // Update the prefix for the next level
+        Verbose.custom("Path is directory, recalling tree generation...");
         const newPrefix = prefix + (isLastItem ? "    " : "│   ");
         _generateTree(itemPath, newPrefix);
       }
     } catch (err) {
       // Handle inaccessible files or directories
+      Verbose.custom(`Encountered an error while trying to read ${itemPath}.`);
       console.log(
         chalk.red(`${prefix}${isLastItem ? "└──" : "├──"} [ERROR] Unable to access: ${item}`)
       );
@@ -60,30 +65,37 @@ const _generateTree = (currentDir, prefix = "") => {
  * The command is visually identical to the Windows `tree` command.
  *
  * @param {string} dir The directory to start the tree in.
- * @param  {...string} args Arguments to change the behavior of `dirtree`.
+ * @param {...string} args Arguments to change the behavior of `dirtree`.
  */
 const dirtree = (dir = process.cwd(), ...args) => {
   try {
-    dir = _parseDoubleQuotes([dir, ...args])[0];
+    // Converts path into case-sensitive path for Windows, and resolves spaces
+    Verbose.parseQuotes();
+    dir = _caseSensitivePath(_parseDoubleQuotes([dir, ...args])[0]);
 
-    // Initialize checker
+    Verbose.initChecker();
     const dirChk = new Checks(dir);
 
     if (!dirChk.doesExist()) {
-      // If the path does not exist
+      Verbose.chkExists();
       Errors.doesNotExist("folder", dir);
       return;
     } else if (!dirChk.validateType()) {
-      // If the path is a file
+      Verbose.chkType(dir, "directory");
       Errors.expectedDir(dir);
+      return;
+    } else if (dirChk.pathUNC()) {
+      Errors.invalidUNCPath();
       return;
     }
 
-    // Start the tree generation with an empty prefix
+    // Start the tree generation
+    Verbose.custom("Logging current directory...");
     console.log(chalk.bold(_convertAbsolute(dir)));
+    Verbose.custom("Starting tree generation...");
     _generateTree(dir);
   } catch (err) {
-    // Unknown error
+    Verbose.fatalError();
     _fatalError(err);
   }
 };

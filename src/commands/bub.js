@@ -1,14 +1,12 @@
-// Get modules
 const fs = require("fs");
 const chalk = require("chalk");
 const path = require("path");
 
-// Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
+const _caseSensitivePath = require("../functions/caseSensitivePath");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 const InfoMessages = require("../classes/InfoMessages");
@@ -23,105 +21,88 @@ const Verbose = require("../classes/Verbose");
  * if it imported instead of passed in (it will be an empty
  * object - `{}` - instead of a function).
  *
- * The `options` object contains the following options that
- * can be changed:
- * - `displayCommand`: Whether to display the command that
- * is currently being executed or not. Defaults to `true`.
- * - `allowExit`: Whether to allow exiting BubbleOS completely
- * if the file contains the `exit` command. Defaults to `false`.
- *
  * @param {Function} intCmds The `intCmds` function that needs to be passed as BubbleOS cannot read it properly (as explained above).
- * @param {fs.PathLike | string} file The path the points to the `.bub` file. It should be a `.bub` file, but others are accepted, as there is no such check for this in the function.
+ * @param {string} file The path the points to the `.bub` file. It should be a `.bub` file, but others are accepted, as there is no such check for this in the function.
  * @param {{ displayCommand: boolean, allowExit: boolean }} options Optional. Defines options that can modify the behaviour of this function. The available keys are listed above.
  */
 const _interpretFile = async (
   intCmds,
   file,
-  options = { displayCommand: true, allowExit: false }
+  options = { displayCommand: false, allowExit: false }
 ) => {
-  // Gets the contents from the path, and splits it into lines
+  // Seperate the file into lines to allow executing each command line-by-line
   Verbose.custom("Reading file and separating into lines...");
   const lines = fs.readFileSync(file, { encoding: "utf-8", flag: "r" }).split("\n");
 
+  // Command that causes infinite loop
+  // TODO make it so that if the user enters full path,
+  // it will also be detected as invalid
   Verbose.custom("Creating invalid 'bub' command to avoid an infinite loop...");
   const invalidBubCommand = `bub ${path.basename(file)}`;
 
-  // Loop through the amount of lines
+  // Loop through all lines
   for (let i = 0; i < lines.length; i++) {
     Verbose.custom("Trimming current line...");
     const line = lines[i]?.trim();
 
     if (line.startsWith("#") || line === "") {
+      // Comment or empty line
       Verbose.custom(`Line '${line}' was detected to either be empty or a comment, skipping...`);
       continue;
     } else if (line === invalidBubCommand) {
+      // Prevents infinite loop by .bub file executing itself
       Verbose.custom(`Line '${line}' was detected to be an invalid 'bub' command, skipping...`);
       InfoMessages.warning(
         "Infinite loop detected due to executing the same '.bub' file, skipping..."
       );
       continue;
     } else if (line === "exit" && !options.allowExit) {
+      // Prevents .bub command from exiting BubbleOS
+      // if --allow-exit was not passed
       Verbose.custom(`Line '${line}' was detected to be the 'exit' command, skipping...`);
       InfoMessages.info("Running the 'exit' command from a '.bub' file is currently disabled.");
       continue;
     }
 
-    // If the 'displayCommand' option is 'true', show the current executing command
     if (options.displayCommand) {
+      // Displays command if requested
       Verbose.custom("Displaying currently executing command...");
       console.log(chalk.underline.bold.red(line));
     }
 
-    // Interpret the command
-    Verbose.custom("Executing command...");
+    // Interprets command, without adding to history
+    Verbose.custom("Interpreting command...");
     await intCmds(line, false);
   }
 };
 
 /**
- * A command used to interpret a BubbleOS file which ends with `.bub`,
- * similar to a Batch file. To run it in the BubbleOS shell, run `bub`.
- *
- * Usage:
- *
- * ```js
- * // See why you need 'intCmds' below
- * bub(intCmds, "D:\\test.bub"); // 'args' is available too
- * ```
- *
- * The file must end with `.bub`!
+ * The `bub` command, used to execute `.bub` files.
  *
  * The `intCmds()` function **must** be passed at the start.
  * This is because BubbleOS cannot read the function correctly
  * if it imported instead of passed in (it will be an empty
  * object - `{}` - instead of a function).
  *
- * Available arguments:
- * - `-d`: Doesn't display the command that is currently executing.
- * - `--alow-exit`: Allows exiting from a `.bub` file if there is
- * an `exit` command in it.
- *
- * @param {Function} intCmds The `intCmds()` function that is needed.
- * @param {fs.PathLike | string} file The path to the BubbleOS file that is going to be executed.
- * @param  {...string} args The arguments, of which the available ones are listed above.
+ * @param {Function} intCmds The `intCmds()` function.
+ * @param {string} file The path to the BubbleOS file that is going to be executed.
+ * @param {...string} args The arguments, of which the available ones are listed above.
  */
 const bub = async (intCmds, file, ...args) => {
   try {
-    // Replace spaces and convert to an absolute path
+    // Converts path to an absolute path and corrects
+    // casing on Windows, and resolves spaces
     Verbose.pathAbsolute(file);
     Verbose.parseQuotes();
-    file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
+    file = _caseSensitivePath(_convertAbsolute(_parseDoubleQuotes([file, ...args])[0]));
 
-    // Initialize checker
     Verbose.initChecker();
     const fileChk = new Checks(file);
 
-    // Initialize arguments
     Verbose.initArgs();
     const displayCommand = args?.includes("-d");
     const allowExit = args?.includes("--allow-exit");
 
-    // Check if file is not defined
     if (fileChk.paramUndefined()) {
       Verbose.chkEmpty();
       Errors.enterParameter("a file", "bub test.bub");
@@ -136,13 +117,19 @@ const bub = async (intCmds, file, ...args) => {
       Verbose.chkType(file, "file");
       Errors.expectedFile(file);
       return;
+    } else if (fileChk.pathUNC()) {
+      Errors.invalidUNCPath();
+      return;
     } else if (!fileChk.validEncoding()) {
+      // To avoid lag with large files with non-plain text encoding
       Verbose.chkEncoding();
       Errors.invalidEncoding("plain text");
       return;
     }
 
-    // If the file doesn't end with '.bub', abort
+    // Technically the file does not need to end in .bub to work,
+    // this is just for fun :P
+    // It does need to be plain text though, which is already checked before
     if (!file.endsWith(".bub")) {
       Verbose.custom(`File '${file}' was detected to not end in '.bub'.`);
       InfoMessages.error(
@@ -153,7 +140,7 @@ const bub = async (intCmds, file, ...args) => {
       return;
     }
 
-    // Interpret the Bubble file
+    // Interprets each line and uses intCmds() function
     Verbose.custom("Interpreting file...");
     await _interpretFile(intCmds, file, { displayCommand, allowExit });
   } catch (err) {
@@ -172,5 +159,4 @@ const bub = async (intCmds, file, ...args) => {
   }
 };
 
-// Export the function
 module.exports = bub;

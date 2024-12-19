@@ -1,14 +1,16 @@
-// Get modules
 const chalk = require("chalk");
 
-// Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
+
+const _fatalError = require("../functions/fatalError");
+
+const Verbose = require("../classes/Verbose");
 
 /**
  * All tips that can be chosen by BubbleOS.
  */
 const ALL_TIPS = [
-  `Hello! We're resetting tips; they'll come back in the next stable release (build 200)!`,
+  `Hello! We're resetting tips; they'll come back in the next stable release of ${GLOBAL_NAME} (build 200)!`,
 ];
 
 /**
@@ -22,57 +24,38 @@ const doneTips = [];
 /**
  * Show some tips and fun facts about BubbleOS.
  *
- * Usage:
- *
- * ```js
- * tips(); // No user-intended arguments accepted yet!
- * ```
- *
- * No user-intended arguments are accepted.
- *
- * @param  {...string} args Arguments to modify the behavior of `tips`.
+ * @param {...string} args Arguments to modify the behavior of `tips`.
  */
 const tips = (...args) => {
-  // Initialize tips
-  const debug = args.includes("--debug");
+  try {
+    Verbose.custom(`Tips in 'ALL_TIPS': ${ALL_TIPS.length}`);
+    Verbose.custom(`Tips in 'doneTips': ${doneTips.length}`);
 
-  // NON-DOCUMENTED FLAG - for use with the dev only!
-  if (debug) {
-    console.log(`Tips in ${chalk.italic("'ALL_TIPS'")}: ${chalk.bold(ALL_TIPS.length)}`);
-    console.log(`Tips in ${chalk.italic("'doneTips'")}: ${chalk.bold(doneTips.length)}`);
+    // As long as BubbleOS has not exceeded the maximum tries, keep looping
+    for (let tryNum = 0; tryNum < MAXIMUM_TRIES; tryNum++) {
+      Verbose.custom("Trying to find a tip...");
+      let randNum = (Math.random() * ALL_TIPS.length).toFixed(0);
 
-    // Newline and return
-    console.log();
-    return;
-  }
+      // If the tip has not already been shown
+      if (!doneTips.includes(randNum)) {
+        if (typeof ALL_TIPS[randNum] === "undefined") continue;
 
-  // As long as BubbleOS has not exceeded the maximum tries, keep looping
-  for (let tryNum = 0; tryNum < MAXIMUM_TRIES; tryNum++) {
-    // Random index
-    let randNum = (Math.random() * ALL_TIPS.length).toFixed(0);
+        Verbose.custom("Showing tip...");
+        console.log(chalk.hex("#FFA500")`${chalk.bold("TIP:")} ${ALL_TIPS[randNum]}\n`);
 
-    // If the tip has not already been shown
-    if (!doneTips.includes(randNum)) {
-      // If the tip chosen is for some reason not defined
-      if (typeof ALL_TIPS[randNum] === "undefined") continue;
-
-      // Show the tip
-      console.log(chalk.hex("#FFA500")`${chalk.bold("TIP:")} ${ALL_TIPS[randNum]}\n`);
-
-      // Add it to the completed tips and end the 'tips' command
-      doneTips.push(randNum);
-      return;
+        doneTips.push(randNum);
+        return;
+      }
     }
-  }
 
-  // If the loop has ended without a 'return', show the error and return
-  console.log(
-    chalk.yellow(
-      "Either there are no more tips available, or the maximum tries for finding a tip have been exceeded.\n"
-    )
-  );
-  return;
+    console.log(
+      chalk.yellow(
+        "Either there are no more tips available, or the maximum tries for finding a tip have been exceeded.\n"
+      )
+    );
+  } catch (err) {
+    _fatalError(err);
+  }
 };
 
-// Export the function
 module.exports = tips;

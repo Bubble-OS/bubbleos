@@ -1,48 +1,36 @@
-// Get packages
 const chalk = require("chalk");
 
-// Get variables
 const { GLOBAL_NAME, AUTHOR, VERSION, BUILD } = require("../variables/constants");
 
-// Get functions
+const _fatalError = require("../functions/fatalError");
+
 const Verbose = require("../classes/Verbose");
 
 /**
- * The `about` command.
+ * The `about` command. Displays information about BubbleOS.
  *
- * This command does not return any information;
- * it is only to be ran in the BubbleOS shell.
- * This command only prints to _stdout_.
- *
- * Usage:
- * ```js
- * about("-l"); // Arguments are optional
- * ```
- *
- * Available arguments:
- * - `-l`: Show the license.
- *
- * @param  {...string} args A list of arguments that can be used to modify the behavior of `about`.
+ * @param {...string} args A list of arguments that can be used to modify the behavior of `about`.
  */
 const about = (...args) => {
   try {
-    // Initialize recognized arguments
     Verbose.initArgs();
     const license = args?.includes("-l");
     const binary = args?.includes("--ilovetech");
 
     // For the Easter egg :)
-    let aboutName = GLOBAL_NAME;
-    if (binary)
-      aboutName = "01000010 01110101 01100010 01100010 01101100 01100101 01001111 01010011";
+    let aboutName = binary
+      ? "01000010 01110101 01100010 01100010 01101100 01100101 01001111 01010011"
+      : GLOBAL_NAME;
 
-    // Print out information about BubbleOS
+    // Title
     Verbose.custom("Displaying information...");
     console.log(chalk.underline.bold.red(`About ${aboutName}\n`));
 
+    // Information about build and author
     console.log(`${aboutName}, v${VERSION} (build ${BUILD})`);
     console.log(`Made by ${AUTHOR}!\n`);
 
+    // MIT Liecense (variable year)
     if (license) {
       Verbose.custom("Displaying license...");
       console.log(
@@ -70,6 +58,7 @@ const about = (...args) => {
       );
     }
 
+    // Links
     console.log(`GitHub: ${chalk.underline.blueBright("https://github.com/arnavt78/bubbleos")}`);
     console.log(`YouTube: ${chalk.underline.blueBright("https://youtube.com/InfiniTech78")}\n`);
   } catch (err) {
@@ -78,5 +67,4 @@ const about = (...args) => {
   }
 };
 
-// Export the function
 module.exports = about;

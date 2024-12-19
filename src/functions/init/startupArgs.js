@@ -22,6 +22,8 @@ const _startupArgs = () => {
   // Sorts keys alphabetically
   Verbose.custom("Sorting arguments alphabetically...");
   const sorted = Object.entries(argInfo).sort(([keyA], [keyB]) => keyA.localeCompare(keyB));
+
+  // Get character length of longest key for purposes of table
   Verbose.custom("Finding maximum character length of arguments...");
   const maxKeyLength = Math.max(...sorted.map(([key]) => key.length));
 

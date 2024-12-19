@@ -1,76 +1,70 @@
-// Get modules
 const chalk = require("chalk");
 const sortKeys = require("sort-keys");
 
-// Get variables
 const HELP_MESSAGES = require("../variables/helpMessages");
 
-// Get functions
 const _fatalError = require("../functions/fatalError");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const Verbose = require("../classes/Verbose");
 
 /**
  * Print help depending on if the user requested
  * a single command, or if they wanted all
  * available commands.
  *
- * @param {Object} sorted The object containing the sorted version of the help messages.
+ * @param {{}} sorted The object containing the sorted version of the help messages.
  * @param {boolean} specific If the user requested help on a specific command or not. If this is `true`, `cmd` must also be passed.
  * @param {string} cmd The command that the user requested specific help on.
  */
 const _printHelp = (sorted, specific, cmd) => {
-  // Convert the command to lower case
   cmd = cmd?.toLowerCase();
 
-  // If the user wanted a specific command
   if (specific) {
-    // Log the command and its usage
     // If the usage is not available, show 'N/A'
+    Verbose.custom("Showing command and usage...");
     console.log(`${chalk.bold(cmd)}: ${chalk.italic(sorted[cmd].usage ?? "N/A")}`);
 
     // Show the description (if it is unavailable, show 'N/A')
+    Verbose.custom("Showing description of command...");
     console.log(`\n  ${sorted[cmd].desc ?? "N/A"}\n`);
 
     // If there are arguments
+    Verbose.custom("Checking if arguments are available...");
     if (typeof sorted[cmd].args !== "undefined") {
-      // If the length of the arguments is not 0 (not empty)
       if (Object.keys(sorted[cmd].args).length !== 0) {
-        // Show an arguments subheading
+        Verbose.custom("Showing arguments...");
         console.log("  " + chalk.underline("Arguments:"));
 
-        // Loop through all arguments
         for (const arg in sorted[cmd].args) {
-          // Pad the argument at the end, and show each description for their respective argument
           console.log(`    ${arg.padEnd(15)} ${sorted[cmd].args[arg]}`);
         }
 
-        // Log a newline after all of the arguments have been shown
         console.log();
       }
     }
 
     return;
   } else {
-    // Final string of all of the commands
+    Verbose.custom("Showing all commands...");
     let finalStr = "";
 
     // Loop through all of the keys of the help object (sorted)
     for (let i = 1; i < Object.keys(sorted).length + 1; i++) {
-      // Add to the final string all of the commands, and pad 15 characters to the end of them
+      Verbose.custom(`Adding command '${Object.keys(sorted)[i - 1]}' to memory...`);
       finalStr += Object.keys(sorted)[i - 1].padEnd(15);
 
       // If there have been three characters on the line, print a newline
       if (i % 3 === 0) {
+        Verbose.custom("Adding a newline...");
         finalStr += "\n";
       }
     }
 
     // Show the final string
+    Verbose.custom("Showing all commands...");
     console.log(finalStr);
-    return;
   }
 };
 
@@ -88,17 +82,18 @@ const _printHelp = (sorted, specific, cmd) => {
  * ```
  *
  * @param {string} command Optionally get help on a specific command.
- * @param  {...string} args Arguments to modify the behavior of `help`.
+ * @param {...string} args Arguments to modify the behavior of `help`.
  */
 const help = (command, ...args) => {
   try {
     // Make a new array with a list of help messages sorted in alphabetical order
-    // Making a new array as HELP_MESSAGES is immutable (cannot be changed)
+    Verbose.custom("Sorting help messages...");
     const sorted = sortKeys(HELP_MESSAGES);
 
     // If the user did not ask for help on a specific command
     if (new Checks(command).paramUndefined()) {
       // The user DID NOT want a specific command
+      Verbose.custom("No command was passed, showing all commands...");
       _printHelp(sorted, false);
 
       console.log(
@@ -110,23 +105,25 @@ const help = (command, ...args) => {
       );
     } else {
       // If the user wanted information about a specific command
-      // Loop through all of the keys in the help object
-      for (const commandName in sorted) {
-        // If the command in the help object is the same as the one the user entered, show the information
-        if (commandName.toLowerCase() === command.toLowerCase()) {
-          _printHelp(sorted, true, commandName);
-          return;
-        }
+      Verbose.custom(`Showing information on command ${command}...`);
+
+      // Check if the command exists in the sorted object
+      if (sorted.hasOwnProperty(command.toLowerCase())) {
+        Verbose.custom("Showing command information...");
+        _printHelp(sorted, true, command.toLowerCase());
+        return;
       }
 
       // The command didn't match any
+      Verbose.custom(
+        `Command '${command}' was detected to be unrecognized, show respective error...`
+      );
       Errors.unrecognizedCommand(command);
     }
   } catch (err) {
-    // An unknown error occurred
+    Verbose.fatalError();
     _fatalError(err);
   }
 };
 
-// Export the function
 module.exports = help;

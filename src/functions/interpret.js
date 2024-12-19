@@ -1,13 +1,10 @@
 const chalk = require("chalk");
 
-// Get variables
-const { COMMANDS: commands, ALIASES: aliases } = require("../variables/commands");
+const { COMMANDS, ALIASES } = require("../variables/commands");
 
-// Get functions
 const _fatalError = require("./fatalError");
 const { _addToHist } = require("../commands/history");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Verbose = require("../classes/Verbose");
 const InfoMessages = require("../classes/InfoMessages");
@@ -18,10 +15,7 @@ const InfoMessages = require("../classes/InfoMessages");
  * @param {string} command The entire command that the user entered.
  */
 const _multiParam = (command) => {
-  // Split the parameters by all of the spaces
   const params = command.split(" ");
-
-  // Remove the first element (the command) and return it
   params.shift();
   return params;
 };
@@ -36,7 +30,6 @@ const getKeyByValue = (object, value) => Object.keys(object).find((key) => objec
  */
 const _intCmds = async (command, storeInHistory = true) => {
   try {
-    // If the command is empty or not
     Verbose.custom("Checking if command entered is empty...");
     const isEmpty = command.length === 0;
     Verbose.custom("Checking entered command...");
@@ -45,16 +38,13 @@ const _intCmds = async (command, storeInHistory = true) => {
     // The command is currently unrecognized
     let recognized = false;
 
-    // Loop through the commands
-    for (let [key, value] of Object.entries(commands)) {
-      // If the command starts with the current command
+    for (let [key, value] of Object.entries(COMMANDS)) {
       if (enteredCmd === key) {
-        Verbose.custom("Command has been recognized.");
+        Verbose.custom("Command has been recognized, executing command...");
         recognized = true;
 
-        // If the command is 'bub', it requires the '_intCmds' function, so call/pass it separately
-        Verbose.custom("Executing command...");
         if (key === "bub") {
+          // If the command is 'bub', it requires the '_intCmds' function, so call/pass it separately
           await value(_intCmds, ..._multiParam(command));
         } else {
           await value(..._multiParam(command));
@@ -69,13 +59,14 @@ const _intCmds = async (command, storeInHistory = true) => {
       );
       Errors.unrecognizedCommand(enteredCmd);
 
-      for (const alias of Object.values(aliases)) {
+      // Alias detection
+      for (const alias of Object.values(ALIASES)) {
         for (const cmd of alias) {
           if (cmd === enteredCmd) {
             Verbose.custom("Alias detected for entered command, show tip to user...");
             InfoMessages.info(
               `There is no command called ${chalk.italic(enteredCmd)}. Did you mean ${chalk.bold(
-                getKeyByValue(aliases, alias)
+                getKeyByValue(ALIASES, alias)
               )}?`
             );
 
@@ -85,6 +76,7 @@ const _intCmds = async (command, storeInHistory = true) => {
       }
     }
 
+    // TODO I don't like 'history -c' being hardcoded for some reason
     if (!isEmpty && storeInHistory && command !== "history -c") {
       Verbose.custom("Adding command to history...");
       _addToHist(command);
@@ -95,5 +87,4 @@ const _intCmds = async (command, storeInHistory = true) => {
   }
 };
 
-// Export the function
 module.exports = _intCmds;

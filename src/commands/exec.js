@@ -1,28 +1,21 @@
-// Get modules
 const chalk = require("chalk");
 
 const fs = require("fs");
 const childProcess = require("child_process");
 
-// Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
+const _caseSensitivePath = require("../functions/caseSensitivePath");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 const InfoMessages = require("../classes/InfoMessages");
+const Verbose = require("../classes/Verbose");
 
 /**
  * Execute a file from BubbleOS. This is meant to be used as a
  * CLI tool for the BubbleOS shell.
- *
- * Usage:
- *
- * ```js
- * exec("file.exe"); // Arguments are also accepted!
- * ```
  *
  * Please note that even though any extension is accepted, and
  * that BubbleOS will not validate extensions, there are chances
@@ -36,36 +29,40 @@ const InfoMessages = require("../classes/InfoMessages");
  * - `--sh`: If this argument is passed, the executable will run
  * inside of a shell.
  *
- * @param {fs.PathLike | string} file The filename to execute. Both absolute and relative paths are accepted.
- * @param  {...string} args The arguments to change the behavior of `exec`. Available arguments are listed above.
+ * @param {string} file The filename to execute. Both absolute and relative paths are accepted.
+ * @param {...string} args The arguments to change the behavior of `exec`. Available arguments are listed above.
  * @returns
  */
 const exec = (file, ...args) => {
   try {
-    // Replace spaces in the path, then convert it to an absolute path
-    file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
+    Verbose.pathAbsolute();
+    Verbose.parseQuotes();
+    file = _caseSensitivePath(_convertAbsolute(_parseDoubleQuotes([file, ...args])[0]));
 
-    // Initialize the checker
+    Verbose.initChecker();
     const fileChk = new Checks(file);
 
-    // Initialize arguments
+    Verbose.initArgs();
     const silent = args?.includes("-s");
     const winHide = args?.includes("-h");
     const shell = args?.includes("--sh");
 
-    // If the file is not defined
     if (fileChk.paramUndefined()) {
+      Verbose.chkEmpty();
       Errors.enterParameter("a file", "exec test");
       return;
     }
 
     if (!fileChk.doesExist()) {
-      // The file does not exist
+      Verbose.chkExists(file);
       Errors.doesNotExist("file", file);
       return;
     } else if (fileChk.validateType()) {
-      // The file is apparently a directory
+      Verbose.chkType(file, "file");
       Errors.expectedFile(file);
+      return;
+    } else if (fileChk.pathUNC()) {
+      Errors.invalidUNCPath();
       return;
     }
 
@@ -73,29 +70,30 @@ const exec = (file, ...args) => {
     // Not using execSync() as that does not let BubbleOS continue
     // unless the window is closed. This should be used instead, with an
     // empty callback function.
+    Verbose.custom(`Executing the file '${file}'...`);
     childProcess.exec(file, { cwd: process.cwd(), windowsHide: winHide, shell }, () => {});
 
-    // If the user didn't add the '-s' flag, show the success message, else, show a newline
     if (!silent) InfoMessages.success(`Successfully executed ${chalk.bold(file)}.`);
     else console.log();
   } catch (err) {
     if (err.code === "UNKNOWN") {
-      // Unknown extension
+      // This for some reason, never occurs
+      // TODO make it so that if a file has no way of running, make it show this error
+      Verbose.custom("Cannot execute file due to no known way of launching.");
       Errors.unknown("execute the file", file);
     } else if (err.code === "EPERM") {
-      // Permission errors running the file
+      Verbose.permError();
       Errors.noPermissions("run the file", file);
       return;
     } else if (err.code === "EBUSY") {
-      // The file is in use
+      Verbose.inUseError();
       Errors.inUse("file", file);
       return;
     } else {
-      // Unknown error
+      Verbose.fatalError();
       _fatalError(err);
     }
   }
 };
 
-// Export the function
 module.exports = exec;

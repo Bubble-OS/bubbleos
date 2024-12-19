@@ -1,9 +1,5 @@
-// Get modules
 const chalk = require("chalk");
 
-const InfoMessages = require("../../classes/InfoMessages");
-
-// Get variables
 const {
   GLOBAL_NAME,
   AUTHOR,
@@ -16,9 +12,12 @@ const {
 
 const Verbose = require("../../classes/Verbose");
 const ConfigManager = require("../../classes/ConfigManager");
+const InfoMessages = require("../../classes/InfoMessages");
 
 const config = new ConfigManager();
 
+// Detection if configuration file is corrupt
+// TODO make this into a seperate function due to usage in 'history' command
 if (typeof config.getConfig() === "undefined") {
   InfoMessages.error("Error when reading the configuration file. Resetting file...");
 
@@ -26,9 +25,9 @@ if (typeof config.getConfig() === "undefined") {
   config.createConfig();
 }
 
-// Show the name of the OS, the version, and the author
 console.log(`${chalk.bold(`${GLOBAL_NAME}, v${VERSION} (build ${BUILD})`)}`);
 
+// Only display if this is the first time BubbleOS is runing
 if (!config.getConfig().firstIntro) {
   console.log(`Made by ${AUTHOR}!`);
 }
@@ -36,9 +35,7 @@ if (!config.getConfig().firstIntro) {
 console.log();
 
 Verbose.custom(`Checking if ${GLOBAL_NAME} is in beta...`);
-// If BubbleOS is in beta...
 if (IN_BETA) {
-  // ...and the timebomb is activated...
   Verbose.custom("Checking if the timebomb is activated...");
   if (TIMEBOMB_ACTIVATED) {
     // Show a timebomb warning message
@@ -53,7 +50,6 @@ if (IN_BETA) {
       )
     );
   } else {
-    // ...else
     // Show a beta warning message
     Verbose.custom("Timebomb is not activated but software is in beta, show relevant message...");
     console.log(
@@ -74,4 +70,5 @@ if (!config.getConfig().firstIntro) {
   console.log(`To exit the ${GLOBAL_NAME} shell, type ${chalk.italic("'exit'")}.\n`);
 }
 
+// Make sure long intro cannot display again on the system
 config.addData({ firstIntro: true });

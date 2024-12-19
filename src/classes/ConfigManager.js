@@ -9,7 +9,7 @@ const Checks = require("./Checks");
 /**
  * Class to manage the BubbleOS configuration file.
  *
- * Initialization is required to use this class. The five methods in this class are listed below:
+ * Initialization is required to use this class. Methods in this class:
  * - `createConfig()`
  * - `deleteConfig()`
  * - `removeData(key)`
@@ -18,8 +18,7 @@ const Checks = require("./Checks");
  */
 class ConfigManager {
   constructor() {
-    this.globalName = GLOBAL_NAME.toLowerCase();
-    this.configName = `${this.globalName}-config.json`;
+    this.configName = `${GLOBAL_NAME.toLowerCase()}-config.json`;
     this.configPath = path.join(os.homedir(), this.configName);
     this.configChk = new Checks(this.configPath);
   }

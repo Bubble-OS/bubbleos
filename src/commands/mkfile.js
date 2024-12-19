@@ -1,30 +1,21 @@
-// Get modules
 const fs = require("fs");
 const chalk = require("chalk");
 const path = require("path");
 const { question, questionInt } = require("readline-sync");
 
-// Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
+const _caseSenstivePath = require("../functions/caseSensitivePath");
 const _fatalError = require("../functions/fatalError");
 const _promptForYN = require("../functions/promptForYN");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 const InfoMessages = require("../classes/InfoMessages");
+const Verbose = require("../classes/Verbose");
 
 /**
  * Make a file synchronously using `fs.mkfileSync()`.
- * This is a CLI tool for use with the BubbleOS
- * shell.
- *
- * Usage:
- *
- * ```js
- * mkfile("test.txt"); // Arguments accepted!
- * ```
  *
  * If a parent directory does not exist, this command
  * will not work.
@@ -40,28 +31,31 @@ const InfoMessages = require("../classes/InfoMessages");
  * which includes the success message. Only error
  * messages are shown.
  *
- * @param {fs.PathLike | string} file The file that should be created. Both absolute and relative paths are accepted.
- * @param  {...string} args Arguments to change the behavior of `mkfile()`. Available arguments are listed above.
+ * @param {string} file The file that should be created. Both absolute and relative paths are accepted.
+ * @param {...string} args Arguments to change the behavior of `mkfile()`. Available arguments are listed above.
  */
 const mkfile = (file, ...args) => {
   try {
-    // Replace spaces and then convert the file to an absolute path
-    file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
+    // Converts path to an absolute path and corrects
+    // casing on Windows, and resolves spaces
+    Verbose.pathAbsolute(file);
+    Verbose.parseQuotes();
+    file = _caseSenstivePath(_convertAbsolute(_parseDoubleQuotes([file, ...args])[0]));
 
-    // Initialize checker
+    Verbose.initChecker();
     const fileChk = new Checks(file);
 
-    // Initialize arguments
+    Verbose.initArgs();
     const silent = args?.includes("-s");
 
-    // If the file was not defined
     if (fileChk.paramUndefined()) {
+      Verbose.chkEmpty();
       Errors.enterParameter("a file", "mkfile test.txt");
       return;
     }
 
-    // If the file already exists
     if (fileChk.doesExist()) {
+      Verbose.promptUser();
       if (
         _promptForYN(
           `The file, '${chalk.italic(
@@ -70,12 +64,15 @@ const mkfile = (file, ...args) => {
         )
       ) {
         try {
+          Verbose.custom("Deleting the file...");
           fs.rmSync(file, { recursive: true, force: true });
           InfoMessages.success(`Successfully deleted ${chalk.bold(file)}.`);
         } catch {
           if (err.code === "EPERM") {
+            Verbose.permError();
             Errors.noPermissions("delete the file", file);
           } else if (err.code === "EBUSY") {
+            Verbose.inUseError();
             Errors.inUse("file", file);
           }
 
@@ -85,6 +82,12 @@ const mkfile = (file, ...args) => {
         console.log(chalk.yellow("Process aborted.\n"));
         return;
       }
+    }
+
+    if (fileChk.pathUNC()) {
+      Verbose.chkUNC();
+      Errors.invalidUNCPath();
+      return;
     }
 
     console.log(
@@ -98,10 +101,12 @@ const mkfile = (file, ...args) => {
     // Collect new content line by line
     let contents = [];
     while (true) {
+      Verbose.custom("Asking for line input...");
       const input = question("> ");
 
       if (input.toUpperCase() === "!SAVE") {
         // Save the new content to the file, ensuring no trailing newline
+        Verbose.custom("Saving file with provided file contents...");
         fs.writeFileSync(file, contents.join("\n"), "utf8");
 
         // If the user requested output, show a success message, else, show a newline
@@ -109,18 +114,22 @@ const mkfile = (file, ...args) => {
         else console.log();
         return;
       } else if (input.toUpperCase() === "!CANCEL") {
+        Verbose.custom("Discarding changes and removing file...");
         console.log(chalk.yellow("Edits discarded and process aborted."));
         return;
       } else if (input.toUpperCase() === "!EDIT") {
         if (contents.length === 0) {
           console.log(chalk.yellow("No previous input to edit.\n"));
         } else {
+          Verbose.custom("Asking for the line to edit...");
           const lineNumber = questionInt(
             chalk.blue("Choose a line number to edit (1-" + contents.length + "): ")
           );
           if (lineNumber >= 1 && lineNumber <= contents.length) {
+            Verbose.custom("Requesting for new line content...");
             const newLine = question(`Edit line ${lineNumber}: `, { defaultInput: "\n" });
 
+            Verbose.custom("Updating content...");
             contents[lineNumber - 1] = newLine; // Replace the selected line
             console.log(chalk.green(`Line ${lineNumber} has been updated.\n`));
           } else {
@@ -128,23 +137,25 @@ const mkfile = (file, ...args) => {
           }
         }
       } else {
-        // Add the input to the contents
+        Verbose.custom("Adding line to memory...");
         contents.push(input);
       }
     }
   } catch (err) {
     if (err.code === "ENOENT") {
       // If the parent directory does not exist
+      Verbose.chkExists(file);
       Errors.doesNotExist("file", file);
       return;
     } else if (err.code === "EPERM") {
-      // No permissions to make the file
+      Verbose.permError();
       Errors.noPermissions("make the file", file);
       return;
     } else if (err.code === "ENAMETOOLONG") {
       // Name too long
       // This code only seems to appear on Linux and macOS
       // On Windows, the code is 'EINVAL'
+      Verbose.custom("The file name was detected to be too long.");
       Errors.pathTooLong(file);
       return;
     } else if (err.code === "EINVAL") {
@@ -153,6 +164,7 @@ const mkfile = (file, ...args) => {
       // However, Windows also uses this code when the file
       // path exceeds 260 characters, or when the file name
       // exceeds 255 characters
+      Verbose.custom("The file name was detected to contain invalid characters, or is too long.");
       Errors.invalidCharacters(
         "directory name",
         "valid path characters",
@@ -161,11 +173,10 @@ const mkfile = (file, ...args) => {
       );
       return;
     } else {
-      // Unknown error
+      Verbose.fatalError();
       _fatalError(err);
     }
   }
 };
 
-// Export the function
 module.exports = mkfile;

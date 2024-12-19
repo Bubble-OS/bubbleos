@@ -1,28 +1,10 @@
-// Get modules
 const chalk = require("chalk");
 
-// Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
 
 /**
  * A function to interpret an error and format
  * the error code and message.
- *
- * Editing the contents of this will reflect across
- * all error messages throughout BubbleOS.
- *
- * Note that the message will be formatted with
- * Chalk and does `console.log` it.
- *
- * Usage (inside):
- *
- * ```js
- * _interpretError(CODE, MESSAGE);
- * ```
- *
- * The `code` must be of type `number`, and the
- * `message` must be of type `string`. However,
- * there are no checks in place for this validation.
  *
  * @param {number | string} code The error code that should be in the error.
  * @param {string} message The error message that should be in the error.
@@ -34,19 +16,7 @@ const _interpretError = (code, message) => {
 /**
  * A class which does **not** require initialization (`new Errors`). Contains all errors used in BubbleOS.
  *
- * Note that you can edit the error messages, but only in the class itself, and the changes will reflect across BubbleOS.
- * Each function inside the class has a `CODE` and `MESSAGE` variable. The `CODE` must be of a `number`, while the `MESSAGE` must be a `string`.
- *
- * For example:
- *
- * ```js
- * const Errors = require("./path/to/Errors.js");
- *
- * // Note that it will always 'console.log' to the stdout
- * Errors.enterCommand();
- * ```
- *
- * Call by using `Errors.yourErrorFunc(params)`. More information on each function below with their respective error code.
+ * All errors are listed below:
  *
  * - `1` - `unrecognizedCommand()`
  * - `2` - `enterParameter()`
@@ -62,7 +32,8 @@ const _interpretError = (code, message) => {
  * - `12` - `invalidCharacters()`
  * - `13` - `pathTooLong()`
  * - `14` - `dirToNonDir()`
- * - `15` - `unknown()`
+ * - `15` - `invalidUNCPath()`
+ * - `16` - `unknown()`
  */
 class Errors {
   constructor() {}
@@ -369,9 +340,6 @@ class Errors {
    * **Error code:** `14`
    *
    * **Message:** Cannot overwrite a directory with a non-directory. (COPY_DIR_TO_NON_DIR)
-   *
-   * @param {string} dir The directory that the user entered.
-   * @param {string} nonDir The non-directory that the user entered.
    */
   static dirToNonDir() {
     const CODE = 14;
@@ -385,11 +353,31 @@ class Errors {
   /**
    * Information about the error message:
    *
+   * **Name:** _Invalid UNC path_
+   *
+   * **Parameters:** _(none)_
+   *
+   * **Error code:** `15`
+   *
+   * **Message:** UNC paths are currently unsupported by _%GLOBAL_NAME%_. (INVALID_UNC_PATH)
+   */
+  static invalidUNCPath() {
+    const CODE = 15;
+    const MESSAGE = `UNC paths are currently unsupported by ${GLOBAL_NAME}. ${chalk.dim(
+      "(INVALID_UNC_PATH)"
+    )}`;
+
+    _interpretError(CODE, MESSAGE);
+  }
+
+  /**
+   * Information about the error message:
+   *
    * **Name:** _Unknown action_
    *
    * **Parameters:** `toDo`, `variable`
    *
-   * **Error code:** `15`
+   * **Error code:** `16`
    *
    * **Message:** _%GLOBAL_NAME%_ does not know how to `toDo` **_'`variable`'_**. (UNKNOWN)
    *
@@ -397,7 +385,7 @@ class Errors {
    * @param {string} variable The variable that the user entered.
    */
   static unknown(toDo, variable) {
-    const CODE = 15;
+    const CODE = 16;
     const MESSAGE = `${GLOBAL_NAME} does not know how to ${toDo} ${chalk.bold.italic(
       `'${variable}'`
     )}. ${chalk.dim("(UNKNOWN)")}`;
@@ -406,5 +394,4 @@ class Errors {
   }
 }
 
-// Export the class
 module.exports = Errors;

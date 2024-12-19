@@ -1,15 +1,13 @@
-// Get packages
 const chalk = require("chalk");
 const fs = require("fs");
 
-// Get functions
 const _convertAbsolute = require("../functions/convAbs");
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 const _getSize = require("../functions/getSize");
+const _caseSensitivePath = require("../functions/caseSensitivePath");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 const Verbose = require("../classes/Verbose");
@@ -25,12 +23,6 @@ const SIZE_TO_SHOW_DIALOG = 262_144_000;
  * to the destination (`dest`). This is a BubbleOS command
  * function for the command `copy` (which used to be
  * `copydir` and `copyfile` before it was combined).
- *
- * Usage:
- *
- * ```js
- * copy("src", "dest"); // Arguments are accepted, which are listed below
- * ```
  *
  * There is a bug in this command where it can throw an error
  * when copying a file to another file, and that file already exists.
@@ -57,49 +49,47 @@ const SIZE_TO_SHOW_DIALOG = 262_144_000;
  * the directory, this flag will remove it and replace it with a copy of the actual
  * contents of the file/directory it was pointing to.
  *
- * @param {fs.PathLike | string} src The source file/directory that should be copied.
- * @param {fs.PathLike | string} dest The destination that the source should be copied to.
- * @param  {...string} args Arguments to modify the behavior of `copy()`. The available arguments are listed above.
- * @returns
+ * @param {string} src The source file/directory that should be copied.
+ * @param {string} dest The destination that the source should be copied to.
+ * @param {...string} args Arguments to modify the behavior of `copy()`. The available arguments are listed above.
  */
 const copy = (src, dest, ...args) => {
   try {
     // Replace spaces and then convert the path to an absolute one to both the source and destination paths
     Verbose.parseQuotes();
-    [src, dest] = _parseDoubleQuotes([src, dest, ...args]);
     Verbose.pathAbsolute(src);
     Verbose.pathAbsolute(dest);
-    [src, dest] = [_convertAbsolute(src), _convertAbsolute(dest)];
+    [src, dest] = _parseDoubleQuotes([src, dest, ...args])
+      .map(_convertAbsolute)
+      .map(_caseSensitivePath);
 
-    // Initialize checkers
     Verbose.initChecker();
     const srcChk = new Checks(src);
     const destChk = new Checks(dest);
 
-    // Initialize arguments
     Verbose.initArgs();
     const silent = args?.includes("-s");
     const confirmCopy = !args.includes("-y");
     const keepTimes = args?.includes("-t");
     const rmSymlinkReference = args?.includes("--rm-symlink");
 
-    // If EITHER the source or destinations are not defined
     if (srcChk.paramUndefined() || destChk.paramUndefined()) {
       Verbose.chkEmpty();
       Errors.enterParameter("the source/destination", "copy src dest");
       return;
     }
 
-    // If the source path does not exist
     if (!srcChk.doesExist()) {
       Verbose.chkExists(src);
       Errors.doesNotExist("source", src);
       return;
+    } else if (srcChk.pathUNC()) {
+      Errors.invalidUNCPath();
+      return;
     }
 
-    // If there was no '-y' argument and the destination exists
+    // If destination exists, confirm user wants to delete it
     if (confirmCopy && destChk.doesExist()) {
-      // If the user doesn't enter 'y'
       Verbose.custom(
         `Destination path '${dest}' exists, confirming if user wants to overwrite it...`
       );
@@ -121,11 +111,14 @@ const copy = (src, dest, ...args) => {
     if (srcChk.validateType()) {
       // If the path is a directory
       // TODO there is an error where ERR_FS_CP_DIR_TO_NON_DIR
-      // will appear even if the paths are files. Fix it pls!
+      // will appear even if the paths are files
+
+      // If size of directory is over 250MB, show "may take a while" message
       Verbose.custom("Getting size of directory...");
       if (!silent && _getSize(src, "directory") >= SIZE_TO_SHOW_DIALOG)
         console.log(chalk.italic.blueBright("Please wait; this may take a while..."));
 
+      // TODO if needed, see if there are more options
       Verbose.custom("Copying directory...");
       fs.cpSync(src, dest, {
         recursive: true,
@@ -133,6 +126,7 @@ const copy = (src, dest, ...args) => {
         preserveTimestamps: keepTimes,
       });
     } else {
+      // If size of directory is over 250MB, show "may take a while" message
       Verbose.custom("Getting size of file...");
       if (!silent && _getSize(src, "file") >= SIZE_TO_SHOW_DIALOG)
         console.log(chalk.italic.blueBright("Please wait; this may take a while..."));
@@ -141,7 +135,6 @@ const copy = (src, dest, ...args) => {
       fs.copyFileSync(src, dest);
     }
 
-    // If the user did not want output, only show a newline, else, show the success message
     if (!silent)
       InfoMessages.success(`Successfully copied to ${chalk.bold(src)} to ${chalk.bold(dest)}.`);
     else console.log();
@@ -168,7 +161,7 @@ const copy = (src, dest, ...args) => {
       // If the user attempted to copy a directory to a non-directory
 
       // There is also a bug in BubbleOS which can do the same thing.
-      // IDK, it seems kind of random to me; it only happened once in
+      // It seems kind of random to me; it only happened once in
       // my testing, even without changing the code. It seems to happen
       // in fs.cpSync(). Fix it please!
       Verbose.custom("Error copying a directory to a non-directory...");
@@ -187,5 +180,4 @@ const copy = (src, dest, ...args) => {
   }
 };
 
-// Export the function
 module.exports = copy;

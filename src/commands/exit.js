@@ -1,7 +1,8 @@
-// Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
 
 const _fatalError = require("../functions/fatalError");
+
+const Verbose = require("../classes/Verbose");
 
 /**
  * Exit the BubbleOS shell with an exit code of
@@ -11,12 +12,6 @@ const _fatalError = require("../functions/fatalError");
  * BubbleOS, making the system unstable, as well as
  * exiting the process with an exit code of `1`
  * (failed) instead of the success code.
- *
- * Usage:
- *
- * ```js
- * exit(); // Arguments are also accepted!
- * ```
  *
  * The exit command should not be used for generic
  * exiting. To exit because an unknown error occurred,
@@ -31,22 +26,21 @@ const _fatalError = require("../functions/fatalError");
  */
 const exit = (...args) => {
   try {
-    // Show the user that BubbleOS is shutting down/exiting
     console.log(`Exiting the ${GLOBAL_NAME} shell...\n`);
 
-    // If the user requested to clear the screen after exiting, do so
+    // If the user requested to clear the screen after exiting
     if (args.includes("-c")) {
       process.stdout.write("\x1bc");
-      // _verboseMsg("Cleared screen due to '-c' argument passed.");
+      Verbose.custom("Cleared screen due to '-c' argument passed.");
     }
 
-    // Exit BubbleOS (Node.js) with an exit code of '0' (success)
-    // _verboseMsg(`Exiting ${GLOBAL_NAME}...`);
+    // Exit with exit code of '0' (success)
+    Verbose.exitProcess();
     process.exit(0);
   } catch (err) {
+    Verbose.fatalError();
     _fatalError(err);
   }
 };
 
-// Export the function
 module.exports = exit;

@@ -1,3 +1,5 @@
+const _fatalError = require("./fatalError");
+
 const args = process.argv.slice(2);
 const arguments = {
   help: ["-h", "--help"],
@@ -18,12 +20,12 @@ const arguments = {
  * @returns `false` if the argument was not passed into BubbleOS, `true` if it was.
  */
 const _detectArgs = (argument) => {
-  if (!arguments[argument]) {
-    // Return false if the argument key is not defined in the arguments object
-    return false;
+  try {
+    if (!arguments[argument]) return false;
+    return args.some((arg) => arguments[argument].includes(arg));
+  } catch (err) {
+    _fatalError(err);
   }
-
-  return args.some((arg) => arguments[argument].includes(arg));
 };
 
 module.exports = _detectArgs;

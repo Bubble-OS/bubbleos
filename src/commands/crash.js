@@ -1,11 +1,8 @@
-// Import modules
 const chalk = require("chalk");
 const { keyInSelect } = require("readline-sync");
 
-// Import variables
 const { GLOBAL_NAME } = require("../variables/constants");
 
-// Import functions
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 
@@ -19,12 +16,6 @@ const AVAILABLE_CRASHES = [`Fatal Error (${GLOBAL_NAME})`, "Hang", "Memory Leak"
 
 /**
  * Crash BubbleOS and the terminal in many ways.
- *
- * Usage:
- *
- * ```js
- * crash(); // An index can also be passed
- * ```
  *
  * If no `index` was passed, BubbleOS will request the user to select
  * a crashing method from a list of elements. These are the following
@@ -41,27 +32,18 @@ const AVAILABLE_CRASHES = [`Fatal Error (${GLOBAL_NAME})`, "Hang", "Memory Leak"
  * as it can leak about 4-8GB of memory.
  *
  * @param {number | string} index Optional. Uses this as the index for the crashing method. Defaults to `NaN`.
- * @param  {...string} args Arguments to change the behavior of the `crash` command. Unused right now.
+ * @param {...string} args Arguments to change the behavior of the `crash` command. Unused right now.
  */
-const crash = (index = NaN, ...args) => {
+const crash = (...args) => {
   try {
     InfoMessages.warning(
       "Using this command can cause issues such as loss of data, high CPU/RAM usage, and more. Save all data before continuing."
     );
 
-    // If the index isn't 'not a number'
-    Verbose.custom("Checking if index was provided by user...");
-    if (!isNaN(index)) {
-      // If the index was provided, minus one out of it due to JS' array structure :)
-      index = index - 1;
-    } else {
-      // If no index was provided, prompt the user for one
-      Verbose.custom("Index was not provided, prompting user for index...");
-      index = keyInSelect(AVAILABLE_CRASHES, "Please select your crashing method");
-    }
+    const index = keyInSelect(AVAILABLE_CRASHES, "Please select your crashing method");
 
     if (index === -1 || index === NaN) {
-      // If the user 'cancelled' on the prompt, or the index is for some reason not a number, exit
+      // If the user 'cancelled' on the prompt
       Verbose.custom(`Index is either -1 or NaN (${index}), exiting...`);
       console.log(chalk.yellow("Process aborted.\n"));
       return;
@@ -73,7 +55,6 @@ const crash = (index = NaN, ...args) => {
       return;
     }
 
-    // Confirm that the user wants to crash BubbleOS
     Verbose.promptUser();
     if (
       !_promptForYN(
@@ -82,7 +63,6 @@ const crash = (index = NaN, ...args) => {
         )}. Are you sure you want to do this?`
       )
     ) {
-      // If they provided anything but 'y', exit
       Verbose.declinePrompt();
       console.log(chalk.yellow("Process aborted.\n"));
       return;
@@ -129,5 +109,4 @@ const crash = (index = NaN, ...args) => {
   }
 };
 
-// Export the function
 module.exports = crash;

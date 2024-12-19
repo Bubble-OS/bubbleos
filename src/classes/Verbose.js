@@ -1,7 +1,3 @@
-// IMPORTANT MESSAGE!!!
-// This class in unused in BubbleOS build 100, as the
-// verbose feature has not been implemented yet.
-
 const chalk = require("chalk");
 
 const _detectArgs = require("../functions/detectArgs");
@@ -13,13 +9,27 @@ const { GLOBAL_NAME } = require("../variables/constants");
  *
  * The existing verbose pre-made messages are below. To make a custom message, use `Verbose.custom()`.
  *
- * - _I'll do it soon_
+ * - `initArgs`
+ * - `pathAbsolute`
+ * - `parseQuotes`
+ * - `initChecker`
+ * - `initArgs`
+ * - `chkEmpty`
+ * - `chkExists`
+ * - `chkType`
+ * - `chkUNC`
+ * - `chkEncoding`
+ * - `promptUser`
+ * - `declinePrompt`
+ * - `permError`
+ * - `inUseError`
+ * - `exitProcess`
+ * - `fatalError`
  */
 class Verbose {
   constructor() {}
 
-  // Also used for other functions in this class. The name is misleading,
-  // as it is also used outside this class for custom messages, hence the name.
+  // Also used for other pre-made messages in this class
   static custom(message) {
     const date = new Date();
     const formattedDate = chalk.dim(
@@ -36,32 +46,31 @@ class Verbose {
       console.log(chalk.yellow(`${formattedDate} ${chalk.bgBlack.bold(" VERBOSE: ")} ${message}`));
   }
 
-  static initArgs() {
-    this.custom("Initializing arguments...");
+  static pathAbsolute(path) {
+    this.custom(`Convering path '${chalk.italic(path)}' to an absolute path...`);
   }
 
   static parseQuotes() {
     this.custom("Parsing double quotes for paths with spaces...");
   }
 
-  static pathAbsolute(path) {
-    this.custom(`Convering path '${chalk.italic(path)}' to an absolute path...`);
-  }
-
   static initChecker() {
     this.custom("Initializing checker...");
   }
 
+  static initArgs() {
+    this.custom("Initializing arguments...");
+  }
+
   static chkEmpty() {
-    this.custom(`One or more arguments were detected to be empty...`);
+    this.custom(`One or more arguments were detected to be empty.`);
   }
 
   static chkExists(variable) {
-    this.custom(`Path '${chalk.italic(variable)}' was detected to not exist...`);
+    this.custom(`Path '${chalk.italic(variable)}' was detected to not exist.`);
   }
 
   /**
-   *
    * @param {string} variable The path.
    * @param {"file" | "directory"} type The type that was expected (e.g. expected file).
    */
@@ -73,16 +82,20 @@ class Verbose {
     );
   }
 
+  static chkUNC() {
+    this.custom("Path was detected to be a UNC path, which is not supported by BubbleOS.");
+  }
+
   static chkEncoding() {
     this.custom("Path was detected to have invalid encoding.");
   }
 
-  static fatalError() {
-    this.custom("Unhandled exception, throwing fatal error...");
+  static promptUser() {
+    this.custom("Prompting for user confirmation...");
   }
 
-  static exitProcess(code = 0) {
-    this.custom(`Exiting ${GLOBAL_NAME} process with status code ${code}...`);
+  static declinePrompt() {
+    this.custom("User did not accept, aborting process...");
   }
 
   static permError() {
@@ -93,12 +106,12 @@ class Verbose {
     this.custom("Encountered an error, due to the path being used by another program.");
   }
 
-  static promptUser() {
-    this.custom("Prompting for user confirmation...");
+  static exitProcess(code = 0) {
+    this.custom(`Exiting ${GLOBAL_NAME} process with status code ${code}...`);
   }
 
-  static declinePrompt() {
-    this.custom("User did not accept, aborting process...");
+  static fatalError() {
+    this.custom("Unhandled exception, throwing fatal error...");
   }
 }
 

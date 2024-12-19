@@ -1,26 +1,18 @@
-// Get modules
 const chalk = require("chalk");
 const fs = require("fs");
 
-// Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
+const _caseSensitivePath = require("../functions/caseSensitivePath");
 const _fatalError = require("../functions/fatalError");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const Verbose = require("../classes/Verbose");
 
 /**
  * Count the number of words, lines, and characters
- * in a file. This is a CLI command in use in the
- * BubbleOS shell.
- *
- * Usage:
- *
- * ```js
- * wcount("test.txt"); // Arguments accepted!
- * ```
+ * in a file.
  *
  * Count the number of lines, words, characters with
  * whitespace and the opposite. In the scenario that
@@ -33,49 +25,53 @@ const Checks = require("../classes/Checks");
  * - `-w`: Only shows the number of words in a file.
  * - `-c`: Only shows the number of characters in a file.
  *
- * @param {fs.PathLike | string} file The file to count the words in.
- * @param  {...string} args Arguments to modify the behavior of `wcount`.
+ * @param {string} file The file to count the words in.
+ * @param {...string} args Arguments to modify the behavior of `wcount`.
  */
 const wcount = (file, ...args) => {
   try {
-    // Replace spaces in the file, and then convert it to an absolute path
-    file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
+    // Converts path to an absolute path and corrects
+    // casing on Windows, and resolves spaces
+    Verbose.pathAbsolute(file);
+    Verbose.parseQuotes();
+    file = _caseSensitivePath(_convertAbsolute(_parseDoubleQuotes([file, ...args])[0]));
 
-    // Initialize file checker
+    Verbose.initChecker();
     const fileChk = new Checks(file);
 
-    // Initialize arguments
+    Verbose.initArgs();
     const lines = args?.includes("-l");
     const words = args?.includes("-w");
     const chars = args?.includes("-c");
 
-    // In case the user did not add any filter arguments, show them all!
     const all = !lines && !words && !chars;
 
-    // If the file is not defined
     if (fileChk.paramUndefined()) {
+      Verbose.chkEmpty();
       Errors.enterParameter("a file", "wcount text.txt");
       return;
-    }
-
-    if (!fileChk.doesExist()) {
-      // The file provided doesn't exist
+    } else if (!fileChk.doesExist()) {
+      Verbose.chkExists(file);
       Errors.doesNotExist("file", file);
       return;
     } else if (fileChk.validateType()) {
-      // The file is actually a directory :)
+      Verbose.chkType(file, "file");
       Errors.expectedFile(file);
       return;
+    } else if (fileChk.pathUNC()) {
+      Verbose.chkUNC();
+      Errors.invalidUNCPath();
+      return;
     } else if (!fileChk.validEncoding()) {
-      // The file is not in plain text
+      Verbose.chkEncoding();
       Errors.invalidEncoding("plain text");
       return;
     }
 
-    // Get the contents of the file in UTF-8
+    Verbose.custom("Reading contents of file provided...");
     const contents = fs.readFileSync(file, { encoding: "utf-8", flag: "r" });
 
-    // Data of the file to make the next code neater
+    Verbose.custom("Counting words, lines, and characters...");
     const data = {
       lines: contents.split("\n").length,
       words: contents.split(" ").length,
@@ -83,7 +79,7 @@ const wcount = (file, ...args) => {
       charsNoWhite: contents.replaceAll(" ", "").length,
     };
 
-    // If the lines/words/characters are provided, or none was provided (a.k.a all), show them
+    Verbose.custom("Displaying results...");
     if (lines || all) console.log(`Lines: ${chalk.bold(data.lines)}`);
     if (words || all) console.log(`Words: ${chalk.bold(data.words)}`);
 
@@ -97,24 +93,21 @@ const wcount = (file, ...args) => {
       }
     }
 
-    // Newline and return
     console.log();
-    return;
   } catch (err) {
     if (err.code === "EPERM") {
-      // Invalid permissions to read the file
+      Verbose.permError();
       Errors.noPermissions("read the file", file);
       return;
     } else if (err.code === "EBUSY") {
-      // The file is in use
+      Verbose.inUseError();
       Errors.inUse("file", file);
       return;
     } else {
-      // Unknown error
+      Verbose.fatalError();
       _fatalError(err);
     }
   }
 };
 
-// Export the function
 module.exports = wcount;

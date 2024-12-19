@@ -1,17 +1,15 @@
-// Get modules
 const os = require("os");
 const chalk = require("chalk");
 const osName = require("os-name");
 
-// Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
 
-// Get functions
 const _convertSize = require("../functions/convSize");
 const _friendlyOS = require("../functions/friendlyOS");
 const _fatalError = require("../functions/fatalError");
 
 const ConfigManager = require("../classes/ConfigManager");
+const Verbose = require("../classes/Verbose");
 
 /**
  * Convert seconds to minutes, hours and days.
@@ -42,7 +40,6 @@ const _convertTime = (seconds, decimals = 2) => {
       ? { value: minutes, type: minutes === 1 ? "minute" : "minutes" }
       : { value: seconds, type: seconds === 1 ? "second" : "seconds" };
 
-  // Return as an object
   return {
     recommended,
     seconds,
@@ -56,20 +53,16 @@ const _convertTime = (seconds, decimals = 2) => {
  * Determine the color depending on the percentage
  * of memory being used.
  *
- * Algebra used: `(t - f) > (t / 2)`
+ * Formula used: `(t - f) > (t / 2)`
  *
  * @param {string | number} mem The memory to display in the color.
  * @returns A string with the colored string.
  */
 const _determineColor = (mem) => {
-  // Algebra: (t - f) > (t / 2)
   // If the total memory minus the free memory is greater than the total memory divided by two,
   // it is using more than half of the total memory, hence, use a red color, else, use green.
-  if (os.totalmem() - os.freemem() > os.totalmem() / 2) {
-    return chalk.red(mem);
-  } else {
-    return chalk.green(mem);
-  }
+  if (os.totalmem() - os.freemem() > os.totalmem() / 2) return chalk.red(mem);
+  else return chalk.green(mem);
 };
 
 /**
@@ -87,12 +80,6 @@ const _fixVersion = (currentOSName) =>
  * Get system information about the computer from
  * the BubbleOS CLI shell.
  *
- * Usage:
- *
- * ```js
- * sysinfo(); // (Filter) Arguments available!
- * ```
- *
  * Get lots of information about the local computer
  * in this command. You can also filter it using
  * arguments, which are listed below.
@@ -105,19 +92,17 @@ const _fixVersion = (currentOSName) =>
  * - `-e`: Display environment variables.
  * - `--all`: Display all system information that is available.
  *
- * @param  {...string} args Arguments to modify the behavior of `sysinfo`.
+ * @param {...string} args Arguments to modify the behavior of `sysinfo`.
  */
 const sysinfo = (...args) => {
   try {
-    // Initialize arguments
-    // Arguments to modify what is shown
+    Verbose.initArgs();
     const computerInfo = args?.includes("-c");
     const userInfo = args?.includes("-u");
     const sysResource = args?.includes("-s");
     const advancedInfo = args?.includes("-a");
     const envVars = args?.includes("-e");
 
-    // Show all values
     const all = args?.includes("--all");
 
     // In case no arguments were passed to modify what was shown, show that
@@ -126,6 +111,7 @@ const sysinfo = (...args) => {
 
     // If the user either requested everything, just the computer info, or the default display
     if (all || computerInfo || defaultDisplay) {
+      Verbose.custom("Showing computer information...");
       console.log(`${chalk.bold.underline("Computer Information")}`);
 
       console.log(`Full OS name: ${chalk.italic(_fixVersion(osName()))}`);
@@ -140,12 +126,11 @@ const sysinfo = (...args) => {
 
     // If the user either requested everything, just the user info, or the default display
     if (all || userInfo || defaultDisplay) {
+      Verbose.custom("Showing user information...");
       console.log(`${chalk.bold.underline("User Information")}`);
 
-      // Get all properties from userInfo()
       const { gid, homedir, shell, uid, username } = os.userInfo();
 
-      // Log basic user information
       console.log(`Username: ${chalk.bold(username)}`);
       console.log(`Home directory: ${chalk.bold(homedir)}`);
       console.log(`Temporary directory: ${chalk.bold(os.tmpdir())}`);
@@ -157,12 +142,12 @@ const sysinfo = (...args) => {
         console.log(`Shell: ${chalk.bold(shell)}`);
       }
 
-      // Newline and return
       console.log();
     }
 
     // If the user either requested everything, just the system resources, or the default display
     if (all || sysResource || defaultDisplay) {
+      Verbose.custom("Showing system resources...");
       console.log(`${chalk.bold.underline("System Resources")}`);
 
       // Show the memory out of the total memory in the color designated
@@ -177,7 +162,6 @@ const sysinfo = (...args) => {
       );
       console.log(`CPU cores: ${chalk.italic(os.cpus().length)}`);
 
-      // Uptime in the recommended time (seconds, minutes, hours or days)
       const uptime = _convertTime(os.uptime(), 0).recommended;
       console.log(`System uptime: ${chalk.italic(`${uptime.value} ${uptime.type}`)}`);
 
@@ -186,6 +170,7 @@ const sysinfo = (...args) => {
 
     // If the user either requested everything or the advanced info
     if (all || advancedInfo) {
+      Verbose.custom("Showing advanced information...");
       console.log(`${chalk.bold.underline("Advanced Information")}`);
 
       console.log(`NULL device: ${chalk.italic(os.devNull)}`);
@@ -210,6 +195,7 @@ const sysinfo = (...args) => {
 
     // If the user either requested everything or the environment vars
     if (all || envVars) {
+      Verbose.custom("Showing environment variables...");
       console.log(`${chalk.bold.underline("Environment Variables")}`);
 
       // Get the keys and values of all environment variables
@@ -223,19 +209,20 @@ const sysinfo = (...args) => {
     const config = new ConfigManager();
 
     if (defaultDisplay && !config.getConfig().sysinfoTip) {
+      Verbose.custom("Showing system information tip...");
       console.log(
         chalk.yellow.italic(
           `Tip: To get more system information, run ${chalk.italic("'sysinfo --all'")}.\n`
         )
       );
 
+      Verbose.custom("Adding tip shown to configuration file...");
       config.addData({ sysinfoTip: true });
     }
   } catch (err) {
-    // Unknown error
+    Verbose.fatalError();
     _fatalError(err);
   }
 };
 
-// Export the function
 module.exports = sysinfo;

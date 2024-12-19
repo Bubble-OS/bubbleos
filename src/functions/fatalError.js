@@ -1,22 +1,17 @@
-// Get modules
 const fs = require("fs");
 const chalk = require("chalk");
 const { question } = require("readline-sync");
 
-// Get variables
-const { GLOBAL_NAME } = require("../variables/constants");
+const { GLOBAL_NAME, SHORT_NAME } = require("../variables/constants");
 
-// Get functions
 const _friendlyOS = require("./friendlyOS");
-const _detectArgs = require("./detectArgs");
 
-// Get classes
 const InfoMessages = require("../classes/InfoMessages");
 
 /**
  * The name of the file to store the error message in.
  */
-const ERROR_INFO_FILENAME = `${GLOBAL_NAME}_error_info.txt`.toUpperCase();
+const ERROR_INFO_FILENAME = `${SHORT_NAME}_error_info.txt`.toUpperCase();
 
 /**
  * End BubbleOS with a fatal exception with exit code `1`.
@@ -25,17 +20,16 @@ const ERROR_INFO_FILENAME = `${GLOBAL_NAME}_error_info.txt`.toUpperCase();
  *
  * ```js
  * try {
- *   // Some code here...
+ *   throw new Error();
  * } catch (err) {
- *   // An error occurred!
  *   _fatalError(err);
  * }
  * ```
  *
  * @param {Error} err The error that caused the fatal error.
+ * @param {boolean} doFileDump Whether or not to save a file containing error info. Defaults to `true`.
  */
-const _fatalError = (err, doFileDump = !_detectArgs("dump")) => {
-  // A friendly version of the technical error information
+const _fatalError = (err, doFileDump = true) => {
   const errProperties = {
     // For 'Error':
     Code: err?.code,
@@ -54,7 +48,6 @@ const _fatalError = (err, doFileDump = !_detectArgs("dump")) => {
   // Beep
   process.stdout.write("\u0007");
 
-  // Log information about the crash and what the user should do
   console.log(`${chalk.bgRed.bold.underline("!!! FATAL ERROR !!!")}\n`);
   console.log(
     `${chalk.red.bold(
@@ -64,36 +57,26 @@ const _fatalError = (err, doFileDump = !_detectArgs("dump")) => {
     )}\n`
   );
 
-  // Technical error information subheading
   console.log(`${chalk.red.dim.underline("Technical Error Information\n")}`);
 
-  // Log the PID
   console.log(chalk.red.dim(`${chalk.italic(`${GLOBAL_NAME} PID`)}: ${process.pid}`));
 
-  // Loop through the error properties
   for (let error in errProperties) {
-    // If the error is defined, log the respective error
     if (typeof errProperties[error] !== "undefined")
       console.log(chalk.red.dim(`${chalk.italic(error)}: ${errProperties[error]}`));
   }
 
-  // Log a newline
   console.log();
 
-  // If the error was passed with a file dump request
   if (doFileDump) {
     try {
-      // All error properties stored in an array
       let errorArr = [];
 
-      // Loop through the errors
       for (let error in errProperties) {
-        // And if it is defined, add it to the error array
         if (typeof errProperties[error] !== "undefined")
           errorArr.push(`${error}: ${errProperties[error]}`);
       }
 
-      // Add some information to the beginning of the error information file
       const date = new Date();
       const errorInfoTxt = `BubbleOS encountered a fatal error at ${String(
         date.getHours()
@@ -106,7 +89,6 @@ const _fatalError = (err, doFileDump = !_detectArgs("dump")) => {
         "\n"
       )}`;
 
-      // Make the file
       fs.writeFileSync(ERROR_INFO_FILENAME, errorInfoTxt);
 
       InfoMessages.success(
@@ -125,5 +107,4 @@ const _fatalError = (err, doFileDump = !_detectArgs("dump")) => {
   process.exit(1);
 };
 
-// Export the function
 module.exports = _fatalError;

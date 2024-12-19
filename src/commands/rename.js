@@ -1,27 +1,19 @@
-// Get modules
 const chalk = require("chalk");
 const fs = require("fs");
 
-// Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
+const _caseSensitivePath = require("../functions/caseSensitivePath");
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
 const InfoMessages = require("../classes/InfoMessages");
+const Verbose = require("../classes/Verbose");
 
 /**
- * Renames a file synchronously for use in the BubbleOS
- * shell. Therefore, this is a CLI tool.
- *
- * Usage:
- *
- * ```js
- * rename("hello.txt", "world.txt"); // Arguments are accepted!
- * ```
+ * Renames a file for use in the BubbleOS shell.
  *
  * Note that the old name and the new name cannot be
  * the same name. Also, if the new name already exists,
@@ -34,45 +26,50 @@ const InfoMessages = require("../classes/InfoMessages");
  * - `-s`: Silently rename the directory (don't output the
  * confirmation prompt). Error messages will still be shown.
  *
- * @param {fs.PathLike | string} oldName The old name of the file.
- * @param {fs.PathLike | string} newName The new name of the file.
- * @param  {...string} args Arguments to modify the behavior of `rename`. Available arguments are above.
+ * @param {string} oldName The old name of the file.
+ * @param {string} newName The new name of the file.
+ * @param {...string} args Arguments to modify the behavior of `rename`. Available arguments are above.
  */
 const rename = (oldName, newName, ...args) => {
   try {
     // Replace spaces and then convert the path to an absolute one to both the old and new names
-    [oldName, newName] = _parseDoubleQuotes([oldName, newName, ...args]);
-    [oldName, newName] = [_convertAbsolute(oldName), _convertAbsolute(newName)];
+    Verbose.pathAbsolute();
+    Verbose.parseQuotes();
+    [oldName, newName] = _parseDoubleQuotes([oldName, newName, ...args]).map((path) =>
+      _caseSensitivePath(_convertAbsolute(path))
+    );
 
-    // Initialize checks
+    Verbose.initChecker();
     const oldChk = new Checks(oldName);
     const newChk = new Checks(newName);
 
-    // Initialize commands
+    Verbose.initArgs();
     const confirm = !args?.includes("-y");
     const silent = args?.includes("-s");
 
-    // If either of the parameters aren't defined
     if (oldChk.paramUndefined() || newChk.paramUndefined()) {
+      Verbose.chkEmpty();
       Errors.enterParameter("the old name and the new name", "rename old.txt new.txt");
       return;
     }
 
-    // If the names are the same
     if (oldName === newName) {
       console.log(chalk.yellow("The old and new names cannot be the same.\nProcess aborted.\n"));
       return;
     }
 
-    // If the path does not exist (current path)
     if (!oldChk.doesExist()) {
+      Verbose.chkExists(oldName);
       Errors.doesNotExist("file", oldName);
+      return;
+    } else if (oldChk.pathUNC() || newChk.pathUNC()) {
+      Verbose.chkUNC();
+      Errors.invalidUNCPath();
       return;
     }
 
-    // If the path exists and the user didn't add the '-y' flag
     if (confirm && newChk.doesExist()) {
-      // If the user doesn't enter 'y'
+      Verbose.promptUser();
       if (
         !_promptForYN(
           `The file/directory, ${chalk.bold(
@@ -85,7 +82,7 @@ const rename = (oldName, newName, ...args) => {
       }
     }
 
-    // Rename
+    Verbose.custom("Renaming the file/directory...");
     fs.renameSync(oldName, newName);
 
     // If the user did not want output, only show a newline, else, show the success message
@@ -96,17 +93,18 @@ const rename = (oldName, newName, ...args) => {
     else console.log();
   } catch (err) {
     if (err.code === "EPERM") {
-      // Permission error
+      Verbose.permError();
       Errors.noPermissions("rename the file/directory", `${oldName}/${newName}`);
       return;
     } else if (err.code === "EBUSY") {
-      // In use error
+      Verbose.inUseError();
       Errors.inUse("file/directory", `${oldName}/${newName}`);
       return;
     } else if (err.code === "ENAMETOOLONG") {
       // The name is too long
       // This code only seems to appear on Linux and macOS
       // On Windows, the code is 'EINVAL'
+      Verbose.custom("The file name was detected to be too long.");
       Errors.pathTooLong(newName);
       return;
     } else if (err.code === "EINVAL") {
@@ -115,6 +113,7 @@ const rename = (oldName, newName, ...args) => {
       // However, Windows also uses this code when the file
       // path exceeds 260 characters, or when the file name
       // exceeds 255 characters
+      Verbose.custom("The file name was detected to contain invalid characters, or is too long.");
       Errors.invalidCharacters(
         "directory name",
         "valid path characters",
@@ -123,11 +122,10 @@ const rename = (oldName, newName, ...args) => {
       );
       return;
     } else {
-      // Unknown error
+      Verbose.fatalError();
       _fatalError(err);
     }
   }
 };
 
-// Export the function
 module.exports = rename;

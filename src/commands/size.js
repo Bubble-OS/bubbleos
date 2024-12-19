@@ -1,20 +1,18 @@
-// Get modules
 const chalk = require("chalk");
-const fs = require("fs");
 
-// Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
+const _caseSensitivePath = require("../functions/caseSensitivePath");
 const _convertSize = require("../functions/convSize");
 const _fatalError = require("../functions/fatalError");
 const _getSize = require("../functions/getSize");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const Verbose = require("../classes/Verbose");
 
 /**
- * A **private** function to log the sizes that
+ * A function to log the sizes that
  * were given, and also making the keys
  * user-friendly by capitalizing the first letter.
  *
@@ -22,51 +20,50 @@ const Checks = require("../classes/Checks");
  * @param {number | string} value The value of the type of size in `key`.
  */
 const _logSize = (sizeType, sizeValue) => {
+  Verbose.custom("Formatting size...");
   const formattedSize = new Intl.NumberFormat("en-US").format(Number(sizeValue) ?? 0);
 
   if (sizeValue <= 0) return;
 
   // The value was not ≤0
+  Verbose.custom("Logging size...");
   console.log(chalk.green(`${chalk.bold(formattedSize)} ${sizeType}`));
 };
 
 /**
  * Show the size of a file from the BubbleOS CLI.
- * This is only meant to be used inside of the
- * BubbleOS shell and should not be used elsewhere.
  *
- * Usage:
- *
- * ```js
- * size("test.txt"); // Arguments accepted!
- * ```
- *
- * @param {fs.PathLike | string} path The file/directory to find the sizes of.
- * @param  {...string} args The arguments to change the behavior of `size`.
+ * @param {string} path The file/directory to find the sizes of.
+ * @param {...string} args The arguments to change the behavior of `size`.
  */
 const size = (path, ...args) => {
   try {
-    // Replace spaces and convert it to an absolute path
-    path = _convertAbsolute(_parseDoubleQuotes([path, ...args])[0]);
+    // Converts path to an absolute path and corrects
+    // casing on Windows, and resolves spaces
+    path = _caseSensitivePath(_convertAbsolute(_parseDoubleQuotes([path, ...args])[0]));
 
-    // Initialize checker
+    Verbose.initChecker();
     const pathChk = new Checks(path);
 
-    // If the file is not defined
     if (pathChk.paramUndefined()) {
+      Verbose.chkEmpty();
       Errors.enterParameter("a file", "size test.txt");
       return;
     } else if (!pathChk.doesExist()) {
-      // File doesn't exist
+      Verbose.chkExists();
       Errors.doesNotExist("file/directory", file);
+      return;
+    } else if (pathChk.pathUNC()) {
+      Verbose.chkUNC();
+      Errors.invalidUNCPath();
       return;
     }
 
-    let totalSize = 0;
-    if (pathChk.validateType()) totalSize = _getSize(path, "directory");
-    else totalSize = _getSize(path, "file");
+    Verbose.custom("Calculating size...");
+    const totalSize = _getSize(path, pathChk.validateType() ? "directory" : "file");
 
     // The size shortened to 2 decimal places
+    Verbose.custom("Converting size and shortening...");
     const allSizes = _convertSize(totalSize, 2);
 
     // Priority order of size units
@@ -75,6 +72,7 @@ const size = (path, ...args) => {
 
     console.log(`Size of ${path}:`);
 
+    Verbose.custom("Finding best unit of measurement to use...");
     for (let i = 0; i < sizeValues.length; i++) {
       if (sizeValues[i] > 0) {
         // Adjust "bytes" to singular if the size is 1
@@ -87,25 +85,22 @@ const size = (path, ...args) => {
     }
 
     // If no meaningful size is found (totalSize is 0)
-    console.log(chalk.yellow(`${chalk.bold("0")} bytes`));
-
-    console.log();
-    return;
+    Verbose.custom("Filesize is 0 bytes, logging...");
+    console.log(chalk.yellow(`${chalk.bold("0")} bytes\n`));
   } catch (err) {
     if (err.code === "EPERM") {
-      // Invalid permissions to read the file
+      Verbose.permError();
       Errors.noPermissions("calculate the size of the file/directory", path);
       return;
     } else if (err.code === "EBUSY") {
-      // The file is in use
+      Verbose.inUseError();
       Errors.inUse("file/directory", path);
       return;
     } else {
-      // Unknown error
+      Verbose.fatalError();
       _fatalError(err);
     }
   }
 };
 
-// Export the functions
 module.exports = size;

@@ -14,7 +14,6 @@ const _convertSize = (bytes, decimals = 3) => {
     const megabytes = parseFloat((kilobytes / 1024).toFixed(decimals));
     const gigabytes = parseFloat((megabytes / 1024).toFixed(decimals));
 
-    // Return all of them as an object
     return {
       bytes,
       kilobytes,
@@ -26,5 +25,4 @@ const _convertSize = (bytes, decimals = 3) => {
   }
 };
 
-// Export the function
 module.exports = _convertSize;

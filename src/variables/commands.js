@@ -1,11 +1,9 @@
-// Get modules
 const chalk = require("chalk");
 const { keyInPause } = require("readline-sync");
 
-// Get variables
 const { GLOBAL_NAME } = require("./constants");
 
-// Get all commands
+// Import all commands
 const about = require("../commands/about");
 const bub = require("../commands/bub");
 const cd = require("../commands/cd");
@@ -20,7 +18,7 @@ const exit = require("../commands/exit");
 const fif = require("../commands/fif");
 const hash = require("../commands/hash");
 const help = require("../commands/help");
-const { historyCmd } = require("../commands/history");
+const { history } = require("../commands/history");
 const ifnet = require("../commands/ifnet");
 const link = require("../commands/link");
 const lock = require("../commands/lock");
@@ -89,7 +87,7 @@ const COMMANDS = {
   fif,
   hash,
   help,
-  history: historyCmd,
+  history,
   ifnet,
   link,
   lock,
@@ -156,5 +154,4 @@ const ALIASES = {
   wcount: ["wc"],
 };
 
-// Export the constant (variable)
 module.exports = { COMMANDS, ALIASES };

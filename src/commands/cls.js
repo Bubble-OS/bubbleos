@@ -4,20 +4,11 @@ const Verbose = require("../classes/Verbose");
 
 /**
  * Clears the entire standard output.
- *
- * Usage:
- *
- * ```js
- * cls(); // No arguments required!
- * ```
- *
- * This command used to use `console.clear()`, but on Windows,
- * it only used to clear the visible standard output, but not
- * the entire screen, unlike Linux. This was fixed by writing
- * `\033c` to the _stdout_ instead, which works cross-platform.
  */
-const cls = () => {
+const cls = (...args) => {
   try {
+    // Note console.clear() only clears visible stdout
+    // on Windows, therefore this works better
     process.stdout.write("\x1bc");
     Verbose.custom("Cleared screen.");
   } catch (err) {
@@ -26,5 +17,4 @@ const cls = () => {
   }
 };
 
-// Export the function
 module.exports = cls;

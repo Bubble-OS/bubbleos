@@ -1,4 +1,3 @@
-// Get variables
 const {
   GLOBAL_NAME,
   IN_BETA,
@@ -16,7 +15,6 @@ const _timebomb = () => {
   try {
     // Only if BubbleOS is in beta and the timebomb is activated will BubbleOS check the date
     if (IN_BETA && TIMEBOMB_ACTIVATED) {
-      // Get the current date
       Verbose.custom("Getting current date...");
       const currentDate = new Date();
 
@@ -37,5 +35,4 @@ const _timebomb = () => {
   }
 };
 
-// Export the function
 module.exports = _timebomb;

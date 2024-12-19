@@ -1,8 +1,7 @@
-// Get variables
 const { GLOBAL_NAME } = require("./constants");
 
 /**
- * All help messages for (almost) all BubbleOS commands.
+ * Help messages for all BubbleOS commands.
  */
 const HELP = {
   about: {
@@ -302,5 +301,4 @@ const HELP = {
   },
 };
 
-// Export the constant (variable)
 module.exports = HELP;

@@ -1,29 +1,19 @@
-// Get modules
 const chalk = require("chalk");
 const fs = require("fs");
 
-// Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _fatalError = require("../functions/fatalError");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const Verbose = require("../classes/Verbose");
 
 /**
- * Log the directory contents. This is a private
- * and should not be used outside of the `ls()`
- * function.
+ * Log the directory contents.
  *
  * Format the contents of the directory depending
  * on options, such as if the user wanted to
  * view the directory in a short view.
- *
- * Usage:
- *
- * ```js
- * _logDirContents(dirContents, { short: false }); // More options are accepted
- * ```
  *
  * Options:
  * - `short`: If the directory should be in a short
@@ -36,24 +26,25 @@ const Checks = require("../classes/Checks");
  * @returns A string with the final value.
  */
 const _logDirContents = (contents, options = { short: false, max: undefined }) => {
-  // Define the string
   let dirStr = "";
 
-  // Loop through the length of items in the directory
   for (let i = 1; i < Object.keys(contents).length + 1; i++) {
-    // Current item
+    Verbose.custom(`Item #${i} of directory.`);
     let item = contents[i - 1];
 
     if (item.type === "file" && item.isSymlink) {
       // Is file and is a symbolic link
+      Verbose.custom("Item is a file and symbolic link...");
       if (options.short) dirStr += chalk.red(item.name).padEnd(options.max);
       else dirStr += chalk.red(item.name);
     } else if (item.type === "folder" && item.isSymlink) {
       // Is folder and is symbolic link
+      Verbose.custom("Item is a folder and symbolic link...");
       if (options.short) dirStr += chalk.bgRed(` ${item.name} `).padEnd(options.max);
       else dirStr += chalk.bold.red(item.name);
     } else if (item.type === "file") {
       // Is file
+      Verbose.custom("Item is a file...");
       if (options.short) dirStr += chalk.green(item.name).padEnd(options.max);
       else dirStr += chalk.green(item.name);
     } else if (
@@ -61,20 +52,24 @@ const _logDirContents = (contents, options = { short: false, max: undefined }) =
       (item.name.startsWith(".") || item.name.startsWith("_") || item.name.startsWith("$"))
     ) {
       // Is folder and is most likely hidden
+      Verbose.custom("Item is a hidden folder...");
       if (options.short) dirStr += chalk.bgGrey(` ${item.name} `).padEnd(options.max);
       else dirStr += chalk.bold.grey(item.name);
     } else if (item.type === "folder") {
       // Is folder
+      Verbose.custom("Item is a folder...");
       if (options.short) dirStr += chalk.bgBlue(` ${item.name} `).padEnd(options.max);
       else dirStr += chalk.bold.blue(item.name);
     } else {
       // Unknown type
+      Verbose.custom(`Item '${item.type}' is unknown...`);
       if (options.short) dirStr += chalk.italic(item.name).padEnd(options.max);
       else dirStr += chalk.italic(item.name);
     }
 
     if (i % 3 === 0 && options.short) {
       // If there are already three rows and the user requested a short view, make a new column
+      Verbose.custom("Three rows and short view, making new column...");
       dirStr += "\n";
     } else if (!options.short && i !== Object.keys(contents).length) {
       // If the user wanted the normal view and 'i' is not the final occurrence
@@ -82,7 +77,6 @@ const _logDirContents = (contents, options = { short: false, max: undefined }) =
     }
   }
 
-  // Append a newline to the end of the string and return it
   return dirStr + "\n";
 };
 
@@ -90,52 +84,46 @@ const _logDirContents = (contents, options = { short: false, max: undefined }) =
  * List the contents of a directory. For use in the
  * BubbleOS CLI shell only!
  *
- * Usage:
- *
- * ```js
- * // Arguments are accepted
- * ls(); // Contents in the CWD
- * ls("/"); // Contents in '/'
- * ```
- *
  * There is a known bug where the contents, if viewed
  * in short view, will look a bit 'off' if a file or
  * directory in the directory has a lot of characters.
- * This will be fixed in the next released version.
+ * This will be fixed in the next released version. (yeah right)
  *
  * Available arguments:
  * - `-s`: View the contents in a shorter view
  * (rows/columns).
  *
- * @param {fs.PathLike | string} dir Optional: the directory to view the contents in. By default, it uses the current working directory.
- * @param  {...string} args Arguments to change the behavior of `ls`.
+ * @param {string} dir Optional: the directory to view the contents in. By default, it uses the current working directory.
+ * @param {...string} args Arguments to change the behavior of `ls`.
  */
 const ls = (dir = `"${process.cwd()}"`, ...args) => {
   try {
-    // Initialize arguments
-    // Do this first as '-s' can change the actual directory value
-    let isShort = args.includes("-s") || dir === "-s";
-
-    // If the directory included '-s', change it to the current directory
+    Verbose.initArgs();
+    let short = args.includes("-s") || dir === "-s";
     if (dir === "-s") dir = process.cwd();
 
-    // Replace spaces
+    Verbose.parseQuotes();
     dir = _parseDoubleQuotes([dir, ...args])[0];
 
-    // Initialize checker
+    Verbose.initChecker();
     const dirChk = new Checks(dir);
 
     if (!dirChk.doesExist()) {
-      // If the path does not exist
+      Verbose.chkExists(dir);
       Errors.doesNotExist("folder", dir);
       return;
     } else if (!dirChk.validateType()) {
-      // If the path is a file
+      Verbose.chkType(dir, "directory");
       Errors.expectedDir(dir);
+      return;
+    } else if (dirChk.pathUNC()) {
+      Verbose.chkUNC();
+      Errors.invalidUNCPath();
       return;
     }
 
     // Get all properties about each file and directory in a directory
+    Verbose.custom("Getting properties of all file and folders in directory...");
     const items = fs
       .readdirSync(dir, { withFileTypes: true })
       .map((item) => ({
@@ -146,31 +134,35 @@ const ls = (dir = `"${process.cwd()}"`, ...args) => {
       .sort();
 
     // Filter all items by 'folder' first and then 'file'
+    Verbose.custom("Sorting items by folder first and then files...");
     const all = items
       .filter((item) => item.type === "folder")
       .concat(items.filter((item) => item.type === "file"));
 
     // If there is nothing in the directory
     if (all.length === 0) {
+      Verbose.custom("No files or folders were detected in the directory...");
       console.log(chalk.yellow("There are no files/directories in the directory.\n"));
       return;
     }
 
-    // Initialize the options object
-    const options = { short: isShort };
-    if (isShort) {
+    const options = { short };
+    if (short) {
       // If the user wanted a short view, find the longest filename for the file/directory
+      Verbose.custom("Finding longest file/folder name...");
       const maxLength = Math.max(...all.map((el) => el.name.length));
       options.max = maxLength * 2;
+
+      Verbose.custom("Logging directory contents in short form...");
       console.log(_logDirContents(all, options));
     } else {
+      Verbose.custom("Logging directory contents in long form...");
       console.log(_logDirContents(all, options));
     }
   } catch (err) {
-    // Unknown error
+    Verbose.fatalError();
     _fatalError(err);
   }
 };
 
-// Export the function
 module.exports = ls;

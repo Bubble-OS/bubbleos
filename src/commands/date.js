@@ -1,7 +1,5 @@
-// Import modules
 const chalk = require("chalk");
 
-// Import functions
 const _fatalError = require("../functions/fatalError");
 
 const Verbose = require("../classes/Verbose");
@@ -32,24 +30,15 @@ const MONTHS = [
  * Show the current date from the local system to
  * display in BubbleOS using the `date` command.
  *
- * Usage:
- *
- * ```js
- * date(); // No arguments needed!
- * ```
- *
  * This command will output to the _stdout_ the
  * 'friendly' date, as well as the 'slash' date.
  */
 const date = (...args) => {
   try {
-    // Make a new date
     Verbose.custom("Getting current date...");
     const date = new Date();
 
-    /**
-     * The friendly date, that will have either a _-st_, _-nd_, _-rd_, or _-th_ suffix.
-     */
+    // The friendly date, that will have either a _-st_, _-nd_, _-rd_, or _-th_ suffix.
     Verbose.custom("Creating user-friendly date...");
     const friendlyDate =
       date.getDate() === 1 || date.getDate() === 21 || date.getDate() === 31
@@ -60,7 +49,6 @@ const date = (...args) => {
         ? `${date.getDate()}rd`
         : `${date.getDate()}th`;
 
-    // Log both of the dates
     // Friendly format
     Verbose.custom("Printing user-friendly date...");
     console.log(
@@ -68,11 +56,11 @@ const date = (...args) => {
         MONTHS[date.getMonth()]
       }, ${date.getFullYear()}`
     );
+
     // Slash format
     Verbose.custom("Printing slash-format date...");
     console.log(chalk.italic(`(${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()})`));
 
-    // Log a newline
     console.log();
   } catch (err) {
     Verbose.fatalError();
@@ -80,5 +68,4 @@ const date = (...args) => {
   }
 };
 
-// Export the function
 module.exports = date;

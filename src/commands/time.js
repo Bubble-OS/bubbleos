@@ -1,8 +1,8 @@
-// Get modules
 const chalk = require("chalk");
 
-// Get functions
 const _fatalError = require("../functions/fatalError");
+
+const Verbose = require("../classes/Verbose");
 
 /**
  * Convert the time passed in to a twelve-hour format.
@@ -22,39 +22,30 @@ const _convertTime = (time) => {
     time[0] = +time[0] % 12 || 12;
   }
 
-  // Return adjusted time or original string
   return time.join("");
 };
 
 /**
  * Show the current time from the local machine.
- * For use in the BubbleOS CLI only.
- *
- * Usage:
- *
- * ```js
- * time(); // Arguments are also accepted! (unintended alliteration)
- * ```
  *
  * By default, this command shows the time in 12-hour
  * time, however, this can be changed using an
  * argument.
  *
- * There is a bug in Linux/macOS where the time
- * will not show the AM/PM, even when viewing it
- * as twelve-hour time.
- *
  * Available arguments:
  * - `-24`: Show the time in 24-hour time.
  *
- * @param  {...string} args Arguments to modify the behavior of `time`.
+ * @param {...string} args Arguments to modify the behavior of `time`.
  */
 const time = (...args) => {
   try {
-    // If the user wants the time in 24-hour format instead of 12-hour
+    // TODO fix bug in macOS/Linux where time will
+    // not show AM/PM in 12-hour time
+    Verbose.initArgs();
     const isTwelveHours = !args.includes("-24");
 
     // Get the time
+    Verbose.custom("Getting the time...");
     const rawTime = new Date();
     const time = `${String(rawTime.getHours())}:${String(rawTime.getMinutes()).padStart(
       2,
@@ -62,16 +53,15 @@ const time = (...args) => {
     )}:${String(rawTime.getSeconds()).padStart(2, "0")}`;
 
     // If the user wants the time in 24-hours, show it in raw format, else, convert it
+    Verbose.custom("Printing the time in the specified format...");
     if (isTwelveHours) console.log(chalk.bold(_convertTime(time)));
     else console.log(chalk.bold(time));
 
-    // Newline and return
     console.log();
-    return;
   } catch (err) {
+    Verbose.fatalError();
     _fatalError(err);
   }
 };
 
-// Export the functions
 module.exports = time;

@@ -1,19 +1,18 @@
-// Get modules
 const fs = require("fs");
 const chalk = require("chalk");
 
-// Get variables
 const { GLOBAL_NAME } = require("../variables/constants");
 
-// Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
+const _caseSensitivePath = require("../functions/caseSensitivePath");
 const _promptForYN = require("../functions/promptForYN");
 const _fatalError = require("../functions/fatalError");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const InfoMessages = require("../classes/InfoMessages");
+const Verbose = require("../classes/Verbose");
 
 /**
  * The maximum amount of characters before BubbleOS
@@ -29,14 +28,7 @@ const MAX_CHARS_READ = 100_000;
 
 /**
  * Read a file in the BubbleOS CLI shell synchronously.
- * This has a character limit, that can be bypassed
- * (dangerously; more information below).
- *
- * Usage:
- *
- * ```js
- * readfile("test.txt"); // Also accepts arguments!
- * ```
+ * This has a character limit, that can be bypassed.
  *
  * BubbleOS has a limit on the number of characters
  * it can read (defined in `MAX_CHARS_READ`) and a
@@ -52,37 +44,42 @@ const MAX_CHARS_READ = 100_000;
  * - `--ignore-max`: Bypass the error of
  * `MAX_CHARS_READ`.
  *
- * @param {fs.PathLike | string} file The file that should be read. Both absolute and relative paths are accepted.
- * @param  {...string} args The arguments to modify the behavior of `readfile`. Available arguments are above.
+ * @param {string} file The file that should be read. Both absolute and relative paths are accepted.
+ * @param {...string} args The arguments to modify the behavior of `readfile`. Available arguments are above.
  */
 const readfile = (file, ...args) => {
   try {
-    // Replace spaces, then convert the file to an absolute path
-    file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
+    // Converts path to an absolute path and corrects
+    // casing on Windows, and resolves spaces
+    file = _caseSensitivePath(_convertAbsolute(_parseDoubleQuotes([file, ...args])[0]));
 
-    // Initialize checker
+    Verbose.initChecker();
     const fileChk = new Checks(file);
 
-    // Initialize arguments
+    Verbose.initArgs();
     const confirm = !args?.includes("-y");
     const ignoreMax = args?.includes("--ignore-max");
 
-    // If the file is not defined
     if (fileChk.paramUndefined()) {
+      Verbose.chkEmpty();
       Errors.enterParameter("a file", "readfile test.txt");
       return;
     }
 
     if (!fileChk.doesExist()) {
-      // The file does not exist
+      Verbose.chkExists(file);
       Errors.doesNotExist("file", file);
       return;
     } else if (fileChk.validateType()) {
-      // The file is a directory
+      Verbose.chkType(file, "file");
       Errors.expectedFile(file);
       return;
+    } else if (fileChk.pathUNC()) {
+      Verbose.chkUNC();
+      Errors.invalidUNCPath();
+      return;
     } else if (!fileChk.validEncoding()) {
-      // The file is not plain text
+      Verbose.chkEncoding();
       Errors.invalidEncoding("plain text");
       return;
     }
@@ -92,18 +89,17 @@ const readfile = (file, ...args) => {
     const chars = contents.length;
 
     // If the number of characters is greater than/equal to the maximum characters
-    // that BubbleOS can read, and the user did not use the '--ignore-max' flag...
+    // that BubbleOS can read, and the user did not use the '--ignore-max' flag
     if (chars >= MAX_CHARS_READ && !ignoreMax) {
-      // ...tell the user that it is not possible to read that many characters
-      console.log(
-        chalk.yellow(
-          `Too many characters to read (${chars} characters). ${GLOBAL_NAME} only supports reading less than ${MAX_CHARS_READ} characters.\nProcess aborted.\n`
-        )
+      Verbose.custom("Detected too many characters to read.");
+      InfoMessages.error(
+        `Too many characters to read (${chars} characters). ${GLOBAL_NAME} only supports reading less than ${MAX_CHARS_READ} characters.`
       );
       return;
     } else if (chars >= MAX_CHARS_CONFIRM && confirm) {
       // If the characters is greater than/equal to the number of characters before BubbleOS
       // must confirm that the user wishes to read this many lines, unless they've already pre-accepted
+      Verbose.promptUser();
       if (
         !_promptForYN(
           `The file, ${chalk.bold(
@@ -111,35 +107,31 @@ const readfile = (file, ...args) => {
           )}, has over ${MAX_CHARS_CONFIRM} characters (${chars} characters). Do you wish to continue?`
         )
       ) {
-        // Anything BUT 'y' will cancel
         console.log(chalk.yellow("Process aborted.\n"));
         return;
       }
 
-      // Newline
       console.log();
     }
 
-    // Log the file contents
+    // Log the file
+    Verbose.custom("Reading file...");
     console.log(fs.readFileSync(file, { encoding: "utf-8", flag: "r" }));
-
-    // Log a newline
     console.log();
   } catch (err) {
     if (err.code === "EPERM") {
-      // Invalid permissions to read the file
+      Verbose.permError();
       Errors.noPermissions("read the file", file);
       return;
     } else if (err.code === "EBUSY") {
-      // The file is in use
+      Verbose.inUseError();
       Errors.inUse("file", file);
       return;
     } else {
-      // Unknown error
+      Verbose.fatalError();
       _fatalError(err);
     }
   }
 };
 
-// Export the functions
 module.exports = readfile;

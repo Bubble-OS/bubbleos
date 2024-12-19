@@ -1,4 +1,3 @@
-// Get modules
 const chalk = require("chalk");
 
 /**
@@ -12,19 +11,19 @@ class InfoMessages {
   constructor() {}
 
   static success(message) {
-    console.log(chalk.green(`${chalk.bgGreen(" SUCCESS: ")} ${message}\n`));
+    console.log(chalk.green(`${chalk.white.bgGreen(" SUCCESS: ")} ${message}\n`));
   }
 
   static info(message) {
-    console.log(chalk.blue(`${chalk.bgBlue(" INFO: ")} ${message}\n`));
+    console.log(chalk.blue(`${chalk.white.bgBlue(" INFO: ")} ${message}\n`));
   }
 
   static warning(message) {
-    console.log(chalk.yellow(`${chalk.bgYellow(" WARNING: ")} ${message}\n`));
+    console.log(chalk.yellow(`${chalk.black.bgYellow(" WARNING: ")} ${message}\n`));
   }
 
   static error(message) {
-    console.log(chalk.red(`${chalk.bgRed(" ERROR: ")} ${message}\n`));
+    console.log(chalk.red(`${chalk.white.bgRed(" ERROR: ")} ${message}\n`));
   }
 }
 

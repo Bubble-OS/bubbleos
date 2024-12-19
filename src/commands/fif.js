@@ -1,16 +1,15 @@
-// Get modules
 const fs = require("fs");
 const chalk = require("chalk");
 const { question } = require("readline-sync");
 
-// Get functions
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
 const _fatalError = require("../functions/fatalError");
+const _caseSensitivePath = require("../functions/caseSensitivePath");
 
-// Get classes
 const Errors = require("../classes/Errors");
 const Checks = require("../classes/Checks");
+const Verbose = require("../classes/Verbose");
 
 /**
  * Escape all special characters in RegExp.
@@ -29,12 +28,6 @@ const escapeRegExp = (str) => str.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /**
  * Find a word or phrase in a file. This is a CLI
  * tool to be used in the BubbleOS shell only.
- *
- * Usage:
- *
- * ```js
- * fif("test.txt"); // Also accepts arguments!
- * ```
  *
  * This function will find all occurrences in a file
  * and show them in multiple ways to the standard
@@ -55,53 +48,57 @@ const escapeRegExp = (str) => str.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
  */
 const fif = (file, ...args) => {
   try {
-    // Replace spaces, and then convert the path to absolute
-    file = _convertAbsolute(_parseDoubleQuotes([file, ...args])[0]);
+    Verbose.pathAbsolute();
+    Verbose.parseQuotes();
+    file = _caseSensitivePath(_convertAbsolute(_parseDoubleQuotes([file, ...args])[0]));
 
-    // Initialize a checker
+    Verbose.initChecker();
     const fileChk = new Checks(file);
 
-    // Initialize arguments
+    Verbose.initArgs();
     const numOccur = args.includes("-n");
     const placeOccur = args.includes("-p");
     const visualOccur = args.includes("-v");
     const all = !numOccur && !placeOccur && !visualOccur;
 
-    // Check to make sure the file/phrase to find is not empty
-    // Make a temporary new checker
     if (fileChk.paramUndefined()) {
+      Verbose.chkEmpty();
       Errors.enterParameter("the file", "fif test.txt");
       return;
     }
 
     if (!fileChk.doesExist()) {
-      // If the file doesn't exist
+      Verbose.chkExists(file);
       Errors.doesNotExist("file", file);
       return;
     } else if (fileChk.validateType()) {
-      // If the path is a directory
+      Verbose.chkType(file, "file");
       Errors.expectedFile(file);
       return;
+    } else if (fileChk.pathUNC()) {
+      Errors.invalidUNCPath();
+      return;
     } else if (!fileChk.validEncoding()) {
-      // If the encoding is not plain text
+      Verbose.chkEncoding();
       Errors.invalidEncoding("plain text");
       return;
     }
 
     // Get file contents
+    Verbose.custom(`Getting file contents of '${file}'...`);
     const contents = fs.readFileSync(file, { encoding: "utf-8", flag: "r" });
 
-    // Prompt the user for file contents
+    // Ask user for the phrase
+    Verbose.custom("Prompting user for phrase to find...");
     const toFind =
       question(`Please enter the phrase to find (${chalk.italic("'Enter'")} to accept): `) ?? "";
 
     console.log();
 
-    if (
-      toFind === null ||
-      typeof toFind === "undefined" ||
-      (typeof toFind === "string" && !toFind)
-    ) {
+    // Checks if phrase is empty
+    Verbose.custom("Checking if phrase is empty...");
+    if (!toFind) {
+      Verbose.custom("Phrase was detected to be empty, aborting process...");
       console.log(chalk.yellow(`No phrase entered.\nProcess aborted.\n`));
       return;
     }
@@ -110,10 +107,13 @@ const fif = (file, ...args) => {
     // and if 'null' is returned, it'll default to [].
     // Otherwise, it will return an array, of which only the length is required.
     // However, if the length is undefined, it will be -1.
+    Verbose.custom("Getting occurrences of phrase...");
     const occurrences = contents.match(new RegExp(escapeRegExp(toFind), "g") || [])?.length ?? -1;
 
     // If there are no occurrences
+    Verbose.custom("Checking if there are no occurrences...");
     if (occurrences === -1) {
+      Verbose.custom("No occurrences detected, aborting process...");
       console.log(
         chalk.yellow(
           `No occurrences were found for the phrase ${chalk.bold.italic(`'${toFind}'`)}.\n`
@@ -127,8 +127,8 @@ const fif = (file, ...args) => {
 
     // Number of occurrences
     if (numOccur || all) {
-      console.log(`Number of occurrences: ${chalk.italic(occurrences)}`);
-      console.log();
+      Verbose.custom("Printing number of occurrences...");
+      console.log(`Number of occurrences: ${chalk.italic(occurrences)}\n`);
     }
 
     // Character occurrence location
@@ -136,9 +136,11 @@ const fif = (file, ...args) => {
       console.log("Occurrence location since start of file:");
 
       // Matches each phrase in the content and spreads it into an array
+      Verbose.custom("Matching phrases and storing matched phrases...");
       const charNum = [...contents.matchAll(new RegExp(escapeRegExp(toFind), "g"))];
 
       // Loop through all character occurrences and output them
+      Verbose.custom("Looping through all occurrences and printing...");
       charNum.forEach((val, idx) => {
         console.log(`#${idx + 1}: ${chalk.bold.italic(val.index + 1 ?? "N/A")}`);
       });
@@ -151,16 +153,16 @@ const fif = (file, ...args) => {
       console.log(chalk.red.bold.underline(`Visual occurrences\n`));
 
       // Replace all occurrences with a highlighted version
+      Verbose.custom("Finding all occurrences and highlighting...");
       console.log(
         contents.replaceAll(new RegExp(escapeRegExp(toFind), "g"), chalk.bgYellow.black(toFind))
       );
       console.log();
     }
   } catch (err) {
-    // An unknown error occurred
+    Verbose.fatalError();
     _fatalError(err);
   }
 };
 
-// Export the function
 module.exports = fif;

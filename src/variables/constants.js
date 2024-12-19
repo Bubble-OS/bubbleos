@@ -3,7 +3,7 @@
  */
 const GLOBAL_NAME = "BubbleOS";
 /**
- * The shorter version of `GLOBAL_NAME`. If it is [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy), it will default to the value of `GLOBAL_NAME`.
+ * The shorter version of `GLOBAL_NAME`.
  */
 const SHORT_NAME = "Bubble" || GLOBAL_NAME;
 /**
@@ -37,7 +37,7 @@ const TIMEBOMB_ACTIVATED = true;
  *
  * Change this every time a new executable is compiled.
  *
- * To change it, use the code guide below:
+ * To change it, use the guide below:
  *
  * ```js
  * const EXPIRY_DATE = new Date(
@@ -53,7 +53,6 @@ const TIMEBOMB_ACTIVATED = true;
  */
 const EXPIRY_DATE = new Date(2025, 2, 7);
 
-// Export all of the variables
 module.exports = {
   GLOBAL_NAME,
   SHORT_NAME,
