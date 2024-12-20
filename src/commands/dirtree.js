@@ -4,6 +4,7 @@ const chalk = require("chalk");
 
 const _parseDoubleQuotes = require("../functions/parseQuotes");
 const _convertAbsolute = require("../functions/convAbs");
+const _caseSensitivePath = require("../functions/caseSensitivePath");
 const _fatalError = require("../functions/fatalError");
 
 const Errors = require("../classes/Errors");

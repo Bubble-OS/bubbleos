@@ -84,24 +84,38 @@ const taskkill = async (processName, ...args) => {
 
       Verbose.custom("Attempting to kill process...");
       process.kill(Number(processName));
-      return;
+
+      // If the user did not request output, show a newline, else, show the success message
+      if (!silent)
+        InfoMessages.success(`Successfully killed the process ${chalk.bold(processName)}.`);
+      else console.log();
     } else {
       const processes = await psList();
       const result = processes.find((obj) => obj.name === processName);
 
-      if (result) {
-        if (_killSelfMsg(result.pid, killSelf)) return;
+      processes.forEach((obj) => {
+        if (obj.name === processName) {
+          if (_killSelfMsg(result.pid, killSelf)) return;
 
-        Verbose.custom("Attempting to kill process...");
-        process.kill(Number(result.pid));
-        return;
-      }
+          Verbose.custom("Attempting to kill process...");
+          try {
+            process.kill(Number(result.pid));
+
+            // If the user did not request output, show a newline, else, show the success message
+            if (!silent)
+              InfoMessages.success(`Successfully killed the process ${chalk.bold(processName)}.`);
+            else console.log();
+          } catch (err) {
+            // In case there are some processes that have perm errors,
+            // one error won't cause the command to terminate
+            if (err.code === "EPERM") {
+              Verbose.permError();
+              Errors.noPermissions("kill the process", processName);
+            }
+          }
+        }
+      });
     }
-
-    // If the user did not request output, show a newline, else, show the success message
-    if (!silent)
-      InfoMessages.success(`Successfully killed the process ${chalk.bold(processName)}.`);
-    else console.log();
   } catch (err) {
     if (err.code === "EPERM") {
       Verbose.permError();

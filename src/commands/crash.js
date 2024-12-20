@@ -102,7 +102,7 @@ const crash = async (...args) => {
       for (let i = 0; i < Number.MAX_VALUE; i++) {
         crashArr.push(new Array(100000000));
       }
-    } else if (index === 4) {
+    } else if (index === 3) {
       Verbose.custom("Crashing method: BSOD.");
 
       if (process.platform !== "win32") {

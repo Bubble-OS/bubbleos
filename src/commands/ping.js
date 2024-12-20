@@ -14,7 +14,7 @@ const _makeConnection = async (host, path = "", maxRedirects = 5) => {
   const options = {
     host,
     path,
-    timeout: 5000,
+    timeout: 15000,
     method: "HEAD", // HEAD request to only fetch headers
     rejectUnauthorized: true,
   };
@@ -22,6 +22,8 @@ const _makeConnection = async (host, path = "", maxRedirects = 5) => {
   Verbose.custom("Creating formatted URL...");
   const formattedURL = (options.host + options.path).replace(/^www\.|\/+$/g, "");
 
+  // The reason resolve() is used everywhere is because if
+  // reject() is used, BubbleOS will crash
   return new Promise((resolve, reject) => {
     Verbose.custom("Creating new request...");
     const req = https.request(options, (res) => {
@@ -41,7 +43,7 @@ const _makeConnection = async (host, path = "", maxRedirects = 5) => {
               .catch(reject);
           } else {
             Verbose.custom("Encountered too many redirects.");
-            reject(
+            resolve(
               InfoMessages.error(
                 `Too many redirects. Stopped following after ${5 - maxRedirects} redirects.`
               )
@@ -49,7 +51,7 @@ const _makeConnection = async (host, path = "", maxRedirects = 5) => {
           }
         } else {
           Verbose.custom("Encountered a redirect without a Location header...");
-          reject(
+          resolve(
             InfoMessages.error(
               `Redirect received, but no Location header found. Status code: ${res.statusCode}.`
             )
@@ -66,7 +68,7 @@ const _makeConnection = async (host, path = "", maxRedirects = 5) => {
         );
       } else {
         Verbose.custom("The server is not responding with status code 200.");
-        reject(
+        resolve(
           chalk.red(
             `The server, ${chalk.bold.italic(formattedURL)}, responded with status code ${
               res.statusCode
@@ -80,7 +82,7 @@ const _makeConnection = async (host, path = "", maxRedirects = 5) => {
 
     req.on("timeout", () => {
       Verbose.custom("The server timed out.");
-      reject(chalk.red(`The server, ${chalk.bold.italic(formattedURL)}, has timed out.\n`));
+      resolve(chalk.red(`The server, ${chalk.bold.italic(formattedURL)}, has timed out.\n`));
     });
 
     req.end();
@@ -107,6 +109,10 @@ const ping = async (host, ...args) => {
     if (err.code === "ENOTFOUND") {
       Verbose.custom("An error occurred while trying to ping the address.");
       InfoMessages.error("The address could not be located.");
+      return;
+    } else if (err.code === "ECONNREFUSED") {
+      Verbose.custom("The connection to the address was refused.");
+      InfoMessages.error("The connection to the address was refused.");
       return;
     } else {
       Verbose.fatalError();

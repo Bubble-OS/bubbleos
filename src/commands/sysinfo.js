@@ -53,23 +53,33 @@ const _convertTime = (seconds, decimals = 2) => {
 
 /**
  * Determine the color depending on the percentage
- * of memory being used.
- *
- * Formula used for memory: `(total - free) > (total / 2)`
- * Formula used for battery: `battery > 20`
+ * of memory being used, or the battery level.
  *
  * @param {"memory" | "battery"} type The type of color to determine.
  * @param {string | number} value The value to determine the color for.
  * @returns The colored string.
  */
-const _determineColor = async (type, value) => {
-  // If the total memory minus the free memory is greater than the total memory divided by two,
-  // it is using more than half of the total memory, hence, use a red color, else, use green.
+const _determineColor = async (
+  type,
+  value,
+  options = { onCharge: undefined, batteryPercent: undefined }
+) => {
   if (type === "memory") {
-    if (os.totalmem() - os.freemem() > os.totalmem() / 2) return chalk.red(value);
-    else return chalk.green(value);
+    // If a third of memory is used, show green text
+    // If a third of memory is left, show red text
+    // If it is in between, show yellow text
+    const usedMemory = os.totalmem() - os.freemem();
+
+    if (usedMemory < os.totalmem() / 3) return chalk.green(value);
+    else if (usedMemory > (2 * os.totalmem()) / 3) return chalk.red(value);
+    else return chalk.yellow(value);
   } else if (type === "battery") {
-    if ((await batteryLevel()) > 0.5) return chalk.green(value);
+    // If on charge, green text
+    // If not on charge and above 50%, yellow text
+    // If not on charge and below 50%, red text
+
+    if (options.onCharge) return chalk.green(value);
+    else if (!options.onCharge && options.batteryPercent > 0.5) return chalk.yellow(value);
     else return chalk.red(value);
   } else throw new TypeError(`Invalid type '${type}' provided.`);
 };
@@ -123,12 +133,12 @@ const sysinfo = async (...args) => {
       Verbose.custom("Showing computer information...");
       console.log(`${chalk.bold.underline("Computer Information")}`);
 
-      console.log(`Full OS name: ${chalk.italic(_fixVersion(osName()))}`);
-      console.log(`Operating system: ${chalk.italic(_friendlyOS())}`);
-      console.log(`Release: ${chalk.italic(os.release())}`);
-      console.log(`Architecture: ${chalk.italic(process.arch)}`);
-      console.log(`Computer name: ${chalk.italic(os.hostname())}`);
-      console.log(`Locale: ${chalk.italic(Intl.DateTimeFormat().resolvedOptions().locale)}`);
+      console.log(`Full OS name: ${chalk.bold(_fixVersion(osName()))}`);
+      console.log(`Operating system: ${chalk.bold(_friendlyOS())}`);
+      console.log(`Release: ${chalk.bold(os.release())}`);
+      console.log(`Architecture: ${chalk.bold(process.arch)}`);
+      console.log(`Computer name: ${chalk.bold(os.hostname())}`);
+      console.log(`Locale: ${chalk.bold(Intl.DateTimeFormat().resolvedOptions().locale)}`);
 
       console.log();
     }
@@ -140,15 +150,15 @@ const sysinfo = async (...args) => {
 
       const { gid, homedir, shell, uid, username } = os.userInfo();
 
-      console.log(`Username: ${chalk.italic(username)}`);
-      console.log(`Home directory: ${chalk.italic(homedir)}`);
-      console.log(`Temporary directory: ${chalk.italic(os.tmpdir())}`);
+      console.log(`Username: ${chalk.bold(username)}`);
+      console.log(`Home directory: ${chalk.bold(homedir)}`);
+      console.log(`Temporary directory: ${chalk.bold(os.tmpdir())}`);
 
       // If the OS is Windows, GID, shell and UID are -1/null; so this is only shown to operating systems other than Windows
       if (process.platform !== "win32") {
-        console.log(`GID (group identifier): ${chalk.italic(gid)}`);
-        console.log(`UID (user identifier): ${chaitalic(uid)}`);
-        console.log(`Shell: ${chalk.italic(shell)}`);
+        console.log(`GID (group identifier): ${chalk.bold(gid)}`);
+        console.log(`UID (user identifier): ${chalk.bold(uid)}`);
+        console.log(`Shell: ${chalk.bold(shell)}`);
       }
 
       console.log();
@@ -161,7 +171,7 @@ const sysinfo = async (...args) => {
 
       // Show the memory out of the total memory in the color designated
       console.log(
-        `Memory usage: ${chalk.italic(
+        `Memory usage: ${chalk.bold(
           await _determineColor(
             "memory",
             `${_convertSize(os.totalmem() - os.freemem(), 2).gigabytes}GB/${
@@ -170,28 +180,28 @@ const sysinfo = async (...args) => {
           )
         )}`
       );
-      console.log(`CPU cores: ${chalk.italic(os.cpus().length)}`);
+      console.log(`CPU cores: ${chalk.bold(os.cpus().length)}`);
 
       const uptime = _convertTime(os.uptime(), 0).recommended;
-      console.log(`System uptime: ${chalk.italic(`${uptime.value} ${uptime.type}`)}`);
+      console.log(`System uptime: ${chalk.bold(`${uptime.value} ${uptime.type}`)}`);
 
       // If the system has a battery, show the battery information
       try {
-        await batteryLevel();
+        // If the system does not have a battery, this will be caught,
+        // and therefore the code after this will not be run
+        const onCharge = await isCharging();
+        const batteryPercent = await batteryLevel();
 
-        console.log();
-
-        Verbose.custom("Showing battery information...");
-        console.log(`${chalk.bold.underline("Battery Information")}`);
-
+        // The Math.floor() is to prevent a floating-point precision
+        // error that can occur sometimes
         console.log(
-          `Battery level: ${chalk.italic(
-            `${await _determineColor("battery", (await batteryLevel()) * 100 + "%")}`
+          `Battery level: ${chalk.bold(
+            `${await _determineColor(
+              "battery",
+              Math.floor(batteryPercent * 100) + "%" + (onCharge ? " (charging)" : ""),
+              { onCharge, batteryPercent } // To minimize lag, pass the variables that were already defined
+            )}`
           )}`
-        );
-
-        console.log(
-          `Charging: ${chalk.italic((await isCharging()) ? chalk.green("Yes") : chalk.red("No"))}`
         );
       } catch {}
 
@@ -203,22 +213,20 @@ const sysinfo = async (...args) => {
       Verbose.custom("Showing advanced information...");
       console.log(`${chalk.bold.underline("Advanced Information")}`);
 
-      console.log(`NULL device: ${chalk.italic(os.devNull)}`);
+      console.log(`NULL device: ${chalk.bold(os.devNull)}`);
       console.log(
-        `CPU endianness: ${chalk.italic(
+        `CPU endianness: ${chalk.bold(
           os.endianness() === "BE" ? "BE (big endian)" : "LE (little endian)"
         )}`
       );
 
       // On some operating systems, this value will throw an error if run
       console.log(
-        `Estimated default parallelism amount (program): ${chalk.italic(
+        `Estimated default parallelism amount (program): ${chalk.bold(
           typeof os.availableParallelism === "undefined" ? "N/A" : os.availableParallelism()
         )}`
       );
-      console.log(
-        `${GLOBAL_NAME} PID (process identification number): ${chalk.italic(process.pid)}`
-      );
+      console.log(`${GLOBAL_NAME} PID (process identification number): ${chalk.bold(process.pid)}`);
 
       console.log();
     }

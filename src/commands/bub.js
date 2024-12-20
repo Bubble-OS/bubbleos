@@ -51,6 +51,11 @@ const _interpretFile = async (
       continue;
     } else if (line === invalidBubCommand) {
       // Prevents infinite loop by .bub file executing itself
+      if (options.displayCommand) {
+        Verbose.custom("Displaying currently executing command...");
+        console.log(chalk.underline.bold.red(line));
+      }
+
       Verbose.custom(`Line '${line}' was detected to be an invalid 'bub' command, skipping...`);
       InfoMessages.warning(
         "Infinite loop detected due to executing the same '.bub' file, skipping..."
@@ -59,6 +64,11 @@ const _interpretFile = async (
     } else if (line === "exit" && !options.allowExit) {
       // Prevents .bub command from exiting BubbleOS
       // if --allow-exit was not passed
+      if (options.displayCommand) {
+        Verbose.custom("Displaying currently executing command...");
+        console.log(chalk.underline.bold.red(line));
+      }
+
       Verbose.custom(`Line '${line}' was detected to be the 'exit' command, skipping...`);
       InfoMessages.info("Running the 'exit' command from a '.bub' file is currently disabled.");
       continue;
@@ -140,9 +150,14 @@ const bub = async (intCmds, file, ...args) => {
       return;
     }
 
+    const beforeCwd = process.cwd();
+
     // Interprets each line and uses intCmds() function
     Verbose.custom("Interpreting file...");
     await _interpretFile(intCmds, file, { displayCommand, allowExit });
+
+    Verbose.custom("Changing current working directory to path before file was executed...");
+    process.chdir(_caseSensitivePath(beforeCwd));
   } catch (err) {
     if (err.code === "EPERM") {
       Verbose.permError();
