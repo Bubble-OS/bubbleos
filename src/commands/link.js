@@ -90,7 +90,7 @@ const link = (path, newPath, ...args) => {
   } catch (err) {
     if (err.code === "EPERM") {
       Verbose.permError();
-      Errors.noPermissions("make the symbolic link", newPath);
+      Errors.noPermissions("make the link", newPath);
       return;
     } else {
       Verbose.fatalError();

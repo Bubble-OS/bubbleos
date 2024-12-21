@@ -7,6 +7,7 @@ const { GLOBAL_NAME, SHORT_NAME, VERSION, BUILD } = require("./src/variables/con
 
 const _intCmds = require("./src/functions/interpret");
 const _detectArgs = require("./src/functions/detectArgs");
+const _caseSensitivePath = require("./src/functions/caseSensitivePath");
 
 const Verbose = require("./src/classes/Verbose");
 
@@ -58,9 +59,9 @@ const Verbose = require("./src/classes/Verbose");
   while (true) {
     // Ask the user for a command
     const command = question(
-      `${chalk.bold.green(SHORT_NAME.toLowerCase())} ${chalk.blueBright(process.cwd())} ${chalk.red(
-        "$"
-      )} `
+      `${chalk.bold.green(SHORT_NAME.toLowerCase())} ${chalk.blueBright(
+        _caseSensitivePath(process.cwd())
+      )} ${chalk.red("$")} `
     );
 
     Verbose.custom("Interpreting command...");
